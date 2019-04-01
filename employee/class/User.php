@@ -20,8 +20,8 @@ class User extends MySQLCN {
                 return false;
             }
         $qry = 'INSERT INTO `users` 
-            (`user_name`,`email_address`, `password`, `user_role`) 
-            VALUES ( "'. $data['user_name'] . '", "'. $data['email_address'] .'" , "'. md5($data['password']) .'" ,"1")';
+            (`first_name`,`last_name`,`email_address`, `password`, `user_role`) 
+            VALUES ( "'. $data['first_name'] . '" , "'. $data['last_name'] . '" , "'. $data['email_address'] .'" , "'. md5($data['password']) .'" ,"1")';
         $res = $this->insert($qry);
         if ($res) {
             return true;

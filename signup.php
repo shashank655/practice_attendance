@@ -46,7 +46,11 @@
                         <form id="signupform" action="employee/process/processUser.php" method="post">
                         <input type="hidden" value="super_admin_signup" name="type" />
                            <div class="form-group custom-mt-form-group">
-								<input type="text" placeholder="Username"/ name="user_name">
+								<input type="text" placeholder="First Name"/ name="first_name">
+                                <i class="bar"></i>
+							</div>
+			<div class="form-group custom-mt-form-group">
+								<input type="text" placeholder="Last Name"/ name="last_name">
                                 <i class="bar"></i>
 							</div>
                            <div class="form-group custom-mt-form-group">

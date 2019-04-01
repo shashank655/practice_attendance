@@ -37,8 +37,12 @@
                 $_SESSION['Msg'] = '';
                 unset($_SESSION['Msg']); 
             } ?>
+            <!-- <h3 class="account-title text-white">Register</h3> -->
                 <div class="account-box">
                     <div class="account-wrapper">
+                    <!-- <div class="account-logo">
+                            <a href="index.html"><img src="assets/img/logo.png" alt="School-admin"></a>
+                        </div> -->
                         <form id="signupform" action="employee/process/processUser.php" method="post">
                         <input type="hidden" value="super_admin_signup" name="type" />
                            <div class="form-group custom-mt-form-group">

@@ -1,7 +1,23 @@
 <?php
+require_once 'employee/class/dbclass.php';
+require_once 'employee/config/config.php';
+require_once 'employee/class/Teacher.php';
+require_once 'employee/class/CommonFunction.php';
+$common_function = new CommonFunction();
+$resultSubjects = $common_function->getAllSubjects();
+
+$teacher = new Teacher();
+$userId = (isset($_REQUEST['userId'])) ? $_REQUEST['userId'] : NULL;
+if ($userId != NULL) {
+    $result = $teacher->getTeacherInfo($userId);
+    if ($result == NULL) {
+        $userId = '';
+    }
+}
+?>
+<?php 
 require_once 'includes/header.php';
 require_once 'includes/sidebar.php';
-require_once 'employee/config/config.php';
 ?>
 <div class="page-wrapper"> <!-- content -->
             <div class="content container-fluid">
@@ -49,15 +65,22 @@ require_once 'employee/config/config.php';
 						                unset($_SESSION['Msg']); 
 						            } ?>
 								<form id="addTeacherForm" action="employee/process/processAddTeacher.php" method="post" novalidate="novalidate" enctype="multipart/form-data">
-								<input type="hidden" value="teacher_sign_up" name="type" />
+								<input type="hidden" name="type" value="<?php echo $userId == '' ? 'Add' : 'Update'; ?>"/>
+								<input type="hidden" name="userId" value="<?php echo $userId; ?>"/>
 									<div class="row">
 										<div class="col-lg-6 col-md-6 col-sm-6 col-12">
 												<div class="form-group custom-mt-form-group">
-													<input type="text"  name="first_name" />
+													<input type="text"  name="first_name" value="<?php
+                                        		if (isset($result[0]['first_name']))
+                                            	echo htmlspecialchars($result[0]['first_name']);
+                                        		?>"/>
 													<label class="control-label">Firstname</label><i class="bar"></i>
 												</div>
 												<div class="form-group custom-mt-form-group">
-													<input type="text"  name="email_address"/>
+													<input type="text"  name="email_address" value="<?php
+                                        		if (isset($result[0]['email_address']))
+                                            	echo htmlspecialchars($result[0]['email_address']);
+                                        		?>"/>
 													<label class="control-label">Email</label><i class="bar"></i>
 												</div>
 												<div class="form-group custom-mt-form-group">
@@ -72,11 +95,17 @@ require_once 'employee/config/config.php';
 													 <label class="control-label">Gender</label><i class="bar"></i>
 												</div>
 												<div class="form-group custom-mt-form-group">
-													 <input class="datetimepicker" type="text" name="dob"> 
+													 <input class="datetimepicker" type="text" name="dob" value="<?php
+                                        		if (isset($result[0]['dob']))
+                                            	echo htmlspecialchars($result[0]['dob']);
+                                        		?>"> 
 													<label class="control-label">Birth Date</label><i class="bar"></i>
 												</div>
 												<div class="form-group custom-mt-form-group">
-													<input type="text"  name="class"/>
+													<input type="text"  name="class" value="<?php
+                                        		if (isset($result[0]['class']))
+                                            	echo htmlspecialchars($result[0]['class']);
+                                        		?>"/>
 													<label class="control-label">Class</label><i class="bar"></i>
 												</div>
 												<div class="form-group custom-mt-form-group">
@@ -89,11 +118,17 @@ require_once 'employee/config/config.php';
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-6 col-12">
 												<div class="form-group custom-mt-form-group">
-													<input type="text"  name="last_name">
+													<input type="text"  name="last_name" value="<?php
+                                        		if (isset($result[0]['last_name']))
+                                            	echo htmlspecialchars($result[0]['last_name']);
+                                        		?>">
 													<label class="control-label">Lastname</label><i class="bar"></i>
 												</div>
 												<div class="form-group custom-mt-form-group">
-													 <input class="form-control floating datetimepicker" type="text" name="joining_date">
+													 <input class="form-control floating datetimepicker" type="text" name="joining_date" value="<?php
+                                        		if (isset($result[0]['joining_date']))
+                                            	echo htmlspecialchars($result[0]['joining_date']);
+                                        		?>">
 													<label class="control-label">Joining Date</label><i class="bar"></i>
 												</div>
 												<div class="form-group custom-mt-form-group">
@@ -101,32 +136,44 @@ require_once 'employee/config/config.php';
 													<label class="control-label">Confirm Password</label><i class="bar"></i>
 												</div>
 												<div class="form-group custom-mt-form-group">
-													<input type="number" name="mobile_number"  />
+													<input type="number" name="mobile_number"   value="<?php
+                                        		if (isset($result[0]['mobile_number']))
+                                            	echo htmlspecialchars($result[0]['mobile_number']);
+                                        		?>"/>
 													<label class="control-label">Mobile number</label><i class="bar"></i>
 												</div>
 												<div class="form-group custom-mt-form-group">
 													<select name="subject_id" id="subject_id">
-														<option value="1">Computer</option>
-														<option value="2">Science</option>
-														<option value="3">Maths</option>
-														<option value="4">Tamil</option>
-														<option value="5">English</option>
-														<option value="6">Social Science</option>
+													<?php for ($i = 0; $i < count($resultSubjects); $i++) : ?>
+														<option <?php if (isset($result[0]['subject_id'])) {
+                                            				if ($result[0]['subject_id'] == $resultSubjects[$i]['id']) {
+                                                			echo 'selected';
+                                            					}
+                                        					} ?> value="<?php echo $resultSubjects[$i]['id']; ?>"><?php echo $resultSubjects[$i]['subject_name']; ?></option>
+													<?php endfor; ?>	
 													 </select>
 													 <label class="control-label">Subject</label><i class="bar"></i>
 												</div>		
 												<div class="form-group custom-mt-form-group">
-													<input type="text"  name="teacher_id" />
+													<input type="text"  name="teacher_id" value="<?php
+                                        		if (isset($result[0]['teacher_id']))
+                                            	echo htmlspecialchars($result[0]['teacher_id']);
+                                        		?>"/>
 													<label class="control-label">ID</label><i class="bar"></i>
 												</div>
 												<div class="form-group custom-mt-form-group">
-													<input type="text"  name="section"/>
+													<input type="text"  name="section" value="<?php
+                                        		if (isset($result[0]['section']))
+                                            	echo htmlspecialchars($result[0]['section']);
+                                        		?>"/>
 													<label class="control-label">Section</label><i class="bar"></i>
 												</div>
 										</div>
 										<div class="col-lg-12 col-md-12 col-sm-12 col-12">
 												<div class="form-group">
-													<textarea id="message" class="form__field" placeholder="Premanent Address" rows="4" name="permanent_address"></textarea>
+													<textarea id="message" class="form__field" placeholder="Premanent Address" rows="4" name="permanent_address"></textarea><?php if (isset($result[0]['permanent_address']))
+                                        				echo $result[0]['permanent_address'];
+                                    				?>
 													<label for="message" class="form-label">Premanent Address</label>
 												</div>
 										</div>

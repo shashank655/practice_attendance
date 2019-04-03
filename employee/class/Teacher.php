@@ -19,6 +19,14 @@ class Teacher extends MySQLCN {
             if($result) {
                 return false;
             }
+        if ($_FILES['profile_image']['error'] == '0') {
+            $profileImageName = time() . strtolower(basename($_FILES['profile_image']['name']));
+            $target = PROFILE_PIC_IMAGE_ROOT . $profileImageName;
+            move_uploaded_file($_FILES['profile_image']['tmp_name'], $target);
+        } else {
+            $profileImageName = '';
+        }
+            
          if($data['is_class_teacher'] == '1') {
             $role = '2';
          } else {
@@ -32,8 +40,8 @@ class Teacher extends MySQLCN {
             $last_id = mysqli_insert_id($this->CONN);
 
             $qry2 = 'INSERT INTO `teachers` 
-            (`user_id`,`gender`,`dob`,`class`, `is_class_teacher`, `joining_date`, `mobile_number`, `subject_id`, `teacher_id`, `section`, `permanent_address`) 
-            VALUES ( "'. $last_id . '" ,"'. $data['gender'] . '", "'. $data['dob'] . '", "'. $data['class'] .'" , "'. $data['is_class_teacher'] .'" ,"'.$data['joining_date'].'","'.$data['mobile_number'].'","'.$data['subject_id'].'","'.$data['teacher_id'].'","'.$data['section'].'","'.$data['permanent_address'].'")';
+            (`user_id`,`gender`,`dob`,`class_id`, `is_class_teacher`, `joining_date`, `mobile_number`, `subject_id`, `teacher_id`, `section`, `permanent_address`,`profile_image`) 
+            VALUES ( "'. $last_id . '" ,"'. $data['gender'] . '", "'. $data['dob'] . '", "'. $data['class_id'] .'" , "'. $data['is_class_teacher'] .'" ,"'.$data['joining_date'].'","'.$data['mobile_number'].'","'.$data['subject_id'].'","'.$data['teacher_id'].'","'.$data['section'].'","'.$data['permanent_address'].'","'.$profileImageName.'")';
             $res2 = $this->insert($qry2);
             return true;
         } else {
@@ -42,15 +50,20 @@ class Teacher extends MySQLCN {
     }
 
     function teacherInfoUpdate($data,$files) {
-        $result = $this->checkTeacherSignUp($data);
-            if($result) {
-                return false;
-            }
          if($data['is_class_teacher'] == '1') {
             $role = '2';
          } else {
             $role = '3';
-         }  
+         }
+
+        if ($_FILES['profile_image']['error'] == '0') {
+          $profileImageName = time() . strtolower(basename($_FILES['profile_image']['name']));
+          $target = PROFILE_PIC_IMAGE_ROOT . $profileImageName;
+          move_uploaded_file($_FILES['profile_image']['tmp_name'], $target);
+        } else {
+          $profileImageName = $_POST['profile_image_name'];
+        }
+
         $qry = "UPDATE `users` SET
               `first_name` = '{$data['first_name']}', 
               `email_address` = '{$data['email_address']}', 
@@ -61,14 +74,15 @@ class Teacher extends MySQLCN {
             $qry2 = "UPDATE `teachers` SET
               `gender` = '{$data['gender']}', 
               `dob` = '{$data['dob']}', 
-              `class` = '{$data['class']}',
+              `class_id` = '{$data['class_id']}',
               `is_class_teacher` = '{$data['is_class_teacher']}',
               `joining_date` = '{$data['joining_date']}',
               `mobile_number` = '{$data['mobile_number']}',
               `subject_id` = '{$data['subject_id']}',
               `teacher_id` = '{$data['teacher_id']}',
               `section` = '{$data['section']}',
-              `permanent_address` = '{$data['permanent_address']}'
+              `permanent_address` = '{$data['permanent_address']}',
+              `profile_image` = '{$profileImageName}'
                WHERE user_id = '{$data['userId']}'";
             $res2 = $this->updateData($qry2);
             return true;

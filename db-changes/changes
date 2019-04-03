@@ -32,4 +32,28 @@ CREATE TABLE `user_roles` (
           `user_role` varchar(100) DEFAULT NULL,                 
           `createdDate` timestamp NULL DEFAULT NULL,             
           PRIMARY KEY (`id`)                                     
-        )                     
+        )
+
+CREATE TABLE `subjects` (                                                                  
+            `id` int(11) NOT NULL AUTO_INCREMENT,                                                    
+            `subject_name` varchar(230) DEFAULT NULL,                                                
+            `createdDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  
+            PRIMARY KEY (`id`)                                                                       
+          )
+
+CREATE TABLE `classes_name` (                                                                   
+           `id` int(11) NOT NULL AUTO_INCREMENT,                                                    
+           `class_name` varchar(220) DEFAULT NULL,                                                  
+           `createdDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  
+           PRIMARY KEY (`id`)                                                                       
+         )
+
+CREATE TABLE `sections` (                                                                  
+            `id` int(11) NOT NULL AUTO_INCREMENT,                                                    
+            `class_id` int(11) DEFAULT NULL,                                                         
+            `section_name` varchar(220) DEFAULT NULL,                                                
+            `createdDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  
+            PRIMARY KEY (`id`)                                                                       
+          )
+
+Alter Teacher table class to class_id, profile_pic text                                                          

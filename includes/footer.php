@@ -14,5 +14,7 @@
     <script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/app.js"></script>
 
 </body>
-
+<script type="text/javascript">
+    $(".select2").select2();
+</script>
 </html>

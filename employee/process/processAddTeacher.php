@@ -2,6 +2,7 @@
 require_once '../config/config.php';
 require_once '../class/dbclass.php';
 require_once '../class/Teacher.php';
+require_once '../class/CommonFunction.php';
 $teacher = new Teacher();
 $data = $_REQUEST;
 if ($data['type'] == 'Add') {
@@ -22,6 +23,11 @@ if ($data['type'] == 'Add') {
         $_SESSION['Msg'] = "Teacher Email address already exist!";
         header('Location: ' . BASE_ROOT.'add-teacher.php');
     }    
+} else if ($_POST['type'] == 'getSection' && $_POST['classID'] != NULL ){
+    $common_function = new CommonFunction();
+    $sectionData = $common_function->getSectionList($_POST['classID']);
+    echo json_encode($sectionData);
+    exit;
 } else {
     header("Location: ". BASE_ROOT);
 }

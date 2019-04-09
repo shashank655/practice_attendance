@@ -77,7 +77,7 @@ require_once 'includes/sidebar.php';
 											<label class="control-label">Email</label><i class="bar"></i>
 										</div>
 										<div class="form-group custom-mt-form-group">
-											<input type="password" name="password" />
+											<input type="password" id="password" name="password" />
 											<label class="control-label">Password</label><i class="bar"></i>
 										</div>
 										<div class="form-group custom-mt-form-group">
@@ -213,6 +213,50 @@ require_once 'includes/sidebar.php';
 </div>
 <?php require_once 'includes/footer.php'; ?>
 <script type="text/javascript">
+	$(function(){
+        $("#addTeacherForm").validate({
+            ignore: "input[type='text']:hidden",
+            rules:{
+                first_name:{
+                    required:true
+                },                
+                last_name:{
+                    required:true
+                },
+                email_address:{
+                    required:true,
+                    email:true
+                },
+                joining_date:{
+                    required:true
+                },
+                password:{
+                    required:true,
+                    minlength: 4
+                },
+                repeat_password:{
+                    required:true,
+                    equalTo:"#password"
+                },
+                mobile_number:{
+                    required:true
+                },
+                dob:{
+                    required:true
+                },
+                teacher_id:{
+                    required:true
+                },
+                permanent_address:{
+                    required:true
+                },
+                profile_image:{
+                	required:true
+                }
+            }
+        });
+    });
+
 	function getSections(classID){  
         $.ajax({
             type: "POST",

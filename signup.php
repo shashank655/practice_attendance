@@ -49,7 +49,7 @@
 								<input type="text" placeholder="First Name"/ name="first_name">
                                 <i class="bar"></i>
 							</div>
-			<div class="form-group custom-mt-form-group">
+			                <div class="form-group custom-mt-form-group">
 								<input type="text" placeholder="Last Name"/ name="last_name">
                                 <i class="bar"></i>
 							</div>
@@ -59,12 +59,12 @@
                                 <i class="bar"></i>
 							</div>
                            <div class="form-group custom-mt-form-group">
-								<input type="password"  placeholder="Password"/ name="password">
+								<input type="password" id="password" placeholder="Password"/ name="password">
 								<!-- <label class="control-label">Password</label> -->
                                 <i class="bar"></i>
 							</div>
                              <div class="form-group custom-mt-form-group">
-								<input type="password"  placeholder="Repeat Password"/ name="repeat_password">
+								<input type="password" placeholder="Repeat Password"/ name="repeat_password">
 								<!-- <label class="control-label">Repeat Password</label> -->
                                 <i class="bar"></i>
 							</div>
@@ -86,6 +86,33 @@
     <script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/jquery.slimscroll.js"></script>
     <script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/app.js"></script>
+    <script src="<?php echo BASE_ROOT ?>assets/js/jquery.validate.js"></script>
 </body>
-
 </html>
+<script type="text/javascript">
+    $(function(){
+        $("#signupform").validate({
+            ignore: "input[type='text']:hidden",
+            rules:{
+                first_name:{
+                    required:true
+                },                
+                last_name:{
+                    required:true
+                },
+                email_address:{
+                    required:true,
+                    email:true
+                },
+                password:{
+                    required:true,
+                    minlength: 4
+                },
+                repeat_password:{
+                    required:true,
+                    equalTo:"#password"
+                }
+            }
+        });
+    });    
+</script>

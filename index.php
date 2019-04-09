@@ -73,6 +73,22 @@
     <script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/jquery.slimscroll.js"></script>
     <script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/app.js"></script>
+    <script src="<?php echo BASE_ROOT ?>assets/js/jquery.validate.js"></script>
 </body>
-
 </html>
+<script type="text/javascript">
+    $(function(){
+        $("#loginform").validate({
+            ignore: "input[type='text']:hidden",
+            rules:{
+                email_address:{
+                    required:true,
+                    email:true
+                },                
+                password:{
+                    required:true
+                }
+            }
+        });
+    });    
+</script>

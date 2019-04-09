@@ -12,6 +12,7 @@
     <script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/jquery.fullcalendar.js"></script>
     <script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/chart.js"></script>
     <script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/app.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/jquery.validate.js"></script>
 
 </body>
 <script type="text/javascript">

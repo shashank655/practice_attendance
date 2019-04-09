@@ -19,4 +19,16 @@ class CommonFunction extends MySQLCN {
         $fetch_section = $this->select($fetchSection);
         return $fetch_section;
     }
+
+    function getCountStudent() {
+        $fetch = "SELECT count(*) FROM `students` ";
+        $fetch_country = $this->select($fetch);
+        return $fetch_country;
+    }
+
+    function getCountTeacher() {
+        $fetch = "SELECT count(*) FROM `teachers` ";
+        $fetch_country = $this->select($fetch);
+        return $fetch_country;
+    }
 }    

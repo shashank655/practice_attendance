@@ -1,4 +1,11 @@
-<?php
+<?php 
+require_once 'employee/class/dbclass.php'; 
+require_once 'employee/config/config.php'; 
+require_once 'employee/class/CommonFunction.php'; 
+$common_function=new CommonFunction(); 
+$totalStudent=$common_function->getCountStudent(); 
+$totalTeacher = $common_function->getCountTeacher();
+
 require_once 'includes/header.php';
 require_once 'includes/sidebar.php';
 ?>
@@ -9,7 +16,7 @@ require_once 'includes/sidebar.php';
                         <div class="dash-widget dash-widget5">
                             <span class="dash-widget-icon bg-primary"><i class="fa fa-users" aria-hidden="true"></i></span>
                             <div class="dash-widget-info">
-                                <h3>60,000</h3>
+                                <h3><?php echo $totalStudent[0][0]; ?></h3>
                                 <span>Students</span>
                             </div>
                         </div>
@@ -18,7 +25,7 @@ require_once 'includes/sidebar.php';
                         <div class="dash-widget dash-widget5">
                             <span class="dash-widget-icon bg-info"><i class="fa fa-user" aria-hidden="true"></i></span>
                             <div class="dash-widget-info">
-                                <h3>12,000</h3>
+                                <h3><?php echo $totalTeacher[0][0]; ?></h3>
                                 <span>Teachers</span>
                             </div>
                         </div>
@@ -27,7 +34,7 @@ require_once 'includes/sidebar.php';
                         <div class="dash-widget dash-widget5">
                             <span class="dash-widget-icon bg-warning"><i class="fa fa-user-plus" aria-hidden="true"></i></span>
                             <div class="dash-widget-info">
-                                <h3>20,000</h3>
+                                <h3><?php echo $totalStudent[0][0]; ?></h3>
                                 <span>Parents</span>
                             </div>
                         </div>

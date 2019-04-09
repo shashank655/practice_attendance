@@ -7,7 +7,7 @@ $data = $_REQUEST;
 if ($data['type'] == 'login') {
     $result = $user->userLogin($data);
     if ($result) {
-        header('Location: ' . BASE_ROOT.'admin');
+        header('Location: ' . BASE_ROOT.'dashboard.php');
     } else {
         $_SESSION['Msg'] = "Inavalid Email Or Password";
         header('Location: ' . BASE_ROOT);

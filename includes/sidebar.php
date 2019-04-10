@@ -9,18 +9,16 @@
 						<li class="submenu">
                             <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Teachers</span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">
-                                <li><a href="all-teachers.html">All Teachers</a></li>
+                                <li><a href="all-teachers.php">All Teachers</a></li>
                                 <li><a href="add-teacher.php">Add Teacher</a></li>
-                                <li><a href="edit-teacher.html">Edit Teacher</a></li>
 								<li><a href="about-teacher.html">About Teacher</a></li>
                             </ul>
                         </li>
                         <li class="submenu">
                             <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Students</span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">
-                                <li><a href="all-students.html">All Students</a></li>
+                                <li><a href="all-students.php">All Students</a></li>
                                 <li><a class="" href="add-student.php">Add Student</a></li>
-                                <li><a href="edit-student.html">Edit Student</a></li>
                                 <li><a href="about-student.html">About Student</a></li>
                             </ul>
                         </li>

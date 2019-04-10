@@ -95,13 +95,10 @@ require_once 'includes/sidebar.php';
 											<label class="control-label">Birth Date</label><i class="bar"></i>
 										</div>
 										<div class="form-group custom-mt-form-group">
-											<select name="class_id" id="class_id" onclick="getSections(this.value);">
-												<?php for ($i=0 ; $i < count($resultClasses); $i++) : ?>
-												<option <?php if (isset($result[0][ 'class_id'])) { if ($result[0][ 'class_id']==$resultClasses[$i][ 'id']) { echo 'selected'; } } ?>value="
-													<?php echo $resultSubjects[$i][ 'id']; ?>">
-													<?php echo $resultClasses[$i][ 'class_name']; ?>
-												</option>
-												<?php endfor; ?>
+											<select id="class_id" name="class_id" onclick="getSections(this.value);">
+											<?php for ($i=0 ; $i < count($resultClasses); $i++) : ?>
+												<option <?php if (isset($result[0]['class_id'])) { if ($result[0]['class_id']==$resultClasses[$i]['id']) { echo 'selected'; } } ?> value="<?php echo $resultClasses[$i][ 'id']; ?>"><?php echo $resultClasses[$i][ 'class_name']; ?></option>
+											<?php endfor; ?>	
 											</select>
 											<label class="control-label">Class Name</label><i class="bar"></i>
 										</div>
@@ -276,7 +273,7 @@ require_once 'includes/sidebar.php';
                            option+=" >"+data[i].section_name+"</option>"
                         $("#section_id").append(option);
                     }                    
-                }else{alert("d");
+                }else{
                     $("#section_id").html("<option value=' ' selected >Section Name</option>");
                 }
                 $("#section_id").select2();

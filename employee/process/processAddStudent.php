@@ -9,18 +9,22 @@ if ($data['type'] == 'Add') {
     $result = $student->StudentSignUp($data,$_FILES);
     if ($result) {
         $_SESSION['Msg'] = "Student added successfully!";
+        $_SESSION['success'] = true;
         header('Location: ' . BASE_ROOT.'add-student.php');
     } else {
         $_SESSION['Msg'] = "Student Email address already exist!";
+        $_SESSION['success'] = false;
         header('Location: ' . BASE_ROOT.'add-student.php');
     } 
 } else if ($_POST['type'] == 'Update' && $_POST['studentId'] != NULL) {
     $result = $student->StudentInfoUpdate($_POST,$_FILES);
     if ($result) {
         $_SESSION['Msg'] = "Student information updated successfully!";
+        $_SESSION['success'] = true;
         header('Location: ' . BASE_ROOT.'add-student.php');
     } else {
         $_SESSION['Msg'] = "Student Email address already exist!";
+        $_SESSION['success'] = false;
         header('Location: ' . BASE_ROOT.'add-student.php');
     }    
 } else if ($_POST['type'] == 'getSection' && $_POST['classID'] != NULL ){

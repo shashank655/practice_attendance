@@ -44,12 +44,11 @@ if (!isset($_SESSION['userId'])) {
                     <a href="#" class="dropdown-toggle nav-link user-link" data-toggle="dropdown">
                         <span class="user-img"><img class="rounded-circle" src="<?php echo BASE_ROOT ?>assets/img/user.jpg" width="40" alt="Admin">
 							<span class="status online"></span></span>
-                        <span>Admin</span>
+                        <span><?php echo $_SESSION['name']; ?></span>
                     </a>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" href="profile.html">My Profile</a>
-						<a class="dropdown-item" href="edit-profile.html">Edit Profile</a>
-						<a class="dropdown-item" href="settings.html">Settings</a>
+						<a class="dropdown-item" href="admin-profile.php">My Profile</a>
+						<a class="dropdown-item" href="edit-admin-profile.php">Edit Profile</a>
 						<a class="dropdown-item" href="employee/process/processUser.php?type=logout">Logout</a>
 					</div>
                 </li>

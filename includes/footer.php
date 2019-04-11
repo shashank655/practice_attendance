@@ -2,6 +2,8 @@
      <script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/popper.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/dataTables.bootstrap4.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/jquery.slimscroll.js"></script>
     <script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/select2.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/moment.min.js"></script>

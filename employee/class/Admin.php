@@ -1,17 +1,10 @@
 <?php
-class Teacher extends MySQLCN {
+class Admin extends MySQLCN {
 
-    function userLogin($data) {
-        $qry = "SELECT * FROM users WHERE email_address = '{$data['email_address']}' AND password = md5('{$data['password']}')";
-        $result = $this->select($qry);
-        if ($result != NULL) {
-            $_SESSION['userId'] = $result[0]['id'];
-            $_SESSION['name'] = $result[0]['first_name'].' '.$result[0]['last_name'];
-            $_SESSION['email_address'] = $result[0]['email_address'];
-            return true;
-        } else {
-            return false;
-        }
+    function getAdminInfo($userId) {
+        $qry = "SELECT * FROM users WHERE id = '{$userId}' AND user_role = '1' ";
+        $fetch_data = $this->select($qry);
+        return $fetch_data;
     }
 
     function teacherSignUp($data,$files) {
@@ -41,7 +34,7 @@ class Teacher extends MySQLCN {
 
             $qry2 = 'INSERT INTO `teachers` 
             (`user_id`,`gender`,`dob`,`class_id`, `is_class_teacher`, `joining_date`, `mobile_number`, `subject_id`, `teacher_id`, `section`, `permanent_address`,`profile_image`) 
-            VALUES ( "'. $last_id . '" ,"'. $data['gender'] . '", "'. $data['dob'] . '", "'. $data['class_id'] .'" , "'. $data['is_class_teacher'] .'" ,"'.$data['joining_date'].'","'.$data['mobile_number'].'","'.trim($data['subject_id']).'","'.$data['teacher_id'].'","'.$data['section'].'","'.$data['permanent_address'].'","'.$profileImageName.'")';
+            VALUES ( "'. $last_id . '" ,"'. $data['gender'] . '", "'. $data['dob'] . '", "'. $data['class_id'] .'" , "'. $data['is_class_teacher'] .'" ,"'.$data['joining_date'].'","'.$data['mobile_number'].'","'.$data['subject_id'].'","'.$data['teacher_id'].'","'.$data['section'].'","'.$data['permanent_address'].'","'.$profileImageName.'")';
             $res2 = $this->insert($qry2);
             return true;
         } else {
@@ -71,7 +64,6 @@ class Teacher extends MySQLCN {
                WHERE id = '{$data['userId']}'";
         $res = $this->updateData($qry);
         if ($res) {
-          $subject_id = trim($data['subject_id']);
             $qry2 = "UPDATE `teachers` SET
               `gender` = '{$data['gender']}', 
               `dob` = '{$data['dob']}', 
@@ -79,7 +71,7 @@ class Teacher extends MySQLCN {
               `is_class_teacher` = '{$data['is_class_teacher']}',
               `joining_date` = '{$data['joining_date']}',
               `mobile_number` = '{$data['mobile_number']}',
-              `subject_id` = '{$subject_id}',
+              `subject_id` = '{$data['subject_id']}',
               `teacher_id` = '{$data['teacher_id']}',
               `section` = '{$data['section']}',
               `permanent_address` = '{$data['permanent_address']}',

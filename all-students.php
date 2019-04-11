@@ -33,8 +33,8 @@ require_once 'includes/sidebar.php';
                     <div class="col-sm-8 col-9 text-right m-b-20">
                         <a href="add-student.php" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Student</a>
                         <div class="view-icons">
-                            <a href="all-students.html" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
-                            <a href="students-list.html" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
+                            <a href="all-students.php" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+                            <a href="students-list.php" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
                         </div>
                     </div>
                 </div>
@@ -95,11 +95,9 @@ require_once 'includes/sidebar.php';
                                 </div>
                             </div>
                             <h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="profile.html"><?php echo $value['first_name'].' '.$value['last_name']; ?></a></h4>
-                            <div class="small text-muted"><?php echo $value['subject_name']; ?></div>
+                            <div class="small text-muted"><?php echo $value['gender']; ?></div>
                             <div class="small text-muted"><?php 
-                            if($value['is_class_teacher']) {
-                                echo 'Class Teacher';
-                            }
+                                echo $value['admission_no'];
                             ?></div>
                         </div>
                     </div>

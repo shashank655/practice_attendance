@@ -34,7 +34,7 @@ require_once 'includes/sidebar.php';
                         <a href="add-teacher.php" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Teacher</a>
                         <div class="view-icons">
                             <a href="all-teachers.php" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
-                            <a href="teachers-list.html" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
+                            <a href="teachers-list.php" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
                         </div>
                     </div>
                 </div>

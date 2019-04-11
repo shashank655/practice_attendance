@@ -45,8 +45,16 @@ require_once 'includes/sidebar.php';
 							</div>
 						</div>
 						<div class="card-body">
-							<?php if (isset($_SESSION[ 'Msg']) && $_SESSION[ 'Msg'] !='' ) { ?>
-							<div class="alert alert-danger alert-dismissible fade show" role="alert"> <strong>Error!</strong> 
+							<?php if (isset($_SESSION[ 'Msg']) && $_SESSION[ 'Msg'] !='' ) { 
+								if($_SESSION['success']) {
+									$alertClass = 'success';
+									$alertValue = 'Success';
+								} else {
+									$alertClass = 'danger';
+									$alertValue = 'Error';
+								}
+							?>
+							<div class="alert alert-<?php echo $alertClass; ?> alert-dismissible fade show" role="alert"> <strong><?php echo $alertValue; ?>!</strong> 
 								<?php echo $_SESSION[ 'Msg']; ?>
 								<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span>
 								</button>
@@ -95,17 +103,21 @@ require_once 'includes/sidebar.php';
 											<label class="control-label">Birth Date</label><i class="bar"></i>
 										</div>
 										<div class="form-group custom-mt-form-group">
-											<select id="class_id" name="class_id" onclick="getSections(this.value);">
+											<input class="" type="text" name="class_id" value="<?php
+                                        				if (isset($result[0]['class_id']))
+                                            			echo htmlspecialchars($result[0]['class_id']);
+                                        			?>">
+											<!-- <select id="class_id" name="class_id" onclick="getSections(this.value);">
 											<?php for ($i=0 ; $i < count($resultClasses); $i++) : ?>
 												<option <?php if (isset($result[0]['class_id'])) { if ($result[0]['class_id']==$resultClasses[$i]['id']) { echo 'selected'; } } ?> value="<?php echo $resultClasses[$i][ 'id']; ?>"><?php echo $resultClasses[$i][ 'class_name']; ?></option>
 											<?php endfor; ?>	
-											</select>
+											</select> -->
 											<label class="control-label">Class Name</label><i class="bar"></i>
 										</div>
-										<div class="form-group custom-mt-form-group">
+										<!-- <div class="form-group custom-mt-form-group">
 											<select name="section_id" id="section_id">
 											</select>
-										</div>
+										</div> -->
 										<div class="form-group custom-mt-form-group">
 											<select class="select2" id="is_class_teacher" name="is_class_teacher">
 												<option value="1">Yes</option>
@@ -159,9 +171,9 @@ require_once 'includes/sidebar.php';
 											<label class="control-label">ID</label><i class="bar"></i>
 										</div>
 										<div class="form-group custom-mt-form-group">
-											<input type="text" name="section" value="<?php
-                                        		if (isset($result[0]['section']))
-                                            	echo htmlspecialchars($result[0]['section']);
+											<input type="text" name="section_id" value="<?php
+                                        		if (isset($result[0]['section_id']))
+                                            	echo htmlspecialchars($result[0]['section_id']);
                                         		?>" />
 											<label class="control-label">Section</label><i class="bar"></i>
 										</div>

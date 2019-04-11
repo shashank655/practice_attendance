@@ -8,6 +8,7 @@ class User extends MySQLCN {
             $_SESSION['userId'] = $result[0]['id'];
             $_SESSION['name'] = $result[0]['first_name'].' '.$result[0]['last_name'];
             $_SESSION['email_address'] = $result[0]['email_address'];
+            $_SESSION['user_role'] = $result[0]['user_role'];
             return true;
         } else {
             return false;

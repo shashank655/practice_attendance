@@ -5,6 +5,7 @@ require_once 'employee/class/CommonFunction.php';
 $common_function=new CommonFunction(); 
 $totalStudent=$common_function->getCountStudent(); 
 $totalTeacher = $common_function->getCountTeacher();
+$resultAllStudents=$common_function->getAllStudents();
 
 require_once 'includes/header.php';
 require_once 'includes/sidebar.php';
@@ -245,26 +246,27 @@ require_once 'includes/sidebar.php';
 												<tr>
 													<th style="min-width:50px;">Name </th>
 													<th style="min-width:74px;">Student ID</th>
-													<th style="min-width:50px;">Class</th>
-													<th style="min-width:50px;">Section</th>
-													<th style="min-width:98px;">Mobile</th>
-													<th style="min-width:90px;">Date of Birth</th>
+													<th style="min-width:50px;">Fathers Name</th>
+													<th style="min-width:50px;">Address</th>
+													<th style="min-width:98px;">Date of Birth</th>
+													<th style="min-width:90px;">Mobile</th>
 													<th class="text-right">Action</th>
 												</tr>
 											</thead>
 											<tbody>
+												<?php foreach ($resultAllStudents as $key => $value) { ?>
 												<tr>
 													<td>
-														<h2><a href="profile.html" class="avatar text-white">P</a></h2>
-														<h2><a href="profile.html">Parker <span></span></a></h2>
+														<h2><a href="student-profile.php?studentId=<?php echo $value[0]; ?>" class="avatar text-white"><?php echo substr($value['first_name'], 0, 1) ?></a></h2>
+														<h2><a href="student-profile.php?studentId=<?php echo $value[0]; ?>"><?php echo $value['first_name'].' '.$value['last_name']; ?> <span></span></a></h2>
 													</td>
-													<td>ST-0d001</td>
-													<td>1</td>
-													<td>A</td>
-													<td>973-584-58700</td>
-													<td>5th June</td>
+													<td><?php echo $value['student_id'];?></td>
+			                                        <td><?php echo $value['fathers_name'];?></td>
+			                                        <td><?php echo $value['permanent_address'];?></td>
+													<td><?php echo $value['dob'];?></td>
+			                                        <td><?php echo $value['mobile_number'];?></td>
 													<td class="text-right">
-														<a href="edit-student.html" class="btn btn-primary btn-sm mb-1">
+														<a href="add-student.php?studentId=<?php echo $value[0]; ?>" class="btn btn-primary btn-sm mb-1">
 															<i class="fa fa-pencil" aria-hidden="true"></i>
 														</a>
 														<button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">
@@ -272,120 +274,7 @@ require_once 'includes/sidebar.php';
 														</button>
 													</td>
 												</tr>
-												<tr>
-													<td>
-														<h2><a href="profile.html" class="avatar text-white">S</a></h2>
-														<h2><a href="profile.html">Smith <span></span></a></h2>
-													</td>
-													<td>ST-0d002</td>
-													<td>2</td>
-													<td>B</td>
-													<td>973-584-58700</td>
-													<td>6th April</td>
-													<td class="text-right">
-														<a href="edit-student.html" class="btn btn-primary btn-sm mb-1">
-															<i class="fa fa-pencil" aria-hidden="true"></i>
-														</a>
-														<button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">
-														<i class="fa fa-trash" aria-hidden="true"></i>
-														</button>
-													</td>
-												</tr>
-											   <tr>
-													<td>
-														<h2><a href="profile.html" class="avatar text-white">H</a></h2>
-														<h2><a href="profile.html">Hensley<span></span></a></h2>
-													</td>
-													<td>ST-0d003</td>
-													<td>1</td>
-													<td>A</td>
-													<td>973-584-58700</td>
-													<td>5th Jan</td>
-													<td class="text-right">
-														<a href="edit-student.html" class="btn btn-primary btn-sm mb-1">
-															<i class="fa fa-pencil" aria-hidden="true"></i>
-														</a>
-														<button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">
-														<i class="fa fa-trash" aria-hidden="true"></i>
-														</button>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2><a href="profile.html" class="avatar text-white">F</a></h2>
-														<h2><a href="profile.html">Friesen<span></span></a></h2>
-													</td>
-													<td>ST-0d004</td>
-													<td>1</td>
-													<td>A</td>
-													<td>973-584-58700</td>
-													<td>2nd June</td>
-													<td class="text-right">
-														<a href="edit-student.html" class="btn btn-primary btn-sm mb-1">
-															<i class="fa fa-pencil" aria-hidden="true"></i>
-														</a>
-														<button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">
-														<i class="fa fa-trash" aria-hidden="true"></i>
-														</button>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2><a href="profile.html" class="avatar text-white">J</a></h2>
-														<h2><a href="profile.html">Jackson<span></span></a></h2>
-													</td>
-													<td>ST-0d005</td>
-													<td>1</td>
-													<td>A</td>
-													<td>973-584-58700</td>
-													<td>7th July</td>
-													<td class="text-right">
-														<a href="edit-student.html" class="btn btn-primary btn-sm mb-1">
-															<i class="fa fa-pencil" aria-hidden="true"></i>
-														</a>
-														<button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">
-														<i class="fa fa-trash" aria-hidden="true"></i>
-														</button>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2><a href="profile.html" class="avatar text-white">M</a></h2>
-														<h2><a href="profile.html">Mason<span></span></a></h2>
-													</td>
-													<td>ST-0d006</td>
-													<td>1</td>
-													<td>A</td>
-													<td>973-584-58700</td>
-													<td>5th June</td>
-													<td class="text-right">
-														<a href="edit-student.html" class="btn btn-primary btn-sm mb-1">
-															<i class="fa fa-pencil" aria-hidden="true"></i>
-														</a>
-														<button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">
-														<i class="fa fa-trash" aria-hidden="true"></i>
-														</button>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2><a href="profile.html" class="avatar text-white">G</a></h2>
-														<h2><a href="profile.html">Garrett <span></span></a></h2>
-													</td>
-													<td>ST-0d007</td>
-													<td>1</td>
-													<td>A</td>
-													<td>973-584-58700</td>
-													<td>5th April</td>
-													<td class="text-right">
-														<a href="edit-student.html" class="btn btn-primary btn-sm mb-1">
-															<i class="fa fa-pencil" aria-hidden="true"></i>
-														</a>
-														<button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">
-														<i class="fa fa-trash" aria-hidden="true"></i>
-														</button>
-													</td>
-												</tr>
+												<?php } ?>
 											</tbody>
 										</table>
 									</div>

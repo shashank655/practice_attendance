@@ -9,18 +9,22 @@ if ($data['type'] == 'Add') {
     $result = $teacher->teacherSignUp($data,$_FILES);
     if ($result) {
         $_SESSION['Msg'] = "Teacher added successfully!";
+        $_SESSION['success'] = true;
         header('Location: ' . BASE_ROOT.'add-teacher.php');
     } else {
         $_SESSION['Msg'] = "Teacher Email address already exist!";
+        $_SESSION['success'] = false;
         header('Location: ' . BASE_ROOT.'add-teacher.php');
     } 
 } else if ($_POST['type'] == 'Update' && $_POST['userId'] != NULL) {
     $result = $teacher->teacherInfoUpdate($_POST,$_FILES);
     if ($result) {
         $_SESSION['Msg'] = "Teacher information updated successfully!";
+        $_SESSION['success'] = true;
         header('Location: ' . BASE_ROOT.'add-teacher.php');
     } else {
         $_SESSION['Msg'] = "Teacher Email address already exist!";
+        $_SESSION['success'] = false;
         header('Location: ' . BASE_ROOT.'add-teacher.php');
     }    
 } else if ($_POST['type'] == 'getSection' && $_POST['classID'] != NULL ){

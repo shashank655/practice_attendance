@@ -71,22 +71,22 @@ require_once 'includes/sidebar.php';
 								<div class="row">
 									<div class="col-lg-6 col-md-6 col-sm-6 col-12">
 										<div class="form-group custom-mt-form-group">
-											<input type="text" name="first_name" value="<?php
+											<input type="text" placeholder="First Name" name="first_name" value="<?php
                                         		if (isset($result[0]['first_name']))
                                             	echo htmlspecialchars($result[0]['first_name']);
                                         		?>" />
-											<label class="control-label">Firstname</label><i class="bar"></i>
+											<i class="bar"></i>
 										</div>
 										<div class="form-group custom-mt-form-group">
-											<input type="text" name="email_address" value="<?php
+											<input type="text" placeholder="Email" name="email_address" value="<?php
                                         		if (isset($result[0]['email_address']))
                                             	echo htmlspecialchars($result[0]['email_address']);
                                         		?>" />
-											<label class="control-label">Email</label><i class="bar"></i>
+											<i class="bar"></i>
 										</div>
 										<div class="form-group custom-mt-form-group">
-											<input type="password" id="password" name="password" />
-											<label class="control-label">Password</label><i class="bar"></i>
+											<input placeholder="Password" type="password" id="password" name="password" />
+											<i class="bar"></i>
 										</div>
 										<div class="form-group custom-mt-form-group">
 											<select id="gender" name="gender">
@@ -96,14 +96,14 @@ require_once 'includes/sidebar.php';
 											<label class="control-label">Gender</label><i class="bar"></i>
 										</div>
 										<div class="form-group custom-mt-form-group">
-											<input class="datetimepicker" type="text" name="dob" value="<?php
+											<input placeholder="Birth Date" class="datetimepicker" type="text" name="dob" value="<?php
                                         		if (isset($result[0]['dob']))
                                             	echo htmlspecialchars($result[0]['dob']);
                                         		?>">
-											<label class="control-label">Birth Date</label><i class="bar"></i>
+											<i class="bar"></i>
 										</div>
 										<div class="form-group custom-mt-form-group">
-											<input class="" type="text" name="class_id" value="<?php
+											<input placeholder="Class Name" class="" type="text" name="class_id" value="<?php
                                         				if (isset($result[0]['class_id']))
                                             			echo htmlspecialchars($result[0]['class_id']);
                                         			?>">
@@ -112,7 +112,7 @@ require_once 'includes/sidebar.php';
 												<option <?php if (isset($result[0]['class_id'])) { if ($result[0]['class_id']==$resultClasses[$i]['id']) { echo 'selected'; } } ?> value="<?php echo $resultClasses[$i][ 'id']; ?>"><?php echo $resultClasses[$i][ 'class_name']; ?></option>
 											<?php endfor; ?>	
 											</select> -->
-											<label class="control-label">Class Name</label><i class="bar"></i>
+											<i class="bar"></i>
 										</div>
 										<!-- <div class="form-group custom-mt-form-group">
 											<select name="section_id" id="section_id">
@@ -128,29 +128,29 @@ require_once 'includes/sidebar.php';
 									</div>
 									<div class="col-lg-6 col-md-6 col-sm-6 col-12">
 										<div class="form-group custom-mt-form-group">
-											<input type="text" name="last_name" value="<?php
+											<input placeholder="Lastname" type="text" name="last_name" value="<?php
                                         		if (isset($result[0]['last_name']))
                                             	echo htmlspecialchars($result[0]['last_name']);
                                         		?>">
-											<label class="control-label">Lastname</label><i class="bar"></i>
+											<i class="bar"></i>
 										</div>
 										<div class="form-group custom-mt-form-group">
-											<input class="form-control floating datetimepicker" type="text" name="joining_date" value="<?php
+											<input placeholder="Joining Date" class="form-control floating datetimepicker" type="text" name="joining_date" value="<?php
                                         		if (isset($result[0]['joining_date']))
                                             	echo htmlspecialchars($result[0]['joining_date']);
                                         		?>">
-											<label class="control-label">Joining Date</label><i class="bar"></i>
+											<i class="bar"></i>
 										</div>
 										<div class="form-group custom-mt-form-group">
-											<input type="password" name="repeat_password" />
-											<label class="control-label">Confirm Password</label><i class="bar"></i>
+											<input placeholder="Confirm Password" type="password" name="repeat_password" />
+											<i class="bar"></i>
 										</div>
 										<div class="form-group custom-mt-form-group">
-											<input type="number" name="mobile_number" value="<?php
+											<input placeholder="Mobile number" type="number" name="mobile_number" value="<?php
                                         		if (isset($result[0]['mobile_number']))
                                             	echo htmlspecialchars($result[0]['mobile_number']);
                                         		?>" />
-											<label class="control-label">Mobile number</label><i class="bar"></i>
+											<i class="bar"></i>
 										</div>
 										<div class="form-group custom-mt-form-group">
 											<select class="select2" name="subject_id" id="subject_id">
@@ -164,23 +164,23 @@ require_once 'includes/sidebar.php';
 											<label class="control-label">Subject</label><i class="bar"></i>
 										</div>
 										<div class="form-group custom-mt-form-group">
-											<input type="text" name="teacher_id" value="<?php
+											<input placeholder="ID" type="text" name="teacher_id" value="<?php
                                         		if (isset($result[0]['teacher_id']))
                                             	echo htmlspecialchars($result[0]['teacher_id']);
                                         		?>" />
-											<label class="control-label">ID</label><i class="bar"></i>
+											<i class="bar"></i>
 										</div>
 										<div class="form-group custom-mt-form-group">
-											<input type="text" name="section_id" value="<?php
+											<input placeholder="Section" type="text" name="section_id" value="<?php
                                         		if (isset($result[0]['section_id']))
                                             	echo htmlspecialchars($result[0]['section_id']);
                                         		?>" />
-											<label class="control-label">Section</label><i class="bar"></i>
+											<i class="bar"></i>
 										</div>
 									</div>
 									<div class="col-lg-12 col-md-12 col-sm-12 col-12">
 										<div class="form-group">
-											<textarea id="message" class="form__field" placeholder="Premanent Address" rows="4" name="permanent_address"><?php if (isset($result[0][ 'permanent_address'])) echo $result[0][ 'permanent_address']; ?></textarea>
+											<textarea  id="message" class="form__field" placeholder="Premanent Address" rows="4" name="permanent_address"><?php if (isset($result[0][ 'permanent_address'])) echo $result[0][ 'permanent_address']; ?></textarea>
 											<label for="message" class="form-label">Premanent Address</label>
 										</div>
 									</div>

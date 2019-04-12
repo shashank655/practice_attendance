@@ -286,6 +286,10 @@ require_once 'includes/sidebar.php';
 			</div>
 		</div>
 	</div>
+<script type="text/javascript">
+	var totalStudent = <?php echo $totalStudent[0][0]?> ;
+	var totalTeacher = <?php echo $totalTeacher[0][0]?> ;
+</script>
 <?php 
 require_once 'includes/footer.php';
 ?>

@@ -1,18 +1,15 @@
     // Chart
-	
 
-
-
-  var colorsDash = ['#0b2035', '#4e87c0' ,'#086ed5'];
+var colorsDash = ['#0b2035', '#4e87c0' ,'#086ed5'];
 Morris.Donut({
   element: 'school-chart',
   colors: colorsDash,
   resize: true,
    labels: ['Series A', 'Series B','Series C'],
   data: [
-    {label: "Students", value: 60000},
-    {label: "Teachers", value: 12000},
-    {label: "Parents", value: 20000}
+    {label: "Students", value: totalStudent},
+    {label: "Teachers", value: totalTeacher},
+    {label: "Parents", value: totalStudent}
   ],
     xkey: 'label',
   ykeys: ['value'],

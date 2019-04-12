@@ -81,7 +81,7 @@ class Teacher extends MySQLCN {
               `mobile_number` = '{$data['mobile_number']}',
               `subject_id` = '{$subject_id}',
               `teacher_id` = '{$data['teacher_id']}',
-              `section` = '{$data['section']}',
+              `section_id` = '{$data['section_id']}',
               `permanent_address` = '{$data['permanent_address']}',
               `profile_image` = '{$profileImageName}'
                WHERE user_id = '{$data['userId']}'";

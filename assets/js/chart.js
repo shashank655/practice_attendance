@@ -3,7 +3,7 @@
 
 
 
-  var colorsDash = ['#8E37D7', '#01c0c8' ,'#6B8DD6'];
+  var colorsDash = ['#0b2035', '#4e87c0' ,'#086ed5'];
 Morris.Donut({
   element: 'school-chart',
   colors: colorsDash,
@@ -43,14 +43,14 @@ $(function() {
         xkey: 'month',
         ykeys: ['value'],
         labels: ['Value'],
-        lineColors: ['#8E37D7'],
+        lineColors: ['#36597c'],
         lineWidth: 4,
         pointSize: 6,
         pointFillColors:['rgba(255,255,255,0.9)'],
         pointStrokeColors: ['#01c0c8'],
         gridLineColor: 'rgba(0,0,0,.5)',
         resize: true,
-        gridTextColor: '#01c0c8',
+        gridTextColor: '#36597c',
         yLabelFormat: function(value) {
               var ranges = [
                 { divider: 1e6, suffix: 'M' },

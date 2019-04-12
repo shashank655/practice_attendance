@@ -192,7 +192,9 @@ require_once 'includes/sidebar.php';
 															<label class="control-label">Mobile number</label><i class="bar"></i>
 														</div>
 														<div class="form-group">
-															<textarea id="message" class="form__field" placeholder="Present Address" rows="4" name="present_address"></textarea><?php if (isset($result[0][ 'present_address'])) echo $result[0][ 'present_address']; ?>
+															<textarea id="message" class="form__field" placeholder="Present Address" rows="4" name="present_address">
+																<?php if (isset($result[0][ 'present_address'])) echo $result[0][ 'present_address']; ?>
+															</textarea>
 															<label for="message" class="form-label">Present Address</label>
 														</div>
 												</div>
@@ -220,8 +222,7 @@ require_once 'includes/sidebar.php';
 															<label class="control-label">Nationality</label><i class="bar"></i>
 														</div>
 														<div class="form-group">
-															<textarea id="message" class="form__field" placeholder="Premanent Address" rows="4" name="permanent_address"></textarea>
-															<?php if (isset($result[0][ 'permanent_address'])) echo $result[0][ 'permanent_address']; ?>
+															<textarea id="message" class="form__field" placeholder="Premanent Address" rows="4" name="permanent_address"><?php if (isset($result[0][ 'permanent_address'])) echo $result[0][ 'permanent_address']; ?></textarea>
 															<label for="message" class="form-label">Premanent Address</label>
 														</div>
 												</div>
@@ -319,9 +320,6 @@ require_once 'includes/sidebar.php';
                 	required:true
                 },
                 permanent_address:{
-                	required:true
-                },
-                student_profile_image:{
                 	required:true
                 }
             }

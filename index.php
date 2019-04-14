@@ -21,9 +21,17 @@
      <div class="main-wrapper">
         <div class="account-page">
             <div class="container">
-            <?php if (isset($_SESSION['Msg']) && $_SESSION['Msg'] != '') { ?>    
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>Error!</strong> <?php echo $_SESSION['Msg']; ?>
+            <?php if (isset($_SESSION[ 'Msg']) && $_SESSION[ 'Msg'] !='' ) { 
+                                if($_SESSION['success']) {
+                                    $alertClass = 'success';
+                                    $alertValue = 'Success';
+                                } else {
+                                    $alertClass = 'danger';
+                                    $alertValue = 'Error';
+                                }
+                            ?>    
+                <div class="alert alert-<?php echo $alertClass; ?> alert-dismissible fade show" role="alert">
+                    <strong><?php echo $alertValue; ?>!</strong> <?php echo $_SESSION['Msg']; ?>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -46,7 +54,7 @@
                         <form id="loginform" action="employee/process/processUser.php" method="post">
                         <input type="hidden" value="login" name="type" />
 							<div class="form-group custom-mt-form-group">
-								<input type="text" placeholder="Username or Email"/ name="email_address">
+								<input type="text" placeholder="Email Address"/ name="email_address">
                                 <i class="bar"></i>
 							</div>
                             <div class="form-group custom-mt-form-group">

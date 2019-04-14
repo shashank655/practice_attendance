@@ -44,8 +44,8 @@ require_once 'includes/sidebar.php';
                         <div class="dash-widget dash-widget5">
                             <span class="dash-widget-icon bg-success"><i class="fa fa-money" aria-hidden="true"></i></span>
                             <div class="dash-widget-info">
-                                <h3>$20,000</h3>
-                                <span>Total Earnings</span>
+                                <h3>1000</h3>
+                                <span>Total Absentees</span>
                             </div>
                         </div>
                     </div>

@@ -56,4 +56,6 @@ CREATE TABLE `sections` (
             PRIMARY KEY (`id`)                                                                       
           )
 
-Alter Teacher table class to class_id, profile_pic text                                                          
+Alter Teacher table class to class_id, profile_pic text   
+SELECT * FROM `holidays` holiday_name, holiday_date
+email_verification in users table                                                       

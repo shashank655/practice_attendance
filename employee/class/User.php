@@ -25,17 +25,32 @@ class User extends MySQLCN {
             VALUES ( "'. $data['first_name'] . '" , "'. $data['last_name'] . '" , "'. $data['email_address'] .'" , "'. md5($data['password']) .'" ,"1")';
         $res = $this->insert($qry);
         if ($res) {
+            //http://localhost/practice_attendance/employee/process/processUser.php?type=email_verfication&userId=123456
             return true;
         } else {
             return false;
         }
     }
 
+
     function checkUserSignUp($data) {
         $qry = "SELECT * FROM users WHERE email_address = '{$data['email_address']}'";
         $dbObj = new MySQLCN();
         $result = $dbObj->select($qry);
         if ($result != NULL) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function userEmailVerification($data) {
+        $userId = base64_decode($data['userId']);
+        $qry = "UPDATE `users` SET
+              `email_verification` = '1'
+               WHERE id = '{$userId}'";
+        $res = $this->updateData($qry);
+        if ($res) {
             return true;
         } else {
             return false;

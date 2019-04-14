@@ -18,7 +18,7 @@ require_once 'includes/sidebar.php';
 				  <div class="page-header">
 					<div class="row">
 						<div class="col-lg-7 col-md-12 col-sm-12 col-12">
-							<h5 class="text-uppercase">my Profile</h5>
+							<h5 class="text-uppercase">Teacher Profile</h5>
 						</div>
 						<div class="col-lg-5 col-md-12 col-sm-12 col-12">
 							<ul class="list-inline breadcrumb float-right">
@@ -35,7 +35,14 @@ require_once 'includes/sidebar.php';
                             <div class="profile-view">
                                 <div class="profile-img-wrap">
                                     <div class="profile-img">
-                                        <a href=""><img class="avatar" src="assets/img/user.jpg" alt=""></a>
+                                        <?php 
+                                            if(!empty($result[0]['profile_image'])) {
+                                                $imageData = PROFILE_PIC_IMAGE_PATH . $result[0]['profile_image'];
+                                            } else {
+                                                $imageData = 'assets/img/user.jpg';
+                                            }
+                                        ?>
+                                        <a href=""><img class="avatar" src="<?php echo $imageData; ?>" alt=""></a>
                                     </div>
                                 </div>
                                 <div class="profile-basic">

@@ -68,35 +68,36 @@ require_once 'includes/sidebar.php';
 									<div class="row">
 										<div class="col-lg-6 col-md-6 col-sm-6 col-12">
 												<div class="form-group custom-mt-form-group">
-													<input type="text"  name="first_name" value="<?php
+													<input type="text"  placeholder="First Name" name="first_name" value="<?php
                                         		if (isset($result[0]['first_name']))
                                             	echo htmlspecialchars($result[0]['first_name']);
                                         		?>"/>
-												 	<label class="control-label">Firstname</label><i class="bar"></i>
+												 	<i class="bar"></i>
 												</div>
 												<div class="form-group custom-mt-form-group">
-													<input type="text"  name="email_address" value="<?php
+													<input type="text"  name="email_address" placeholder="Email" value="<?php
                                         		if (isset($result[0]['email_address']))
                                             	echo htmlspecialchars($result[0]['email_address']);
                                         		?>"/>
-													<label class="control-label">Email</label><i class="bar"></i>
+													<i class="bar"></i>
 												</div>
 												<div class="form-group custom-mt-form-group">
 													<select id="gender" name="gender">
+														<option selected>Select Gender</option>
 														<option value="male">Male</option>
 														<option value="female">Female</option>
 													 </select>
-													 <label class="control-label">Gender</label><i class="bar"></i>
+													 <i class="bar"></i>
 												</div>
 												<div class="form-group custom-mt-form-group">
-													 <input class="datetimepicker" type="text" name="dob" value="<?php
+													 <input class="datetimepicker" placeholder="Birth Date" type="text" name="dob" value="<?php
                                         		if (isset($result[0]['dob']))
                                             	echo htmlspecialchars($result[0]['dob']);
                                         		?>"> 
-													<label class="control-label">Birth Date</label><i class="bar"></i>
+													<i class="bar"></i>
 												</div>
 												<div class="form-group custom-mt-form-group">
-													<input class="" type="text" name="class_id" value="<?php
+													<input class="" type="text" name="class_id" placeholder="Class Name" value="<?php
                                         				if (isset($result[0]['class_id']))
                                             			echo htmlspecialchars($result[0]['class_id']);
                                         			?>">
@@ -108,55 +109,55 @@ require_once 'includes/sidebar.php';
 														</option>
 														<?php endfor; ?>
 													</select> -->
-													<label class="control-label">Class Name</label><i class="bar"></i>
+													<i class="bar"></i>
 												</div>
 												<!-- <div class="form-group custom-mt-form-group">
 													<select name="section_id" id="section_id">
 													</select>
 												</div> -->
 												<div class="form-group custom-mt-form-group">
-													<input type="text"  name="religion" value="<?php
+													<input type="text"  name="religion" placeholder="Religion" value="<?php
                                         		if (isset($result[0]['religion']))
                                             	echo htmlspecialchars($result[0]['religion']);
                                         		?>"/>
-													<label class="control-label">Religion</label><i class="bar"></i>
+													<i class="bar"></i>
 												</div>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-6 col-12">
 												<div class="form-group custom-mt-form-group">
-													<input type="text"  name="last_name" value="<?php
+													<input type="text"  name="last_name" placeholder="Lastname" value="<?php
                                         		if (isset($result[0]['last_name']))
                                             	echo htmlspecialchars($result[0]['last_name']);
                                         		?>">
-													<label class="control-label">Lastname</label><i class="bar"></i>
+													<i class="bar"></i>
 												</div>
 												<div class="form-group custom-mt-form-group">
-													 <input class="form-control floating datetimepicker" type="text" name="date_of_joining" value="<?php
+													 <input class="form-control floating datetimepicker" placeholder="Joining Date" type="text" name="date_of_joining" value="<?php
                                         		if (isset($result[0]['date_of_joining']))
                                             	echo htmlspecialchars($result[0]['date_of_joining']);
                                         		?>">
-													<label class="control-label">Joining Date</label><i class="bar"></i>
+													<i class="bar"></i>
 												</div>
 												<div class="form-group custom-mt-form-group">
-													<input type="number" name="mobile_number" value="<?php
+													<input type="number" name="mobile_number" placeholder="Mobile number" value="<?php
                                         		if (isset($result[0]['mobile_number']))
                                             	echo htmlspecialchars($result[0]['mobile_number']);
                                         		?>" />
-													<label class="control-label">Mobile number</label><i class="bar"></i>
+													<i class="bar"></i>
 												</div>
 												<div class="form-group custom-mt-form-group">
-													<input type="text"  name="admission_no" value="<?php
+													<input type="text"  name="admission_no" placeholder="Admission No" value="<?php
                                         		if (isset($result[0]['admission_no']))
                                             	echo htmlspecialchars($result[0]['admission_no']);
                                         		?>"/>
-													<label class="control-label">Admission No</label><i class="bar"></i>
+													<i class="bar"></i>
 												</div>
 												<div class="form-group custom-mt-form-group">
-													<input type="text"  name="student_id" value="<?php
+													<input type="text"  name="student_id" placeholder="ID" value="<?php
                                         		if (isset($result[0]['student_id']))
                                             	echo htmlspecialchars($result[0]['student_id']);
                                         		?>"/>
-													<label class="control-label">ID</label><i class="bar"></i>
+													<i class="bar"></i>
 												</div>
 										</div>
 										
@@ -171,58 +172,57 @@ require_once 'includes/sidebar.php';
 											<div class="row">
 												<div class="col-lg-6 col-md-6 col-sm-6 col-12">
 														<div class="form-group custom-mt-form-group">
-															<input type="text" name="fathers_name" value="<?php
+														<input type="text" name="fathers_name" placeholder="Father Name" value="<?php
                                         		if (isset($result[0]['fathers_name']))
                                             	echo htmlspecialchars($result[0]['fathers_name']);
                                         		?>"/>
-															<label class="control-label">Father Name</label><i class="bar"></i>
+															<i class="bar"></i>
 														</div>
 														<div class="form-group custom-mt-form-group">
-															<input type="text" name="fathers_occupation" value="<?php
+															<input type="text" name="fathers_occupation" placeholder="Father Occupation" value="<?php
                                         		if (isset($result[0]['fathers_occupation']))
                                             	echo htmlspecialchars($result[0]['fathers_occupation']);
                                         		?>"/>
-															<label class="control-label">Father Occupation</label><i class="bar"></i>
+															<i class="bar"></i>
 														</div>
 														<div class="form-group custom-mt-form-group">
-															<input type="number"  name="parents_mobile_number" value="<?php
+															<input type="number"  name="parents_mobile_number" placeholder="Mobile number" value="<?php
                                         		if (isset($result[0]['parents_mobile_number']))
                                             	echo htmlspecialchars($result[0]['parents_mobile_number']);
                                         		?>"/>
-															<label class="control-label">Mobile number</label><i class="bar"></i>
+															<i class="bar"></i>
 														</div>
 														<div class="form-group">
-															<textarea id="message" class="form__field" placeholder="Present Address" rows="4" name="present_address">
-																<?php if (isset($result[0][ 'present_address'])) echo $result[0][ 'present_address']; ?>
-															</textarea>
+															<textarea id="message" class="form__field" placeholder="Present Address" rows="4" name="present_address"></textarea><?php if (isset($result[0][ 'present_address'])) echo $result[0][ 'present_address']; ?>
 															<label for="message" class="form-label">Present Address</label>
 														</div>
 												</div>
 												
 												<div class="col-lg-6 col-md-6 col-sm-6 col-12">
 														<div class="form-group custom-mt-form-group">
-															<input type="text"  name="mothers_name" value="<?php
+															<input type="text"  name="mothers_name" placeholder="Mother Name" value="<?php
                                         		if (isset($result[0]['mothers_name']))
                                             	echo htmlspecialchars($result[0]['mothers_name']);
                                         		?>"/>
-															<label class="control-label">Mother Name</label><i class="bar"></i>
+														<i class="bar"></i>
 														</div>
 														<div class="form-group custom-mt-form-group">
-															<input type="text"  name="mothers_occupation" value="<?php
+															<input type="text"  name="mothers_occupation" placeholder="Mother Occupation" value="<?php
                                         		if (isset($result[0]['mothers_occupation']))
                                             	echo htmlspecialchars($result[0]['mothers_occupation']);
                                         		?>"/>
-															<label class="control-label">Mother Occupation</label><i class="bar"></i>
+															<i class="bar"></i>
 														</div>
 														<div class="form-group custom-mt-form-group">
-															<input type="text"  name="nationality" value="<?php
+															<input type="text"  name="nationality" placeholder="Nationality" value="<?php
                                         		if (isset($result[0]['nationality']))
                                             	echo htmlspecialchars($result[0]['nationality']);
                                         		?>"/>
-															<label class="control-label">Nationality</label><i class="bar"></i>
+															<i class="bar"></i>
 														</div>
 														<div class="form-group">
-															<textarea id="message" class="form__field" placeholder="Premanent Address" rows="4" name="permanent_address"><?php if (isset($result[0][ 'permanent_address'])) echo $result[0][ 'permanent_address']; ?></textarea>
+															<textarea id="message" class="form__field" placeholder="Premanent Address" rows="4" name="permanent_address"></textarea>
+															<?php if (isset($result[0][ 'permanent_address'])) echo $result[0][ 'permanent_address']; ?>
 															<label for="message" class="form-label">Premanent Address</label>
 														</div>
 												</div>
@@ -266,7 +266,7 @@ require_once 'includes/sidebar.php';
 										</div>
 										<div class="col-lg-12 col-md-12 col-sm-12 col-12">
 												<div class="form-group text-center custom-mt-form-group">
-													<button class="btn btn-primary mr-2" type="submit">Submit</button>
+													<button class="btn btn-secondary mr-2" type="submit">Submit</button>
 													<button class="btn btn-secondary" type="reset">Cancel</button>
 												</div>
 										</div>
@@ -320,6 +320,9 @@ require_once 'includes/sidebar.php';
                 	required:true
                 },
                 permanent_address:{
+                	required:true
+                },
+                student_profile_image:{
                 	required:true
                 }
             }

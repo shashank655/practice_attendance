@@ -24,6 +24,12 @@
                             </ul>
                         </li>
                         <?php } ?>
+                        <li>
+                            <a class="<?php if($currentURL =='holidays.php'){echo 'active';}?>" href="holidays.php"><i class="fa fa-tasks" aria-hidden="true"></i> Holidays</a>
+                        </li>
+                        <li>
+                            <a href="events.php"><i class="fa fa-table" aria-hidden="true"></i> Events</a>
+                        </li>
 						<!-- <li class="submenu">
                             <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Students</span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">

@@ -10,15 +10,29 @@ if ($data['type'] == 'login') {
         header('Location: ' . BASE_ROOT.'dashboard.php');
     } else {
         $_SESSION['Msg'] = "Inavalid Email Or Password";
+        $_SESSION['success'] = false;
         header('Location: ' . BASE_ROOT);
     } 
 } else if ($data['type'] == 'super_admin_signup') {
     $result = $user->userRegistration($data);
     if ($result) {
         $_SESSION['Msg'] = "Sign up successfully";
+        $_SESSION['success'] = true;
         header('Location: ' . BASE_ROOT);
     } else {
         $_SESSION['Msg'] = "Email address already exist , please login!";
+        $_SESSION['success'] = false;
+        header('Location: ' . BASE_ROOT);
+    }
+} else if ($data['type'] == 'email_verfication') {
+    $result = $user->userEmailVerification($data);
+    if ($result) {
+        $_SESSION['Msg'] = "Sign up successfully";
+        $_SESSION['success'] = true;
+        header('Location: ' . BASE_ROOT);
+    } else {
+        $_SESSION['Msg'] = "Email address already exist , please login!";
+        $_SESSION['success'] = false;
         header('Location: ' . BASE_ROOT);
     }
 } elseif ($data['type'] == 'logout') {

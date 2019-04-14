@@ -205,7 +205,7 @@ require_once 'includes/sidebar.php';
 									</div>
 									<div class="col-lg-12 col-md-12 col-sm-12 col-12">
 										<div class="form-group text-center custom-mt-form-group">
-											<button class="btn btn-primary mr-2" type="submit">Submit</button>
+											<button class="btn btn-secondary mr-2" type="submit">Submit</button>
 											<button class="btn btn-secondary" type="reset">Cancel</button>
 										</div>
 									</div>

@@ -97,24 +97,20 @@ require_once 'includes/sidebar.php';
 													<i class="bar"></i>
 												</div>
 												<div class="form-group custom-mt-form-group">
-													<input class="" type="text" name="class_id" placeholder="Class Name" value="<?php
-                                        				if (isset($result[0]['class_id']))
-                                            			echo htmlspecialchars($result[0]['class_id']);
-                                        			?>">
-													<!-- <select name="class_id" id="class_id" onclick="getSections(this.value);">
-														<?php for ($i=0 ; $i < count($resultClasses); $i++) : ?>
-														<option <?php if (isset($result[0][ 'class_id'])) { if ($result[0][ 'class_id']==$resultClasses[$i][ 'id']) { echo 'selected'; } } ?>value="
-															<?php echo $resultSubjects[$i][ 'id']; ?>">
-															<?php echo $resultClasses[$i][ 'class_name']; ?>
-														</option>
-														<?php endfor; ?>
-													</select> -->
+													<select id="class_id" name="class_id" onchange="getSections(this.value);">
+													<option value='' >Select Class</option>
+													<?php for ($i=0 ; $i < count($resultClasses); $i++) : ?>
+														<option <?php if (isset($result[0]['class_id'])) { if ($result[0]['class_id']==$resultClasses[$i]['id']) { echo 'selected'; } } ?> value="<?php echo $resultClasses[$i][ 'id']; ?>"><?php echo $resultClasses[$i][ 'class_name']; ?></option>
+													<?php endfor; ?>	
+													</select>
 													<i class="bar"></i>
 												</div>
-												<!-- <div class="form-group custom-mt-form-group">
+												<div class="form-group custom-mt-form-group">
 													<select name="section_id" id="section_id">
+													<option value=''>Select Section</option>
 													</select>
-												</div> -->
+													<i class="bar"></i>
+												</div>
 												<div class="form-group custom-mt-form-group">
 													<input type="text"  name="religion" placeholder="Religion" value="<?php
                                         		if (isset($result[0]['religion']))
@@ -193,7 +189,7 @@ require_once 'includes/sidebar.php';
 															<i class="bar"></i>
 														</div>
 														<div class="form-group">
-															<textarea id="message" class="form__field" placeholder="Present Address" rows="4" name="present_address"></textarea><?php if (isset($result[0][ 'present_address'])) echo $result[0][ 'present_address']; ?>
+															<textarea id="message" class="form__field" placeholder="Present Address" rows="4" name="present_address"><?php if (isset($result[0][ 'present_address'])) echo $result[0][ 'present_address']; ?></textarea>
 															<label for="message" class="form-label">Present Address</label>
 														</div>
 												</div>
@@ -221,8 +217,7 @@ require_once 'includes/sidebar.php';
 															<i class="bar"></i>
 														</div>
 														<div class="form-group">
-															<textarea id="message" class="form__field" placeholder="Premanent Address" rows="4" name="permanent_address"></textarea>
-															<?php if (isset($result[0][ 'permanent_address'])) echo $result[0][ 'permanent_address']; ?>
+															<textarea id="message" class="form__field" placeholder="Premanent Address" rows="4" name="permanent_address"><?php if (isset($result[0][ 'permanent_address'])) echo $result[0][ 'permanent_address']; ?></textarea>
 															<label for="message" class="form-label">Premanent Address</label>
 														</div>
 												</div>
@@ -329,6 +324,11 @@ require_once 'includes/sidebar.php';
         });
     });
 
+	<?php  if($studentId!=''){ ?>        
+        section_id='<?php echo $result[0]['section_id']; ?>';
+        getSections('<?php echo $result[0]['class_id']; ?>');
+     <?php }?>
+
 	function getSections(classID){  
         $.ajax({
             type: "POST",
@@ -339,21 +339,21 @@ require_once 'includes/sidebar.php';
             },
             success:function(data){                
                 
-                data = $.parseJSON(data);
-                console.log(data);                
-                if(data){
-                    $("#section_id").html("<option value=' '>Section Name</option>");
-                    for(var i=0;i<data.length;i++){             
+                data = $.parseJSON(data);         
+                if(data.length > 0){
+                    $("#section_id").html("<option value=''>Select Section</option>");
+                    for(var i=0;i<data.length;i++){        
                        var option="<option value='"+data[i].id+"'";
+                       		if(data[i].id==section_id){
+                               option+=" selected";
+                           	}
                            option+=" >"+data[i].section_name+"</option>"
                         $("#section_id").append(option);
                     }                    
-                }else{alert("d");
-                    $("#section_id").html("<option value=' ' selected >Section Name</option>");
+                }else{
+                    $("#section_id").html("<option value='' selected >No Section Found</option>");
                 }
-                $("#section_id").select2();
-                
-            }
+			}
         });
     }
 

@@ -59,3 +59,11 @@ CREATE TABLE `sections` (
 Alter Teacher table class to class_id, profile_pic text   
 SELECT * FROM `holidays` holiday_name, holiday_date
 email_verification in users table                                                       
+ CREATE TABLE `events` (                                  
+          `id` int(11) NOT NULL AUTO_INCREMENT,                  
+          `title` varchar(255) NOT NULL,                         
+          `start_event` datetime NOT NULL,                       
+          `end_event` datetime NOT NULL,                         
+          PRIMARY KEY (`id`)                                     
+        )
+ Alter teacher table user_id and section_id to int(11)       

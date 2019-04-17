@@ -68,6 +68,7 @@ require_once 'includes/sidebar.php';
 							<form id="addTeacherForm" action="employee/process/processAddTeacher.php" method="post" novalidate="novalidate" enctype="multipart/form-data">
 								<input type="hidden" name="type" value="<?php echo $userId == '' ? 'Add' : 'Update'; ?>" />
 								<input type="hidden" name="userId" value="<?php echo $userId; ?>" />
+								<input type="hidden" name="oldEmailAddress" value='<?php if (isset($result[0]['email_address'])) echo $result[0]['email_address']; ?>'  />
 								<div class="row">
 									<div class="col-lg-6 col-md-6 col-sm-6 col-12">
 										<div class="form-group custom-mt-form-group">
@@ -103,27 +104,19 @@ require_once 'includes/sidebar.php';
 											<i class="bar"></i>
 										</div>
 										<div class="form-group custom-mt-form-group">
-											<input placeholder="Class Name" class="" type="text" name="class_id" value="<?php
-                                        				if (isset($result[0]['class_id']))
-                                            			echo htmlspecialchars($result[0]['class_id']);
-                                        			?>">
-											<!-- <select id="class_id" name="class_id" onclick="getSections(this.value);">
+											<select id="class_id" name="class_id" onchange="getSections(this.value);">
+											<option value='' >Select Class</option>
 											<?php for ($i=0 ; $i < count($resultClasses); $i++) : ?>
 												<option <?php if (isset($result[0]['class_id'])) { if ($result[0]['class_id']==$resultClasses[$i]['id']) { echo 'selected'; } } ?> value="<?php echo $resultClasses[$i][ 'id']; ?>"><?php echo $resultClasses[$i][ 'class_name']; ?></option>
 											<?php endfor; ?>	
-											</select> -->
+											</select>
 											<i class="bar"></i>
 										</div>
-										<!-- <div class="form-group custom-mt-form-group">
-											<select name="section_id" id="section_id">
-											</select>
-										</div> -->
 										<div class="form-group custom-mt-form-group">
-											<select class="select2" id="is_class_teacher" name="is_class_teacher">
-												<option value="1">Yes</option>
-												<option value="0">No</option>
+											<select name="section_id" id="section_id">
+											<option value=''>Select Section</option>
 											</select>
-											<label class="control-label">Is Class Teacher ?</label><i class="bar"></i>
+											<i class="bar"></i>
 										</div>
 									</div>
 									<div class="col-lg-6 col-md-6 col-sm-6 col-12">
@@ -153,9 +146,9 @@ require_once 'includes/sidebar.php';
 											<i class="bar"></i>
 										</div>
 										<div class="form-group custom-mt-form-group">
-											<select class="select2" name="subject_id" id="subject_id">
+											<select name="subject_id" id="subject_id">
 												<?php for ($i=0 ; $i < count($resultSubjects); $i++) : ?>
-												<option <?php if (isset($result[0][ 'subject_id'])) { if ($result[0][ 'subject_id']==$resultSubjects[$i][ 'id']) { echo 'selected'; } } ?>value="
+												<option <?php if (isset($result[0][ 'subject_id'])) { if ($result[0][ 'subject_id']==$resultSubjects[$i][ 'id']) { echo 'selected'; } } ?> value="
 													<?php echo $resultSubjects[$i][ 'id']; ?>">
 													<?php echo $resultSubjects[$i][ 'subject_name']; ?>
 												</option>
@@ -171,11 +164,11 @@ require_once 'includes/sidebar.php';
 											<i class="bar"></i>
 										</div>
 										<div class="form-group custom-mt-form-group">
-											<input placeholder="Section" type="text" name="section_id" value="<?php
-                                        		if (isset($result[0]['section_id']))
-                                            	echo htmlspecialchars($result[0]['section_id']);
-                                        		?>" />
-											<i class="bar"></i>
+											<select id="is_class_teacher" name="is_class_teacher">
+												<option value="1">Yes</option>
+												<option value="0">No</option>
+											</select>
+											<label class="control-label">Is Class Teacher ?</label><i class="bar"></i>
 										</div>
 									</div>
 									<div class="col-lg-12 col-md-12 col-sm-12 col-12">
@@ -221,6 +214,28 @@ require_once 'includes/sidebar.php';
 </div>
 <?php require_once 'includes/footer.php'; ?>
 <script type="text/javascript">
+	jQuery.validator.addMethod("isCheckEmailAddress", function(value, element) {
+        var emailValue = $.trim(value);
+        var oldEmailAddress = $("input[name=oldEmailAddress]").val();
+        var check_result = false;
+        $.ajax({
+           type: "POST",
+           async: false,
+           url: "employee/process/processAddTeacher.php",
+           data:{oldEmailAddress:oldEmailAddress, emailAddress:emailValue, type:'isCheckEmailAddress'},
+           success: function(response)
+           {
+              // if the url exists, it returns a string "true"
+              if(response == true) {
+                check_result =  false;  // already exists
+              } else {
+                check_result =  true;   // url is free to use
+              } 
+           }
+        });
+        return check_result;
+    }, "Email address is already exist!");
+
 	$(function(){
         $("#addTeacherForm").validate({
             ignore: "input[type='text']:hidden",
@@ -233,7 +248,8 @@ require_once 'includes/sidebar.php';
                 },
                 email_address:{
                     required:true,
-                    email:true
+                    email:true,
+                    isCheckEmailAddress:true
                 },
                 joining_date:{
                     required:true
@@ -262,6 +278,11 @@ require_once 'includes/sidebar.php';
         });
     });
 
+	<?php  if($userId!=''){ ?>        
+        section_id='<?php echo $result[0]['section_id']; ?>';
+        getSections('<?php echo $result[0]['class_id']; ?>');
+     <?php }?>
+
 	function getSections(classID){  
         $.ajax({
             type: "POST",
@@ -272,21 +293,21 @@ require_once 'includes/sidebar.php';
             },
             success:function(data){                
                 
-                data = $.parseJSON(data);
-                console.log(data);                
-                if(data){
-                    $("#section_id").html("<option value=' '>Section Name</option>");
-                    for(var i=0;i<data.length;i++){             
+                data = $.parseJSON(data);         
+                if(data.length > 0){
+                    $("#section_id").html("<option value=''>Select Section</option>");
+                    for(var i=0;i<data.length;i++){        
                        var option="<option value='"+data[i].id+"'";
+                       		if(data[i].id==section_id){
+                               option+=" selected";
+                           	}
                            option+=" >"+data[i].section_name+"</option>"
                         $("#section_id").append(option);
                     }                    
                 }else{
-                    $("#section_id").html("<option value=' ' selected >Section Name</option>");
+                    $("#section_id").html("<option value='' selected >No Section Found</option>");
                 }
-                $("#section_id").select2();
-                
-            }
+			}
         });
     }
 

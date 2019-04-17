@@ -1,4 +1,5 @@
 <?php
+require_once 'PHPMailer/class.phpmailer.php';
 class MySQLCN {
 
     function MySQLCN() {
@@ -250,49 +251,26 @@ class MySQLCN {
     }
     function send_mail($to,$fromEmail,$fromName,$subject,$message)
     {
-        $logArr = array('Subject'=>$subject,'toEmail'=>$to,'fromEmail'=>$fromEmail ,'fromName'=>$fromName ,'emailException' => '');
-        try {
-            $mail = new PHPMailer(true); //New instance, with exceptions enabled
-                
-            
-            $mail->IsSMTP();                           // tell the class to use SMTP
-            $mail->SMTPAuth   = true;                  // enable SMTP authentication
-            $mail->Port       = 25;                    // set the SMTP server port
-            $mail->Host       = "smtpout.secureserver.net"; // SMTP server
-            $mail->Username   = "reservation@shofur.com";     // SMTP server username
-            $mail->Password   = "reservation2013";            // SMTP server password
-        
-            $mail->IsSendmail();  // tell the class to use Sendmail
-        
-            $mail->AddReplyTo("reservation@shofur.com","Shofur Reservation");
-        
-            $mail->From       = $fromEmail;
-            $mail->FromName   = $fromName;
-            
-            $mail->Sender = "reservation@shofur.com";
-            
-            $mail->AddAddress($to);
-        
-            $mail->Subject  = $subject;
-        
-            $mail->AltBody    = "To view the message, please use an HTML compatible email viewer!";
-            // optional, comment out and test
-        
-            $mail->WordWrap   = 80; // set word wrap
-        
-            $mail->MsgHTML($message);
-        
-            $mail->IsHTML(true); // send as HTML
-        
-            $mail->Send();
-            $systemLogEmail = array('operation' => 'Email Send', 'action' => 'Success', 'info' => urldecode(http_build_query($logArr, '', ', ')));
-                systemLogEmail($systemLogEmail);
-            //echo 'Message has been sent.';
-        } catch (phpmailerException $e) {
-            $logArr['emailException'] = $e->errorMessage();
-            $systemLogEmail = array('operation' => 'Email Send', 'action' => 'Error', 'info' => urldecode(http_build_query($logArr, '', ', ')));
-            systemLogEmail($systemLogEmail);
-            echo "dbClass.php Error Sending Email ".$e->errorMessage();
+        global $error;
+        $mail = new PHPMailer();  // create a new object
+         $mail->IsSMTP(); // enable SMTP
+         $mail->SMTPDebug = 1;  // debugging: 1 = errors and messages, 2 = messages only
+         $mail->SMTPAuth = true;  // authentication enabled
+         $mail->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
+         $mail->Host = 'smtp.gmail.com';
+         $mail->Port = 587; 
+         $mail->Username = 'shashankgarg655@gmail.com';  
+         $mail->Password = 'Geu@123456';           
+         $mail->SetFrom($fromEmail, $fromName);
+         $mail->Subject = $subject;
+         $mail->Body = $message;
+         $mail->AddAddress($to);
+         if(!$mail->Send()) {
+         $error = 'Mail error: '.$mail->ErrorInfo; 
+         return false;
+         } else {
+         $error = 'Message sent!';
+         return true;
         }
     }
 

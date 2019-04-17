@@ -40,8 +40,8 @@ class Teacher extends MySQLCN {
             $last_id = mysqli_insert_id($this->CONN);
 
             $qry2 = 'INSERT INTO `teachers` 
-            (`user_id`,`gender`,`dob`,`class_id`, `is_class_teacher`, `joining_date`, `mobile_number`, `subject_id`, `teacher_id`, `section`, `permanent_address`,`profile_image`) 
-            VALUES ( "'. $last_id . '" ,"'. $data['gender'] . '", "'. $data['dob'] . '", "'. $data['class_id'] .'" , "'. $data['is_class_teacher'] .'" ,"'.$data['joining_date'].'","'.$data['mobile_number'].'","'.trim($data['subject_id']).'","'.$data['teacher_id'].'","'.$data['section'].'","'.$data['permanent_address'].'","'.$profileImageName.'")';
+            (`user_id`,`gender`,`dob`,`class_id`, `is_class_teacher`, `joining_date`, `mobile_number`, `subject_id`, `teacher_id`, `section_id`, `permanent_address`,`profile_image`) 
+            VALUES ( "'. $last_id . '" ,"'. $data['gender'] . '", "'. $data['dob'] . '", "'. $data['class_id'] .'" , "'. $data['is_class_teacher'] .'" ,"'.$data['joining_date'].'","'.$data['mobile_number'].'","'.trim($data['subject_id']).'","'.$data['teacher_id'].'","'.$data['section_id'].'","'.$data['permanent_address'].'","'.$profileImageName.'")';
             $res2 = $this->insert($qry2);
             return true;
         } else {
@@ -106,6 +106,34 @@ class Teacher extends MySQLCN {
         $fetch = "SELECT * FROM `users` join teachers on users.id =teachers.user_id where users.id ='" . $id . "'";
         $fetch_data = $this->select($fetch);
         return $fetch_data;
+    }
+
+    function isCheckEmailAddress() {
+        if($_POST['oldEmailAddress'] == $_POST['emailAddress']) {
+            return false;
+        } else {
+            $fetch = "SELECT * FROM `users` where email_address='".$_POST['emailAddress']."'";
+            $fetch_result = $this->select($fetch);
+            if (!empty($fetch_result)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    function assignTeacherPassword($data) {
+      $qry = "TRUNCATE TABLE `teachers_password`";
+      $res = $this->deleteData($qry);
+        if ($res) {
+            $qry2 = 'INSERT INTO `teachers_password` 
+            (`password`) 
+            VALUES ( "'. $data['password'] . '")';
+            $res2 = $this->insert($qry2);
+            return true;
+        } else {
+            return false;
+        }
     }    
 }
 ?>

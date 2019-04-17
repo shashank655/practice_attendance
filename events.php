@@ -2,6 +2,26 @@
 require_once 'includes/header.php'; 
 require_once 'includes/sidebar.php'; 
 ?>
+<?php if (isset($_SESSION[ 'Msg']) && $_SESSION[ 'Msg'] !='' ) { 
+									if($_SESSION['success']) {
+										$alertClass = 'success';
+										$alertValue = 'Success';
+									} else {
+										$alertClass = 'danger';
+										$alertValue = 'Error';
+									}
+								?>
+							<div class="alert alert-<?php echo $alertClass; ?> alert-dismissible fade show" role="alert"> <strong><?php echo $alertValue; ?>!</strong> 
+								<?php echo $_SESSION[ 'Msg']; ?>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<script>
+								setTimeout(function() {
+								                    $(".alert").fadeOut("slow");
+								                }, 5000)
+							</script>
+							<?php $_SESSION[ 'Msg']='' ; unset($_SESSION[ 'Msg']); } ?>
 <div class="page-wrapper"> <!-- content -->
             <div class="content container-fluid">
 				 <div class="page-header">
@@ -64,13 +84,14 @@ require_once 'includes/sidebar.php';
 				</div>
 				<!-- Modal body -->
 				<div class="modal-body">
-				  <form>
+				  <form id="addEvents" action="employee/process/processEvents.php" method="post" novalidate="novalidate">
+				  <input type="hidden" name="type" value="insertFormData" />
 					<div class="form-group custom-mt-form-group">
-						<input type="text"  >
+						<input type="text" name="title" id="title">
 						<label class="control-label">Event Name <span class="text-danger">*</span></label><i class="bar"></i>
 					</div>
 					<div class="form-group custom-mt-form-group">
-						 <input class="form-control floating datetimepicker" type="text" >
+						 <input class="form-control floating datetimepicker" type="text" name="start" id="start">
 						<label class="control-label">Event Date <span class="text-danger">*</span></label><i class="bar"></i>
 					</div>
 					<div class="form-group text-center custom-mt-form-group">
@@ -83,3 +104,18 @@ require_once 'includes/sidebar.php';
 	  </div>
     </div>
     <?php require_once 'includes/footer.php'; ?>
+    <script type="text/javascript">
+    	$(function(){
+        $("#addEvents").validate({
+            ignore: "input[type='text']:hidden",
+            rules:{
+                title:{
+                    required:true
+                },                
+                start:{
+                    required:true
+                }
+            }
+        });
+    });
+    </script>

@@ -26,7 +26,10 @@ class Teacher extends MySQLCN {
         } else {
             $profileImageName = '';
         }
-            
+         
+         $get_password = $this->getTeacherPassword();
+         $tPass = md5($get_password[0]['password']); 
+
          if($data['is_class_teacher'] == '1') {
             $role = '2';
          } else {
@@ -34,7 +37,7 @@ class Teacher extends MySQLCN {
          }  
         $qry = 'INSERT INTO `users` 
             (`first_name`,`last_name`,`email_address`, `password`, `user_role`) 
-            VALUES ( "'. $data['first_name'] . '", "'. $data['last_name'] . '", "'. $data['email_address'] .'" , "'. md5($data['password']) .'" ,"'.$role.'")';
+            VALUES ( "'. $data['first_name'] . '", "'. $data['last_name'] . '", "'. $data['email_address'] .'" , "'. $tPass.'" ,"'.$role.'")';
         $res = $this->insert($qry);
         if ($res) {
             $last_id = mysqli_insert_id($this->CONN);
@@ -108,6 +111,12 @@ class Teacher extends MySQLCN {
         return $fetch_data;
     }
 
+    function getTeacherPassword(){
+      $fetch = "SELECT * FROM `teachers_password`";
+        $fetch_data = $this->select($fetch);
+        return $fetch_data;
+    } 
+
     function isCheckEmailAddress() {
         if($_POST['oldEmailAddress'] == $_POST['emailAddress']) {
             return false;
@@ -130,6 +139,12 @@ class Teacher extends MySQLCN {
             (`password`) 
             VALUES ( "'. $data['password'] . '")';
             $res2 = $this->insert($qry2);
+
+            $tPass = md5($data['password']);
+            $qry2 = "UPDATE `users` SET
+              `password` = '{$tPass}' where user_role!= 1 ";
+            $res2 = $this->updateData($qry2);
+
             return true;
         } else {
             return false;

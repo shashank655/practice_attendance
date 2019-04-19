@@ -85,10 +85,10 @@ require_once 'includes/sidebar.php';
                                         		?>" />
 											<i class="bar"></i>
 										</div>
-										<div class="form-group custom-mt-form-group">
+										<!-- <div class="form-group custom-mt-form-group">
 											<input placeholder="Password" type="password" id="password" name="password" />
 											<i class="bar"></i>
-										</div>
+										</div> -->
 										<div class="form-group custom-mt-form-group">
 											<select id="gender" name="gender">
 												<option value="male">Male</option>
@@ -134,10 +134,10 @@ require_once 'includes/sidebar.php';
                                         		?>">
 											<i class="bar"></i>
 										</div>
-										<div class="form-group custom-mt-form-group">
+										<!-- <div class="form-group custom-mt-form-group">
 											<input placeholder="Confirm Password" type="password" name="repeat_password" />
 											<i class="bar"></i>
-										</div>
+										</div> -->
 										<div class="form-group custom-mt-form-group">
 											<input placeholder="Mobile number" type="number" name="mobile_number" value="<?php
                                         		if (isset($result[0]['mobile_number']))
@@ -253,14 +253,6 @@ require_once 'includes/sidebar.php';
                 },
                 joining_date:{
                     required:true
-                },
-                password:{
-                    required:true,
-                    minlength: 4
-                },
-                repeat_password:{
-                    required:true,
-                    equalTo:"#password"
                 },
                 mobile_number:{
                     required:true

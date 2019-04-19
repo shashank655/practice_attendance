@@ -101,7 +101,6 @@ class User extends MySQLCN {
                     PreSchool!<br/>';
             $fromEmail = 'shashankgarg655@gmail.com';
             $fromName = 'Test Email';
-            echo $txt;die;
             $res = $this->send_mail($to, $fromEmail, $fromName, $subject, $txt);
                 if($res){
                     return true;

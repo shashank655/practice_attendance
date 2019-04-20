@@ -2280,7 +2280,9 @@ table.dataTable tbody td.patient-img {
 .dash-widget-info > span {
 	font-size: 15px;
 }
-
+.dash-widget-info > span a{
+	color: #333;
+}
 .activity-panel .activity-box {
 	height: 350px;
 	overflow-x: auto;

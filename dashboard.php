@@ -51,15 +51,15 @@ require_once 'includes/sidebar.php';
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                   <!--  <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                         <div class="dash-widget dash-widget5">
                             <span class="dash-widget-icon bg-warning"><i class="fa fa-user-plus" aria-hidden="true"></i></span>
                             <div class="dash-widget-info">
-                                <h3><?php echo $totalStudent[0][0]; ?></h3>
+                                <h3><?php //echo $totalStudent[0][0]; ?></h3>
                                 <span>Parents</span>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                         <div class="dash-widget dash-widget5">
                             <span class="dash-widget-icon bg-success"><i class="fa fa-money" aria-hidden="true"></i></span>
@@ -73,7 +73,7 @@ require_once 'includes/sidebar.php';
                         <div class="dash-widget dash-widget5">
                             <span class="dash-widget-icon bg-success"><i class="fa fa-user" aria-hidden="true"></i></span>
                             <div class="dash-widget-info">
-                            <span><a href="#" data-toggle="modal" data-target="#assign_teacher_password">Assign Teacher's Password</a></span>
+                            <span><a href="#" data-toggle="modal" data-target="#assign_teacher_password">Teacher Global Password</a></span>
                             </div>
                         </div>
                     </div>

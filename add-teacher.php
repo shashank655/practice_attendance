@@ -91,10 +91,11 @@ require_once 'includes/sidebar.php';
 										</div> -->
 										<div class="form-group custom-mt-form-group">
 											<select id="gender" name="gender">
+												<option selected="" value="" disabled="">Gender</option>
 												<option value="male">Male</option>
 												<option value="female">Female</option>
 											</select>
-											<label class="control-label">Gender</label><i class="bar"></i>
+											<label class="control-label"></label><i class="bar"></i>
 										</div>
 										<div class="form-group custom-mt-form-group">
 											<input placeholder="Birth Date" class="datetimepicker" type="text" name="dob" value="<?php
@@ -114,7 +115,7 @@ require_once 'includes/sidebar.php';
 										</div>
 										<div class="form-group custom-mt-form-group">
 											<select name="section_id" id="section_id">
-											<option value=''>Select Section</option>
+												<option value='' selected="" disabled="">Select Section</option>
 											</select>
 											<i class="bar"></i>
 										</div>
@@ -147,6 +148,7 @@ require_once 'includes/sidebar.php';
 										</div>
 										<div class="form-group custom-mt-form-group">
 											<select name="subject_id" id="subject_id">
+												<option selected="" disabled="" value="">Subject</option>
 												<?php for ($i=0 ; $i < count($resultSubjects); $i++) : ?>
 												<option <?php if (isset($result[0][ 'subject_id'])) { if ($result[0][ 'subject_id']==$resultSubjects[$i][ 'id']) { echo 'selected'; } } ?> value="
 													<?php echo $resultSubjects[$i][ 'id']; ?>">
@@ -154,7 +156,7 @@ require_once 'includes/sidebar.php';
 												</option>
 												<?php endfor; ?>
 											</select>
-											<label class="control-label">Subject</label><i class="bar"></i>
+											<i class="bar"></i>
 										</div>
 										<div class="form-group custom-mt-form-group">
 											<input placeholder="ID" type="text" name="teacher_id" value="<?php
@@ -165,10 +167,11 @@ require_once 'includes/sidebar.php';
 										</div>
 										<div class="form-group custom-mt-form-group">
 											<select id="is_class_teacher" name="is_class_teacher">
+												<option selected="" disabled="" value="">Is Class Teacher ?</option>
 												<option value="1">Yes</option>
 												<option value="0">No</option>
 											</select>
-											<label class="control-label">Is Class Teacher ?</label><i class="bar"></i>
+											<i class="bar"></i>
 										</div>
 									</div>
 									<div class="col-lg-12 col-md-12 col-sm-12 col-12">

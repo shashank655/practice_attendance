@@ -83,7 +83,7 @@ require_once 'includes/sidebar.php';
 												</div>
 												<div class="form-group custom-mt-form-group">
 													<select id="gender" name="gender">
-														<option selected>Select Gender</option>
+														<option selected="" value="" disabled="">Select Gender</option>
 														<option value="male">Male</option>
 														<option value="female">Female</option>
 													 </select>
@@ -98,7 +98,7 @@ require_once 'includes/sidebar.php';
 												</div>
 												<div class="form-group custom-mt-form-group">
 													<select id="class_id" name="class_id" onchange="getSections(this.value);">
-													<option value='' >Select Class</option>
+													<option value='' disabled="" selected="">Select Class</option>
 													<?php for ($i=0 ; $i < count($resultClasses); $i++) : ?>
 														<option <?php if (isset($result[0]['class_id'])) { if ($result[0]['class_id']==$resultClasses[$i]['id']) { echo 'selected'; } } ?> value="<?php echo $resultClasses[$i][ 'id']; ?>"><?php echo $resultClasses[$i][ 'class_name']; ?></option>
 													<?php endfor; ?>	
@@ -107,7 +107,7 @@ require_once 'includes/sidebar.php';
 												</div>
 												<div class="form-group custom-mt-form-group">
 													<select name="section_id" id="section_id">
-													<option value=''>Select Section</option>
+													<option value='' disabled="" selected="">Select Section</option>
 													</select>
 													<i class="bar"></i>
 												</div>

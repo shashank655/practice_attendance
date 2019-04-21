@@ -961,7 +961,9 @@ textarea.form-control {
 	display: block;
 	line-height: 60px;
 }
-
+.logo img{
+	height: 35px;
+}
 .header .navbar-nav .badge {
 	position: absolute;
 	right: 7px;
@@ -1460,7 +1462,7 @@ textarea.form-control {
 }
 
 .account-logo img {
-	width: 100px;
+	width: 210px;
 }
 
 .main-content {
@@ -5900,14 +5902,29 @@ blockquote p {
 }
 
 label.error {
-	position: absolute;
-	left: 0;
-	top:100%;
 	font-size: 13px;
-	color: red;
-	padding: 3px 0;
+    position: absolute;
+    background-color: #cd2e26;
+    max-width: 325px;
+    border-radius: 5px;
+    color: white;
+    padding: 2px 12px;
+    z-index: 9;
+    top: 100%;
+    left: 0;
 }
-
+label.error:before {
+    content: '';
+    position: absolute;
+    display: block;
+    height: 0;
+    width: 0;
+    border-width: 5px;
+    border-style: solid;
+    top: -10px;
+    left: 10px;
+    border-color: transparent transparent #cd2e26 transparent;
+}
 /*------------------------------------------------------------------
 [47. Responsive]
 */

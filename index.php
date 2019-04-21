@@ -49,9 +49,9 @@
             <!-- <h3 class="account-title text-white">Login</h3> -->
                 <div class="account-box">
                     <div class="account-wrapper">
-                    <!-- <div class="account-logo">
+                    <div class="account-logo">
                             <a href="index.html"><img src="assets/img/logo.png" alt="SchoolAdmin"></a>
-                        </div> -->
+                        </div>
                         <form id="loginform" action="employee/process/processUser.php" method="post">
                         <input type="hidden" value="login" name="type" />
 							<div class="form-group custom-mt-form-group">

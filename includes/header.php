@@ -31,8 +31,8 @@ if (!isset($_SESSION['userId'])) {
         <div class="header"> <!-- Header start -->
             <div class="header-left">
                 <a href="index.html" class="logo">
-                    <img src="<?php echo BASE_ROOT ?>assets/img/logo.png" width="40" height="40" alt="">
-                    <span class="text-uppercase">Preschool</span>
+                    <img src="<?php echo BASE_ROOT ?>assets/img/logo.png" alt="">
+                    <!-- <span class="text-uppercase">Preschool</span> -->
                 </a>
             </div>
             <div class="page-title-box float-left">

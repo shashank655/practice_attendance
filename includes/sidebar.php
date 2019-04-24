@@ -30,6 +30,12 @@
                         <li>
                             <a href="events.php"><i class="fa fa-table" aria-hidden="true"></i> Events</a>
                         </li>
+                        <li>
+                            <a href="class-section-list.php"><i class="fa fa-table" aria-hidden="true"></i>Classes & Sections</a>
+                        </li>
+                        <li>
+                            <a href="subject-lists.php"><i class="fa fa-table" aria-hidden="true"></i>Subjects List</a>
+                        </li>
 						<!-- <li class="submenu">
                             <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Students</span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">

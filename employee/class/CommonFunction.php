@@ -44,4 +44,10 @@ class CommonFunction extends MySQLCN {
         $fetch_list = $this->select($fetchList);
         return $fetch_list;
     }
+
+    function getTeacherPassword() {
+        $fetchList = "SELECT * FROM `teachers_password`";
+        $fetch_list = $this->select($fetchList);
+        return $fetch_list;
+    }
 }    

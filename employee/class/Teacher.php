@@ -14,7 +14,7 @@ class Teacher extends MySQLCN {
         }
     }
 
-    function teacherSignUp($data,$files) {
+    function teacherSignUp($data,$files,$teacherPassword) {
         $result = $this->checkTeacherSignUp($data);
             if($result) {
                 return false;
@@ -46,6 +46,8 @@ class Teacher extends MySQLCN {
             (`user_id`,`gender`,`dob`,`class_id`, `is_class_teacher`, `joining_date`, `mobile_number`, `subject_id`, `teacher_id`, `section_id`, `permanent_address`,`profile_image`) 
             VALUES ( "'. $last_id . '" ,"'. $data['gender'] . '", "'. $data['dob'] . '", "'. $data['class_id'] .'" , "'. $data['is_class_teacher'] .'" ,"'.$data['joining_date'].'","'.$data['mobile_number'].'","'.trim($data['subject_id']).'","'.$data['teacher_id'].'","'.$data['section_id'].'","'.$data['permanent_address'].'","'.$profileImageName.'")';
             $res2 = $this->insert($qry2);
+
+            $send_email = $this->emailDetailsToTeacher($data,$teacherPassword);
             return true;
         } else {
             return false;
@@ -146,6 +148,30 @@ class Teacher extends MySQLCN {
             $res2 = $this->updateData($qry2);
 
             return true;
+        } else {
+            return false;
+        }
+    }
+
+    function emailDetailsToTeacher($result,$teachPass) {
+        if (!empty($result)) {
+                $to = $result['email_address'];
+                $subject = "Teacher Login Details";
+            $txt = '
+                  Hi '.$result['first_name'].',<br/><br/>
+                  Below are the details of Email address and Password to login .<br/><br/>
+                  Email '.$to.'.<br/><br/>
+                  Password '.$teachPass[0]['password'].'.<br/><br/>
+                  Thank you!
+                    PreSchool!<br/>';
+            $fromEmail = 'shashankgarg655@gmail.com';
+            $fromName = 'Test Email';
+            $res = $this->send_mail($to, $fromEmail, $fromName, $subject, $txt);
+                if($res){
+                    return true;
+                } else {
+                    return false;
+                }    
         } else {
             return false;
         }

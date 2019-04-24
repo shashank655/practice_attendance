@@ -23,11 +23,11 @@ CREATE TABLE `classes_name` (
   `class_name` varchar(220) DEFAULT NULL,
   `createdDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 /*Data for the table `classes_name` */
 
-insert  into `classes_name`(`id`,`class_name`,`createdDate`) values (1,'class 1','2019-04-03 11:57:21'),(2,'class 2','2019-04-03 11:57:25'),(3,'class 3','2019-04-03 11:57:27'),(4,'class 4','2019-04-03 11:57:31');
+insert  into `classes_name`(`id`,`class_name`,`createdDate`) values (1,'class 1','2019-04-03 11:57:21'),(2,'class 2','2019-04-03 11:57:25'),(3,'class 3','2019-04-03 11:57:27'),(4,'class 4','2019-04-03 11:57:31'),(5,'class 6','2019-04-22 14:16:19'),(6,'class 9','2019-04-22 14:17:14');
 
 /*Table structure for table `events` */
 
@@ -41,7 +41,7 @@ CREATE TABLE `events` (
 
 /*Data for the table `events` */
 
-insert  into `events`(`id`,`title`,`start_event`,`end_event`) values (1,'This is for Testing','2019-04-08 00:00:00','2019-04-09 00:00:00'),(2,'sasasaSS','2019-04-08 00:00:00','2019-04-09 00:00:00');
+insert  into `events`(`id`,`title`,`start_event`,`end_event`) values (1,'Test Event','2019-05-01 00:00:00','2019-05-02 00:00:00'),(2,'Test 2 event','2019-04-01 00:00:00','2019-04-02 00:00:00');
 
 /*Table structure for table `holidays` */
 
@@ -50,11 +50,11 @@ CREATE TABLE `holidays` (
   `holiday_name` varchar(255) DEFAULT NULL,
   `holiday_date` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `holidays` */
 
-insert  into `holidays`(`id`,`holiday_name`,`holiday_date`) values (3,'tes ttest','25/04/2019'),(4,'aaaaa','26/04/2019');
+insert  into `holidays`(`id`,`holiday_name`,`holiday_date`) values (1,'Test Holiday','25/04/2019');
 
 /*Table structure for table `sections` */
 
@@ -64,11 +64,11 @@ CREATE TABLE `sections` (
   `section_name` varchar(220) DEFAULT NULL,
   `createdDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 /*Data for the table `sections` */
 
-insert  into `sections`(`id`,`class_id`,`section_name`,`createdDate`) values (1,1,'Section A','2019-04-03 11:57:42'),(2,1,'Section B','2019-04-03 11:57:48'),(3,1,'Section C','2019-04-03 11:57:53'),(4,2,'Section A','2019-04-03 11:57:58'),(5,2,'Section B','2019-04-03 11:58:04'),(6,3,'Section A','2019-04-03 11:58:12'),(7,3,'Section B','2019-04-03 11:58:18'),(8,3,'Section C','2019-04-03 11:58:23');
+insert  into `sections`(`id`,`class_id`,`section_name`,`createdDate`) values (1,1,'Section A','2019-04-03 11:57:42'),(2,1,'Section B','2019-04-03 11:57:48'),(3,1,'Section C','2019-04-03 11:57:53'),(4,2,'Section A','2019-04-03 11:57:58'),(5,2,'Section B','2019-04-03 11:58:04'),(6,3,'Section A','2019-04-03 11:58:12'),(7,3,'Section B','2019-04-03 11:58:18'),(8,3,'Section C','2019-04-03 11:58:23'),(9,5,'Section A','2019-04-22 14:16:19'),(10,5,'Section B','2019-04-22 14:16:19'),(11,5,'Section C','2019-04-22 14:16:19'),(12,6,'Section D','2019-04-22 14:17:14'),(13,6,'Section C','2019-04-22 14:17:14');
 
 /*Table structure for table `students` */
 
@@ -102,7 +102,7 @@ CREATE TABLE `students` (
 
 /*Data for the table `students` */
 
-insert  into `students`(`id`,`first_name`,`last_name`,`email_address`,`gender`,`dob`,`class_id`,`section_id`,`religion`,`date_of_joining`,`mobile_number`,`admission_no`,`student_id`,`fathers_name`,`fathers_occupation`,`parents_mobile_number`,`present_address`,`mothers_name`,`mothers_occupation`,`nationality`,`permanent_address`,`student_profile_image`,`parents_profile_image`,`createdDate`) values (1,'qqqqqqqq','wwwwww','qqq@gmail.com','Select Gender','26/04/2019',3,8,'hindu','24/04/2019','123456789','123456','111111','sp garg','caedd','66666666666','Saraswati soni marg\r\nLaxman chowk','','HW','India','872\r\nSaraswati soni marg\r\nLaxma chowk','15554955361461078568_postimage.2.jpg','155549527911992408_1009809872403008_2094994501_n.jpg','2019-04-17 15:35:36');
+insert  into `students`(`id`,`first_name`,`last_name`,`email_address`,`gender`,`dob`,`class_id`,`section_id`,`religion`,`date_of_joining`,`mobile_number`,`admission_no`,`student_id`,`fathers_name`,`fathers_occupation`,`parents_mobile_number`,`present_address`,`mothers_name`,`mothers_occupation`,`nationality`,`permanent_address`,`student_profile_image`,`parents_profile_image`,`createdDate`) values (1,'Student one','two','student@gmail.com','male','24/04/2019',3,7,'hindu','19/04/2019','123456789','123456','111111111','sp garg','ca','0123456789','872\r\nSaraswati soni marg\r\nLaxma chowkasasasas','rashmi garg','HW','India','asasas asas','15556543621461078568_postimage.2.jpg','1555654362accounat.2.jpe','2019-04-19 11:42:42');
 
 /*Table structure for table `subjects` */
 
@@ -111,11 +111,11 @@ CREATE TABLE `subjects` (
   `subject_name` varchar(230) DEFAULT NULL,
   `createdDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 /*Data for the table `subjects` */
 
-insert  into `subjects`(`id`,`subject_name`,`createdDate`) values (1,'Computer','2019-04-02 15:15:38'),(2,'Science','2019-04-02 15:15:45'),(3,'Maths','2019-04-02 15:15:47'),(4,'Hindi','2019-04-02 15:15:50'),(5,'English','2019-04-02 15:15:54'),(6,'Social Science','2019-04-02 15:15:56');
+insert  into `subjects`(`id`,`subject_name`,`createdDate`) values (1,'Computer','2019-04-02 15:15:38'),(2,'Science','2019-04-02 15:15:45'),(3,'Maths','2019-04-02 15:15:47'),(4,'Hindi','2019-04-02 15:15:50'),(5,'English','2019-04-02 15:15:54'),(6,'Social Science','2019-04-02 15:15:56'),(7,'EVS','2019-04-22 14:28:39'),(8,'saadwd','2019-04-22 14:28:51'),(9,'sasasasaassa','2019-04-23 14:44:00');
 
 /*Table structure for table `teachers` */
 
@@ -135,11 +135,11 @@ CREATE TABLE `teachers` (
   `profile_image` text,
   `createdDate` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `teachers` */
 
-insert  into `teachers`(`id`,`user_id`,`gender`,`dob`,`class_id`,`is_class_teacher`,`joining_date`,`mobile_number`,`subject_id`,`teacher_id`,`section_id`,`permanent_address`,`profile_image`,`createdDate`) values (1,1,'male','16/04/2019',2,'1','16/04/2019','2222222222222','6','765432',0,'',NULL,NULL),(2,3,'male','25/04/2019',0,'1','03/04/2019','987678888','2','12345',0,'','1554283205challenger_ext-min.png',NULL),(3,4,'male','01/05/2019',1,'0','16/04/2019','0123456789','5','12345',0,'872\r\nSaraswati soni marg\r\nLaxma chowk','1554699692accounat.2.jpe',NULL),(4,18,'male','25/04/2019',3,'1','25/04/2019','87654321','6','12345',8,'sASAS assaSASAS','15554933441461078568_postimage.2.jpg',NULL);
+insert  into `teachers`(`id`,`user_id`,`gender`,`dob`,`class_id`,`is_class_teacher`,`joining_date`,`mobile_number`,`subject_id`,`teacher_id`,`section_id`,`permanent_address`,`profile_image`,`createdDate`) values (1,2,'female','30/04/2019',3,'1','24/04/2019','4444444444','6','111111',8,'asasas ssasa','15556544191461078568_postimage.2.jpg',NULL),(2,3,'male','19/04/2019',5,'1','24/04/2019','0123456789','3','12345',10,'872\r\nSaraswati soni marg\r\nLaxma chowk','',NULL);
 
 /*Table structure for table `teachers_password` */
 
@@ -152,7 +152,7 @@ CREATE TABLE `teachers_password` (
 
 /*Data for the table `teachers_password` */
 
-insert  into `teachers_password`(`id`,`password`,`created`) values (1,'22222','2019-04-17 17:01:58');
+insert  into `teachers_password`(`id`,`password`,`created`) values (1,'111111','2019-04-19 11:44:54');
 
 /*Table structure for table `user_roles` */
 
@@ -179,11 +179,11 @@ CREATE TABLE `users` (
   `email_verification` int(11) DEFAULT '0',
   `createdDate` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`first_name`,`last_name`,`user_name`,`email_address`,`password`,`user_role`,`email_verification`,`createdDate`) values (1,'shashank edit','garg edit','evonsha','sha@gmail.com','e10adc3949ba59abbe56e057f20f883e','1',0,NULL),(2,'shashank','garg',NULL,'shashank@gmail.com','e10adc3949ba59abbe56e057f20f883e','2',0,NULL),(3,'Shanky','garg',NULL,'shanky@gmail.com','e10adc3949ba59abbe56e057f20f883e','3',0,NULL),(4,'asasas','asas',NULL,'asa@gmail.com','e10adc3949ba59abbe56e057f20f883e','2',0,NULL),(7,'shashank','garg',NULL,'test@gmail.com','e10adc3949ba59abbe56e057f20f883e','1',1,NULL),(8,'asdsdsd','sadsdsd',NULL,'sadas@gmail.com','e10adc3949ba59abbe56e057f20f883e','1',0,NULL),(16,'Shashank','garg',NULL,'shashankgarg655@gmail.com','fcea920f7412b5da7be0cf42b8c93759','1',1,NULL),(17,'sdsd','sds',NULL,'asdsa@gmail.com','e10adc3949ba59abbe56e057f20f883e','1',1,NULL),(18,'sadsad','sdasdasdasdasd',NULL,'aaaa@gmail.com','e10adc3949ba59abbe56e057f20f883e','2',0,NULL);
+insert  into `users`(`id`,`first_name`,`last_name`,`user_name`,`email_address`,`password`,`user_role`,`email_verification`,`createdDate`) values (1,'Shashank','Garg',NULL,'shashankgarg655@gmail.com','e10adc3949ba59abbe56e057f20f883e','1',1,NULL),(2,'teacher','garg',NULL,'teacher@gmail.com','96e79218965eb72c92a549dd5a330112','2',0,NULL),(3,'sasa','sasas',NULL,'asass@gmail.com','96e79218965eb72c92a549dd5a330112','2',0,NULL);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

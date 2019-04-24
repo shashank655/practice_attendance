@@ -3,10 +3,13 @@ require_once '../config/config.php';
 require_once '../class/dbclass.php';
 require_once '../class/Teacher.php';
 require_once '../class/CommonFunction.php';
+$common_function=new CommonFunction();
+$teacherPassword=$common_function->getTeacherPassword();
+
 $teacher = new Teacher();
 $data = $_REQUEST;
 if ($data['type'] == 'Add') {
-    $result = $teacher->teacherSignUp($data,$_FILES);
+    $result = $teacher->teacherSignUp($data,$_FILES,$teacherPassword);
     if ($result) {
         $_SESSION['Msg'] = "Teacher added successfully!";
         $_SESSION['success'] = true;

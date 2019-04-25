@@ -1,4 +1,14 @@
-<?php require_once 'employee/config/config.php';
+<?php 
+require_once 'employee/class/dbclass.php';
+require_once 'employee/config/config.php'; 
+require_once 'employee/class/CommonFunction.php'; 
+$common_function = new CommonFunction();
+$isAdmin = $common_function->isAdmin();
+if($isAdmin) {
+    $_SESSION['Msg'] = "Administration account is already created";
+    $_SESSION['success'] = false;
+    header('Location: ' . BASE_ROOT);
+}
 ?>
 <!DOCTYPE html>
 <html>

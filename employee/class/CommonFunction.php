@@ -50,4 +50,14 @@ class CommonFunction extends MySQLCN {
         $fetch_list = $this->select($fetchList);
         return $fetch_list;
     }
+
+    function isAdmin() {
+        $fetchList = "SELECT * FROM `users` where user_role='1' ";
+        $fetch_list = $this->select($fetchList);
+        if(!empty($fetch_list)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }    

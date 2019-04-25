@@ -50,7 +50,11 @@ require_once 'includes/sidebar.php';
 								                }, 5000)
 							</script>
 							<?php $_SESSION[ 'Msg']='' ; unset($_SESSION[ 'Msg']); } ?>
-                    <div class="col-sm-7 col-7 text-right m-b-30">
+                    <div class="col-sm-5 col-5 text-right m-b-30">
+                        <a href="#" class="btn btn-primary btn-rounded" data-toggle="modal" data-target="#sms_parents"><i class="fa fa-plus"></i> SMS for Parents</a>
+                    </div>
+                            
+                    <div class=" text-right m-b-30">
                         <a href="#" class="btn btn-primary btn-rounded" data-toggle="modal" data-target="#add_holiday"><i class="fa fa-plus"></i> Add New Holiday</a>
                     </div>
                 </div>
@@ -124,6 +128,34 @@ require_once 'includes/sidebar.php';
                 </div>
             </div>
         </div>
+
+        <div id="sms_parents" class="modal" role="dialog">
+            <div class="modal-dialog">
+                
+                <div class="modal-content modal-md">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Send SMS</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group custom-mt-form-group">
+                                <input type="text" name="holiday_name" value="" />
+                                <label class="control-label">Holiday Name <span class="text-danger">*</span></label><i class="bar"></i>
+                            </div>
+                            <div class="form-group custom-mt-form-group">
+                                <input class="form-control floating datetimepicker" type="text" name="holiday_date" value="" >
+                                <label class="control-label">Holiday Date <span class="text-danger">*</span></label><i class="bar"></i>
+                            </div>
+                            <div class="m-t-20 text-center">
+                                <button class="btn btn-primary btn-lg">Send SMS</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="edit_holiday" class="modal" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content modal-md">

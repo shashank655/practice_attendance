@@ -1,4 +1,9 @@
-<?php require_once 'employee/config/config.php';
+<?php 
+require_once 'employee/class/dbclass.php';
+require_once 'employee/config/config.php'; 
+require_once 'employee/class/CommonFunction.php'; 
+$common_function = new CommonFunction();
+$isAdmin = $common_function->isAdmin();
 ?>
 <!DOCTYPE html>
 <html>
@@ -68,7 +73,9 @@
                             </div>
                             <div class="d-flex text-center justify-content-between">
                                 <a href="forgot-password.php">Forgot your password?</a>
+                                <?php if($isAdmin != true) { ?>
                                 <a href="signup.php">Proceed to SignUp</a>
+                                <?php } ?>
                             </div>
                         </form>
                     </div>

@@ -66,4 +66,10 @@ email_verification in users table
           `end_event` datetime NOT NULL,                         
           PRIMARY KEY (`id`)                                     
         )
- Alter teacher table user_id and section_id to int(11)       
+ Alter teacher table user_id and section_id to int(11)
+ CREATE TABLE `leave_types` (                                                                  
+            `id` int(11) NOT NULL AUTO_INCREMENT,                                                    
+            `leave_type` varchar(230) DEFAULT NULL,                                                
+            `createdDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  
+            PRIMARY KEY (`id`)                                                                       
+          )       

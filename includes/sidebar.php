@@ -36,6 +36,9 @@
                         <li>
                             <a href="subject-lists.php"><i class="fa fa-table" aria-hidden="true"></i>Subjects List</a>
                         </li>
+                        <li>
+                            <a href="leaves-types.php"><i class="fa fa-table" aria-hidden="true"></i>Add Leaves Types</a>
+                        </li>
 						<!-- <li class="submenu">
                             <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Students</span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">

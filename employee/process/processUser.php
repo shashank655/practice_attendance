@@ -2,7 +2,9 @@
 require_once '../config/config.php';
 require_once '../class/dbclass.php';
 require_once '../class/User.php';
+require_once '../class/Admin.php';
 $user = new User();
+$admin = new Admin();
 $data = $_REQUEST;
 if ($data['type'] == 'login') {
     $result = $user->userLogin($data);
@@ -52,6 +54,17 @@ if ($data['type'] == 'login') {
         $_SESSION['Msg'] = "Password has been reset successfully ";
         $_SESSION['success'] = true;
         header('Location: ' . BASE_ROOT.'index.php');
+    } else {
+        $_SESSION['Msg'] = "Email address does not found!";
+        $_SESSION['success'] = false;
+        header('Location: ' . BASE_ROOT.'forgot-password.php');
+    }
+} else if ($data['type'] == 'update_admin_info') {
+    $result = $admin->updateAdminInfo($data,$_FILES);
+    if ($result) {
+        $_SESSION['Msg'] = "Admin information updated successfully ";
+        $_SESSION['success'] = true;
+        header('Location: ' . BASE_ROOT.'admin-profile.php');
     } else {
         $_SESSION['Msg'] = "Email address does not found!";
         $_SESSION['success'] = false;

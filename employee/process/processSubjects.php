@@ -15,6 +15,17 @@ if ($data['type'] == 'Add') {
         $_SESSION['success'] = false;
         header('Location: ' . BASE_ROOT.'class-section.php');
     }
+}  else if ($_POST['type'] == 'Update' && $_POST['subjectId'] != NULL) {
+    $result = $subjects->subjectInfoUpdate($_POST);
+    if ($result) {
+        $_SESSION['Msg'] = "Subjects name updated successfully!";
+        $_SESSION['success'] = true;
+        header('Location: ' . BASE_ROOT.'subject-lists.php');
+    } else {
+        $_SESSION['Msg'] = "Something went wrong!";
+        $_SESSION['success'] = false;
+        header('Location: ' . BASE_ROOT.'subject-lists.php');
+    }    
 } else if ($_POST['type'] == 'insertData' && $_POST['title'] != NULL) {
     $result = $events->eventsInsertData($_POST);
     if ($result) {

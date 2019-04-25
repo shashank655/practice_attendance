@@ -84,6 +84,27 @@ class Admin extends MySQLCN {
         }
     }
 
+    function updateAdminInfo($data,$files) {
+        if ($_FILES['admin_profile_image']['error'] == '0') {
+          $profileImageName = time() . strtolower(basename($_FILES['admin_profile_image']['name']));
+          $target = PROFILE_PIC_IMAGE_ROOT . $profileImageName;
+          move_uploaded_file($_FILES['admin_profile_image']['tmp_name'], $target);
+        } else {
+          $profileImageName = $_POST['profile_image_name'];
+        }
+        $qry = "UPDATE `users` SET
+              `first_name` = '{$data['first_name']}', 
+              `last_name` = '{$data['last_name']}',
+              `admin_profile_image` = '{$profileImageName}'
+               WHERE id = '{$data['userId']}'";
+        $res = $this->updateData($qry);
+        if ($res) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     function checkTeacherSignUp($data) {
         $qry = "SELECT * FROM users WHERE email_address = '{$data['email_address']}'";
         $result = $this->select($qry);

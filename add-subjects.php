@@ -1,4 +1,14 @@
 <?php 
+require_once 'employee/class/dbclass.php';
+require_once 'employee/config/config.php'; 
+require_once 'employee/class/Subjects.php';
+$subjects = new Subjects();
+
+$subjectId = (isset($_REQUEST['id'])) ? $_REQUEST['id'] : NULL; 
+if ($subjectId != NULL) { $result = $subjects->getSubjectInfo($subjectId); 
+	if ($result == NULL) { $subjectId = ''; } }
+?>
+<?php 
 require_once 'includes/header.php'; 
 require_once 'includes/sidebar.php'; 
 ?>
@@ -42,11 +52,15 @@ require_once 'includes/sidebar.php';
                         <div class="card-box">
                             <h4 class="card-title">Subjects</h4>
                             <form id="addSubjects" action="employee/process/processSubjects.php" method="post" novalidate="novalidate">
-                            <input type="hidden" name="type" value="Add" />
+                            <input type="hidden" name="type" value="<?php echo $subjectId == '' ? 'Add' : 'Update'; ?>" />
+							<input type="hidden" name="subjectId" value="<?php echo $subjectId; ?>" />
                                 <div class="form-group row ">
                                     <label class="col-form-label col-md-2">Subject Name</label>
                                     <div class="col-md-10">
-                                        <input type="text" name="subject_name" class="form-control">
+                                        <input type="text" name="subject_name" class="form-control" value="<?php
+                                        		if (isset($result[0]['subject_name']))
+                                            	echo htmlspecialchars($result[0]['subject_name']);
+                                        		?>">
                                     </div>
                                 </div>
                             <div class="form-group text-center custom-mt-form-group">

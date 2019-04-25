@@ -5,7 +5,7 @@
                 <div id="sidebar-menu" class="sidebar-menu">
                     <ul>
                         <li class="menu-title">Main</li>
-                    	<li class="active">
+                    	<li class="<?php if($currentURL =='dashboard.php'){echo 'active';}?>">
                             <a href="dashboard.php"><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</a>
                         </li>
                         <?php if($_SESSION['user_role'] == '1' ) { ?>
@@ -24,19 +24,29 @@
                             </ul>
                         </li>
                         <?php } ?>
-                        <li>
-                            <a class="<?php if($currentURL =='holidays.php'){echo 'active';}?>" href="holidays.php"><i class="fa fa-tasks" aria-hidden="true"></i> Holidays</a>
+                        <li class="submenu">
+                            <a href="#"><i class="fa fa-table" aria-hidden="true"></i> <span> Classes & Sections</span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled" style="display: none;">
+                                <li><a class="<?php if($currentURL =='class-section-list.php'){echo 'active';}?>" href="class-section-list.php">Classes List</a></li>
+                                <li><a class="<?php if($currentURL =='class-section.php'){echo 'active';}?>" class="" href="class-section.php">Add Classes</a></li>
+                            </ul>
                         </li>
-                        <li>
-                            <a href="events.php"><i class="fa fa-table" aria-hidden="true"></i> Events</a>
+
+                        <li class="submenu">
+                            <a href="#"><i class="fa fa-table" aria-hidden="true"></i> <span> Subjects</span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled" style="display: none;">
+                                <li><a class="<?php if($currentURL =='subject-lists.php'){echo 'active';}?>" href="subject-lists.php">Subjects List</a></li>
+                                <li><a class="<?php if($currentURL =='add-subjects.php'){echo 'active';}?>" class="" href="add-subjects.php">Add Subjects</a></li>
+                            </ul>
                         </li>
-                        <li>
-                            <a href="class-section-list.php"><i class="fa fa-table" aria-hidden="true"></i>Classes & Sections</a>
+
+                        <li class="<?php if($currentURL =='holidays.php'){echo 'active';}?>">
+                            <a href="holidays.php"><i class="fa fa-tasks" aria-hidden="true"></i> Holidays</a>
                         </li>
-                        <li>
-                            <a href="subject-lists.php"><i class="fa fa-table" aria-hidden="true"></i>Subjects List</a>
+                        <li class="<?php if($currentURL =='events.php'){echo 'active';}?>">
+                            <a href="events.php"><i class="fa fa-calendar" aria-hidden="true"></i> Events</a>
                         </li>
-                        <li>
+                        <li class="<?php if($currentURL =='leaves-types.php'){echo 'active';}?>">
                             <a href="leaves-types.php"><i class="fa fa-table" aria-hidden="true"></i>Add Leaves Types</a>
                         </li>
 						<!-- <li class="submenu">

@@ -19,6 +19,11 @@ class Subjects extends MySQLCN {
         return $fetch_data;
     }
 
+    function getSubjectInfo($id) {
+        $fetch = "SELECT * FROM `subjects` where id='{$id}'";
+        $fetch_data = $this->select($fetch);
+        return $fetch_data;
+    }    
     function DeleteStudent($sId) {
         $qry = "DELETE FROM `students` WHERE id = '{$sId}'";
         $res = $this->deleteData($qry);
@@ -27,6 +32,19 @@ class Subjects extends MySQLCN {
         } else {
             return false;
         }
-    }    
+    }
+
+    function subjectInfoUpdate($data) {
+        $qry = "UPDATE `subjects` SET
+              `subject_name` = '{$data['subject_name']}'
+               WHERE id = '{$data['subjectId']}'";
+        $res = $this->updateData($qry);
+        if ($res) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
 ?>

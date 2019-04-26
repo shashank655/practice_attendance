@@ -19,5 +19,10 @@
 </body>
 <script type="text/javascript">
     $(".select2").select2();
+    $('#myModal').modal('show');
+        setTimeout(function() {
+        $('#myModal').modal('hide');
+    }, 5000);
+
 </script>
 </html>

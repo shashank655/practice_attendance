@@ -9,11 +9,11 @@ if ($data['type'] == 'Add') {
     if ($result) {
         $_SESSION['Msg'] = "Subjects added successfully!";
         $_SESSION['success'] = true;
-        header('Location: ' . BASE_ROOT.'add-subjects.php');
+        header('Location: ' . BASE_ROOT.'subject-lists.php');
     } else {
         $_SESSION['Msg'] = "Something went wrong!";
         $_SESSION['success'] = false;
-        header('Location: ' . BASE_ROOT.'class-section.php');
+        header('Location: ' . BASE_ROOT.'subject-lists.php');
     }
 }  else if ($_POST['type'] == 'Update' && $_POST['subjectId'] != NULL) {
     $result = $subjects->subjectInfoUpdate($_POST);

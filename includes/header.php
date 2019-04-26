@@ -1,4 +1,9 @@
-<?php require_once 'employee/config/config.php';
+<?php 
+require_once 'employee/class/dbclass.php'; 
+require_once 'employee/config/config.php';
+require_once 'employee/class/Admin.php';
+$admin = new Admin();
+$adminData = $admin->getAdminInfo($_SESSION['userId']);
 if (!isset($_SESSION['userId'])) {
     header('Location:' . BASE_ROOT);
 }
@@ -27,6 +32,33 @@ if (!isset($_SESSION['userId'])) {
 </head>
 
 <body>
+<!-- Modal Success Popup -->
+<?php if (isset($_SESSION[ 'Msg']) && $_SESSION[ 'Msg'] !='' ) { 
+    if($_SESSION['success']) {
+        $alertValue = 'Success';
+    } else {
+        $alertValue = 'Error';
+    }
+?>
+<div id="myModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><?php echo $alertValue; ?>!</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p><?php echo $_SESSION[ 'Msg']; ?></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php 
+    $_SESSION[ 'Msg']='' ; unset($_SESSION[ 'Msg']);
+} ?>
     <div class="main-wrapper">
         <div class="header"> <!-- Header start -->
             <div class="header-left">
@@ -42,9 +74,16 @@ if (!isset($_SESSION['userId'])) {
             <ul class="nav user-menu float-right">
                 <li class="nav-item dropdown has-arrow">
                     <a href="#" class="dropdown-toggle nav-link user-link" data-toggle="dropdown">
-                        <span class="user-img"><img class="rounded-circle" src="<?php echo BASE_ROOT ?>assets/img/user.jpg" width="40" alt="Admin">
+                    <?php
+                        if (!empty($adminData[0]['admin_profile_image'])) {
+                            $userImage = PROFILE_PIC_IMAGE_PATH . $adminData[0]['admin_profile_image'];
+                        } else {
+                            $userImage = 'assets/img/user.jpg';
+                        }
+                    ?>
+                        <span class="user-img"><img class="rounded-circle" src="<?php echo $userImage; ?>" width="40" alt="Admin">
                             <span class="status online"></span></span>
-                        <span><?php echo $_SESSION['name']; ?></span>
+                        <span><?php echo $adminData[0]['first_name']; ?></span>
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="admin-profile.php">My Profile</a>

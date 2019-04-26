@@ -33,7 +33,14 @@ require_once 'includes/sidebar.php';
                             <div class="profile-view">
                                 <div class="profile-img-wrap">
                                     <div class="profile-img">
-                                        <a href=""><img class="avatar" src="assets/img/user.jpg" alt=""></a>
+                                    <?php
+                                        if (!empty($adminData[0]['admin_profile_image'])) {
+                                            $userImage = PROFILE_PIC_IMAGE_PATH . $adminData[0]['admin_profile_image'];
+                                        } else {
+                                            $userImage = 'assets/img/user.jpg';
+                                        }
+                                    ?>
+                                        <a href=""><img class="avatar" src="<?php echo $userImage; ?>" alt=""></a>
                                     </div>
                                 </div>
                                 <div class="profile-basic">

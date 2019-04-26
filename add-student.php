@@ -42,26 +42,6 @@ require_once 'includes/sidebar.php';
 									</div>
 								</div>
 								<div class="card-body">	
-								<?php if (isset($_SESSION[ 'Msg']) && $_SESSION[ 'Msg'] !='' ) { 
-									if($_SESSION['success']) {
-										$alertClass = 'success';
-										$alertValue = 'Success';
-									} else {
-										$alertClass = 'danger';
-										$alertValue = 'Error';
-									}
-								?>
-							<div class="alert alert-<?php echo $alertClass; ?> alert-dismissible fade show" role="alert"> <strong><?php echo $alertValue; ?>!</strong> 
-								<?php echo $_SESSION[ 'Msg']; ?>
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<script>
-								setTimeout(function() {
-								                    $(".alert").fadeOut("slow");
-								                }, 5000)
-							</script>
-							<?php $_SESSION[ 'Msg']='' ; unset($_SESSION[ 'Msg']); } ?>
 							<form id="addStudentForm" action="employee/process/processAddStudent.php" method="post" novalidate="novalidate" enctype="multipart/form-data" class="custom-mt-form">
 							<input type="hidden" name="type" value="<?php echo $studentId == '' ? 'Add' : 'Update'; ?>" />
 							<input type="hidden" name="studentId" value="<?php echo $studentId; ?>" />

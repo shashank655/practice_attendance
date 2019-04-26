@@ -9,11 +9,11 @@ if ($data['type'] == 'Add') {
     if ($result) {
         $_SESSION['Msg'] = "Class and Section added successfully!";
         $_SESSION['success'] = true;
-        header('Location: ' . BASE_ROOT.'class-section.php');
+        header('Location: ' . BASE_ROOT.'class-section-list.php');
     } else {
         $_SESSION['Msg'] = "Something went wrong!";
         $_SESSION['success'] = false;
-        header('Location: ' . BASE_ROOT.'class-section.php');
+        header('Location: ' . BASE_ROOT.'class-section-list.php');
     }
 } else if ($_POST['type'] == 'insertData' && $_POST['title'] != NULL) {
     $result = $events->eventsInsertData($_POST);

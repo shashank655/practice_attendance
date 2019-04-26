@@ -30,26 +30,6 @@ require_once 'includes/sidebar.php';
                     <div class="col-sm-5 col-5">
                         <h4 class="page-title">Holidays <?php echo date('Y'); ?></h4>
                     </div>
-                    <?php if (isset($_SESSION[ 'Msg']) && $_SESSION[ 'Msg'] !='' ) { 
-									if($_SESSION['success']) {
-										$alertClass = 'success';
-										$alertValue = 'Success';
-									} else {
-										$alertClass = 'danger';
-										$alertValue = 'Error';
-									}
-								?>
-							<div class="alert alert-<?php echo $alertClass; ?> alert-dismissible fade show" role="alert"> <strong><?php echo $alertValue; ?>!</strong> 
-								<?php echo $_SESSION[ 'Msg']; ?>
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<script>
-								setTimeout(function() {
-								                    $(".alert").fadeOut("slow");
-								                }, 5000)
-							</script>
-							<?php $_SESSION[ 'Msg']='' ; unset($_SESSION[ 'Msg']); } ?>
                     <div class="col-sm-5 col-5 text-right m-b-30">
                         <a href="#" class="btn btn-primary btn-rounded" data-toggle="modal" data-target="#sms_parents"><i class="fa fa-plus"></i> SMS for Parents</a>
                     </div>

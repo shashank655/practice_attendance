@@ -27,8 +27,8 @@ if ($data['type'] == 'Add') {
         $_SESSION['success'] = false;
         header('Location: ' . BASE_ROOT.'add-student.php');
     }    
-} else if ($_POST['type'] == 'delete' && $_POST['holidayId'] != NULL) {
-    $res = $holidays->DeleteHoliday($_POST['holidayId']);
+} else if ($data['type'] == 'deleteHoliday') {
+    $res = $holidays->DeleteHoliday($data['id']);
     if ($res) {
         $_SESSION['Msg'] = "Holiday deleted successfully!";
         $_SESSION['success'] = true;

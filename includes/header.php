@@ -3,7 +3,11 @@ require_once 'employee/class/dbclass.php';
 require_once 'employee/config/config.php';
 require_once 'employee/class/Admin.php';
 $admin = new Admin();
-$adminData = $admin->getAdminInfo($_SESSION['userId']);
+if($_SESSION['user_role'] == '1') {
+    $adminData = $admin->getAdminInfo($_SESSION['userId']);
+} else if($_SESSION['user_role'] == '2') {
+    $adminData = $admin->getTeacherInfo($_SESSION['userId']);
+}
 if (!isset($_SESSION['userId'])) {
     header('Location:' . BASE_ROOT);
 }
@@ -75,8 +79,10 @@ if (!isset($_SESSION['userId'])) {
                 <li class="nav-item dropdown has-arrow">
                     <a href="#" class="dropdown-toggle nav-link user-link" data-toggle="dropdown">
                     <?php
-                        if (!empty($adminData[0]['admin_profile_image'])) {
+                        if (!empty($adminData[0]['admin_profile_image']) && $_SESSION['user_role'] == '1') {
                             $userImage = PROFILE_PIC_IMAGE_PATH . $adminData[0]['admin_profile_image'];
+                        } else if (!empty($adminData[0]['profile_image']) && $_SESSION['user_role'] == '2') {
+                            $userImage = PROFILE_PIC_IMAGE_PATH . $adminData[0]['profile_image'];
                         } else {
                             $userImage = 'assets/img/user.jpg';
                         }

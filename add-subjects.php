@@ -22,6 +22,7 @@ require_once 'includes/sidebar.php';
 					<div class="col-lg-5 col-md-12 col-sm-12 col-12">
 						<ul class="list-inline breadcrumb float-right">
 							<li class="list-inline-item"><a href="dashboard.php">Home</a></li>
+                            <li class="list-inline-item"> Add Subject</li>
 						</ul>
 					</div>
 				</div>
@@ -54,3 +55,15 @@ require_once 'includes/sidebar.php';
         </div>
     </div>
     <?php require_once 'includes/footer.php'; ?>
+    <script type="text/javascript">
+    $(function(){
+        $("#addSubjects").validate({
+            ignore: "input[type='text']:hidden",
+            rules:{
+                subject_name:{
+                    required:true
+                }
+            }
+        });
+    });
+    </script>

@@ -11,7 +11,7 @@ require_once 'includes/sidebar.php';
 						</div>
 						<div class="col-lg-5 col-md-12 col-sm-12 col-12">
 							<ul class="list-inline breadcrumb float-right">
-								<li class="list-inline-item"><a href="#">Home</a></li>
+								<li class="list-inline-item"><a href="dashboard.php">Home</a></li>
 								<li class="list-inline-item"> Calendar</li>
 							</ul>
 						</div>

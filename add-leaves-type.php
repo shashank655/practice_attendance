@@ -1,6 +1,13 @@
-<?php 
+<?php
+require_once 'employee/class/dbclass.php'; 
 require_once 'includes/header.php'; 
-require_once 'includes/sidebar.php'; 
+require_once 'includes/sidebar.php';
+require_once 'employee/class/Leaves.php';
+$leaves = new Leaves();
+
+$leaveId = (isset($_REQUEST['id'])) ? $_REQUEST['id'] : NULL; 
+if ($leaveId != NULL) { $result = $leaves->getLeaveTypeInfo($leaveId); 
+    if ($result == NULL) { $leaveId = ''; } }
 ?>
 <div class="page-wrapper"> <!-- content -->
             <div class="content container-fluid">
@@ -12,6 +19,7 @@ require_once 'includes/sidebar.php';
 					<div class="col-lg-5 col-md-12 col-sm-12 col-12">
 						<ul class="list-inline breadcrumb float-right">
 							<li class="list-inline-item"><a href="dashboard.php">Home</a></li>
+                            <li class="list-inline-item"> Add Leave Type</li>
 						</ul>
 					</div>
 				</div>
@@ -21,12 +29,25 @@ require_once 'includes/sidebar.php';
                     <div class="col-lg-12">
                         <div class="card-box">
                             <h4 class="card-title">Add Leave</h4>
-                            <form id="addSubjects" action="employee/process/processLeavesTypes.php" method="post" novalidate="novalidate">
-                            <input type="hidden" name="type" value="Add" />
+                            <form id="addLeaveType" action="employee/process/processLeavesTypes.php" method="post" novalidate="novalidate">
+                            <input type="hidden" name="type" value="<?php echo $leaveId == '' ? 'Add' : 'Update'; ?>" />
+                            <input type="hidden" name="leaveId" value="<?php echo $leaveId; ?>" />
                                 <div class="form-group row ">
                                     <label class="col-form-label col-md-2">Leave Type</label>
                                     <div class="col-md-10">
-                                        <input type="text" name="leave_type" class="form-control">
+                                        <input type="text" name="leave_type" class="form-control" value="<?php
+                                                if (isset($result[0]['leave_type']))
+                                                echo htmlspecialchars($result[0]['leave_type']);
+                                                ?>">
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-form-label col-md-2">Number of days</label>
+                                    <div class="col-md-10">
+                                        <input type="text" name="days" class="form-control" value="<?php
+                                                if (isset($result[0]['days']))
+                                                echo htmlspecialchars($result[0]['days']);
+                                                ?>">
                                     </div>
                                 </div>
                             <div class="form-group text-center custom-mt-form-group">
@@ -40,3 +61,18 @@ require_once 'includes/sidebar.php';
         </div>
     </div>
     <?php require_once 'includes/footer.php'; ?>
+    <script type="text/javascript">
+    $(function(){
+        $("#addLeaveType").validate({
+            ignore: "input[type='text']:hidden",
+            rules:{
+                leave_type:{
+                    required:true
+                },                
+                days:{
+                    required:true
+                }
+            }
+        });
+    });
+    </script>

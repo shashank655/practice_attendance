@@ -1,6 +1,13 @@
 <?php 
+require_once 'employee/config/config.php';
+require_once 'employee/class/dbclass.php';
+require_once 'employee/class/ClassSections.php';
+$classes = new ClassSections(); 
+$classId = (isset($_REQUEST['id'])) ? $_REQUEST['id'] : NULL; 
+if ($classId != NULL) { $result = $classes->getClassInfo($classId); 
+    if ($result == NULL) { $classId = ''; } }
 require_once 'includes/header.php'; 
-require_once 'includes/sidebar.php'; 
+require_once 'includes/sidebar.php';
 ?>
 <div class="page-wrapper"> <!-- content -->
             <div class="content container-fluid">
@@ -12,6 +19,7 @@ require_once 'includes/sidebar.php';
 					<div class="col-lg-5 col-md-12 col-sm-12 col-12">
 						<ul class="list-inline breadcrumb float-right">
 							<li class="list-inline-item"><a href="dashboard.php">Home</a></li>
+                            <li class="list-inline-item"> Add Classes</li>
 						</ul>
 					</div>
 				</div>
@@ -22,13 +30,29 @@ require_once 'includes/sidebar.php';
                         <div class="card-box">
                             <h4 class="card-title">Classes & Sections</h4>
                             <form id="addClassesSections" action="employee/process/processClassSections.php" method="post" novalidate="novalidate">
-                            <input type="hidden" name="type" value="Add" />
+                            <input type="hidden" name="type" value="<?php echo $classId == '' ? 'Add' : 'Update'; ?>" />
+                            <input type="hidden" name="classId" value="<?php echo $classId; ?>" />
                                 <div class="form-group row ">
                                     <label class="col-form-label col-md-2">Class Name</label>
                                     <div class="col-md-10">
-                                        <input type="text" name="className" class="form-control">
+                                        <input type="text" name="className" class="form-control" value="<?php
+                                                if (isset($result[0]['class_name']))
+                                                echo htmlspecialchars($result[0]['class_name']);
+                                                ?>">
                                     </div>
                                 </div>
+                                <?php if(!empty($result)) { ?>
+                                <?php foreach ($result as $key => $value) { ?>
+                                    <div id="" class="form-group row">    
+                                        <label class="col-form-label col-md-2">Sections Name</label>
+                                            <div class="col-md-10">
+                                                <input type="text" name="addSection[]" class="form-control" value="<?php
+                                                        if (isset($value['section_name']))
+                                                        echo htmlspecialchars($value['section_name']);
+                                                        ?>">
+                                            </div>
+                                    </div>           
+                                    <?php } } ?>
                                 <div id="main-sections-div">
 	                                
                                 </div>

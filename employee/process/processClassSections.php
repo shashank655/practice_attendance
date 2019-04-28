@@ -15,6 +15,17 @@ if ($data['type'] == 'Add') {
         $_SESSION['success'] = false;
         header('Location: ' . BASE_ROOT.'class-section-list.php');
     }
+} else if ($_POST['type'] == 'Update' && $_POST['classId'] != NULL) {
+    $result = $classes->classInfoUpdate($_POST);
+    if ($result) {
+        $_SESSION['Msg'] = "Class and Section updated successfully!";
+        $_SESSION['success'] = true;
+        header('Location: ' . BASE_ROOT.'class-section-list.php');
+    } else {
+        $_SESSION['Msg'] = "Something went wrong!";
+        $_SESSION['success'] = false;
+        header('Location: ' . BASE_ROOT.'class-section-list.php');
+    }    
 } else if ($_POST['type'] == 'insertData' && $_POST['title'] != NULL) {
     $result = $events->eventsInsertData($_POST);
     if ($result) {
@@ -28,11 +39,17 @@ if ($data['type'] == 'Add') {
 } else if ($_POST['type'] == 'updateEvent' && $_POST['id'] != NULL ){
     $sectionData = $events->updateEvent($_POST);
     return true;
-} else if ($_POST['type'] == 'deleteEvent' && $_POST['id'] != NULL) {
-    $result = $events->eventDelete($_POST['id']);
+} else if ($data['type'] == 'deleteClasses') {
+    $result = $classes->deleteClasses($data['id']);
     if ($result) {
-        return true;
-    }    
+        $_SESSION['Msg'] = "Class & Sections deleted successfully!";
+        $_SESSION['success'] = true;
+        header('Location: ' . BASE_ROOT.'class-section-list.php');
+    } else {
+        $_SESSION['Msg'] = "Something went wrong!";
+        $_SESSION['success'] = false;
+        header('Location: ' . BASE_ROOT.'class-section-list.php');
+    }   
 } else {
     header("Location: ". BASE_ROOT);
 }

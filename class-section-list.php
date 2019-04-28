@@ -20,6 +20,7 @@ require_once 'includes/sidebar.php';
 						<div class="col-lg-5 col-md-12 col-sm-12 col-12">
 							<ul class="list-inline breadcrumb float-right">
 								<li class="list-inline-item"><a href="dashboard.php">Home</a></li>
+                                <li class="list-inline-item">Class List</li>
 							</ul>
 						</div>
 					</div>
@@ -41,6 +42,7 @@ require_once 'includes/sidebar.php';
                                     <tr>
                                         <th style="min-width:50px;">S.No.</th>
                                         <th style="min-width:50px;">Class Name</th>
+                                        <th style="min-width:50px;">Sections</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -49,13 +51,14 @@ require_once 'includes/sidebar.php';
                                     <tr>
                                         <td><?php echo $i; ?></td>
                                         <td><?php echo $value['class_name']; ?></td>
+                                        <td><?php echo $value['sections']; ?></td>
                                         <td class="text-right" >
 											<a href="class-section.php?id=<?php echo $value['id']; ?>" class="btn btn-primary btn-sm mb-1">
 												<i class="fa fa-pencil" aria-hidden="true"></i>
 											</a>
-											<button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">
-											<i class="fa fa-trash" aria-hidden="true"></i>
-											</button>
+											<a href="employee/process/processClassSections.php?type=deleteClasses&id=<?php echo $value['id']; ?>" class="btn btn-danger btn-sm mb-1">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </a>
 										</td>
                                     </tr>
                                 	<?php $i++; } ?>

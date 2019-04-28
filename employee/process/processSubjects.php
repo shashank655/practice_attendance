@@ -39,11 +39,17 @@ if ($data['type'] == 'Add') {
 } else if ($_POST['type'] == 'updateEvent' && $_POST['id'] != NULL ){
     $sectionData = $events->updateEvent($_POST);
     return true;
-} else if ($_POST['type'] == 'deleteEvent' && $_POST['id'] != NULL) {
-    $result = $events->eventDelete($_POST['id']);
+} else if ($data['type'] == 'deleteSubjects') {
+    $result = $subjects->deleteSubjects($data['id']);
     if ($result) {
-        return true;
-    }    
+        $_SESSION['Msg'] = "Subject deleted successfully!";
+        $_SESSION['success'] = true;
+        header('Location: ' . BASE_ROOT.'subject-lists.php');
+    } else {
+        $_SESSION['Msg'] = "Something went wrong!";
+        $_SESSION['success'] = false;
+        header('Location: ' . BASE_ROOT.'subject-lists.php');
+    }   
 } else {
     header("Location: ". BASE_ROOT);
 }

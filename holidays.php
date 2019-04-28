@@ -18,7 +18,7 @@ require_once 'includes/sidebar.php';
 						</div>
 						<div class="col-lg-5 col-md-12 col-sm-12 col-12">
 							<ul class="list-inline breadcrumb float-right">
-								<li class="list-inline-item"><a href="#">Home</a></li>
+								<li class="list-inline-item"><a href="dashboard.php">Home</a></li>
 								<li class="list-inline-item"> Holidays</li>
 							</ul>
 						</div>
@@ -65,7 +65,7 @@ require_once 'includes/sidebar.php';
                                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     <a class="dropdown-item" href="<?php echo $value['id']?>" data-toggle="modal" data-target="#edit_holiday" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                    <a class="dropdown-item" href="" val="<?php echo $value['id']?>" id="delete_holiday" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                    <a class="dropdown-item" href="employee/process/processHolidays.php?type=deleteHoliday&id=<?php echo $value['id']; ?>" val="<?php echo $value['id']?>" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -177,21 +177,21 @@ require_once 'includes/sidebar.php';
             }
         });
     });
-	$( "#delete_holiday" ).click(function() {
-        var id = $(this).attr('val');
-        var r = confirm("Are You Sure Delete this Holiday ?");
-            if (r==true){
-                $.ajax({
-                    type: "POST",
-                    url: "employee/process/processHolidays.php",
-                    data:{holidayId:id,type:'delete'},
-                    beforeSend : function () {
-                    },
-                    success:function(data){
-                    	alert('Deleted Successfully');
-                    }
-                });
-            }else{   
-            }
-    });
+	// $( "#delete_holiday" ).click(function() {
+ //        var id = $(this).attr('val');
+ //        var r = confirm("Are You Sure Delete this Holiday ?");
+ //            if (r==true){
+ //                $.ajax({
+ //                    type: "POST",
+ //                    url: "employee/process/processHolidays.php",
+ //                    data:{holidayId:id,type:'delete'},
+ //                    beforeSend : function () {
+ //                    },
+ //                    success:function(data){
+ //                    	alert('Deleted Successfully');
+ //                    }
+ //                });
+ //            }else{   
+ //            }
+ //    });
     </script>

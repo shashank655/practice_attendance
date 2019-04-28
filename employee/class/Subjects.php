@@ -24,8 +24,8 @@ class Subjects extends MySQLCN {
         $fetch_data = $this->select($fetch);
         return $fetch_data;
     }    
-    function DeleteStudent($sId) {
-        $qry = "DELETE FROM `students` WHERE id = '{$sId}'";
+    function deleteSubjects($sId) {
+        $qry = "DELETE FROM `subjects` WHERE id = '{$sId}'";
         $res = $this->deleteData($qry);
         if ($res) {
             return true;

@@ -21,7 +21,6 @@ require_once 'includes/sidebar.php';
                         <div class="col-lg-5 col-md-12 col-sm-12 col-12">
                             <ul class="list-inline breadcrumb float-right">
                                 <li class="list-inline-item"><a href="dashboard.php">Home</a></li>
-                                <li class="list-inline-item"><a href="add-student.php">Students</a></li>
                                 <li class="list-inline-item"> All Students</li>
                             </ul>
                         </div>

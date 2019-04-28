@@ -1,10 +1,9 @@
 <?php 
 require_once 'employee/class/dbclass.php'; 
 require_once 'employee/config/config.php'; 
-require_once 'employee/class/Subjects.php'; 
-require_once 'employee/class/CommonFunction.php'; 
-$subjects=new Subjects(); 
-$resultAllSubjects=$subjects->getSubjectLists(); 
+require_once 'employee/class/Exams.php';  
+$exams=new Exams(); 
+$resultExamList=$exams->getExamsLists(); 
 ?>
 
 <?php 
@@ -16,12 +15,12 @@ require_once 'includes/sidebar.php';
 			<div class="page-header">
 					<div class="row">
 						<div class="col-lg-7 col-md-12 col-sm-12 col-12">
-							<h5 class="text-uppercase">Subjects</h5>
+							<h5 class="text-uppercase">Exams</h5>
 						</div>
 						<div class="col-lg-5 col-md-12 col-sm-12 col-12">
 							<ul class="list-inline breadcrumb float-right">
 								<li class="list-inline-item"><a href="dashboard.php">Home</a></li>
-                                <li class="list-inline-item"> Subject List</li>
+                                <li class="list-inline-item"> Exams List</li>
 							</ul>
 						</div>
 					</div>
@@ -31,7 +30,7 @@ require_once 'includes/sidebar.php';
                       
                     </div>
                     <div class="col-sm-8 col-9 text-right m-b-20">
-                        <a href="add-subjects.php" class="btn btn-primary float-right btn-rounded"><i class="fa fa-plus"></i> Add Subjects</a>
+                        <a href="add-exams.php" class="btn btn-primary float-right btn-rounded"><i class="fa fa-plus"></i> Add Exams</a>
                     </div>
                 </div>
 			<div class="content-page">
@@ -42,22 +41,29 @@ require_once 'includes/sidebar.php';
                                 <thead>
                                     <tr>
                                         <th style="min-width:50px;">S.No.</th>
-                                        <th style="min-width:50px;">Subject Name</th>
+                                        <th style="min-width:50px;">Class</th>
+                                        <th style="min-width:50px;">Sections</th>
+                                        <th style="min-width:50px;">Date of exam</th>
+                                        <th style="min-width:50px;">Exam</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <?php $i=1; ?>
-                                	<?php foreach ($resultAllSubjects as $key => $value) { ?>
+                                	<?php foreach ($resultExamList as $key => $value) { ?>
                                     <tr>
                                         <td><?php echo $i; ?></td>
-                                        <td><?php echo $value['subject_name']; ?></td>
+                                        <td><?php echo $value['class_name']; ?></td>
+                                        <td><?php echo $value['section_name'];?></td>
+                                        <td><?php echo $value['date_of_exam']; ?></td>
+                                        <td><?php echo $value['exam_name']; ?></td>
                                         <td class="text-right" >
-											<a href="add-subjects.php?id=<?php echo $value['id']; ?>" class="btn btn-primary btn-sm mb-1">
+											<a href="add-exams.php?examId=<?php echo $value[0]; ?>" class="btn btn-primary btn-sm mb-1">
 												<i class="fa fa-pencil" aria-hidden="true"></i>
 											</a>
-											<a href="employee/process/processSubjects.php?type=deleteSubjects&id=<?php echo $value['id']; ?>" class="btn btn-danger btn-sm mb-1">
+                                            <a href="employee/process/processExams.php?type=deleteExams&id=<?php echo $value[0]; ?>" class="btn btn-danger btn-sm mb-1">
                                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                             </a>
+											
 										</td>
                                     </tr>
                                 	<?php $i++; } ?>

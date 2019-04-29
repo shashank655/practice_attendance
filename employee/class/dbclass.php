@@ -2,7 +2,7 @@
 require_once 'PHPMailer/class.phpmailer.php';
 class MySQLCN {
 
-    function MySQLCN() {
+    function __construct() {
         $user = DB_USERNAME;
         $pass = DB_PASSWORD;
         $server = DB_SERVER;

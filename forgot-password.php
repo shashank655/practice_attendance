@@ -66,12 +66,18 @@ $isAdmin = $common_function->isAdmin();
                             <div class="form-group text-center custom-mt-form-group">
                                 <button class="btn btn-primary account-btn" type="submit">Submit</button>
                             </div>
+
+                            <?php if($isAdmin != true) { ?>
                             <div class="d-flex text-center justify-content-between">
+                            <?php } else {?>
+                                <div class="text-center">
+                            <?php } ?>
                                 <a href="index.php">Already have an account?</a>
                                 <?php if($isAdmin != true) { ?>
                                 <a href="signup.php">Proceed to SignUp</a>
                                 <?php } ?>
                             </div>
+
                         </form>
                     </div>
                 </div>

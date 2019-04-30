@@ -55,6 +55,9 @@
                         <li class="<?php if($currentURL =='exams-list.php' || $currentURL =='add-exams.php'){echo 'active';}?>">
                             <a href="exams-list.php"><i class="fa fa-table" aria-hidden="true"></i>Exams List</a>
                         </li>
+                        <li class="<?php if($currentURL =='student-attendance.php' || $currentURL =='student-attendance.php'){echo 'active';}?>">
+                            <a href="student-attendance.php"><i class="fa fa-table" aria-hidden="true"></i>Student Attendance</a>
+                        </li>
 						<!-- <li class="submenu">
                             <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Students</span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">

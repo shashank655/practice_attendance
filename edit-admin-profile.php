@@ -44,6 +44,34 @@ require_once 'includes/sidebar.php';
                                         		?>" />
 											<i class="bar"></i>
 										</div>
+										<div class="form-group custom-mt-form-group">
+											<input type="text" placeholder="School Name" name="school_name" value="<?php
+                                        		if (isset($adminInfo[0]['school_name']))
+                                            	echo htmlspecialchars($adminInfo[0]['school_name']);
+                                        		?>" />
+											<i class="bar"></i>
+										</div>
+										<div class="form-group custom-mt-form-group">
+											<input type="text" placeholder="Phone Number" name="phone_number" value="<?php
+                                        		if (isset($adminInfo[0]['phone_number']))
+                                            	echo htmlspecialchars($adminInfo[0]['phone_number']);
+                                        		?>" />
+											<i class="bar"></i>
+										</div>
+										<div class="form-group custom-mt-form-group">
+											<input type="text" placeholder="Address" name="address" value="<?php
+                                        		if (isset($adminInfo[0]['address']))
+                                            	echo htmlspecialchars($adminInfo[0]['address']);
+                                        		?>" />
+											<i class="bar"></i>
+										</div>
+										<div class="form-group custom-mt-form-group">
+											<input type="text" placeholder="Designation" name="designation" value="<?php
+                                        		if (isset($adminInfo[0]['designation']))
+                                            	echo htmlspecialchars($adminInfo[0]['designation']);
+                                        		?>" />
+											<i class="bar"></i>
+										</div>
 									<div class="col-lg-12 col-md-12 col-sm-12 col-12">
 										<div class="form-group custom-mt-form-group">
 											<input type="file" name="admin_profile_image" id="admin_profile_image" style="margin-bottom:10px;">

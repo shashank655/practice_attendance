@@ -54,7 +54,23 @@ require_once 'includes/sidebar.php';
                                             <ul class="personal-info">
                                                 <li>
                                                     <span class="title">Email:</span>
-                                                    <span class="text"><a href=""><?php echo $adminData[0]['email_address'];?></a></span>
+                                                    <span class="text"><?php echo $adminData[0]['email_address'];?></span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">School Name:</span>
+                                                    <span class="text"><?php echo $adminData[0]['school_name'];?></span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Phone:</span>
+                                                    <span class="text"><?php echo $adminData[0]['phone_number'];?></span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Address:</span>
+                                                    <span class="text"><?php echo $adminData[0]['address'];?></span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Designation:</span>
+                                                    <span class="text"><?php echo $adminData[0]['designation'];?></span>
                                                 </li>
                                             </ul>
                                         </div>

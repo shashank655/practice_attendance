@@ -95,6 +95,10 @@ class Admin extends MySQLCN {
         $qry = "UPDATE `users` SET
               `first_name` = '{$data['first_name']}', 
               `last_name` = '{$data['last_name']}',
+              `school_name` = '{$data['school_name']}',
+              `phone_number` = '{$data['phone_number']}',
+              `address` = '{$data['address']}',
+              `designation` = '{$data['designation']}',
               `admin_profile_image` = '{$profileImageName}'
                WHERE id = '{$data['userId']}'";
         $res = $this->updateData($qry);

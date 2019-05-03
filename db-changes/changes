@@ -79,4 +79,5 @@ CREATE TABLE `practice`.`exams_list` ( `id` INT(11) NULL AUTO_INCREMENT , `class
 `school_name` varchar(200) DEFAULT NULL,               
           `phone_number` varchar(200) DEFAULT NULL,              
           `address` varchar(200) DEFAULT NULL,                   
-          `designation` varchar(200) DEFAULT NULL,                     
+          `designation` varchar(200) DEFAULT NULL,
+CREATE TABLE `practice`.`leaves_request` ( `id` INT(11) NOT NULL AUTO_INCREMENT , `leave_type_id` INT(11) NOT NULL , `number_of_days` VARCHAR(100) NULL , `effective_from` VARCHAR(100) NULL , `reason_to_leave` VARCHAR(200) NULL , `leave_status` VARCHAR(100) NOT NULL DEFAULT '0' COMMENT '0->pending, 1->approve' , `notify_status` VARCHAR(100) NOT NULL DEFAULT '0' COMMENT '0->unread , 1->read' , `createdDate` TIMESTAMP NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;                               

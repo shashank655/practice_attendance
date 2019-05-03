@@ -46,15 +46,22 @@
                         <li class="<?php if($currentURL =='events.php'){echo 'active';}?>">
                             <a href="events.php"><i class="fa fa-calendar" aria-hidden="true"></i> Events</a>
                         </li>
+                        <?php if($_SESSION['user_role'] == '1' ) { ?>
                         <li class="<?php if($currentURL =='leaves-types.php'){echo 'active';}?>">
                             <a href="leaves-types.php"><i class="fa fa-table" aria-hidden="true"></i>Add Leaves Types</a>
                         </li>
-                        <li class="<?php if($currentURL =='request-leave-list.php' || $currentURL =='add-leaves-type.php'){echo 'active';}?>">
-                            <a href="request-leave-list.php"><i class="fa fa-table" aria-hidden="true"></i>Request Leave List</a>
+                        <li class="<?php if($currentURL =='leave-requests-list.php'){echo 'active';}?>">
+                            <a href="leave-requests-list.php"><i class="fa fa-table" aria-hidden="true"></i>Leave Requests List</a>
                         </li>
                         <li class="<?php if($currentURL =='exams-list.php' || $currentURL =='add-exams.php'){echo 'active';}?>">
                             <a href="exams-list.php"><i class="fa fa-table" aria-hidden="true"></i>Exams List</a>
                         </li>
+                        <?php } ?>
+                        <?php if($_SESSION['user_role'] == '2' ) { ?>
+                        <li class="<?php if($currentURL =='request-leave-list.php' || $currentURL =='add-leaves-type.php'){echo 'active';}?>">
+                            <a href="request-leave-list.php"><i class="fa fa-table" aria-hidden="true"></i>Request Leave List</a>
+                        </li>
+                        <?php } ?>
                         <li class="<?php if($currentURL =='student-attendance.php' || $currentURL =='student-attendance.php'){echo 'active';}?>">
                             <a href="student-attendance.php"><i class="fa fa-table" aria-hidden="true"></i>Student Attendance</a>
                         </li>

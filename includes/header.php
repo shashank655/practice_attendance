@@ -33,7 +33,7 @@ if (!isset($_SESSION['userId'])) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
-    <title>Preschool - Bootstrap Admin Template</title>
+    <title>Adhyay</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="<?php echo BASE_ROOT ?>assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo BASE_ROOT ?>assets/css/font-awesome.min.css">
@@ -80,7 +80,7 @@ if (!isset($_SESSION['userId'])) {
     <div class="main-wrapper">
         <div class="header"> <!-- Header start -->
             <div class="header-left">
-                <a href="index.html" class="logo">
+                <a href="dashboard.php" class="logo">
                     <img src="<?php echo BASE_ROOT ?>assets/img/logo.png" alt="">
                     <!-- <span class="text-uppercase">Preschool</span> -->
                 </a>

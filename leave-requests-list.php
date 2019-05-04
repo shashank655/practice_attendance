@@ -51,15 +51,21 @@ require_once 'includes/sidebar.php';
                                         <td><?php echo $value['leave_type']; ?></td>
                                         <td><?php echo $value['effective_from']; ?></td>
                                         <td><?php echo $value['number_of_days']; ?></td>
-                                        <td><?php 
+                                        <?php 
                                             if($value['leave_status'] == '0') {
                                                 $status = 'Pending';
                                             } else if($value['leave_status'] == '1') {
                                                 $status = 'Approve';
                                             } else {
                                                 $status = 'Rejected';
-                                            }
-                                        echo $status; ?></td>
+                                            } ?>
+                                        <td class="text-center">
+                                            <div class="action-label">
+                                                <a class="btn btn-white btn-sm btn-rounded" href="#">
+                                                    <i class="fa fa-dot-circle-o text-success"></i> <?php echo $status; ?>
+                                                </a>
+                                            </div>
+                                        </td>
                                         <td class="">
                                             <a href="view-leave-requests.php?leaveId=<?php echo $value[0]; ?>" class="btn btn-primary btn-sm mb-1">
                                                 <i class="fa fa-pencil" aria-hidden="true"></i>

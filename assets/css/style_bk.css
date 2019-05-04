@@ -67,8 +67,7 @@ html {
 body {
 	font-family: 'Roboto', sans-serif;
 	font-size: 0.875rem;
-	color: #333;
-	/*background-color: #eaeef3;*/
+	color: #333;	/*background-color: #eaeef3;*/
 	overflow-x: hidden;
 	height: 100%;
 }
@@ -199,9 +198,15 @@ textarea.form-control {
 }
 
 .table-striped > tbody > tr:nth-of-type(2n+1) {
-	background-color: #e4f2f3;
+	background-color: #89b2db;
 }
 
+.table-striped > tbody > tr:nth-of-type(2n+1) td {
+	color: #ffffff;
+}
+.table-striped > tbody > tr:nth-of-type(2n+1) td h2 a{
+	color: #ffffff;
+}
 table.table td .avatar {
 	margin: 0 5px 0 0;
 }
@@ -359,7 +364,7 @@ div.dataTables_wrapper div.dataTables_paginate {
 }
 
 .page-title {
-	color: #565656;
+	color: #000000;
 	font-size: 21px;
 	font-weight: normal;
 	margin-bottom: 5px;
@@ -463,22 +468,22 @@ div.dataTables_wrapper div.dataTables_paginate {
 
 .bg-primary,
 .badge-primary {
-	background-color: #01c0c8 !important;
+	background-color: #0b2035 !important;
 }
 
 .bg-success,
 .badge-success {
-	background-color: #8944d7 !important;
+	background-color: #36597c !important;
 }
 
 .bg-info,
 .badge-info {
-	background-color: #009efb !important;
+	background-color: #4e87c0 !important;
 }
 
 .bg-warning,
 .badge-warning {
-	background-color: #776fd6 !important;
+	background-color: #086ed5 !important;
 }
 
 .bg-danger,
@@ -521,22 +526,29 @@ div.dataTables_wrapper div.dataTables_paginate {
 }
 
 .btn-primary {
-	background-color: #01c0c8;
-	border: 1px solid #01c0c8;
+	background-color: #254769;
+	border: 1px solid #254769;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active {
-	background-color: transparent;
-	border: 1px solid #ffffff;
+	background-color: #4e87c0;
+	border: 1px solid transparent;
 }
 
 .btn-primary:hover,
-.btn-primary:focus,
-.btn-primary.active,
-.btn-primary:active,
+.btn-primary:focus,		
+.btn-primary.active,		
+.btn-primary:active,.btn-primary:active,
 .open > .dropdown-toggle.btn-primary {
-	background-color: #01acb2;
-	border: 1px solid #01c4cb;
+	background-color: #4e87c0;
+	border: 1px solid #4e87c0;
+}
+	
+.btn-primary:focus,
+.btn-primary.active {
+	background-color: #4e87c0;
+	border: 1px solid transparent;
+	box-shadow: 2px 2px 2px 1px #4e87c0;
 }
 
 .btn-primary.active.focus,
@@ -553,19 +565,23 @@ div.dataTables_wrapper div.dataTables_paginate {
 }
 
 .btn-secondary {
-	background-color: #8E37D7;
-	border: 1px solid #8E37D7;
+	background-color: #4e87c0;
+	border: 1px solid #4e87c0;
+	box-shadow: 2px 2px 2px 1px #254769;
 }
 
 .btn-secondary:hover,
-.btn-secondary:focus,
 .btn-secondary.active,
 .btn-secondary:active,
 .open > .dropdown-toggle.btn-secondary {
-	background-color: #6d22aa;
-	border: 1px solid  #6d22aa;
+	background-color: #4e87c0;
+	border: 1px solid  #4e87c0;
 }
-
+.btn-secondary:focus {
+	background-color: #4e87c0;
+	border: 1px solid  #4e87c0;
+	box-shadow: none;
+}
 .btn-secondary.active.focus,
 .btn-secondary.active:focus,
 .btn-secondary.active:hover,
@@ -580,8 +596,8 @@ div.dataTables_wrapper div.dataTables_paginate {
 }
 
 .btn-success {
-	background-color: #55ce63;
-	border: 1px solid #55ce63
+	background-color: #086ed5;
+	border: 1px solid #086ed5
 }
 
 .btn-success:hover,
@@ -589,8 +605,10 @@ div.dataTables_wrapper div.dataTables_paginate {
 .btn-success.active,
 .btn-success:active,
 .open > .dropdown-toggle.btn-success {
-	background: #4ab657;
-	border: 1px solid #4ab657
+	background: #254769;
+	border: 1px solid #254769;
+	box-shadow: none;
+	color: #fff;
 }
 
 .btn-success.active.focus,
@@ -816,7 +834,17 @@ textarea.form-control {
 .modal-body a:hover {
 	color: #fff;
 }
+.text-muted {
+	color: #000 !important;
+	font-weight: 600;
+}
 
+.btn-secondary:not(:disabled):not(.disabled).active:focus,
+.btn-secondary:not(:disabled):not(.disabled):active:focus,.show>.btn-secondary.dropdown-toggle:focus {
+	background-color: #254769;
+	box-shadow: none;
+	border-color: transparent;
+}
 /*------------------------------------------------------------------
 [5. Animation]
 */
@@ -902,7 +930,7 @@ textarea.form-control {
 [6. Header]
 */
 .header {
-	background-image: linear-gradient(-225deg, #01c0c8 0%, #6B8DD6 48%, #8E37D7 100%);
+	background-image: linear-gradient(-225deg, #4f89c2 0%, #254769 48%, #0c2237 100%);
 	left: 0;
 	position: fixed;
 	right: 0;
@@ -913,7 +941,7 @@ textarea.form-control {
 }
 
 .header .header-left {
-	background: #fff;
+	background: transparent;
 	float: left;
 	height: 60px;
 	padding: 0 20px;
@@ -933,7 +961,9 @@ textarea.form-control {
 	display: block;
 	line-height: 60px;
 }
-
+.logo img{
+	height: 35px;
+}
 .header .navbar-nav .badge {
 	position: absolute;
 	right: 7px;
@@ -1036,6 +1066,80 @@ textarea.form-control {
 	background-color: #faa937;
 }
 
+
+
+
+
+.custom_checkbox {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  height: 25px;
+  margin-bottom: 0;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.custom_checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.custom_checkbox .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.custom_checkbox:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.custom_checkbox input:checked ~ .checkmark {
+  background-color: #254769;
+}
+.custom_checkbox.red input:checked ~ .checkmark{
+	background-color:#f62d51;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.custom_checkbox .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.custom_checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.custom_checkbox .checkmark:after {
+  left: 10px;
+  top: 7px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
 /*------------------------------------------------------------------
 [7. Sidebar]
 */
@@ -1068,7 +1172,7 @@ textarea.form-control {
 }
 
 .sidebar-menu li a {
-	color: #888;
+	color: #000;
 	display: block;
 	font-size: 14px;
 	height: auto;
@@ -1077,8 +1181,13 @@ textarea.form-control {
 	padding: 0 20px;
 }
 
+.sidebar-menu li a.subdrop {
+	color: #fff;
+	background-color: #254769;
+}
 .sidebar-menu li a:hover {
-	color: #01c0c8;
+	color: #ffffff;
+	background-color: #254769;
 }
 
 .sidebar-menu li a > .badge {
@@ -1099,7 +1208,7 @@ textarea.form-control {
 
 .sidebar-menu li.active a {
 	color: #fff;
-	background-color: #01c0c8;
+	background-color: #254769;
 }
 
 .menu-title {
@@ -1160,8 +1269,9 @@ textarea.form-control {
 }
 
 .sidebar-menu ul ul a.active {
-	color: #01c0c8;
+	color: #ffffff;
 	text-decoration: underline;
+	background: #4e87c0;
 }
 
 .mobile-user-menu {
@@ -1180,7 +1290,7 @@ textarea.form-control {
 }
 
 .mobile-user-menu > a {
-	color: #01c0c8;
+	color: #ffffff;
 	padding: 0;
 }
 
@@ -1217,9 +1327,11 @@ textarea.form-control {
 }
 
 #sidebar-menu ul ul {
-	background-color: #f3f3f3;
+	background-color: #d7e7f7;
 }
-
+#sidebar-menu ul ul.list-unstyled li a:hover {
+	background: #4e87c0
+}
 .sidebar-menu > ul > li {
 	position: relative;
 }
@@ -1327,6 +1439,7 @@ textarea.form-control {
 }
 
 .account-page {
+
 	/*background-image: url("../img/bg-account.jpeg");*/
 	background-image: linear-gradient(#0c2137, #5693d1);
 	width: 100%;
@@ -1344,6 +1457,7 @@ textarea.form-control {
 }
 
 .account-page::before {
+
 	/*content: "";
 	display: block;
 	position: absolute;
@@ -1364,8 +1478,7 @@ textarea.form-control {
 
 .account-box {
 	margin: 0 auto;
-	width: 400px;
-	/*border: 1px solid #e7e7e7;
+	width: 400px;	/*border: 1px solid #e7e7e7;
 	background-color: #fff;
 	box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);*/
 	border-radius: 0px;
@@ -1381,6 +1494,7 @@ textarea.form-control {
 }
 
 .account-box .form-group {
+
 	/*margin-bottom: 25px;*/
 }
 
@@ -1396,6 +1510,7 @@ textarea.form-control {
 
 .account-box .account-btn:hover,
 .account-box .account-btn:focus {
+
 	/*border: 0;
 	opacity: 0.8;*/
 }
@@ -1421,7 +1536,7 @@ textarea.form-control {
 }
 
 .account-logo img {
-	width: 100px;
+	width: 210px;
 }
 
 .main-content {
@@ -1451,14 +1566,14 @@ textarea.form-control {
 
 .page-header h5 {
 	font-weight: 700;
-	color: #01c0c8;
+	color: #254769;
 	font-size: 22px;
 	margin-top: 10px;
 }
 
 .page-header a,
 .profile-content a {
-	color: #06b4c2;
+	color: #254769;
 }
 
 .page-content {
@@ -1499,8 +1614,31 @@ textarea.form-control {
 /*------------------------------------------------------------------
  [10.Teacher form]
 */
+.custom-mt-form-group input::-webkit-input-placeholder {
+
+	/* Chrome/Opera/Safari */
+	color: #000;
+}
+
+.custom-mt-form-group input::-moz-placeholder {
+
+	/* Firefox 19+ */
+	color: #000;
+}
+
+.custom-mt-form-group input:-ms-input-placeholder {
+
+	/* IE 10+ */
+	color: #000;
+}
+
+.custom-mt-form-group input:-moz-placeholder {
+
+	/* Firefox 18- */
+	color: #000;
+}
 .custom-mt-form-group {
-	position: relative;
+	position: relative;	
 	/*margin-top: 30px;*/
 	margin-bottom: 1.25rem;
 }
@@ -1540,6 +1678,7 @@ textarea.form-control {
 	border-bottom: 1px solid #d2d2d2;
 	display: block;
 }
+
 .account-page .custom-mt-form-group .bar {
 	position: relative;
 	border-bottom: 1px solid #ffffff;
@@ -1565,7 +1704,7 @@ textarea.form-control {
 	display: block;
 	background: none;
 	padding: 0.125rem 0.125rem 0.0625rem;
-	font-size: 1rem;
+	font-size: 15px;
 	border-width: 0;
 	border-color: transparent;
 	line-height: 1;
@@ -1598,10 +1737,11 @@ textarea.form-control {
 .custom-mt-form-group textarea.form-file ~ .control-label,
 .custom-mt-form-group textarea.has-value ~ .control-label {
 	font-size: 0.8rem;
-	color: gray;
+	color: #000000;
 	top: -1rem;
 	left: 0;
 }
+
 .account-page .custom-mt-form-group select ~ .control-label,
 .account-page .custom-mt-form-group input:focus ~ .control-label,
 .account-page .custom-mt-form-group input:valid ~ .control-label,
@@ -1613,17 +1753,32 @@ textarea.form-control {
 .account-page .custom-mt-form-group textarea.has-value ~ .control-label {
 	color: #ffffff;
 }
-.account-page ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  color: #fff;
+
+.account-page .custom-mt-form-group input::-webkit-input-placeholder {
+
+	/* Chrome/Opera/Safari */
+	color: #fff;
 }
-.account-page ::-moz-placeholder { /* Firefox 19+ */
-  color: #fff;
+
+.account-page .custom-mt-form-group input::-moz-placeholder {
+
+	/* Firefox 19+ */
+	color: #fff;
 }
-.account-page :-ms-input-placeholder { /* IE 10+ */
-  color: #fff;
+
+.account-page .custom-mt-form-group input:-ms-input-placeholder {
+
+	/* IE 10+ */
+	color: #fff;
 }
-.account-page :-moz-placeholder { /* Firefox 18- */
-  color: #fff;
+
+.account-page .custom-mt-form-group input:-moz-placeholder {
+
+	/* Firefox 18- */
+	color: #fff;
+}
+.account-page .custom-mt-form-group input{
+	color: #fff;
 }
 .custom-mt-form-group select:focus,
 .custom-mt-form-group input:focus,
@@ -2012,8 +2167,8 @@ ul.activity-list .activity-desk h5 a {
 }
 
 .form-group {
-	position: relative;
-	/*padding: 15px 0 0;*/
+	position: relative;	
+	padding: 15px 0 0;
 }
 
 .form__field {
@@ -2046,7 +2201,7 @@ ul.activity-list .activity-desk h5 a {
 	display: block;
 	transition: 0.2s;
 	font-size: 12px;
-	color: grey;
+	color: #000;
 }
 
 .form__field:focus ~ .form-label {
@@ -2059,8 +2214,8 @@ ul.activity-list .activity-desk h5 a {
 }
 
 /*------------------------------------------------------------------
- [11. TAB ] 
- 
+[11. TAB ] 
+
 */
 .tab-pane > p:last-child {
 	margin-bottom: 0
@@ -2201,7 +2356,9 @@ table.dataTable tbody td.patient-img {
 .dash-widget-info > span {
 	font-size: 15px;
 }
-
+.dash-widget-info > span a{
+	color: #333;
+}
 .activity-panel .activity-box {
 	height: 350px;
 	overflow-x: auto;
@@ -2808,7 +2965,7 @@ table.dataTable tbody td.patient-img {
 }
 
 .avatar {
-	background-color: #8944d7;
+	background-color: #254769;
 	border-radius: 50%;
 	color: #fff;
 	display: inline-block;
@@ -3585,11 +3742,16 @@ html.menu-opened body {
 }
 
 .fc th.fc-widget-header {
-	background: #eeeeee;
+	background: #89b2db;
+	color: #ffffff;
 	font-size: 14px;
 	line-height: 20px;
 	padding: 10px 0;
 	text-transform: uppercase;
+}
+
+.fc td.fc-widget-content td {
+	color: #000000;
 }
 
 .fc-unthemed th,
@@ -3603,9 +3765,9 @@ html.menu-opened body {
 }
 
 .fc-button {
-	background: #f1f1f1;
+	background: #89b2db;
 	border: none;
-	color: #797979;
+	color: #ffffff;
 	text-transform: capitalize;
 	box-shadow: none !important;
 	border-radius: 3px !important;
@@ -3630,7 +3792,7 @@ html.menu-opened body {
 .fc-state-down,
 .fc-state-active,
 .fc-state-disabled {
-	background-color: #01c0c8;
+	background-color: #254769;
 	color: #fff;
 	text-shadow: none;
 }
@@ -3651,6 +3813,7 @@ html.menu-opened body {
 	margin: 1px 7px;
 	padding: 5px 5px;
 	text-align: center;
+	color: #fff !important;
 }
 
 .fc-basic-view td.fc-week-number span {
@@ -5812,6 +5975,30 @@ blockquote p {
 	object-fit: cover;
 }
 
+label.error {
+	font-size: 13px;
+    position: absolute;
+    background-color: #cd2e26;
+    max-width: 325px;
+    border-radius: 5px;
+    color: white;
+    padding: 2px 12px;
+    z-index: 9;
+    top: 100%;
+    left: 0;
+}
+label.error:before {
+    content: '';
+    position: absolute;
+    display: block;
+    height: 0;
+    width: 0;
+    border-width: 5px;
+    border-style: solid;
+    top: -10px;
+    left: 10px;
+    border-color: transparent transparent #cd2e26 transparent;
+}
 /*------------------------------------------------------------------
 [47. Responsive]
 */
@@ -6040,7 +6227,7 @@ blockquote p {
 		}
 
 		a.mobile_btn {
-			color: #01c0c8;
+			color: #ffffff;
 			font-size: 24px;
 			height: 60px;
 			left: 0;
@@ -6497,12 +6684,15 @@ blockquote p {
 			width: 100%;
 			margin-bottom: 20px;
 		}
+
 		.account-wrapper {
-		     padding: 0; 
+			padding: 0;
 		}
+
 		.account-box a {
-		    font-size: 13px;
+			font-size: 13px;
 		}
+
 		body {
 			font-size: 12px;
 		}

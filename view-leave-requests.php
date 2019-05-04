@@ -71,7 +71,7 @@ require_once 'includes/sidebar.php';
                                     </div>
                                 </div>
                                 <div class="form-group row ">
-                                    <label class="col-form-label col-md-2">eReason to leave</label>
+                                    <label class="col-form-label col-md-2">Reason to leave</label>
                                     <div class="col-md-10">
                                         <input type="text" readonly="readonly" class="form-control" value="<?php
                                                 if (isset($result[0]['reason_to_leave']))

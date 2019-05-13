@@ -62,8 +62,8 @@
                             <a href="request-leave-list.php"><i class="fa fa-table" aria-hidden="true"></i>Request Leave List</a>
                         </li>
                         <?php } ?>
-                        <li class="<?php if($currentURL =='student-attendance.php' || $currentURL =='student-attendance.php'){echo 'active';}?>">
-                            <a href="student-attendance.php"><i class="fa fa-table" aria-hidden="true"></i>Student Attendance</a>
+                        <li class="<?php if($currentURL =='student-attendance-list.php' || $currentURL =='student-attendance.php'){echo 'active';}?>">
+                            <a href="student-attendance-list.php"><i class="fa fa-table" aria-hidden="true"></i>Student Attendance</a>
                         </li>
 						<!-- <li class="submenu">
                             <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Students</span> <span class="menu-arrow"></span></a>

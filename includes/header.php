@@ -109,7 +109,7 @@ if (!isset($_SESSION['userId'])) {
                         <span><?php echo $adminData[0]['first_name']; ?></span>
                     </a>
                     <div class="dropdown-menu">
-                    <?php  if (!empty($adminData[0]['admin_profile_image']) && $_SESSION['user_role'] == '1') { ?>
+                    <?php  if ($_SESSION['user_role'] == '1') { ?>
                         <a class="dropdown-item" href="admin-profile.php">My Profile</a>
                         <a class="dropdown-item" href="edit-admin-profile.php">Edit Profile</a>
                         <a class="dropdown-item" href="employee/process/processUser.php?type=logout">Logout</a>

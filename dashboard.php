@@ -68,7 +68,7 @@ require_once 'includes/sidebar.php';
 					</div>
 					<div class="col-lg-6">
 						<div class="content-page">
-							<div class="page-title">Income Monthwise</div>
+							<div class="page-title">Monthly Attendance</div>
 							<div id="incomeChart" style="height: 350px;"></div>
 						</div>
 					</div>

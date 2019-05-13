@@ -1,7 +1,25 @@
-
+<?php
+require_once 'employee/class/dbclass.php'; 
+require_once 'employee/config/config.php';
+require_once 'employee/class/Teacher.php'; 
+$teacher = new Teacher();
+if($_SESSION['user_role'] == '2') {
+    $output = $teacher->getTeacherClassName($_SESSION['userId']);
+    $get_class_id = $output[0]['classId'];
+    $get_total_class_students = $teacher->getTotalClassStudents($get_class_id);
+    $isTodaysAttendanceCheck = $teacher->isTodaysAttendanceCheck($_SESSION['userId'], $get_class_id);
+        if($isTodaysAttendanceCheck) {
+            $_SESSION['Msg'] = "Today's attendance has already been marked!";
+            $_SESSION['success'] = true;
+            header('Location: ' . BASE_ROOT.'student-attendance-list.php');
+        }
+} else {
+    header('Location: ' . BASE_ROOT.'dashboard.php');
+}
+?>
 <?php 
 require_once 'includes/header.php'; 
-require_once 'includes/sidebar.php'; 
+require_once 'includes/sidebar.php';
 ?>
 <div class="page-wrapper"> 
 <!-- content -->
@@ -11,16 +29,11 @@ require_once 'includes/sidebar.php';
                         <div class="col-lg-7 col-md-12 col-sm-12 col-12">
                             <h5 class="text-uppercase">Students Attendance</h5>
                         </div>
-                        <div class="col-lg-5 col-md-12 col-sm-12 col-12">
-                            <!-- <ul class="list-inline breadcrumb float-right">
-                                <li class="list-inline-item"><a href="dashboard.php">Home</a></li>
-                                <li class="list-inline-item"> Exams List</li>
-                            </ul> -->
-                        </div>
                     </div>
                 </div>
 			<div class="row mt-2">
-                    <div class="col-lg-12">
+                <div class="col-lg-12">
+                    <form id="addAttendance" action="employee/process/processStudentsAttendance.php" method="post" novalidate="novalidate">
                         <div class="content-page">
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-12">
@@ -39,52 +52,41 @@ require_once 'includes/sidebar.php';
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <input type="hidden" name="type" value="student_attendance" />
+                                                <input type="hidden" name="class_id" value="<?php echo $get_class_id; ?>" />
+                                                <input type="hidden" name="teacher_id" value="<?php echo $_SESSION['userId']; ?>" />
+                                                <?php  foreach ($get_total_class_students as $key => $value) { ?>
+                                                <input type="hidden" name="userId[]" value="<?php echo $value['id'] ?>" />
                                                 <tr>
                                                     <td>
                                                         <h2><a href="profile.html" class="avatar text-white">P</a></h2>
-                                                        <h2><a href="profile.html">Parker <span></span></a></h2>
+                                                        <h2><a href="profile.html"><?php echo $value['first_name']; ?> <span></span></a></h2>
                                                     </td>
-                                                    <td>Last Name</td>
+                                                    <td><?php echo $value['last_name']; ?></td>
                                                     <td>
                                                         <label class="custom_checkbox">
-                                                          <input type="checkbox" checked="checked">
+                                                          <input type="checkbox" checked="checked" name="attendance[]" value="P">
                                                           <span class="checkmark"></span>
                                                         </label>
                                                     </td>
                                                     <td>
                                                         <label class="custom_checkbox red">
-                                                          <input type="checkbox">
+                                                          <input type="checkbox" name="attendance[]" value="A">
                                                           <span class="checkmark"></span>
                                                         </label>
                                                     </td>
-                                                    <td>&nbsp;</td>                
+                                                    <td><?php echo date('Y-m-d') ?></td>                
                                                 </tr>
-                                                 <tr>
-                                                    <td>
-                                                        <h2><a href="profile.html" class="avatar text-white">P</a></h2>
-                                                        <h2><a href="profile.html">Peter <span></span></a></h2>
-                                                    </td>
-                                                    <td>Last Name</td>
-                                                    <td>
-                                                        <label class="custom_checkbox">
-                                                          <input type="checkbox">
-                                                          <span class="checkmark"></span>
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <label class="custom_checkbox red">
-                                                          <input type="checkbox" checked="checked">
-                                                          <span class="checkmark"></span>
-                                                        </label>
-                                                    </td>
-                                                    <td>&nbsp;</td>                
-                                                </tr>
-                                               
+                                                <?php } ?> 
+                                            </form>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="form-group text-center custom-mt-form-group">
+                            <button class="btn btn-primary btn-lg mr-2" type="submit">Submit</button>
                         </div>
                      </div>       
                 </div>

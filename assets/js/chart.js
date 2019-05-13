@@ -20,18 +20,18 @@ Morris.Donut({
 
 $(function() {
       var data = [
-        { month: '2018-01', value: 2000 },
-        { month: '2018-02', value: 11000 },
-        { month: '2018-03', value: 10000 },
-        { month: '2018-04', value: 14000 },
-        { month: '2018-05', value: 11000 },
-        { month: '2018-06', value: 17000 },
-        { month: '2018-07', value: 14500 },
-        { month: '2018-08', value: 18000 },
-        { month: '2018-09', value: 12000 },
-        { month: '2018-10', value: 23000 },
-        { month: '2018-11', value: 17000 },
-        { month: '2018-12', value: 23000 }
+        { month: '2018-01', value: 10 },
+        { month: '2018-02', value: 20 },
+        { month: '2018-03', value: 30 },
+        { month: '2018-04', value: 40 },
+        { month: '2018-05', value: 50 },
+        { month: '2018-06', value: 60 },
+        { month: '2018-07', value: 70 },
+        { month: '2018-08', value: 80 },
+        { month: '2018-09', value: 90 },
+        { month: '2018-10', value: 100 },
+        { month: '2018-11', value: 110 },
+        { month: '2018-12', value: 120 }
       ];
       var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       new Morris.Line({
@@ -61,7 +61,7 @@ $(function() {
                 }
                 return n;
               }
-              return '$' + formatNumber(value);
+              return formatNumber(value);
             },
         xLabelFormat: function (x) { return months[x.getMonth()]; }
       });

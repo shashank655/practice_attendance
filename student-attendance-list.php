@@ -9,9 +9,10 @@ $get_current_month_days = date('t');
 if($_SESSION['user_role'] == '2') { 
     $output = $teacher->getTeacherClassName($_SESSION['userId']);
     $get_class_id = $output[0]['classId'];
+    $get_section_id = $output[0]['sectionId'];
     $get_teacher_id = $_SESSION['userId'];
     $get_current_month = date('m');
-    $get_student_details = $student_attendance->getStudentDetails($get_class_id , $get_teacher_id);
+    $get_student_details = $student_attendance->getStudentDetails($get_class_id , $get_teacher_id , $get_section_id);
     //echo "<pre>";print_r($get_current_month_attendance)
 }
 ?>

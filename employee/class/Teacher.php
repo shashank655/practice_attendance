@@ -178,7 +178,7 @@ class Teacher extends MySQLCN {
     }
 
     function getTeacherClassName($teacherId) {
-      $fetch = "SELECT classes_name.class_name, classes_name.id as classId FROM `teachers` join classes_name on classes_name.id=teachers.class_id where user_id='".$teacherId."'";
+      $fetch = "SELECT classes_name.class_name, sections.id as sectionId, classes_name.id as classId FROM `teachers` join classes_name on classes_name.id=teachers.class_id join sections on sections.id=teachers.section_id where user_id='".$teacherId."'";
       $fetch_result = $this->select($fetch);
         if (!empty($fetch_result)) {
           return $fetch_result;
@@ -187,8 +187,8 @@ class Teacher extends MySQLCN {
       }
     }
 
-    function getTotalClassStudents($classId) {
-      $fetch = "SELECT id,first_name,last_name FROM `students` where class_id='".$classId."' ";
+    function getTotalClassStudents($classId, $sectionId) {
+      $fetch = "SELECT id,first_name,last_name FROM `students` where class_id='".$classId."' and section_id='".$sectionId."'";
       $fetch_result = $this->select($fetch);
         if (!empty($fetch_result)) {
           return $fetch_result;
@@ -197,9 +197,9 @@ class Teacher extends MySQLCN {
       }
     }
 
-    function isTodaysAttendanceCheck($teacher_id , $class_id) {
+    function isTodaysAttendanceCheck($teacher_id , $class_id , $section_id) {
         $todaysDate = date('Y-m-d');
-        $fetch = "SELECT * FROM `students_attendance` where class_id='".$class_id."' and teacher_id= '".$teacher_id."' and date_of_attendance='".$todaysDate."'";
+        $fetch = "SELECT * FROM `students_attendance` where class_id='".$class_id."' and teacher_id= '".$teacher_id."' and section_id= '".$section_id."' and date_of_attendance='".$todaysDate."'";
         $fetch_result = $this->select($fetch);
         if (!empty($fetch_result)) {
           return true;

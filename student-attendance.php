@@ -6,8 +6,9 @@ $teacher = new Teacher();
 if($_SESSION['user_role'] == '2') {
     $output = $teacher->getTeacherClassName($_SESSION['userId']);
     $get_class_id = $output[0]['classId'];
-    $get_total_class_students = $teacher->getTotalClassStudents($get_class_id);
-    $isTodaysAttendanceCheck = $teacher->isTodaysAttendanceCheck($_SESSION['userId'], $get_class_id);
+    $get_section_id = $output[0]['sectionId'];
+    $get_total_class_students = $teacher->getTotalClassStudents($get_class_id,$get_section_id);
+    $isTodaysAttendanceCheck = $teacher->isTodaysAttendanceCheck($_SESSION['userId'], $get_class_id, $get_section_id);
         if($isTodaysAttendanceCheck) {
             $_SESSION['Msg'] = "Today's attendance has already been marked!";
             $_SESSION['success'] = true;
@@ -54,6 +55,7 @@ require_once 'includes/sidebar.php';
                                             <tbody>
                                                 <input type="hidden" name="type" value="student_attendance" />
                                                 <input type="hidden" name="class_id" value="<?php echo $get_class_id; ?>" />
+                                                <input type="hidden" name="section_id" value="<?php echo $get_section_id; ?>" />
                                                 <input type="hidden" name="teacher_id" value="<?php echo $_SESSION['userId']; ?>" />
                                                 <?php  foreach ($get_total_class_students as $key => $value) { ?>
                                                 <input type="hidden" name="userId[]" value="<?php echo $value['id'] ?>" />

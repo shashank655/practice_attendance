@@ -11,7 +11,8 @@ if($_SESSION['user_role'] == '2') {
     $get_class_id = $output[0]['classId'];
     $get_teacher_id = $_SESSION['userId'];
     $get_current_month = date('m');
-    $get_current_month_attendance = $student_attendance->getCurrentMonthAttendance($get_class_id , $get_teacher_id , $get_current_month);
+    $get_student_details = $student_attendance->getStudentDetails($get_class_id , $get_teacher_id);
+    //echo "<pre>";print_r($get_current_month_attendance)
 }
 ?>
 <?php 
@@ -102,43 +103,27 @@ require_once 'includes/sidebar.php';
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php if(!empty($get_student_details)) { 
+                                        foreach ($get_student_details as $key => $value) {
+                                    ?>
                                     <tr>
-                                        <td>Ruth C. Gault</td>
+                                        <td><?php echo $value['first_name'].' '.$value['last_name']; ?></td>
+                                    <?php  
+                                    $student_id = $value['student_id'];
+                                        $get_current_month_attendance = $student_attendance->getCurrentMonthAttendance($get_class_id , $get_teacher_id , $get_current_month , $student_id); 
+                                    ?>    
                                         <td><i class="fa fa-check text-success"></i> </td>
                                         <td><i class="fa fa-check text-success"></i> </td>
-                                        <td><i class="fa fa-check text-success"></i> </td>
-                                        <td><i class="fa fa-check text-success"></i> </td>
-                                        <td><i class="fa fa-check text-success"></i> </td>
-                                        <td><i class="fa fa-check text-success"></i> </td>
-                                        <td>
+                                        <!-- <td>
                                             <div class="half-day"><span class="First-off"><i class="fa fa-check text-success"></i></span> <span class="First-off"><i class="fa fa-close text-danger"></i></span></div>
-                                        </td>
+                                        </td> -->
                                         <td><i class="fa fa-check text-success"></i> </td>
                                         <td><i class="fa fa-check text-success"></i> </td>
                                         <td><i class="fa fa-close text-danger"></i> </td>
                                         <td><i class="fa fa-close text-danger"></i> </td>
                                         <td><i class="fa fa-close text-danger"></i> </td>
-                                        <td><i class="fa fa-check text-success"></i> </td>
-                                        <td><i class="fa fa-check text-success"></i> </td>
-                                        <td><i class="fa fa-check text-success"></i> </td>
-                                        <td><i class="fa fa-check text-success"></i> </td>
-                                        <td><i class="fa fa-check text-success"></i> </td>
-                                        <td><i class="fa fa-close text-danger"></i> </td>
-                                        <td><i class="fa fa-check text-success"></i> </td>
-                                        <td><i class="fa fa-check text-success"></i> </td>
-                                        <td>
-                                            <div class="half-day"><span class="First-off"><i class="fa fa-close text-danger"></i></span> <span class="First-off"><i class="fa fa-check text-success"></i></span></div>
-                                        </td>
-                                        <td><i class="fa fa-check text-success"></i> </td>
-                                        <td><i class="fa fa-check text-success"></i> </td>
-                                        <td><i class="fa fa-close text-danger"></i> </td>
-                                        <td><i class="fa fa-check text-success"></i> </td>
-                                        <td><i class="fa fa-check text-success"></i> </td>
-                                        <td><i class="fa fa-check text-success"></i> </td>
-                                        <td><i class="fa fa-close text-danger"></i> </td>
-                                        <td><i class="fa fa-check text-success"></i> </td>
-                                        <td><i class="fa fa-check text-success"></i> </td>
                                     </tr>
+                                    <?php } } ?>
                                 </tbody>
                             </table>
                         </div>

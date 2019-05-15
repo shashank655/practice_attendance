@@ -27,15 +27,29 @@ class StudentAttendance extends MySQLCN {
         if (!empty($fetch_result)) {
           $student_data = array();
           $get_current_month_days = date('t');
+          $attendanceArray = array();
             for ($i=1; $i <= $get_current_month_days; $i++) { 
                 if ($i < 10) {
                   $search_day = '0'.$i;
+                     foreach ($fetch_result as $key => $val) {
+                         if ($val['day_number'] == $search_day) {
+                             $attendanceArray[$search_day]['output'] = $val['attendance'];
+                         } else {
+                             $attendanceArray[$search_day]['output']='-';
+                         }
+                     } 
                 } else {
                   $search_day = $i;
+                     foreach ($fetch_result as $key1 => $val1) {
+                         if ($val1['day_number'] == $search_day) {
+                             $attendanceArray[$search_day]['output'] = $val1['attendance'];
+                         } else {
+                             $attendanceArray[$search_day]['output']='-';
+                         }
+                     }
                 }
             }
-
-          //echo "<pre>";print_r($student_data);die;  
+          return $attendanceArray;
         } else {
           return false;
       }

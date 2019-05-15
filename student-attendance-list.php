@@ -111,17 +111,18 @@ require_once 'includes/sidebar.php';
                                     <?php  
                                     $student_id = $value['student_id'];
                                         $get_current_month_attendance = $student_attendance->getCurrentMonthAttendance($get_class_id , $get_teacher_id , $get_current_month , $student_id); 
+                                    ?>
+                                    <?php foreach ($get_current_month_attendance as $key1 => $value1) { 
+                                        if($value1['output'] == 'A') {
+                                            $class = 'text-danger';
+                                        } elseif($value1['output'] == 'P') {
+                                            $class = 'text-success';
+                                        } else {
+                                            $class = 'text-success';
+                                        }
                                     ?>    
-                                        <td><i class="fa fa-check text-success"></i> </td>
-                                        <td><i class="fa fa-check text-success"></i> </td>
-                                        <!-- <td>
-                                            <div class="half-day"><span class="First-off"><i class="fa fa-check text-success"></i></span> <span class="First-off"><i class="fa fa-close text-danger"></i></span></div>
-                                        </td> -->
-                                        <td><i class="fa fa-check text-success"></i> </td>
-                                        <td><i class="fa fa-check text-success"></i> </td>
-                                        <td><i class="fa fa-close text-danger"></i> </td>
-                                        <td><i class="fa fa-close text-danger"></i> </td>
-                                        <td><i class="fa fa-close text-danger"></i> </td>
+                                        <td><i class="fa fa-check <?php echo $class; ?>"></i></td>
+                                    <?php } ?>
                                     </tr>
                                     <?php } } ?>
                                 </tbody>

@@ -57,7 +57,7 @@
                             <a href="exams-list.php"><i class="fa fa-table" aria-hidden="true"></i>Exams List</a>
                         </li>
                         <?php } ?>
-                        <?php if($_SESSION['user_role'] == '2' ) { ?>
+                        <?php if( ($_SESSION['user_role'] == '2') ||  ($_SESSION['user_role'] == '3')) { ?>
                         <li class="<?php if($currentURL =='request-leave-list.php' || $currentURL =='add-leaves-type.php'){echo 'active';}?>">
                             <a href="request-leave-list.php"><i class="fa fa-table" aria-hidden="true"></i>Request Leave List</a>
                         </li>

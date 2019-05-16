@@ -11,8 +11,18 @@ if($_SESSION['user_role'] == '2') {
     $get_class_id = $output[0]['classId'];
     $get_section_id = $output[0]['sectionId'];
     $get_teacher_id = $_SESSION['userId'];
-    $get_current_month = date('m');
-    $get_current_year = date('Y');
+        $searchYear = (isset($_REQUEST['year'])) ? $_REQUEST['year'] : NULL;
+            if ($searchYear != NULL) {
+                $get_current_year = $searchYear;
+            } else {
+                $get_current_year = date('Y');
+            }
+        $searchMonth = (isset($_REQUEST['month'])) ? $_REQUEST['month'] : NULL;
+            if ($searchMonth != NULL) {
+                $get_current_month = $searchMonth;
+            } else {
+                $get_current_month = date('m');
+            }       
     $get_student_details = $student_attendance->getStudentDetails($get_class_id , $get_teacher_id , $get_section_id);
 }
 ?>
@@ -44,42 +54,39 @@ require_once 'includes/sidebar.php';
 					</div>
 				</div>
 				<div class="content-page">
+                 <form id="searchAttendance" action="student-attendance-list.php" method="get" novalidate="novalidate">
 				 <div class="row">
-                    <div class="col-sm-6 col-md-3">
+                    <!-- <div class="col-sm-6 col-md-3">
 						<div class="form-group custom-mt-form-group">
 							<input type="text" />
 							<label class="control-label">Employee name</label><i class="bar"></i>
 						</div>
-                    </div>
+                    </div> -->
                     <div class="col-sm-6 col-md-3">
 						<div class="form-group custom-mt-form-group">
-							<select >
-								 <option>-</option>
-                                <option>Jan</option>
-                                <option>Feb</option>
-                                <option>Mar</option>
-                                <option>Apr</option>
-                                <option>May</option>
-                                <option>Jun</option>
-                                <option>Jul</option>
-                                <option>Aug</option>
-                                <option>Sep</option>
-                                <option>Oct</option>
-                                <option>Nov</option>
-                                <option>Dec</option>
+							<select name="month" id="month">
+                                <option value="01">Jan</option>
+                                <option value="02">Feb</option>
+                                <option value="03">Mar</option>
+                                <option value="04">Apr</option>
+                                <option value="05">May</option>
+                                <option value="06">Jun</option>
+                                <option value="07">Jul</option>
+                                <option value="08">Aug</option>
+                                <option value="09">Sep</option>
+                                <option value="10">Oct</option>
+                                <option value="11">Nov</option>
+                                <option value="12">Dec</option>
 							 </select>
 							 <label class="control-label">Select Month</label><i class="bar"></i>
 						</div>	
                     </div>
                     <div class="col-sm-6 col-md-3">
 					<div class="form-group custom-mt-form-group">
-							<select >
-								 <option>-</option>
-                                <option>2019</option>
-                                <option>2018</option>
-                                <option>2018</option>
-                                <option>2016</option>
-                                <option>2015</option>
+							<select name="year" id="year">
+                                <option value="2019">2019</option>
+                                <option value="2018">2018</option>
+                                <option value="2017">2017</option>
 							 </select>
 							 <label class="control-label">Select Year</label><i class="bar"></i>
 						</div>	
@@ -87,10 +94,11 @@ require_once 'includes/sidebar.php';
                     </div>
                     <div class="col-sm-6 col-md-3">
 						<div class="form-group custom-mt-form-group">
-                        <a href="#" class="btn btn-success btn-block"> Search </a>
+                        <button class="btn btn-success btn-block" type="submit">Submit</button>
 						</div>
                     </div>
                 </div>
+                </form>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="table-responsive">

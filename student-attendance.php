@@ -34,7 +34,7 @@ require_once 'includes/sidebar.php';
                 </div>
 			<div class="row mt-2">
                 <div class="col-lg-12">
-                    <form id="addAttendance" action="employee/process/processStudentsAttendance.php" method="post" novalidate="novalidate">
+                    <form id="addAttendance" action="employee/process/processStudentsAttendance.php" method="post" novalidate="novalidate" onclick="return confirm('Are you sure you want to submit the attendance ?');">
                         <div class="content-page">
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-12">

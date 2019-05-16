@@ -12,8 +12,8 @@ if($_SESSION['user_role'] == '2') {
     $get_section_id = $output[0]['sectionId'];
     $get_teacher_id = $_SESSION['userId'];
     $get_current_month = date('m');
+    $get_current_year = date('Y');
     $get_student_details = $student_attendance->getStudentDetails($get_class_id , $get_teacher_id , $get_section_id);
-    //echo "<pre>";print_r($get_current_month_attendance)
 }
 ?>
 <?php 
@@ -111,7 +111,7 @@ require_once 'includes/sidebar.php';
                                         <td><?php echo $value['first_name'].' '.$value['last_name']; ?></td>
                                     <?php  
                                     $student_id = $value['student_id'];
-                                        $get_current_month_attendance = $student_attendance->getCurrentMonthAttendance($get_class_id , $get_teacher_id , $get_current_month , $student_id); 
+                                        $get_current_month_attendance = $student_attendance->getCurrentMonthAttendance($get_class_id , $get_teacher_id , $get_current_month , $get_current_year , $student_id); 
                                     ?>
                                     <?php foreach ($get_current_month_attendance as $key1 => $value1) { 
                                         if($value1['output'] == 'A') {
@@ -119,7 +119,7 @@ require_once 'includes/sidebar.php';
                                         } elseif($value1['output'] == 'P') {
                                             $class = 'text-success';
                                         } else {
-                                            $class = 'text-success';
+                                            $class = '';
                                         }
                                     ?>    
                                         <td><i class="fa fa-check <?php echo $class; ?>"></i></td>

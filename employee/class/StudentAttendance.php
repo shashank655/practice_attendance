@@ -22,8 +22,8 @@ class StudentAttendance extends MySQLCN {
         return $fetch_result;
     }
 
-    function getCurrentMonthAttendance($classId , $teacherId , $currentMonth, $studentId) {
-        $fetch = "SELECT students_attendance.attendance , DAY(date_of_attendance) as day_number from students_attendance where students_attendance.class_id='".$classId."' and students_attendance.teacher_id= '".$teacherId."' and students_attendance.student_id= '".$studentId."' and MONTH(students_attendance.date_of_attendance)='".$currentMonth."'";
+    function getCurrentMonthAttendance($classId , $teacherId , $currentMonth , $currentYear , $studentId) {
+        $fetch = "SELECT students_attendance.attendance , DAY(date_of_attendance) as day_number from students_attendance where students_attendance.class_id='".$classId."' and students_attendance.teacher_id= '".$teacherId."' and students_attendance.student_id= '".$studentId."' and MONTH(students_attendance.date_of_attendance)='".$currentMonth."' and YEAR(students_attendance.date_of_attendance)='".$currentYear."'";
         $fetch_result = $this->select($fetch); 
         if (!empty($fetch_result)) {
           $student_data = array();
@@ -35,15 +35,17 @@ class StudentAttendance extends MySQLCN {
                      foreach ($fetch_result as $key => $val) {
                          if ($val['day_number'] == $search_day) {
                              $attendanceArray[$search_day]['output'] = $val['attendance'];
+                             break;
                          } else {
                              $attendanceArray[$search_day]['output']='-';
                          }
                      } 
                 } else {
                   $search_day = $i;
-                     foreach ($fetch_result as $key1 => $val1) {
-                         if ($val1['day_number'] == $search_day) {
-                             $attendanceArray[$search_day]['output'] = $val1['attendance'];
+                     foreach ($fetch_result as $key => $val) {
+                         if ($val['day_number'] == $search_day) {
+                             $attendanceArray[$search_day]['output'] = $val['attendance'];
+                             break;
                          } else {
                              $attendanceArray[$search_day]['output']='-';
                          }

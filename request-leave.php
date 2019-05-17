@@ -39,7 +39,7 @@ require_once 'includes/sidebar.php';
                                     <label class="col-form-label col-md-2">Select Leave Type</label>
                                     <div class="col-md-10">
                                         <select id="leave_type_id" class="form-control" name="leave_type_id">
-                                            <option value='' >Leave Type</option>
+                                            <option value="">Leave Type</option>
                                             <?php for ($i=0 ; $i < count($leaveType); $i++) : ?>
                                                 <option <?php if (isset($result[0]['leave_type_id'])) { if ($result[0]['leave_type_id']==$leaveType[$i]['id']) { echo 'selected'; } } ?> value="<?php echo $leaveType[$i][ 'id']; ?>"><?php echo $leaveType[$i][ 'leave_type'].'('.$leaveType[$i]['days'].')'; ?></option>
                                             <?php endfor; ?>    
@@ -65,6 +65,15 @@ require_once 'includes/sidebar.php';
                                     </div>
                                 </div>
                                 <div class="form-group row ">
+                                    <label class="col-form-label col-md-2">Effective to</label>
+                                    <div class="col-md-10">
+                                        <input type="text" name="effective_to" class="form-control datetimepicker" value="<?php
+                                                if (isset($result[0]['effective_to']))
+                                                echo htmlspecialchars($result[0]['effective_to']);
+                                                ?>">
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
                                     <label class="col-form-label col-md-2">Reason for leave</label>
                                     <div class="col-md-10">
                                         <input type="text" name="reason_to_leave" class="form-control" value="<?php
@@ -86,14 +95,25 @@ require_once 'includes/sidebar.php';
     </div>
     <?php require_once 'includes/footer.php'; ?>
     <script type="text/javascript">
+    jQuery.validator.addMethod("dropdownValidation", function(value, element, params) {        
+        return $.trim(value) != '';
+    },'This field is required.');
+
     $(function(){
         $("#requestLeave").validate({
             ignore: "input[type='text']:hidden",
             rules:{
+                leave_type_id:{
+                    required:true,
+                    dropdownValidation:true
+                },
                 number_of_days:{
                     required:true
                 },
                 effective_from:{
+                    required:true
+                },
+                effective_to:{
                     required:true
                 },                
                 reason_to_leave:{

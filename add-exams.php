@@ -87,10 +87,22 @@ require_once 'includes/sidebar.php';
     </div>
     <?php require_once 'includes/footer.php'; ?>
     <script type="text/javascript">
+    jQuery.validator.addMethod("dropdownValidation", function(value, element, params) {        
+        return $.trim(value) != '';
+    },'This field is required.');
+        
     $(function(){
         $("#addExams").validate({
             ignore: "input[type='text']:hidden",
             rules:{
+                class_id:{
+                    required:true,
+                    dropdownValidation:true
+                },
+                section_id:{
+                    required:true,
+                    dropdownValidation:true
+                },
                 date_of_exam:{
                     required:true
                 },                

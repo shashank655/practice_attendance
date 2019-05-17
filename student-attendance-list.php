@@ -39,10 +39,8 @@ require_once 'includes/sidebar.php';
 						</div>
 						<div class="col-lg-5 col-md-12 col-sm-12 col-12">
 							<ul class="list-inline breadcrumb float-right">
-								<li class="list-inline-item"><a href="index.html">Home</a></li>
-								<li class="list-inline-item"><a href="index.html">Management</a></li>
-								<li class="list-inline-item"><a href="index.html">Employees</a></li>
-								<li class="list-inline-item"> Attendance</li>
+								<li class="list-inline-item"><a href="dashboard.php">Home</a></li>
+								<li class="list-inline-item"> Attendance List</li>
 							</ul>
 						</div>
                         <div class="col-sm-4 col-3">
@@ -119,19 +117,19 @@ require_once 'includes/sidebar.php';
                                         <td><?php echo $value['first_name'].' '.$value['last_name']; ?></td>
                                     <?php  
                                     $student_id = $value['student_id'];
-                                        $get_current_month_attendance = $student_attendance->getCurrentMonthAttendance($get_class_id , $get_teacher_id , $get_current_month , $get_current_year , $student_id); 
-                                    ?>
-                                    <?php foreach ($get_current_month_attendance as $key1 => $value1) { 
-                                        if($value1['output'] == 'A') {
-                                            $class = 'text-danger';
-                                        } elseif($value1['output'] == 'P') {
-                                            $class = 'text-success';
-                                        } else {
-                                            $class = '';
-                                        }
-                                    ?>    
+                                        $get_current_month_attendance = $student_attendance->getCurrentMonthAttendance($get_class_id , $get_teacher_id , $get_current_month , $get_current_year , $student_id);
+                                        if(!empty($get_current_month_attendance)) {
+                                            foreach ($get_current_month_attendance as $key1 => $value1) { 
+                                                if($value1['output'] == 'A') {
+                                                    $class = 'text-danger';
+                                                } elseif($value1['output'] == 'P') {
+                                                    $class = 'text-success';
+                                                } else {
+                                                    $class = '';
+                                                }
+                                            ?>    
                                         <td><i class="fa fa-check <?php echo $class; ?>"></i></td>
-                                    <?php } ?>
+                                    <?php } } ?>
                                     </tr>
                                     <?php } } ?>
                                 </tbody>

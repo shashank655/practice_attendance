@@ -2,10 +2,13 @@
 require_once 'employee/class/dbclass.php'; 
 require_once 'employee/config/config.php'; 
 require_once 'employee/class/CommonFunction.php'; 
+require_once 'employee/class/Exams.php';
 $common_function=new CommonFunction(); 
+$exams=new Exams();
 $totalStudent=$common_function->getCountStudent(); 
 $totalTeacher = $common_function->getCountTeacher();
 $resultAllStudents=$common_function->getAllStudents();
+$resultExamList=$exams->getExamsLists();
 
 require_once 'includes/header.php';
 require_once 'includes/sidebar.php';
@@ -96,143 +99,32 @@ require_once 'includes/sidebar.php';
 										<table class="table table-striped custom-table">
 											<thead>
 												<tr>
-													<th style="min-width:91px;">Exam Name </th>
-													<th style="min-width:50px;">Subject</th>
-													<th style="min-width:50px;">Class</th>
-													<th style="min-width:50px;">Section</th>
-													<th style="min-width:50px;">Time</th>
-													<th style="min-width:50px;">Date</th>
-													<th class="text-right" style="width:30%;">Action</th>
+													<th style="min-width:50px;">S.No.</th>
+			                                        <th style="min-width:50px;">Class</th>
+			                                        <th style="min-width:50px;">Sections</th>
+			                                        <th style="min-width:50px;">Date of exam</th>
+			                                        <th style="min-width:50px;">Exam</th>
 												</tr>
 											</thead>
 											<tbody>
+												<?php $i=1; ?>
+                                				<?php foreach ($resultExamList as $key => $value) { ?>		
 												 <tr>
-													<td>
-														<a href="exam-detail.html" class="avatar">C</a>
-													</td>
-													<td>English</td>
-													<td>5</td>
-													<td>B</td>
-													<td>10.00am</td>
-													<td>20/1/2019</td>
+													<td><?php echo $i; ?></td>
+                                        			<td><?php echo $value['class_name']; ?></td>
+                                        			<td><?php echo $value['section_name'];?></td>
+                                        			<td><?php echo $value['date_of_exam']; ?></td>
+                                        			<td><?php echo $value['exam_name']; ?></td>
 													<td class="text-right" >
-														<a href="edit-exam.html" class="btn btn-primary btn-sm mb-1">
+														<a href="add-exams.php?examId=<?php echo $value[0]; ?>" class="btn btn-primary btn-sm mb-1">
 															<i class="fa fa-pencil" aria-hidden="true"></i>
 														</a>
-														<button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">
-														<i class="fa fa-trash" aria-hidden="true"></i>
-														</button>
+														<a href="employee/process/processExams.php?type=deleteExams&id=<?php echo $value[0]; ?>" class="btn btn-danger btn-sm mb-1">
+                                                			<i class="fa fa-trash" aria-hidden="true"></i>
+                                           				</a>
 													</td>
 												</tr>
-												<tr>
-													<td>
-														<a href="exam-detail.html" class="avatar">C</a>
-													</td>
-													<td>English</td>
-													<td>4</td>
-													<td>A</td>
-													<td>10.00am</td>
-													<td>2/1/2019</td>
-													<td class="text-right">
-														<a href="edit-exam.html" class="btn btn-primary btn-sm mb-1">
-															<i class="fa fa-pencil" aria-hidden="true"></i>
-														</a>
-														<button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">
-														<i class="fa fa-trash" aria-hidden="true"></i>
-														</button>
-													</td>
-												</tr>
-												
-												<tr>
-													<td>
-														<a href="exam-detail.html" class="avatar">C</a>
-													</td>
-													<td>Maths</td>
-													<td>6</td>
-													<td>B</td>
-													<td>10.00am</td>
-													<td>2/1/2019</td>
-													<td class="text-right">
-														<a href="edit-exam.html" class="btn btn-primary btn-sm mb-1">
-															<i class="fa fa-pencil" aria-hidden="true"></i>
-														</a>
-														<button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">
-														<i class="fa fa-trash" aria-hidden="true"></i>
-														</button>
-													</td>
-												</tr>
-												 <tr>
-													<td>
-														<a href="exam-detail.html" class="avatar">C</a>
-													</td>
-													<td>Science</td>
-													<td>3</td>
-													<td>B</td>
-													<td>10.00am</td>
-													<td>20/1/2019</td>
-													<td class="text-right">
-														<a href="edit-exam.html" class="btn btn-primary btn-sm mb-1">
-															<i class="fa fa-pencil" aria-hidden="true"></i>
-														</a>
-														<button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">
-														<i class="fa fa-trash" aria-hidden="true"></i>
-														</button>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<a href="exam-detail.html" class="avatar">C</a>
-													</td>
-													<td>Maths</td>
-													<td>6</td>
-													<td>B</td>
-													<td>10.00am</td>
-													<td>20/1/2019</td>
-													<td class="text-right">
-														<a href="edit-exam.html" class="btn btn-primary btn-sm mb-1">
-															<i class="fa fa-pencil" aria-hidden="true"></i>
-														</a>
-														<button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">
-														<i class="fa fa-trash" aria-hidden="true"></i>
-														</button>
-													</td>
-												</tr>
-												 <tr>
-													<td>
-														<a href="exam-detail.html" class="avatar">C</a>
-													</td>
-													<td>English</td>
-													<td>7</td>
-													<td>B</td>
-													<td>10.00am</td>
-													<td>20/1/2019</td>
-													<td class="text-right">
-														<a href="edit-exam.html" class="btn btn-primary btn-sm mb-1">
-															<i class="fa fa-pencil" aria-hidden="true"></i>
-														</a>
-														<button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">
-														<i class="fa fa-trash" aria-hidden="true"></i>
-														</button>
-													</td>
-												</tr>
-												 <tr>
-													<td>
-														<a href="exam-detail.html" class="avatar">C</a>
-													</td>
-													<td>Science</td>
-													<td>5</td>
-													<td>B</td>
-													<td>10.00am</td>
-													<td>20/1/2019</td>
-													<td class="text-right">
-														<a href="edit-exam.html" class="btn btn-primary btn-sm mb-1">
-															<i class="fa fa-pencil" aria-hidden="true"></i>
-														</a>
-														<button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">
-														<i class="fa fa-trash" aria-hidden="true"></i>
-														</button>
-													</td>
-												</tr>
+												<?php $i++; } ?>
 											</tbody>
 										</table>
 									</div>

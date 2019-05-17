@@ -97,4 +97,18 @@ require_once 'includes/sidebar.php';
 
                 k = k + 1;
         }
+        
+        $(function(){
+            $("#addClassesSections").validate({
+                ignore: "input[type='text']:hidden",
+                rules:{
+                    className:{
+                        required:true
+                    },
+                    'addSection[]':{
+                        required:true
+                    }
+                }
+            });
+        });
     </script>

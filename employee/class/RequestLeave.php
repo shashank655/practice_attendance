@@ -4,8 +4,8 @@ class RequestLeave extends MySQLCN {
     function addLeaveRequest($data) {
         $userId = $_SESSION['userId'];
         $qry = 'INSERT INTO `leaves_request` 
-            (`userId`,`leave_type_id`,`number_of_days`,`effective_from`,`reason_to_leave`) 
-            VALUES ( "'. $userId . '","'. $data['leave_type_id'] . '","'. $data['number_of_days'] . '","'. $data['effective_from'] . '","'. $data['reason_to_leave'] . '")';
+            (`userId`,`leave_type_id`,`number_of_days`,`effective_from`,`effective_to`,`reason_to_leave`) 
+            VALUES ( "'. $userId . '","'. $data['leave_type_id'] . '","'. $data['number_of_days'] . '","'. $data['effective_from'] . '","'. $data['effective_to'] . '","'. $data['reason_to_leave'] . '")';
         $res = $this->insert($qry);
         if ($res) {
             return true;

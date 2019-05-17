@@ -62,6 +62,15 @@ require_once 'includes/sidebar.php';
                                     </div>
                                 </div>
                                 <div class="form-group row ">
+                                    <label class="col-form-label col-md-2">Effective To</label>
+                                    <div class="col-md-10">
+                                        <input type="text" readonly="readonly" class="form-control" value="<?php
+                                                if (isset($result[0]['effective_to']))
+                                                echo htmlspecialchars($result[0]['effective_to']);
+                                                ?>">
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
                                     <label class="col-form-label col-md-2">No. of days</label>
                                     <div class="col-md-10">
                                         <input type="text" readonly="readonly" class="form-control" value="<?php

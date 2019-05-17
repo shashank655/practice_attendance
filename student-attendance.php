@@ -34,7 +34,7 @@ require_once 'includes/sidebar.php';
                 </div>
 			<div class="row mt-2">
                 <div class="col-lg-12">
-                    <form id="addAttendance" action="employee/process/processStudentsAttendance.php" method="post" novalidate="novalidate" onclick="return confirm('Are you sure you want to submit the attendance ?');">
+                    <form id="addAttendance" action="employee/process/processStudentsAttendance.php" method="post" novalidate="novalidate">
                         <div class="content-page">
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-12">
@@ -67,13 +67,13 @@ require_once 'includes/sidebar.php';
                                                     <td><?php echo $value['last_name']; ?></td>
                                                     <td>
                                                         <label class="custom_checkbox">
-                                                          <input type="checkbox" checked="checked" name="attendance[]" value="P">
+                                                          <input type="radio" checked="checked" name="attendance[<?php echo $key?>]" value="P">
                                                           <span class="checkmark"></span>
                                                         </label>
                                                     </td>
                                                     <td>
                                                         <label class="custom_checkbox red">
-                                                          <input type="checkbox" name="attendance[]" value="A">
+                                                          <input type="radio" name="attendance[<?php echo $key?>]" value="A">
                                                           <span class="checkmark"></span>
                                                         </label>
                                                     </td>
@@ -94,3 +94,11 @@ require_once 'includes/sidebar.php';
                 </div>
         </div>
         <?php require_once 'includes/footer.php'; ?>
+        <script type="text/javascript">
+            $('#addAttendance').submit(function () {
+               if (confirm("Are you sure you want to submit the attendance ?"))
+                  return true;
+               else
+                 return false;
+            });
+        </script>

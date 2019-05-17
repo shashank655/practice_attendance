@@ -121,5 +121,9 @@ require_once 'includes/sidebar.php';
                 }
             }
         });
+
+        $("form").submit(function() {
+            $(this).find('input[type="submit"]').prop("disabled", true);
+        });
     });
     </script>

@@ -24,6 +24,7 @@
                             </ul>
                         </li>
                         <?php } ?>
+                        <?php if($_SESSION['user_role'] == '1' ) { ?>
                         <li class="submenu">
                             <a href="#"><i class="fa fa-table" aria-hidden="true"></i> <span> Classes & Sections</span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">
@@ -31,7 +32,6 @@
                                 <li><a class="<?php if($currentURL =='class-section.php'){echo 'active';}?>" class="" href="class-section.php">Add Classes</a></li>
                             </ul>
                         </li>
-
                         <li class="submenu">
                             <a href="#"><i class="fa fa-table" aria-hidden="true"></i> <span> Subjects</span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">
@@ -39,18 +39,16 @@
                                 <li><a class="<?php if($currentURL =='add-subjects.php'){echo 'active';}?>" class="" href="add-subjects.php">Add Subjects</a></li>
                             </ul>
                         </li>
-
                         <li class="<?php if($currentURL =='holidays.php'){echo 'active';}?>">
                             <a href="holidays.php"><i class="fa fa-tasks" aria-hidden="true"></i> Holidays</a>
                         </li>
                         <li class="<?php if($currentURL =='events.php'){echo 'active';}?>">
                             <a href="events.php"><i class="fa fa-calendar" aria-hidden="true"></i> Events</a>
                         </li>
-                        <?php if($_SESSION['user_role'] == '1' ) { ?>
-                        <li class="<?php if($currentURL =='leaves-types.php'){echo 'active';}?>">
+                        <li class="<?php if($currentURL =='leaves-types.php' || $currentURL =='add-leaves-type.php'){echo 'active';}?>">
                             <a href="leaves-types.php"><i class="fa fa-table" aria-hidden="true"></i>Add Leaves Types</a>
                         </li>
-                        <li class="<?php if($currentURL =='leave-requests-list.php'){echo 'active';}?>">
+                        <li class="<?php if($currentURL =='leave-requests-list.php' || $currentURL =='view-leave-requests.php'){echo 'active';}?>">
                             <a href="leave-requests-list.php"><i class="fa fa-table" aria-hidden="true"></i>Leave Requests List</a>
                         </li>
                         <li class="<?php if($currentURL =='exams-list.php' || $currentURL =='add-exams.php'){echo 'active';}?>">
@@ -62,9 +60,11 @@
                             <a href="request-leave-list.php"><i class="fa fa-table" aria-hidden="true"></i>Request Leave List</a>
                         </li>
                         <?php } ?>
+                        <?php if( ($_SESSION['user_role'] == '1') ||  ($_SESSION['user_role'] == '2')) { ?>
                         <li class="<?php if($currentURL =='student-attendance-list.php' || $currentURL =='student-attendance.php'){echo 'active';}?>">
                             <a href="student-attendance-list.php"><i class="fa fa-table" aria-hidden="true"></i>Student Attendance</a>
                         </li>
+                        <?php } ?>
 						<!-- <li class="submenu">
                             <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Students</span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">

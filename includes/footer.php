@@ -24,5 +24,9 @@
         $('#myModal').modal('hide');
     }, 5000);
 
+    $("form").submit(function() {
+        $(this).find('input[type="submit"]').prop("disabled", true);
+    });
+
 </script>
 </html>

@@ -13,7 +13,7 @@ if($_SESSION['user_role'] == '1') {
         } else {
             $getLeaveNotifyCount = '';
         }
-} else if($_SESSION['user_role'] == '2') {
+} else if($_SESSION['user_role'] == '2' || $_SESSION['user_role'] == '3') {
     $adminData = $admin->getTeacherInfo($_SESSION['userId']);
     $leaveNotifyCount = $leaves->getTeacherLeaveNotifyCount($_SESSION['userId']);
         if($leaveNotifyCount[0][0] !='0' ) {

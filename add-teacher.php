@@ -154,7 +154,7 @@ require_once 'includes/sidebar.php';
 									</div>
 									<div class="col-lg-12 col-md-12 col-sm-12 col-12">
 										<div class="form-group">
-											<textarea  id="message" class="form__field" placeholder="Premanent Address" rows="4" name="permanent_address"><?php if (isset($result[0][ 'permanent_address'])) echo $result[0][ 'permanent_address']; ?></textarea>
+											<textarea  id="message" class="form__field" placeholder="Premanent Address" name="permanent_address"><?php if (isset($result[0][ 'permanent_address'])) echo $result[0][ 'permanent_address']; ?></textarea>
 											<label for="message" class="form-label">Premanent Address</label>
 										</div>
 									</div>
@@ -217,6 +217,10 @@ require_once 'includes/sidebar.php';
         return check_result;
     }, "Email address is already exist!");
 
+	jQuery.validator.addMethod("dropdownValidation", function(value, element, params) {        
+        return $.trim(value) != '';
+    },'This field is required.');
+
 	$(function(){
         $("#addTeacherForm").validate({
             ignore: "input[type='text']:hidden",
@@ -231,6 +235,26 @@ require_once 'includes/sidebar.php';
                     required:true,
                     email:true,
                     isCheckEmailAddress:true
+                },
+                gender:{
+                    required:true,
+                    dropdownValidation:true
+                },
+                subject_id:{
+                    required:true,
+                    dropdownValidation:true
+                },
+                class_id:{
+                    required:true,
+                    dropdownValidation:true
+                },
+                section_id:{
+                    required:true,
+                    dropdownValidation:true
+                },
+                is_class_teacher:{
+                    required:true,
+                    dropdownValidation:true
                 },
                 joining_date:{
                     required:true

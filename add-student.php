@@ -54,13 +54,6 @@ require_once 'includes/sidebar.php';
 												 	<i class="bar"></i>
 												</div>
 												<div class="form-group custom-mt-form-group">
-													<input type="text"  name="email_address" placeholder="Email" value="<?php
-                                        		if (isset($result[0]['email_address']))
-                                            	echo htmlspecialchars($result[0]['email_address']);
-                                        		?>"/>
-													<i class="bar"></i>
-												</div>
-												<div class="form-group custom-mt-form-group">
 													<select id="gender" name="gender">
 														<option selected="" value="" disabled="">Select Gender</option>
 														<option value="male">Male</option>
@@ -128,9 +121,9 @@ require_once 'includes/sidebar.php';
 													<i class="bar"></i>
 												</div>
 												<div class="form-group custom-mt-form-group">
-													<input type="text"  name="student_id" placeholder="ID" value="<?php
-                                        		if (isset($result[0]['student_id']))
-                                            	echo htmlspecialchars($result[0]['student_id']);
+													<input type="text"  name="roll_number" placeholder="Roll Number" value="<?php
+                                        		if (isset($result[0]['roll_number']))
+                                            	echo htmlspecialchars($result[0]['roll_number']);
                                         		?>"/>
 													<i class="bar"></i>
 												</div>
@@ -161,6 +154,13 @@ require_once 'includes/sidebar.php';
 															<i class="bar"></i>
 														</div>
 														<div class="form-group custom-mt-form-group">
+													<input type="text"  name="email_address" placeholder="Email" value="<?php
+                                        		if (isset($result[0]['email_address']))
+                                            	echo htmlspecialchars($result[0]['email_address']);
+                                        		?>"/>
+													<i class="bar"></i>
+												</div>
+														<div class="form-group custom-mt-form-group">
 															<input type="number"  name="parents_mobile_number" placeholder="Mobile number" value="<?php
                                         		if (isset($result[0]['parents_mobile_number']))
                                             	echo htmlspecialchars($result[0]['parents_mobile_number']);
@@ -168,7 +168,7 @@ require_once 'includes/sidebar.php';
 															<i class="bar"></i>
 														</div>
 														<div class="form-group">
-															<textarea id="message" class="form__field" placeholder="Present Address" rows="4" name="present_address"><?php if (isset($result[0][ 'present_address'])) echo $result[0][ 'present_address']; ?></textarea>
+															<textarea id="message" class="form__field" placeholder="Present Address" name="present_address"><?php if (isset($result[0][ 'present_address'])) echo $result[0][ 'present_address']; ?></textarea>
 															<label for="message" class="form-label">Present Address</label>
 														</div>
 												</div>
@@ -196,7 +196,7 @@ require_once 'includes/sidebar.php';
 															<i class="bar"></i>
 														</div>
 														<div class="form-group">
-															<textarea id="message" class="form__field" placeholder="Premanent Address" rows="4" name="permanent_address"><?php if (isset($result[0][ 'permanent_address'])) echo $result[0][ 'permanent_address']; ?></textarea>
+															<textarea id="message" class="form__field" placeholder="Premanent Address" name="permanent_address"><?php if (isset($result[0][ 'permanent_address'])) echo $result[0][ 'permanent_address']; ?></textarea>
 															<label for="message" class="form-label">Premanent Address</label>
 														</div>
 												</div>
@@ -255,6 +255,10 @@ require_once 'includes/sidebar.php';
             </div>
             <?php require_once 'includes/footer.php'; ?>
 <script type="text/javascript">
+	jQuery.validator.addMethod("dropdownValidation", function(value, element, params) {        
+        return $.trim(value) != '';
+    },'This field is required.');
+
 	$(function(){
         $("#addStudentForm").validate({
             ignore: "input[type='text']:hidden",
@@ -265,9 +269,17 @@ require_once 'includes/sidebar.php';
                 last_name:{
                     required:true
                 },
-                email_address:{
+                gender:{
                     required:true,
-                    email:true
+                    dropdownValidation:true
+                },
+                class_id:{
+                    required:true,
+                    dropdownValidation:true
+                },
+                section_id:{
+                    required:true,
+                    dropdownValidation:true
                 },
                 date_of_joining:{
                     required:true
@@ -281,7 +293,7 @@ require_once 'includes/sidebar.php';
                 dob:{
                     required:true
                 },
-                student_id:{
+                roll_number:{
                     required:true
                 },
                 religion:{
@@ -294,9 +306,6 @@ require_once 'includes/sidebar.php';
                 	required:true
                 },
                 permanent_address:{
-                	required:true
-                },
-                student_profile_image:{
                 	required:true
                 }
             }

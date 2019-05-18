@@ -43,14 +43,20 @@ require_once 'includes/sidebar.php';
 								<li class="list-inline-item"> Attendance List</li>
 							</ul>
 						</div>
-                        <div class="col-sm-4 col-3">
-                      
-                        </div>
-                    <div class="col-sm-8 col-9 text-right m-b-20">
+
+                    <!-- <div class="col-sm-8 col-9 text-right m-b-20">
                         <a href="student-attendance.php" class="float-right btn-rounded">Take today's Attendance</a>
-                    </div>
+                    </div> -->
 					</div>
 				</div>
+                     <div class="row">
+                            <div class="col-sm-4 col-3">
+                          
+                            </div>
+                            <div class="col-sm-8 col-9 text-right m-b-20">
+                                <a href="student-attendance.php" class="btn btn-primary float-right btn-rounded"><i class="fa fa-plus"></i>Today's Attendance</a>
+                            </div>
+                        </div>
 				<div class="content-page">
                  <form id="searchAttendance" action="student-attendance-list.php" method="get" novalidate="novalidate">
 				 <div class="row">
@@ -125,7 +131,7 @@ require_once 'includes/sidebar.php';
                                                 } elseif($value1['output'] == 'P') {
                                                     $class = 'text-success';
                                                 } else {
-                                                    $class = '';
+                                                    $class = 'fa fa-minus';
                                                 }
                                             ?>    
                                         <td><i class="fa fa-check <?php echo $class; ?>"></i></td>

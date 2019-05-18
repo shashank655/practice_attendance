@@ -41,6 +41,14 @@ require_once 'includes/sidebar.php';
                                                 ?>">
                                     </div>
                                 </div>
+                                <?php if(empty($result)) { ?>
+                                <div class="form-group row">    
+                                    <label class="col-form-label col-md-2">Sections Name</label>
+                                    <div class="col-md-10">
+                                        <input type="text" name="addSection[]" class="form-control" value="">
+                                    </div>
+                                </div>
+                                 <?php } ?>   
                                 <?php if(!empty($result)) { ?>
                                 <?php foreach ($result as $key => $value) { ?>
                                     <div id="" class="form-group row">    

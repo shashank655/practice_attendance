@@ -3,13 +3,15 @@ require_once 'employee/class/dbclass.php';
 require_once 'employee/config/config.php'; 
 require_once 'employee/class/CommonFunction.php'; 
 require_once 'employee/class/Exams.php';
+require_once 'employee/class/Holidays.php';
 $common_function=new CommonFunction(); 
 $exams=new Exams();
+$holidays=new Holidays();
 $totalStudent=$common_function->getCountStudent(); 
 $totalTeacher = $common_function->getCountTeacher();
 $resultAllStudents=$common_function->getAllStudents();
 $resultExamList=$exams->getExamsLists();
-
+$resultHolidays=$holidays->getHolidaysList();
 require_once 'includes/header.php';
 require_once 'includes/sidebar.php';
 ?>
@@ -52,6 +54,7 @@ require_once 'includes/sidebar.php';
                             </div>
                         </div>
                     </div>
+                    <?php if( ($_SESSION['user_role'] == '1')) { ?>
                     <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                         <div class="dash-widget dash-widget5">
                             <span class="dash-widget-icon bg-success"><i class="fa fa-user" aria-hidden="true"></i></span>
@@ -60,6 +63,7 @@ require_once 'includes/sidebar.php';
                             </div>
                         </div>
                     </div>
+                <?php } ?>
 
                 </div>
 				<div class="row">
@@ -115,6 +119,7 @@ require_once 'includes/sidebar.php';
                                         			<td><?php echo $value['section_name'];?></td>
                                         			<td><?php echo $value['date_of_exam']; ?></td>
                                         			<td><?php echo $value['exam_name']; ?></td>
+                                        			<?php if($_SESSION['user_role'] == '1' ) { ?>
 													<td class="text-right" >
 														<a href="add-exams.php?examId=<?php echo $value[0]; ?>" class="btn btn-primary btn-sm mb-1">
 															<i class="fa fa-pencil" aria-hidden="true"></i>
@@ -123,6 +128,39 @@ require_once 'includes/sidebar.php';
                                                 			<i class="fa fa-trash" aria-hidden="true"></i>
                                            				</a>
 													</td>
+												<?php } ?>
+												</tr>
+												<?php $i++; } ?>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="content-page">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="page-title mb-2">
+										Holiday list
+									</div>
+									<div class="table-responsive">
+										<table class="table table-striped custom-table">
+											<thead>
+												<tr>
+													<th style="min-width:50px;">S.No.</th>
+			                                        <th style="min-width:50px;">Title</th>
+			                                        <th style="min-width:50px;">Holiday Date</th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php $i=1; ?>
+                                				<?php foreach ($resultHolidays as $key => $value) { ?>		
+												 <tr>
+													<td><?php echo $i; ?></td>
+                                        			<td><?php echo $value['holiday_name']; ?></td>
+                                        			<td><?php echo $value['holiday_date'];?></td>
 												</tr>
 												<?php $i++; } ?>
 											</tbody>
@@ -133,6 +171,7 @@ require_once 'includes/sidebar.php';
 						</div>
 					</div>
 				</div>
+				<?php if($_SESSION['user_role'] == '1' ) { ?>
 				<div class="row mt-2">
 					<div class="col-lg-12">
 						<div class="content-page">
@@ -184,6 +223,7 @@ require_once 'includes/sidebar.php';
 						</div>
 					 </div>       
 				</div>
+			<?php } ?>
 			</div>
 		</div>
 	</div>

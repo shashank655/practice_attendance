@@ -58,7 +58,7 @@ require_once 'includes/sidebar.php';
                                                 <input type="hidden" name="section_id" value="<?php echo $get_section_id; ?>" />
                                                 <input type="hidden" name="teacher_id" value="<?php echo $_SESSION['userId']; ?>" />
                                                 <?php  foreach ($get_total_class_students as $key => $value) { ?>
-                                                <input type="hidden" name="userId[]" value="<?php echo $value['id'] ?>" />
+                                                <input type="hidden" name="student_id[]" value="<?php echo $value['id'] ?>" />
                                                 <tr>
                                                     <td>
                                                         <h2><a href="profile.html" class="avatar text-white">P</a></h2>

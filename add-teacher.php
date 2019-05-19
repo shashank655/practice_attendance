@@ -70,8 +70,8 @@ require_once 'includes/sidebar.php';
 										<div class="form-group custom-mt-form-group">
 											<select id="gender" name="gender">
 												<option selected="" value="" disabled="">Gender</option>
-												<option value="male">Male</option>
-												<option value="female">Female</option>
+												<option <?php if($result[0]['gender'] == 'male'){echo 'selected'; } ?> value="male">Male</option>
+												<option <?php if($result[0]['gender'] == 'female'){echo 'selected'; } ?> value="female">Female</option>
 											</select>
 											<label class="control-label"></label><i class="bar"></i>
 										</div>
@@ -146,8 +146,8 @@ require_once 'includes/sidebar.php';
 										<div class="form-group custom-mt-form-group">
 											<select id="is_class_teacher" name="is_class_teacher">
 												<option selected="" disabled="" value="">Is Class Teacher ?</option>
-												<option value="1">Yes</option>
-												<option value="0">No</option>
+												<option <?php if($result[0]['is_class_teacher'] == '1'){echo 'selected'; } ?> value="1">Yes</option>
+												<option <?php if($result[0]['is_class_teacher'] == '0'){echo 'selected'; } ?> value="0">No</option>
 											</select>
 											<i class="bar"></i>
 										</div>

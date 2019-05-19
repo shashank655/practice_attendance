@@ -60,9 +60,14 @@
                             <a href="request-leave-list.php"><i class="fa fa-table" aria-hidden="true"></i>Request Leave List</a>
                         </li>
                         <?php } ?>
-                        <?php if( ($_SESSION['user_role'] == '1') ||  ($_SESSION['user_role'] == '2')) { ?>
+                        <?php if($_SESSION['user_role'] == '2') { ?>
                         <li class="<?php if($currentURL =='student-attendance-list.php' || $currentURL =='student-attendance.php'){echo 'active';}?>">
                             <a href="student-attendance-list.php"><i class="fa fa-table" aria-hidden="true"></i>Student Attendance</a>
+                        </li>
+                        <?php } ?>
+                        <?php if($_SESSION['user_role'] == '1') { ?>
+                        <li class="<?php if($currentURL =='all-students-attendance-list.php' || $currentURL =='all-students-attendance-list.php'){echo 'active';}?>">
+                            <a href="all-students-attendance-list.php"><i class="fa fa-table" aria-hidden="true"></i>Students Attendance</a>
                         </li>
                         <?php } ?>
 						<!-- <li class="submenu">

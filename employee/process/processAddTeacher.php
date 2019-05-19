@@ -13,22 +13,22 @@ if ($data['type'] == 'Add') {
     if ($result) {
         $_SESSION['Msg'] = "Teacher added successfully!";
         $_SESSION['success'] = true;
-        header('Location: ' . BASE_ROOT.'add-teacher.php');
+        header('Location: ' . BASE_ROOT.'all-teachers.php');
     } else {
         $_SESSION['Msg'] = "Teacher Email address already exist!";
         $_SESSION['success'] = false;
-        header('Location: ' . BASE_ROOT.'add-teacher.php');
+        header('Location: ' . BASE_ROOT.'all-teachers.php');
     } 
 } else if ($_POST['type'] == 'Update' && $_POST['userId'] != NULL) {
     $result = $teacher->teacherInfoUpdate($_POST,$_FILES);
     if ($result) {
         $_SESSION['Msg'] = "Teacher information updated successfully!";
         $_SESSION['success'] = true;
-        header('Location: ' . BASE_ROOT.'add-teacher.php');
+        header('Location: ' . BASE_ROOT.'all-teachers.php');
     } else {
         $_SESSION['Msg'] = "Teacher Email address already exist!";
         $_SESSION['success'] = false;
-        header('Location: ' . BASE_ROOT.'add-teacher.php');
+        header('Location: ' . BASE_ROOT.'all-teachers.php');
     }    
 } else if ($_POST['type'] == 'getSection' && $_POST['classID'] != NULL ){
     $common_function = new CommonFunction();

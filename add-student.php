@@ -56,8 +56,8 @@ require_once 'includes/sidebar.php';
 												<div class="form-group custom-mt-form-group">
 													<select id="gender" name="gender">
 														<option selected="" value="" disabled="">Select Gender</option>
-														<option value="male">Male</option>
-														<option value="female">Female</option>
+														<option <?php if($result[0]['gender'] == 'male'){echo 'selected'; } ?> value="male">Male</option>
+														<option <?php if($result[0]['gender'] == 'female'){echo 'selected'; } ?> value="female">Female</option>
 													 </select>
 													 <i class="bar"></i>
 												</div>

@@ -72,7 +72,8 @@ class Teacher extends MySQLCN {
         $qry = "UPDATE `users` SET
               `first_name` = '{$data['first_name']}', 
               `email_address` = '{$data['email_address']}', 
-              `last_name` = '{$data['last_name']}'
+              `last_name` = '{$data['last_name']}',
+              `user_role` = '{$role}'
                WHERE id = '{$data['userId']}'";
         $res = $this->updateData($qry);
         if ($res) {

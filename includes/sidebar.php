@@ -70,6 +70,11 @@
                             <a href="all-students-attendance-list.php"><i class="fa fa-table" aria-hidden="true"></i>Students Attendance</a>
                         </li>
                         <?php } ?>
+                        <?php if($_SESSION['user_role'] == '2' || $_SESSION['user_role'] == '3') { ?>
+                        <li class="<?php if($currentURL =='teacher-attendance-list.php' || $currentURL =='teacher-attendance-list.php'){echo 'active';}?>">
+                            <a href="teacher-attendance-list.php"><i class="fa fa-table" aria-hidden="true"></i>My Attendance</a>
+                        </li>
+                        <?php } ?>
 						<!-- <li class="submenu">
                             <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Students</span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">

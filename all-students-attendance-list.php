@@ -97,9 +97,9 @@ require_once 'includes/sidebar.php';
 					<div class="form-group custom-mt-form-group">
 							<select name="year" id="year">
                                 <option value="">Select Year</option>
+                                <option <?php if($get_selected_year == '2021'){echo 'selected'; } ?> value="2021">2021</option>
+                                <option <?php if($get_selected_year == '2020'){echo 'selected'; } ?> value="2020">2020</option>
                                 <option <?php if($get_selected_year == '2019'){echo 'selected'; } ?> value="2019">2019</option>
-                                <option <?php if($get_selected_year == '2018'){echo 'selected'; } ?> value="2018">2018</option>
-                                <option <?php if($get_selected_year == '2017'){echo 'selected'; } ?> value="2017">2017</option>
 							 </select>
 							 <label class="control-label">Select Year</label><i class="bar"></i>
 						</div>	

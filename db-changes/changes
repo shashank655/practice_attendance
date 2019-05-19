@@ -84,4 +84,6 @@ CREATE TABLE `practice`.`leaves_request` ( `id` INT(11) NOT NULL AUTO_INCREMENT 
 
 section_id add in students_attendance
 effective_to add in leaves_request
-change section_id to roll_number                                
+change section_id to roll_number
+CREATE TABLE `practice`.`teachers_attendance` ( `id` INT(11) NULL AUTO_INCREMENT , `teacher_id` INT(11) NOT NULL , `date_of_attendance` VARCHAR(200) NOT NULL , `login_time` TIMESTAMP NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+                                

@@ -69,18 +69,19 @@ require_once 'includes/sidebar.php';
                     <div class="col-sm-6 col-md-3">
 						<div class="form-group custom-mt-form-group">
 							<select name="month" id="month">
-                                <option value="01">Jan</option>
-                                <option value="02">Feb</option>
-                                <option value="03">Mar</option>
-                                <option value="04">Apr</option>
-                                <option value="05">May</option>
-                                <option value="06">Jun</option>
-                                <option value="07">Jul</option>
-                                <option value="08">Aug</option>
-                                <option value="09">Sep</option>
-                                <option value="10">Oct</option>
-                                <option value="11">Nov</option>
-                                <option value="12">Dec</option>
+                                <option value="">Select Month</option>
+                                <option <?php if($get_current_month == '01'){echo 'selected'; } ?> value="01">Jan</option>
+                                <option <?php if($get_current_month == '02'){echo 'selected'; } ?> value="02">Feb</option>
+                                <option <?php if($get_current_month == '03'){echo 'selected'; } ?> value="03">Mar</option>
+                                <option <?php if($get_current_month == '04'){echo 'selected'; } ?> value="04">Apr</option>
+                                <option <?php if($get_current_month == '05'){echo 'selected'; } ?> value="05">May</option>
+                                <option <?php if($get_current_month == '06'){echo 'selected'; } ?> value="06">Jun</option>
+                                <option <?php if($get_current_month == '07'){echo 'selected'; } ?> value="07">Jul</option>
+                                <option <?php if($get_current_month == '08'){echo 'selected'; } ?> value="08">Aug</option>
+                                <option <?php if($get_current_month == '09'){echo 'selected'; } ?> value="09">Sep</option>
+                                <option <?php if($get_current_month == '10'){echo 'selected'; } ?> value="10">Oct</option>
+                                <option <?php if($get_current_month == '11'){echo 'selected'; } ?> value="11">Nov</option>
+                                <option <?php if($get_current_month == '12'){echo 'selected'; } ?> value="12">Dec</option>
 							 </select>
 							 <label class="control-label">Select Month</label><i class="bar"></i>
 						</div>	
@@ -88,9 +89,10 @@ require_once 'includes/sidebar.php';
                     <div class="col-sm-6 col-md-3">
 					<div class="form-group custom-mt-form-group">
 							<select name="year" id="year">
-                                <option value="2019">2019</option>
-                                <option value="2018">2018</option>
-                                <option value="2017">2017</option>
+                                <option value="">Select Year</option>
+                                <option <?php if($get_current_year == '2021'){echo 'selected'; } ?> value="2021">2021</option>
+                                <option <?php if($get_current_year == '2020'){echo 'selected'; } ?> value="2020">2020</option>
+                                <option <?php if($get_current_year == '2019'){echo 'selected'; } ?> value="2019">2019</option>
 							 </select>
 							 <label class="control-label">Select Year</label><i class="bar"></i>
 						</div>	

@@ -207,7 +207,12 @@ class Teacher extends MySQLCN {
         } else {
           return false;
       }
+    }
 
+    function getAttendanceLists($teacherId, $get_current_year, $get_current_month) {
+        $fetch = "SELECT * from teachers_attendance where teachers_attendance.teacher_id='".$teacherId."' and MONTH(teachers_attendance.date_of_attendance)='".$get_current_month."' and YEAR(teachers_attendance.date_of_attendance)='".$get_current_year."'";
+        $fetch_result = $this->select($fetch);
+          return $fetch_result;
     }     
 }
 ?>

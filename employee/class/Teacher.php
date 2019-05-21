@@ -213,6 +213,12 @@ class Teacher extends MySQLCN {
         $fetch = "SELECT * from teachers_attendance where teachers_attendance.teacher_id='".$teacherId."' and MONTH(teachers_attendance.date_of_attendance)='".$get_current_month."' and YEAR(teachers_attendance.date_of_attendance)='".$get_current_year."'";
         $fetch_result = $this->select($fetch);
           return $fetch_result;
+    }
+
+    function getTeachersList() {
+      $fetch = "SELECT id,first_name,last_name from users where users.user_role!='1' order by first_name";
+      $fetch_result = $this->select($fetch);
+      return $fetch_result;
     }     
 }
 ?>

@@ -67,12 +67,17 @@
                         <?php } ?>
                         <?php if($_SESSION['user_role'] == '1') { ?>
                         <li class="<?php if($currentURL =='all-students-attendance-list.php' || $currentURL =='all-students-attendance-list.php'){echo 'active';}?>">
-                            <a href="all-students-attendance-list.php"><i class="fa fa-table" aria-hidden="true"></i>Students Attendance</a>
+                            <a href="all-students-attendance-list.php"><i class="fa fa-table" aria-hidden="true"></i>Student's Attendance</a>
                         </li>
                         <?php } ?>
                         <?php if($_SESSION['user_role'] == '2' || $_SESSION['user_role'] == '3') { ?>
                         <li class="<?php if($currentURL =='teacher-attendance-list.php' || $currentURL =='teacher-attendance-list.php'){echo 'active';}?>">
                             <a href="teacher-attendance-list.php"><i class="fa fa-table" aria-hidden="true"></i>My Attendance</a>
+                        </li>
+                        <?php } ?>
+                        <?php if($_SESSION['user_role'] == '1') { ?>
+                        <li class="<?php if($currentURL =='teacher-attendance-list.php' || $currentURL =='teacher-attendance-list.php'){echo 'active';}?>">
+                            <a href="teacher-attendance-list.php"><i class="fa fa-table" aria-hidden="true"></i>Teacher's Attendance</a>
                         </li>
                         <?php } ?>
 						<!-- <li class="submenu">

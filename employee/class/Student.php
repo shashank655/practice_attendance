@@ -107,7 +107,7 @@ class Student extends MySQLCN {
     }
 
     function getStudentInfo($id) {
-        $fetch = "SELECT * FROM `students` where students.id ='" . $id . "'";
+        $fetch = "SELECT * FROM `students` join classes_name on students.class_id=classes_name.id join sections on students.section_id=sections.id where students.id ='" . $id . "'";
         $fetch_data = $this->select($fetch);
         return $fetch_data;
     }
@@ -120,6 +120,12 @@ class Student extends MySQLCN {
         } else {
             return false;
         }
+    }
+
+    function getAllStudents() {
+        $fetchList = "SELECT * FROM `students` join classes_name on students.class_id=classes_name.id join sections on students.section_id=sections.id order by `first_name` asc";
+        $fetch_list = $this->select($fetchList);
+        return $fetch_list;
     }    
 }
 ?>

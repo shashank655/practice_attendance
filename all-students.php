@@ -1,10 +1,9 @@
 <?php 
 require_once 'employee/class/dbclass.php'; 
 require_once 'employee/config/config.php'; 
-require_once 'employee/class/Teacher.php'; 
-require_once 'employee/class/CommonFunction.php'; 
-$common_function=new CommonFunction(); 
-$resultAllStudents=$common_function->getAllStudents();  
+require_once 'employee/class/Student.php'; 
+$student = new Student(); 
+$resultAllStudents=$student->getAllStudents();  
 ?>
 
 <?php 
@@ -94,9 +93,12 @@ require_once 'includes/sidebar.php';
                                 </div>
                             </div>
                             <h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="profile.html"><?php echo $value['first_name'].' '.$value['last_name']; ?></a></h4>
-                            <div class="small text-muted"><?php echo $value['gender']; ?></div>
+                            <div class="small text-muted"><?php echo ucfirst($value['gender']); ?></div>
                             <div class="small text-muted"><?php 
-                                echo $value['admission_no'];
+                                echo $value['class_name'];
+                            ?></div>
+                            <div class="small text-muted"><?php 
+                                echo $value['section_name'];
                             ?></div>
                         </div>
                     </div>

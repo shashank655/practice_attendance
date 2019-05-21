@@ -7,7 +7,8 @@ $common_function=new CommonFunction();
 $student = new Student(); 
 $studentId = (isset($_REQUEST['studentId'])) ? $_REQUEST['studentId'] : NULL; 
 if ($studentId != NULL) { $result = $student->getStudentInfo($studentId); 
-	if ($result == NULL) { $studentId = ''; } } ?>
+	if ($result == NULL) { $studentId = ''; } } 
+    ?>
 <?php 
 require_once 'includes/header.php'; 
 require_once 'includes/sidebar.php'; 
@@ -50,8 +51,10 @@ require_once 'includes/sidebar.php';
                                             <div class="profile-info-left">
                                                 <h3 class="user-name m-t-0"><?php echo $result[0]['first_name'].' '.$result[0]['last_name']?></h3>
                                                 <h5 class="company-role m-t-0 m-b-0">Preschool</h5>
+                                                <div class="staff-id">Class : <?php echo $result[0]['class_name'];?></div>
+                                                <div class="staff-id">Section : <?php echo $result[0]['section_name'];?></div>
                                                 <div class="staff-id">Admission NO : <?php echo $result[0]['admission_no'];?></div>
-                                                <div class="staff-id">Student ID : <?php echo $result[0]['student_id'];?></div>
+                                                <div class="staff-id">Roll Number : <?php echo $result[0]['roll_number'];?></div>
                                                 <div class="staff-id">Religion : <?php echo $result[0]['religion'];?></div>
 											</div>
                                         </div>

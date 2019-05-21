@@ -3,7 +3,11 @@ require_once 'employee/class/dbclass.php';
 require_once 'employee/config/config.php'; 
 require_once 'employee/class/Teacher.php'; 
 $teacher_id = $_SESSION['userId']; 
+$user_role = $_SESSION['user_role'];
 $teacher = new Teacher();
+if($user_role == '1') {
+    $get_teachers_list = $teacher->getTeachersList();
+}
 $searchYear = (isset($_REQUEST['year'])) ? $_REQUEST['year'] : NULL;
     if ($searchYear != NULL) {
         $current_year = $searchYear;
@@ -16,7 +20,10 @@ $searchMonth = (isset($_REQUEST['month'])) ? $_REQUEST['month'] : NULL;
     } else {
         $current_month = date('m');
     }   
-
+$teacherId = (isset($_REQUEST['teacher_id'])) ? $_REQUEST['teacher_id'] : NULL;
+    if ($teacherId != NULL) {
+        $teacher_id = $teacherId;
+    }
 $resultAttendanceList=$teacher->getAttendanceLists($teacher_id, $current_year, $current_month); 
 ?>
 
@@ -42,6 +49,19 @@ require_once 'includes/sidebar.php';
 			<div class="content-page">
                 <form id="searchAttendance" action="teacher-attendance-list.php" method="get" novalidate="novalidate">
                  <div class="row">
+                    <?php if($user_role == '1') { ?>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="form-group custom-mt-form-group">
+                                <select name="teacher_id" id="teacher_id">
+                                    <option value="">Select Teacher</option>
+                                    <?php for ($i=0 ; $i < count($get_teachers_list); $i++) : ?>
+                                        <option <?php if (isset($teacherId)) { if ($teacherId==$get_teachers_list[$i]['id']) { echo 'selected'; } } ?> value="<?php echo $get_teachers_list[$i][ 'id']; ?>"><?php echo $get_teachers_list[$i][ 'first_name'].' '.$get_teachers_list[$i][ 'last_name']; ?></option>
+                                    <?php endfor; ?>
+                                 </select>
+                                 <label class="control-label">Select Year</label><i class="bar"></i>
+                            </div>        
+                    </div>
+                    <?php } ?> 
                     <div class="col-sm-6 col-md-3">
                         <div class="form-group custom-mt-form-group">
                             <select name="month" id="month">

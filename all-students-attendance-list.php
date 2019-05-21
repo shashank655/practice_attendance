@@ -120,7 +120,7 @@ require_once 'includes/sidebar.php';
                                     <tr>
                                         <th>Students</th>
                                         <?php for ($i=1; $i <= $get_selected_month_days; $i++) { ?>
-                                        <th><?php echo $i; ?></th>
+                                        <th>Day <?php echo $i; ?></th>
                                     <?php } ?>
                                     </tr>
                                 </thead>
@@ -136,14 +136,14 @@ require_once 'includes/sidebar.php';
                                         if(!empty($get_selected_month_attendance)) {
                                             foreach ($get_selected_month_attendance as $key1 => $value1) { 
                                                 if($value1['output'] == 'A') {
-                                                    $class = 'text-danger';
+                                                    $class = 'fa fa-times text-danger';
                                                 } elseif($value1['output'] == 'P') {
-                                                    $class = 'text-success';
+                                                    $class = 'fa fa-check text-success';
                                                 } else {
-                                                    $class = 'fa fa-minus';
+                                                    $class = 'fa fa-check fa fa-minus';
                                                 }
                                             ?>    
-                                        <td><i class="fa fa-check <?php echo $class; ?>"></i></td>
+                                        <td><i class="<?php echo $class; ?>"></i></td>
                                     <?php } } ?>
                                     </tr>
                                     <?php } } ?>

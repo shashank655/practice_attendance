@@ -4,12 +4,14 @@ require_once 'employee/config/config.php';
 require_once 'employee/class/CommonFunction.php'; 
 require_once 'employee/class/Exams.php';
 require_once 'employee/class/Holidays.php';
+require_once 'employee/class/Student.php';
 $common_function=new CommonFunction(); 
 $exams=new Exams();
+$student=new Student();
 $holidays=new Holidays();
 $totalStudent=$common_function->getCountStudent(); 
 $totalTeacher = $common_function->getCountTeacher();
-$resultAllStudents=$common_function->getAllStudents();
+$resultAllStudents=$student->getAllStudents();
 $resultExamList=$exams->getExamsLists();
 $resultHolidays=$holidays->getHolidaysList();
 require_once 'includes/header.php';
@@ -185,7 +187,7 @@ require_once 'includes/sidebar.php';
 											<thead>
 												<tr>
 													<th style="min-width:50px;">Name </th>
-													<th style="min-width:74px;">Student ID</th>
+													<th style="min-width:74px;">Roll Number</th>
 													<th style="min-width:50px;">Fathers Name</th>
 													<th style="min-width:50px;">Address</th>
 													<th style="min-width:98px;">Date of Birth</th>
@@ -200,7 +202,7 @@ require_once 'includes/sidebar.php';
 														<h2><a href="student-profile.php?studentId=<?php echo $value[0]; ?>" class="avatar text-white"><?php echo substr($value['first_name'], 0, 1) ?></a></h2>
 														<h2><a href="student-profile.php?studentId=<?php echo $value[0]; ?>"><?php echo $value['first_name'].' '.$value['last_name']; ?> <span></span></a></h2>
 													</td>
-													<td><?php echo $value['student_id'];?></td>
+													<td><?php echo $value['roll_number'];?></td>
 			                                        <td><?php echo $value['fathers_name'];?></td>
 			                                        <td><?php echo $value['permanent_address'];?></td>
 													<td><?php echo $value['dob'];?></td>

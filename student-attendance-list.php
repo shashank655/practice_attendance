@@ -5,7 +5,7 @@ require_once 'employee/class/StudentAttendance.php';
 require_once 'employee/class/Teacher.php';
 $student_attendance = new StudentAttendance();
 $teacher = new Teacher();
-$get_current_month_days = date('t');
+
 if($_SESSION['user_role'] == '2') { 
     $output = $teacher->getTeacherClassName($_SESSION['userId']);
     $get_class_id = $output[0]['classId'];
@@ -24,6 +24,7 @@ if($_SESSION['user_role'] == '2') {
                 $get_current_month = date('m');
             }       
     $get_student_details = $student_attendance->getStudentDetails($get_class_id , $get_teacher_id , $get_section_id);
+    $get_current_month_days = cal_days_in_month(CAL_GREGORIAN, $get_current_month, $get_current_year);
 }
 ?>
 <?php 
@@ -100,7 +101,7 @@ require_once 'includes/sidebar.php';
                     </div>
                     <div class="col-sm-6 col-md-3">
 						<div class="form-group custom-mt-form-group">
-                        <button class="btn btn-success btn-block" type="submit">Submit</button>
+                        <button class="btn btn-primary btn-block" type="submit">Submit</button>
 						</div>
                     </div>
                 </div>

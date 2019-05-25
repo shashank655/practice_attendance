@@ -12,14 +12,14 @@
 						<li class="submenu">
                             <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Teachers</span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">
-                                <li><a class="<?php if($currentURL =='all-teachers.php'){echo 'active';}?>" href="all-teachers.php">All Teachers</a></li>
+                                <li><a class="<?php if($currentURL =='all-teachers.php' || $currentURL == 'teacher-profile.php'){echo 'active';}?>" href="all-teachers.php">All Teachers</a></li>
                                 <li><a class="<?php if($currentURL =='add-teacher.php'){echo 'active';}?>" href="add-teacher.php">Add Teacher</a></li>
                             </ul>
                         </li>
                         <li class="submenu">
                             <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Students</span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">
-                                <li><a class="<?php if($currentURL =='all-students.php'){echo 'active';}?>" href="all-students.php">All Students</a></li>
+                                <li><a class="<?php if($currentURL =='all-students.php' || $currentURL == 'student-profile.php'){echo 'active';}?>" href="all-students.php">All Students</a></li>
                                 <li><a class="<?php if($currentURL =='add-student.php'){echo 'active';}?>" class="" href="add-student.php">Add Student</a></li>
                             </ul>
                         </li>
@@ -53,6 +53,11 @@
                         </li>
                         <li class="<?php if($currentURL =='exams-list.php' || $currentURL =='add-exams.php'){echo 'active';}?>">
                             <a href="exams-list.php"><i class="fa fa-table" aria-hidden="true"></i>Exams List</a>
+                        </li>
+                        <?php } ?>
+                        <?php if( ($_SESSION['user_role'] == '2') ||  ($_SESSION['user_role'] == '3')) { ?>
+                        <li class="<?php if($currentURL =='all-students.php' || $currentURL =='student-profile.php'){echo 'active';}?>">
+                            <a href="all-students.php"><i class="fa fa-table" aria-hidden="true"></i>All Students List</a>
                         </li>
                         <?php } ?>
                         <?php if( ($_SESSION['user_role'] == '2') ||  ($_SESSION['user_role'] == '3')) { ?>

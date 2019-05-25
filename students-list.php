@@ -2,9 +2,9 @@
 require_once 'employee/class/dbclass.php'; 
 require_once 'employee/config/config.php'; 
 require_once 'employee/class/Teacher.php'; 
-require_once 'employee/class/CommonFunction.php'; 
-$common_function=new CommonFunction(); 
-$resultAllStudents=$common_function->getAllStudents();  
+require_once 'employee/class/Student.php'; 
+$student=new Student(); 
+$resultAllStudents=$student->getAllStudents();  
 ?>
 
 <?php 
@@ -81,7 +81,7 @@ require_once 'includes/sidebar.php';
                                 <thead>
                                     <tr>
                                         <th style="min-width:50px;">Name </th>
-                                        <th style="min-width:70px;">Student ID</th>
+                                        <th style="min-width:70px;">Roll Number</th>
                                         <th style="min-width:50px;">Gender</th>
                                         <th style="min-width:90px;">Parents Name</th>
 										<th style="min-width:20px;">Class</th>
@@ -100,7 +100,7 @@ require_once 'includes/sidebar.php';
                                             <a href="student-profile.php?studentId=<?php echo $value[0]; ?>" class="avatar"><?php echo substr($value['first_name'], 0, 1) ?></a>
                                             <h2><a href="student-profile.php?studentId=<?php echo $value[0]; ?>"><?php echo $value['first_name'].' '.$value['last_name']; ?> <span></span></a></h2>
                                         </td>
-                                        <td><?php echo $value['student_id'];?></td>
+                                        <td><?php echo $value['roll_number'];?></td>
                                         <td><?php echo $value['gender'];?></td>
                                         <td><?php echo $value['fathers_name'];?></td>
                                         <td><?php echo $value['class_id'];?></td>

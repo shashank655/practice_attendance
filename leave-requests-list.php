@@ -39,7 +39,7 @@ require_once 'includes/sidebar.php';
                                         <th style="min-width:50px;">Effective From</th>
                                         <th style="min-width:50px;">Number of days</th>
                                         <th style="min-width:50px;">Leave Status </th>
-                                        <th style="min-width:50px;">View More</th>
+                                        <th style="min-width:50px;">Edit Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -54,15 +54,18 @@ require_once 'includes/sidebar.php';
                                         <?php 
                                             if($value['leave_status'] == '0') {
                                                 $status = 'Pending';
+                                                $class = 'leave_pending';
                                             } else if($value['leave_status'] == '1') {
                                                 $status = 'Approve';
+                                                $class = 'leave_approve';
                                             } else {
                                                 $status = 'Rejected';
+                                                $class = 'leave_reject';
                                             } ?>
                                         <td class="text-center">
                                             <div class="action-label">
-                                                <a class="btn btn-white btn-sm btn-rounded" href="#">
-                                                    <i class="fa fa-dot-circle-o text-success"></i> <?php echo $status; ?>
+                                                <a class="btn btn-white <?php echo $class?> btn-sm btn-rounded" href="#">
+                                                    <i class="fa fa-dot-circle-o"></i> <?php echo $status; ?>
                                                 </a>
                                             </div>
                                         </td>

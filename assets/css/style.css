@@ -460,7 +460,24 @@ div.dataTables_wrapper div.dataTables_paginate {
 	border: 1px solid #ccc;
 	color: #fff;
 }
-
+.leave_approve{
+	background: #28a745;
+}
+.leave_approve i{
+	color: #fff;
+}
+.leave_reject{
+	background: #dc3545;
+}
+.leave_reject i{
+	color: #fff;
+}
+.leave_pending{
+	background: #ffbc34;
+}
+.leave_pending i{
+	color: #fff;
+}
 .rounded,
 .circle {
 	border-radius: 500px;
@@ -695,18 +712,18 @@ div.dataTables_wrapper div.dataTables_paginate {
 .pagination > .active > span,
 .pagination > .active > span:focus,
 .pagination > .active > span:hover {
-	background-color: #01c0c8;
-	border-color: #01c0c8;
+	background-color: #254769;
+	border-color: #254769;
 }
 
 .pagination > li > a,
 .pagination > li > span {
-	color: #01c0c8;
+	color: #254769;
 }
 
 .page-item.active .page-link {
-	background-color: #01c0c8;
-	border-color: #01c0c8;
+	background-color: #254769;
+	border-color: #254769;
 }
 
 .dropdown-menu {

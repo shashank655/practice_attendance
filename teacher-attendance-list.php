@@ -96,7 +96,7 @@ require_once 'includes/sidebar.php';
                     </div>
                     <div class="col-sm-6 col-md-3">
                         <div class="form-group custom-mt-form-group">
-                        <button class="btn btn-success btn-block" type="submit">Submit</button>
+                        <button class="btn btn-primary btn-block" type="submit">Submit</button>
                         </div>
                     </div>
                 </div>

@@ -62,15 +62,18 @@ require_once 'includes/sidebar.php';
                                         <?php 
                                             if($value['leave_status'] == '0') {
                                                 $status = 'Pending';
+                                                $class = 'leave_pending';
                                             } else if($value['leave_status'] == '1') {
                                                 $status = 'Approve';
+                                                $class = 'leave_approve';
                                             } else {
                                                 $status = 'Rejected';
+                                                $class = 'leave_reject';
                                             } ?>
                                         <td class="text-center">
                                             <div class="action-label">
-                                                <a class="btn btn-white btn-sm btn-rounded" href="#">
-                                                    <i class="fa fa-dot-circle-o text-success"></i> <?php echo $status; ?>
+                                                <a class="btn btn-white <?php echo $class?> btn-sm btn-rounded" href="#">
+                                                    <i class="fa fa-dot-circle-o"></i> <?php echo $status; ?>
                                                 </a>
                                             </div>
                                         </td>

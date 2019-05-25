@@ -25,6 +25,7 @@ require_once 'includes/sidebar.php';
                         </div>
                     </div>
                 </div>
+                <?php if($_SESSION['user_role'] == '1') { ?>
                 <div class="row">
                     <div class="col-sm-4 col-3">
                     </div>
@@ -36,6 +37,7 @@ require_once 'includes/sidebar.php';
                         </div>
                     </div>
                 </div>
+                <?php } ?>
             <div class="content-page">
                 <div class="row filter-row">
                     <div class="col-sm-6 col-md-3">
@@ -85,6 +87,7 @@ require_once 'includes/sidebar.php';
                             <div class="profile-img">
                                 <a href="student-profile.php?studentId=<?php echo $value[0]; ?>"><img class="avatar" src="<?php echo $imageData; ?>" alt=""></a>
                             </div>
+                            <?php if($_SESSION['user_role'] == '1') { ?>
                             <div class="dropdown profile-action">
                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right">
@@ -92,7 +95,8 @@ require_once 'includes/sidebar.php';
                                     <a class="dropdown-item" val="<?php echo $value[0]; ?>" href="#" id="delTeacher"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                 </div>
                             </div>
-                            <h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="profile.html"><?php echo $value['first_name'].' '.$value['last_name']; ?></a></h4>
+                            <?php } ?>
+                            <h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="student-profile.php?studentId=<?php echo $value[0]; ?>"><?php echo $value['first_name'].' '.$value['last_name']; ?></a></h4>
                             <div class="small text-muted"><?php echo ucfirst($value['gender']); ?></div>
                             <div class="small text-muted"><?php 
                                 echo $value['class_name'];

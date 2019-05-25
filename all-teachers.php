@@ -87,7 +87,7 @@ require_once 'includes/sidebar.php';
                                     <a class="dropdown-item" val="<?php echo $value[0]; ?>" href="#" id="delTeacher"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                 </div>
                             </div>
-                            <h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="profile.html"><?php echo $value['first_name'].' '.$value['last_name']; ?></a></h4>
+                            <h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="teacher-profile.php?userId=<?php echo $value[0]; ?>"><?php echo $value['first_name'].' '.$value['last_name']; ?></a></h4>
                             <div class="small text-muted"><?php echo $value['subject_name']; ?></div>
                             <div class="small text-muted"><?php 
                             if($value['is_class_teacher']) {

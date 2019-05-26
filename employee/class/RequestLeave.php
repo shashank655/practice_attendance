@@ -2,10 +2,18 @@
 class RequestLeave extends MySQLCN {
 
     function addLeaveRequest($data) {
+        if ($_FILES['leave_attachment']['error'] == '0') {
+            $leaveAttachmentName = time() . strtolower(basename($_FILES['leave_attachment']['name']));
+            $target = LEAVE_ATTACHMENT . $leaveAttachmentName;
+            move_uploaded_file($_FILES['leave_attachment']['tmp_name'], $target);
+        } else {
+            $leaveAttachmentName = '';
+        }
+
         $userId = $_SESSION['userId'];
         $qry = 'INSERT INTO `leaves_request` 
-            (`userId`,`leave_type_id`,`number_of_days`,`effective_from`,`effective_to`,`reason_to_leave`) 
-            VALUES ( "'. $userId . '","'. $data['leave_type_id'] . '","'. $data['number_of_days'] . '","'. $data['effective_from'] . '","'. $data['effective_to'] . '","'. $data['reason_to_leave'] . '")';
+            (`userId`,`leave_type_id`,`number_of_days`,`effective_from`,`effective_to`,`reason_to_leave`,`leaveAttachmentName`) 
+            VALUES ( "'. $userId . '","'. $data['leave_type_id'] . '","'. $data['number_of_days'] . '","'. $data['effective_from'] . '","'. $data['effective_to'] . '","'. $data['reason_to_leave'] . '","'. $leaveAttachmentName . '")';
         $res = $this->insert($qry);
         if ($res) {
             return true;

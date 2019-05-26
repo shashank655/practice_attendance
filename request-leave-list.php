@@ -47,6 +47,7 @@ require_once 'includes/sidebar.php';
                                         <th style="min-width:50px;">Effective From</th>
                                         <th style="min-width:50px;">Number of days</th>
                                         <th style="min-width:50px;">Reason to Leave </th>
+                                        <th style="min-width:50px;">Note</th>
                                         <th style="min-width:50px;">Leave Status </th>
                                     </tr>
                                 </thead>
@@ -59,6 +60,7 @@ require_once 'includes/sidebar.php';
                                         <td><?php echo $value['effective_from']; ?></td>
                                         <td><?php echo $value['number_of_days']; ?></td>
                                         <td><?php echo $value['reason_to_leave']; ?></td>
+                                        <td><?php echo $value['send_note']; ?></td>
                                         <?php 
                                             if($value['leave_status'] == '0') {
                                                 $status = 'Pending';

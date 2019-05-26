@@ -5,7 +5,6 @@ require_once '../class/Teacher.php';
 require_once '../class/CommonFunction.php';
 $common_function=new CommonFunction();
 $teacherPassword=$common_function->getTeacherPassword();
-
 $teacher = new Teacher();
 $data = $_REQUEST;
 if ($data['type'] == 'Add') {
@@ -30,6 +29,17 @@ if ($data['type'] == 'Add') {
         $_SESSION['success'] = false;
         header('Location: ' . BASE_ROOT.'all-teachers.php');
     }    
+} else if ($_POST['type'] == 'add-profile-pic' && $_FILES['profile_image']['error'] == 0) {
+    $result = $teacher->profilePicUpdate($_POST,$_FILES);
+    if ($result) {
+        $_SESSION['Msg'] = "Profile Image updated successfully!";
+        $_SESSION['success'] = true;
+        header('Location: ' . BASE_ROOT.'teacher-profile.php?userId='.$_POST['userId']);
+    } else {
+        $_SESSION['Msg'] = "Something went wrong, please try again!";
+        $_SESSION['success'] = false;
+        header('Location: ' . BASE_ROOT.'teacher-profile.php?userId='.$_POST['userId']);
+    }    
 } else if ($_POST['type'] == 'getSection' && $_POST['classID'] != NULL ){
     $common_function = new CommonFunction();
     $sectionData = $common_function->getSectionList($_POST['classID']);
@@ -50,6 +60,6 @@ if ($data['type'] == 'Add') {
         header('Location: ' . BASE_ROOT.'dashboard.php');
     }
 } else {
-    header("Location: ". BASE_ROOT);
+    header("Location: ". BASE_ROOT.'dashboard.php');
 }
 ?>

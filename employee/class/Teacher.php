@@ -98,6 +98,26 @@ class Teacher extends MySQLCN {
         }
     }
 
+    function profilePicUpdate($data,$files) {
+      if ($_FILES['profile_image']['error'] == '0') {
+            $profileImageName = time() . strtolower(basename($_FILES['profile_image']['name']));
+            $target = PROFILE_PIC_IMAGE_ROOT . $profileImageName;
+            move_uploaded_file($_FILES['profile_image']['tmp_name'], $target);
+        } else {
+            $profileImageName = '';
+        }
+
+        $qry = "UPDATE `teachers` SET
+              `profile_image` = '{$profileImageName}'
+               WHERE user_id = '{$data['userId']}'";
+        $res = $this->updateData($qry);
+        if ($res != NULL) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     function checkTeacherSignUp($data) {
         $qry = "SELECT * FROM users WHERE email_address = '{$data['email_address']}'";
         $result = $this->select($qry);
@@ -111,6 +131,10 @@ class Teacher extends MySQLCN {
     function getTeacherInfo($id) {
         $fetch = "SELECT * FROM `users` join teachers on users.id =teachers.user_id where users.id ='" . $id . "'";
         $fetch_data = $this->select($fetch);
+
+        $fetch2 = "SELECT classes_name.class_name, sections.section_name FROM `teachers` join classes_name on teachers.class_id = classes_name.id join sections on teachers.section_id = sections.id where teachers.user_id ='" . $id . "'";
+        $fetch_data2 = $this->select($fetch2);
+        $fetch_data['class-sections'] = $fetch_data2;
         return $fetch_data;
     }
 

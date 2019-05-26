@@ -100,6 +100,8 @@ if (!isset($_SESSION['userId'])) {
                             $userImage = PROFILE_PIC_IMAGE_PATH . $adminData[0]['admin_profile_image'];
                         } else if (!empty($adminData[0]['profile_image']) && $_SESSION['user_role'] == '2') {
                             $userImage = PROFILE_PIC_IMAGE_PATH . $adminData[0]['profile_image'];
+                        } else if (!empty($adminData[0]['profile_image']) && $_SESSION['user_role'] == '3') {
+                            $userImage = PROFILE_PIC_IMAGE_PATH . $adminData[0]['profile_image'];
                         } else {
                             $userImage = 'assets/img/user.jpg';
                         }

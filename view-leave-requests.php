@@ -97,6 +97,15 @@ require_once 'includes/sidebar.php';
                                             </select>
                                     </div>
                                 </div>
+                                <div class="form-group row ">
+                                    <label class="col-form-label col-md-2">Send Note</label>
+                                    <div class="col-md-10">
+                                        <input type="text" name="send_note" class="form-control" value="<?php
+                                                if (isset($result[0]['send_note']))
+                                                echo htmlspecialchars($result[0]['send_note']);
+                                                ?>">
+                                    </div>
+                                </div>
                             <div class="form-group text-center custom-mt-form-group">
                                 <button class="btn btn-primary btn-lg mr-2" type="submit">Submit</button>
                             </div>    

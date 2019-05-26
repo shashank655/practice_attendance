@@ -32,7 +32,7 @@ require_once 'includes/sidebar.php';
                     <div class="col-lg-12">
                         <div class="card-box">
                             <h4 class="card-title">Request Leave</h4>
-                            <form id="requestLeave" action="employee/process/processRequestLeave.php" method="post" novalidate="novalidate">
+                            <form id="requestLeave" action="employee/process/processRequestLeave.php" method="post" enctype="multipart/form-data" novalidate="novalidate">
                             <input type="hidden" name="type" value="<?php echo $examId == '' ? 'Add' : 'Update'; ?>" />
                             <input type="hidden" name="examId" value="<?php echo $examId; ?>" />
                                 <div class="form-group row">
@@ -82,7 +82,12 @@ require_once 'includes/sidebar.php';
                                                 ?>">
                                     </div>
                                 </div>
-
+                                <div class="form-group row">
+                                    <label class="col-form-label col-md-2">Attachment</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" type="file" name="leave_attachment">
+                                    </div>
+                                </div>
                             <div class="form-group text-center custom-mt-form-group">
                                 <button class="btn btn-primary btn-lg mr-2" type="submit">Apply</button>
                             </div>    

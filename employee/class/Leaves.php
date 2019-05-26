@@ -51,8 +51,14 @@ class Leaves extends MySQLCN {
     }
 
     function assignLeaveStatus($data) {
+        if($data['send_note']!='') {
+            $sendNote = $data['send_note'];
+        } else {
+            $sendNote = '';
+        }
         $qry = "UPDATE `leaves_request` SET
               `leave_status` = '{$data['leave_status']}',
+              `send_note` = '{$sendNote}',
               `notify_status` = '2'
                WHERE id = '{$data['leaveId']}'";
         $res = $this->updateData($qry);

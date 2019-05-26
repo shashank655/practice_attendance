@@ -122,9 +122,11 @@ class Student extends MySQLCN {
         }
     }
 
-    function getAllStudents() {
-        $fetchList = "SELECT * FROM `students` join classes_name on students.class_id=classes_name.id join sections on students.section_id=sections.id order by `first_name` asc";
+    function getAllStudents($get_class_id,$get_section_id,$roll_number,$student_name) {
+        $fetchList = "SELECT * FROM `students` join classes_name on students.class_id=classes_name.id join sections on students.section_id=sections.id where students.first_name='{$student_name}' or students.roll_number='{$roll_number}' or ( students.class_id='{$get_class_id}' and students.section_id='{$get_section_id}' ) order by `first_name` asc";
+       // echo $fetchList;die;
         $fetch_list = $this->select($fetchList);
+        //echo "<pre>";print_r($fetch_list);die;
         return $fetch_list;
     }    
 }

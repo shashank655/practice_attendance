@@ -2,8 +2,19 @@
 require_once 'employee/class/dbclass.php'; 
 require_once 'employee/config/config.php'; 
 require_once 'employee/class/Student.php'; 
+require_once 'employee/class/CommonFunction.php';
+$common_function=new CommonFunction();
 $student = new Student(); 
-$resultAllStudents=$student->getAllStudents();  
+$resultClasses = $common_function->getAllClassesName(); 
+$class_id = (isset($_REQUEST['class_id'])) ? $_REQUEST['class_id'] : NULL;
+$get_class_id = $class_id;
+$section_id = (isset($_REQUEST['section_id'])) ? $_REQUEST['section_id'] : NULL;
+$get_section_id = $section_id;
+$roll_number = (isset($_REQUEST['roll_number'])) ? $_REQUEST['roll_number'] : NULL;
+$student_name = (isset($_REQUEST['student_name'])) ? $_REQUEST['student_name'] : NULL;
+
+$resultAllStudents=$student->getAllStudents($get_class_id,$get_section_id,$roll_number,$student_name);
+
 ?>
 
 <?php 
@@ -39,40 +50,45 @@ require_once 'includes/sidebar.php';
                 </div>
                 <?php } ?>
             <div class="content-page">
+                <form id="searchStudents" action="all-students.php" method="get" novalidate="novalidate">
                 <div class="row filter-row">
                     <div class="col-sm-6 col-md-3">
                         <div class="form-group custom-mt-form-group">
-                            <input type="text"  />
-                            <label class="control-label">Student ID</label><i class="bar"></i>
+                            <select id="class_id" name="class_id" onchange="getSections(this.value);">
+                                <option value='' >Select Class</option>
+                                    <?php for ($i=0 ; $i < count($resultClasses); $i++) : ?>
+                                        <option <?php if (isset($get_class_id)) { if ($get_class_id==$resultClasses[$i]['id']) { echo 'selected'; } } ?> value="<?php echo $resultClasses[$i][ 'id']; ?>"><?php echo $resultClasses[$i][ 'class_name']; ?></option>
+                                    <?php endfor; ?>
+                             </select>
+                             <label class="control-label">Select Class</label><i class="bar"></i>
+                        </div>  
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="form-group custom-mt-form-group">
+                            <select name="section_id" id="section_id">
+                                <option value='' disabled="" selected="">Select Section</option>
+                            </select>
+                             <label class="control-label">Select Section</label><i class="bar"></i>
+                        </div>  
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="form-group custom-mt-form-group">
+                            <input type="text" value="<?php if(isset($roll_number)) { echo $roll_number; } ?>"  name="roll_number" />
+                            <label class="control-label">Roll Number</label><i class="bar"></i>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3">
                         <div class="form-group custom-mt-form-group">
-                            <input type="text"  />
+                            <input type="text" value="<?php if(isset($student_name)) { echo $student_name; } ?>" name="student_name" />
                             <label class="control-label">Student Name</label><i class="bar"></i>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3">
                         <div class="form-group custom-mt-form-group">
-                            <select >
-                                <option>Select class</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                <option>6</option>
-                                <option>7</option>
-                                <option>8</option>
-                                <option>9</option>
-                                <option>10</option>
-                             </select>
-                             <label class="control-label">Class</label><i class="bar"></i>
-                        </div>  
+                        <button class="btn btn-success btn-block" type="submit">Submit</button>
+                        </div>
                     </div>
-                    <div class="col-sm-6 col-md-3">
-                        <a href="#" class="btn btn-success btn-block mt-4 mb-2"> Search </a>
-                    </div>
+                </form>
                 </div>
                 <div class="row staff-grid-row">
                 <?php foreach ($resultAllStudents as $key => $value) { 
@@ -131,3 +147,39 @@ require_once 'includes/sidebar.php';
         </div>
     </div>
     <?php require_once 'includes/footer.php'; ?>
+    <script type="text/javascript">
+    
+        <?php  if($get_class_id!=''){ ?>
+            section_id='<?php echo $get_section_id; ?>';        
+            getSections('<?php echo $get_class_id; ?>');
+        <?php }?>
+
+        function getSections(classID){
+        $.ajax({
+            type: "POST",
+            url: "employee/process/processAddTeacher.php",
+            data:{type:'getSection',classID:classID},
+            beforeSend : function () {
+                //$('#wait').html("Wait for checking");
+            },
+            success:function(data){                
+                
+                data = $.parseJSON(data); 
+                console.log(data);        
+                if(data.length > 0){
+                    $("#section_id").html("<option value=''>Select Section</option>");
+                    for(var i=0;i<data.length;i++){        
+                       var option="<option value='"+data[i].id+"'";
+                            if(data[i].id==section_id){
+                               option+=" selected";
+                            }
+                           option+=" >"+data[i].section_name+"</option>"
+                        $("#section_id").append(option);
+                    }                    
+                }else{
+                    $("#section_id").html("<option value='' selected >No Section Found</option>");
+                }
+            }
+        });
+    }
+    </script>

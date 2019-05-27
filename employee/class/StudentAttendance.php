@@ -27,30 +27,39 @@ class StudentAttendance extends MySQLCN {
         return $fetch_result;
     }
 
-    function getCurrentMonthAttendance($classId , $teacherId , $currentMonth , $currentYear , $studentId) {
+    function getCurrentMonthAttendance($classId , $teacherId , $currentMonth , $currentYear , $studentId , $numberOfDays) {
         $fetch = "SELECT students_attendance.attendance , DAY(date_of_attendance) as day_number from students_attendance where students_attendance.class_id='".$classId."' and students_attendance.teacher_id= '".$teacherId."' and students_attendance.student_id= '".$studentId."' and MONTH(students_attendance.date_of_attendance)='".$currentMonth."' and YEAR(students_attendance.date_of_attendance)='".$currentYear."'";
         $fetch_result = $this->select($fetch); 
         if (!empty($fetch_result)) {
           $student_data = array();
-          $get_current_month_days = date('t');
           $attendanceArray = array();
-            for ($i=1; $i <= $get_current_month_days; $i++) { 
+            for ($i=1; $i <= $numberOfDays; $i++) {
                 if ($i < 10) {
                   $search_day = '0'.$i;
+                    $findDate = $currentYear.'-'.$currentMonth.'-'.$search_day;
+                    $unixTimestamp = strtotime($findDate);
+                    $dayOfWeek = date("D", $unixTimestamp);
                      foreach ($fetch_result as $key => $val) {
                          if ($val['day_number'] == $search_day) {
                              $attendanceArray[$search_day]['output'] = $val['attendance'];
                              break;
+                         } else if($dayOfWeek == 'Sun') {
+                            $attendanceArray[$search_day]['output']='S';
                          } else {
                              $attendanceArray[$search_day]['output']='-';
                          }
                      } 
                 } else {
                   $search_day = $i;
+                    $findDate = $currentYear.'-'.$currentMonth.'-'.$search_day;
+                    $unixTimestamp = strtotime($findDate);
+                    $dayOfWeek = date("D", $unixTimestamp);
                      foreach ($fetch_result as $key => $val) {
                          if ($val['day_number'] == $search_day) {
                              $attendanceArray[$search_day]['output'] = $val['attendance'];
                              break;
+                         } else if($dayOfWeek == 'Sun') {
+                            $attendanceArray[$search_day]['output']='S';
                          } else {
                              $attendanceArray[$search_day]['output']='-';
                          }
@@ -63,30 +72,39 @@ class StudentAttendance extends MySQLCN {
       }
     }
 
-    function getSelectedMonthAttendance($classId , $selectedMonth , $selectedYear , $studentId) {
+    function getSelectedMonthAttendance($classId , $selectedMonth , $selectedYear , $studentId , $numberOfDays) {
         $fetch = "SELECT students_attendance.attendance , DAY(date_of_attendance) as day_number from students_attendance where students_attendance.class_id='".$classId."' and students_attendance.student_id= '".$studentId."' and MONTH(students_attendance.date_of_attendance)='".$selectedMonth."' and YEAR(students_attendance.date_of_attendance)='".$selectedYear."'";
         $fetch_result = $this->select($fetch); 
         if (!empty($fetch_result)) {
           $student_data = array();
-          $get_current_month_days = date('t');
           $attendanceArray = array();
-            for ($i=1; $i <= $get_current_month_days; $i++) { 
+            for ($i=1; $i <= $numberOfDays; $i++) { 
                 if ($i < 10) {
                   $search_day = '0'.$i;
+                    $findDate = $selectedYear.'-'.$selectedMonth.'-'.$search_day;
+                    $unixTimestamp = strtotime($findDate);
+                    $dayOfWeek = date("D", $unixTimestamp);
                      foreach ($fetch_result as $key => $val) {
                          if ($val['day_number'] == $search_day) {
                              $attendanceArray[$search_day]['output'] = $val['attendance'];
                              break;
+                         } else if($dayOfWeek == 'Sun') {
+                            $attendanceArray[$search_day]['output']='S';
                          } else {
                              $attendanceArray[$search_day]['output']='-';
                          }
                      } 
                 } else {
                   $search_day = $i;
+                    $findDate = $selectedYear.'-'.$selectedMonth.'-'.$search_day;
+                    $unixTimestamp = strtotime($findDate);
+                    $dayOfWeek = date("D", $unixTimestamp);
                      foreach ($fetch_result as $key => $val) {
                          if ($val['day_number'] == $search_day) {
                              $attendanceArray[$search_day]['output'] = $val['attendance'];
                              break;
+                         } else if($dayOfWeek == 'Sun') {
+                            $attendanceArray[$search_day]['output']='S';
                          } else {
                              $attendanceArray[$search_day]['output']='-';
                          }

@@ -3,6 +3,26 @@ require_once 'employee/class/dbclass.php';
 require_once 'employee/config/config.php';
 require_once 'employee/class/Admin.php';
 require_once 'employee/class/Leaves.php';
+
+$expireAfter = 5;
+if (isset($_SESSION["userId"])) {
+    $secondsInactive = time() - $_SESSION['last_login_timestamp'];
+    //Convert our minutes into seconds.
+    $expireAfterSeconds = $expireAfter * 60;
+    //Check to see if they have been inactive for too long.
+    if($secondsInactive >= $expireAfterSeconds){
+        //User has been inactive for too long.
+        //Kill their session.
+        session_unset();
+        session_destroy();
+        header('Location:' . BASE_ROOT);
+    }
+}
+
+if (!isset($_SESSION['userId'])) {
+    header('Location:' . BASE_ROOT);
+}
+
 $admin = new Admin();
 $leaves = new Leaves();
 if($_SESSION['user_role'] == '1') {
@@ -21,9 +41,6 @@ if($_SESSION['user_role'] == '1') {
         } else {
             $getLeaveNotifyCount = '';
         }
-}
-if (!isset($_SESSION['userId'])) {
-    header('Location:' . BASE_ROOT);
 }
 ?>
 <!DOCTYPE html>

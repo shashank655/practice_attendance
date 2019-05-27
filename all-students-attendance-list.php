@@ -132,18 +132,22 @@ require_once 'includes/sidebar.php';
                                         <td><?php echo $value['first_name'].' '.$value['last_name']; ?></td>
                                     <?php
                                     $student_id = $value['student_id'];  
-                                        $get_selected_month_attendance = $student_attendance->getSelectedMonthAttendance($get_class_id ,  $get_selected_month , $get_selected_year , $student_id);
+                                        $get_selected_month_attendance = $student_attendance->getSelectedMonthAttendance($get_class_id ,  $get_selected_month , $get_selected_year , $student_id , $get_selected_month_days);
                                         if(!empty($get_selected_month_attendance)) {
                                             foreach ($get_selected_month_attendance as $key1 => $value1) { 
                                                 if($value1['output'] == 'A') {
                                                     $class = 'fa fa-times text-danger';
                                                 } elseif($value1['output'] == 'P') {
                                                     $class = 'fa fa-check text-success';
+                                                } elseif($value1['output'] == 'S') {
+                                                    $class = '';
                                                 } else {
                                                     $class = 'fa fa-check fa fa-minus';
                                                 }
                                             ?>    
-                                        <td><i class="<?php echo $class; ?>"></i></td>
+                                        <td><i class="<?php echo $class; ?>"><?php if ($value1['output'] == 'S') {
+                                            echo 'Sun';
+                                            } ?></i></td>
                                     <?php } } ?>
                                     </tr>
                                     <?php } } ?>
@@ -208,7 +212,6 @@ require_once 'includes/sidebar.php';
                     for(var i=0;i<data.length;i++){        
                        var option="<option value='"+data[i].id+"'";
                             if(data[i].id==section_id){
-                                alert(ata[i].id+section_id);
                                option+=" selected";
                             }
                            option+=" >"+data[i].section_name+"</option>"

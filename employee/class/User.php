@@ -14,6 +14,7 @@ class User extends MySQLCN {
             $_SESSION['name'] = $result[0]['first_name'].' '.$result[0]['last_name'];
             $_SESSION['email_address'] = $result[0]['email_address'];
             $_SESSION['user_role'] = $result[0]['user_role'];
+            $_SESSION['last_login_timestamp'] = time();
             if($result[0]['user_role'] == '3' || $result[0]['user_role'] == '2') {
                 $this->takeTeacherAttendance($result[0]['id']);
                 return true;

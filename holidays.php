@@ -30,6 +30,7 @@ require_once 'includes/sidebar.php';
                     <div class="col-sm-5 col-5">
                         <h4 class="page-title">Holidays <?php echo date('Y'); ?></h4>
                     </div>
+                    <?php if($_SESSION['user_role'] == '1') { ?>
                     <div class="col-sm-5 col-5 text-right m-b-30">
                         <a href="#" class="btn btn-primary btn-rounded" data-toggle="modal" data-target="#sms_parents"><i class="fa fa-plus"></i> SMS for Parents</a>
                     </div>
@@ -37,6 +38,7 @@ require_once 'includes/sidebar.php';
                     <div class=" text-right m-b-30">
                         <a href="#" class="btn btn-primary btn-rounded" data-toggle="modal" data-target="#add_holiday"><i class="fa fa-plus"></i> Add New Holiday</a>
                     </div>
+                    <?php } ?>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -44,11 +46,13 @@ require_once 'includes/sidebar.php';
                             <table class="table table-striped custom-table m-b-0">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th><S class="No"></S></th>
                                         <th>Title </th>
                                         <th>Holiday Date</th>
                                         <th>Day</th>
+                                        <?php if($_SESSION['user_role'] == '1') { ?>
                                         <th class="text-right">Action</th>
+                                        <?php } ?>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -59,7 +63,16 @@ require_once 'includes/sidebar.php';
                                         <td><?php echo $i; ?></td>
                                         <td><?php echo $value['holiday_name']; ?></td>
                                         <td><?php echo $value['holiday_date']; ?></td>
-                                        <td>Monday</td>
+                                        <td>
+                                            <?php 
+                                                $findDate = $value['holiday_date'];
+                                                $unixTimestamp = strtotime($findDate);
+                                                $dayOfWeek = date("D", $unixTimestamp);
+                                                echo $dayOfWeek;
+                                            ?>
+
+                                        </td>
+                                        <?php if($_SESSION['user_role'] == '1') { ?>
                                         <td class="text-right">
                                             <div class="dropdown dropdown-action">
                                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
@@ -69,6 +82,7 @@ require_once 'includes/sidebar.php';
                                                 </div>
                                             </div>
                                         </td>
+                                        <?php } ?>
                                     </tr>
                                 	<?php $i++; } ?>
                                 </tbody>

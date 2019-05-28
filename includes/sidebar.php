@@ -64,6 +64,12 @@
                         <li class="<?php if($currentURL =='request-leave-list.php' || $currentURL =='add-leaves-type.php'){echo 'active';}?>">
                             <a href="request-leave-list.php"><i class="fa fa-table" aria-hidden="true"></i>Request Leave List</a>
                         </li>
+                        <li class="<?php if($currentURL =='holidays.php'){echo 'active';}?>">
+                            <a href="holidays.php"><i class="fa fa-tasks" aria-hidden="true"></i> Holidays</a>
+                        </li>
+                        <li class="<?php if($currentURL =='events.php'){echo 'active';}?>">
+                            <a href="events.php"><i class="fa fa-calendar" aria-hidden="true"></i> Events</a>
+                        </li>
                         <?php } ?>
                         <?php if($_SESSION['user_role'] == '2') { ?>
                         <li class="<?php if($currentURL =='student-attendance-list.php' || $currentURL =='student-attendance.php'){echo 'active';}?>">

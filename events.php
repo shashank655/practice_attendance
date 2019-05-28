@@ -17,6 +17,7 @@ require_once 'includes/sidebar.php';
 						</div>
 					</div>
 				</div>
+                <?php if($_SESSION['user_role'] == '1') { ?>
 				<div class="row">
                     <div class="col-sm-8 col-4">
                         
@@ -25,12 +26,17 @@ require_once 'includes/sidebar.php';
                         <a href="#" class="btn btn-primary btn-rounded" data-toggle="modal" data-target="#add_event"><i class="fa fa-plus"></i> Add Event</a>
                     </div>
                 </div>
+                <?php } ?>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card-box m-b-0">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div id="calendar"></div>
+                                    <?php if($_SESSION['user_role'] == '1') { ?>
+                                        <div id="calendar"></div>
+                                    <?php } else { ?>
+                                        <div id="calendar_teachers"></div>    
+                                    <?php } ?>    
                                 </div>
                             </div>
                         </div>

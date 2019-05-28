@@ -83,3 +83,17 @@ var calendar = $('#calendar').fullCalendar({
     },
 
    });
+
+  var calendar = $('#calendar_teachers').fullCalendar({
+    editable:true,
+    header:{
+     left:'prev,next today',
+     center:'title',
+     right:'month,agendaWeek,agendaDay'
+    },
+    events: 'employee/process/processEvents.php?type=loadData',
+    selectable:true,
+    selectHelper:true,
+    displayEventTime:false,
+    editable:false,
+   });

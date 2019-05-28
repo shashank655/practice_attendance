@@ -98,7 +98,11 @@ require_once 'includes/sidebar.php';
 								Events
 							</div>
 							<div class="card-body p-0">
-                              <div id="calendar"></div>
+                            <?php if($_SESSION['user_role'] == '1'){ ?>
+                                <div id="calendar"></div>
+                            <?php } else { ?>
+                                <div id="calendar_teachers"></div>
+                            <?php } ?>
 							 </div>
                         </div>
 					</div>

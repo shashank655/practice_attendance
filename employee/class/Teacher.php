@@ -233,10 +233,52 @@ class Teacher extends MySQLCN {
       }
     }
 
-    function getAttendanceLists($teacherId, $get_current_year, $get_current_month) {
-        $fetch = "SELECT * from teachers_attendance where teachers_attendance.teacher_id='".$teacherId."' and MONTH(teachers_attendance.date_of_attendance)='".$get_current_month."' and YEAR(teachers_attendance.date_of_attendance)='".$get_current_year."'";
+    function getAttendanceLists($teacherId, $get_current_year, $get_current_month , $numberOfDays) {
+        $fetch = "SELECT teacher_id, login_time , date_of_attendance , DAY(date_of_attendance) as day_number from teachers_attendance where teachers_attendance.teacher_id='".$teacherId."' and MONTH(teachers_attendance.date_of_attendance)='".$get_current_month."' and YEAR(teachers_attendance.date_of_attendance)='".$get_current_year."'";
         $fetch_result = $this->select($fetch);
-          return $fetch_result;
+        $attendanceArray = array();
+            for ($i=1; $i <= $numberOfDays; $i++) {
+                if ($i < 10) {
+                  $search_day = '0'.$i;
+                    $findDate = $get_current_year.'-'.$get_current_month.'-'.$search_day;
+                    $unixTimestamp = strtotime($findDate);
+                    $dayOfWeek = date("D", $unixTimestamp);
+                     foreach ($fetch_result as $key => $val) {
+                         if ($val['day_number'] == $search_day) {
+                             $attendanceArray[$search_day]['output'] = 'P';
+                             $attendanceArray[$search_day]['date_of_attendance'] = $findDate;
+                             $attendanceArray[$search_day]['login_time'] = $val['login_time'];
+                             break;
+                         } else if($dayOfWeek == 'Sun') {
+                            $attendanceArray[$search_day]['output']='S';
+                            $attendanceArray[$search_day]['date_of_attendance'] = $findDate;
+                         } else {
+                             $attendanceArray[$search_day]['output']='A';
+                             $attendanceArray[$search_day]['date_of_attendance'] = $findDate;
+                         }
+                     } 
+                } else {
+                  $search_day = $i;
+                    $findDate = $get_current_year.'-'.$get_current_month.'-'.$search_day;
+                    $unixTimestamp = strtotime($findDate);
+                    $dayOfWeek = date("D", $unixTimestamp);
+                     foreach ($fetch_result as $key => $val) {
+                         if ($val['day_number'] == $search_day) {
+                             $attendanceArray[$search_day]['output'] = 'P';
+                             $attendanceArray[$search_day]['date_of_attendance'] = $findDate;
+                             $attendanceArray[$search_day]['login_time'] = $val['login_time'];
+                             break;
+                         } else if($dayOfWeek == 'Sun') {
+                            $attendanceArray[$search_day]['output']='Sun';
+                            $attendanceArray[$search_day]['date_of_attendance'] = $findDate;
+                         } else {
+                             $attendanceArray[$search_day]['output']='A';
+                             $attendanceArray[$search_day]['date_of_attendance'] = $findDate;
+                         }
+                     }
+                }
+            }
+          return $attendanceArray;
     }
 
     function getTeachersList() {

@@ -24,7 +24,8 @@ $teacherId = (isset($_REQUEST['teacher_id'])) ? $_REQUEST['teacher_id'] : NULL;
     if ($teacherId != NULL) {
         $teacher_id = $teacherId;
     }
-$resultAttendanceList=$teacher->getAttendanceLists($teacher_id, $current_year, $current_month); 
+$get_current_month_days = cal_days_in_month(CAL_GREGORIAN, $current_month, $current_year);    
+$resultAttendanceList=$teacher->getAttendanceLists($teacher_id, $current_year, $current_month,$get_current_month_days);
 ?>
 
 <?php 
@@ -110,16 +111,18 @@ require_once 'includes/sidebar.php';
                                         <th style="min-width:50px;">S.No.</th>
                                         <th style="min-width:50px;">Date of Attendance</th>
                                         <th style="min-width:50px;">Login Time</th>
+                                        <th style="min-width:50px;">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <?php $i=1; ?>
                                 	<?php foreach ($resultAttendanceList as $key => $value) { ?>
                                     <tr>
-                                        <td><?php echo $i; ?></td>
+                                        <td><?php echo $key; ?></td>
                                         <td><?php 
                                         echo date('jS F, Y', strtotime($value['date_of_attendance'])); ?></td>
                                         <td><?php echo $value['login_time'];?></td>
+                                        <td><?php echo $value['output'];?></td>
                                     </tr>
                                 	<?php $i++; } ?>
                                 </tbody>

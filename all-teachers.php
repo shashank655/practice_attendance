@@ -64,7 +64,7 @@ require_once 'includes/sidebar.php';
 						</div>	
                     </div>
                     <div class="col-sm-6 col-md-3">
-                        <a href="#" class="btn btn-success btn-block mt-4 mb-2"> Search </a>
+                        <a href="#" class="btn btn-primary btn-block mt-4 mb-2"> Search </a>
                     </div>
                 </div>
                 <div class="row staff-grid-row">

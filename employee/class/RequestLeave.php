@@ -4,7 +4,7 @@ class RequestLeave extends MySQLCN {
     function addLeaveRequest($data) {
         if ($_FILES['leave_attachment']['error'] == '0') {
             $leaveAttachmentName = time() . strtolower(basename($_FILES['leave_attachment']['name']));
-            $target = LEAVE_ATTACHMENT . $leaveAttachmentName;
+            $target = PROFILE_PIC_IMAGE_ROOT . $leaveAttachmentName;
             move_uploaded_file($_FILES['leave_attachment']['tmp_name'], $target);
         } else {
             $leaveAttachmentName = '';

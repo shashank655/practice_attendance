@@ -45,6 +45,7 @@ require_once 'includes/sidebar.php';
                                         <th style="min-width:50px;">Sections</th>
                                         <th style="min-width:50px;">Date of exam</th>
                                         <th style="min-width:50px;">Exam</th>
+                                        <th style="min-width:50px;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>

@@ -121,7 +121,7 @@ require_once 'includes/sidebar.php';
                                         <td><?php echo $key; ?></td>
                                         <td><?php 
                                         echo date('jS F, Y', strtotime($value['date_of_attendance'])); ?></td>
-                                        <td><?php echo $value['login_time'];?></td>
+                                        <td><?php if(isset($value['login_time'])) echo $value['login_time'];?></td>
                                         <td><?php echo $value['output'];?></td>
                                     </tr>
                                 	<?php $i++; } ?>

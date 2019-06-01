@@ -5,7 +5,7 @@ require_once 'employee/class/Leaves.php';
 $leaves=new Leaves();
 $leaveId = (isset($_REQUEST['leaveId'])) ? $_REQUEST['leaveId'] : NULL; 
 if ($leaveId != NULL) { $result = $leaves->viewLeaveRequest($leaveId); 
-    if ($result == NULL) { $leaveId = ''; } } 
+    if ($result == NULL) { $leaveId = ''; } }
 ?>
 <?php 
 require_once 'includes/header.php'; 
@@ -106,6 +106,14 @@ require_once 'includes/sidebar.php';
                                                 ?>">
                                     </div>
                                 </div>
+                                <?php if(!empty($result[0]['leaveAttachmentName'])) { ?>
+                                <div class="form-group row ">
+                                    <label class="col-form-label col-md-2">Download Attachment</label>
+                                    <div class="col-md-10">
+                                        <a href="<?php if (isset($result[0]['leaveAttachmentName'])) echo PROFILE_PIC_IMAGE_PATH . $result[0]['leaveAttachmentName']; ?>">Click here to Save</a>
+                                    </div>
+                                </div>
+                                <?php } ?>
                             <div class="form-group text-center custom-mt-form-group">
                                 <button class="btn btn-primary btn-lg mr-2" type="submit">Submit</button>
                             </div>    

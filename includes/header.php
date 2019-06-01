@@ -4,8 +4,8 @@ require_once 'employee/config/config.php';
 require_once 'employee/class/Admin.php';
 require_once 'employee/class/Leaves.php';
 
-$expireAfter = 10;
-if (isset($_SESSION["userId"])) {
+$expireAfter = 20;
+if (isset($_SESSION["userId"]) && $_SESSION['user_role']!='1') {
     $secondsInactive = time() - $_SESSION['last_login_timestamp'];
     //Convert our minutes into seconds.
     $expireAfterSeconds = $expireAfter * 60;

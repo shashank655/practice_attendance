@@ -4,7 +4,7 @@ require_once 'employee/config/config.php';
 require_once 'employee/class/Admin.php';
 require_once 'employee/class/Leaves.php';
 
-$expireAfter = 20;
+$expireAfter = TEACHERS_EXPIRY_TIME;
 if (isset($_SESSION["userId"]) && $_SESSION['user_role']!='1') {
     $secondsInactive = time() - $_SESSION['last_login_timestamp'];
     //Convert our minutes into seconds.
@@ -54,6 +54,7 @@ if($_SESSION['user_role'] == '1') {
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="<?php echo BASE_ROOT ?>assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo BASE_ROOT ?>assets/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/plugins/light-gallery/css/lightgallery.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo BASE_ROOT ?>assets/css/fullcalendar.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo BASE_ROOT ?>assets/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo BASE_ROOT ?>assets/css/select2.min.css">

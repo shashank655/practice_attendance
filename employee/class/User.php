@@ -17,6 +17,7 @@ class User extends MySQLCN {
             $_SESSION['last_login_timestamp'] = time();
             if($result[0]['user_role'] == '3' || $result[0]['user_role'] == '2') {
                 $this->takeTeacherAttendance($result[0]['id']);
+                $this->recordTeachersAttendance($result[0]['id']);
                 return true;
             }
             return true;
@@ -146,6 +147,18 @@ class User extends MySQLCN {
             $this->insert($qry1);
             return true;
         }
+    }
+
+    function recordTeachersAttendance($teacherId) {
+        date_default_timezone_set('Asia/Kolkata');
+        $expiryTime = "+".TEACHERS_EXPIRY_TIME." minutes";
+        $loginTime = date('Y-m-d H:i:s');
+        $logoutTime = date('Y-m-d H:i:s', strtotime($expiryTime));
+        $qry = 'INSERT INTO `teachers_attendance_record` 
+            (`teacher_id`,`login_time`,`logout_time`) 
+            VALUES ( "'. $teacherId . '" , "'. $loginTime . '" , "'. $logoutTime . '")';
+            $this->insert($qry);
+            return true;
     }
 }
 ?>

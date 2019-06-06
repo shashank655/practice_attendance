@@ -10,4 +10,5 @@ define("BASE_ROOT",'http://'.$_SERVER['HTTP_HOST'].'/practice_attendance/');
 define("PROFILE_PIC_IMAGE_ROOT",$_SERVER['DOCUMENT_ROOT']."/practice_attendance/employee/upload/");
 define("PROFILE_PIC_IMAGE_PATH",ROOT."upload/");
 define("LEAVE_ATTACHMENT",ROOT."upload/leave_attachment/");
+define("TEACHERS_EXPIRY_TIME","20");
 ?>

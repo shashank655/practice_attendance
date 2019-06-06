@@ -88,4 +88,10 @@ change section_id to roll_number
 CREATE TABLE `practice`.`teachers_attendance` ( `id` INT(11) NULL AUTO_INCREMENT , `teacher_id` INT(11) NOT NULL , `date_of_attendance` VARCHAR(200) NOT NULL , `login_time` TIMESTAMP NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 ALTER TABLE `leaves_request` ADD `leaveAttachmentName` TEXT NULL AFTER `reason_to_leave`;
 
-ALTER TABLE `leaves_request` ADD `send_note` VARCHAR(255) NULL AFTER `reason_to_leave`;                                
+ALTER TABLE `leaves_request` ADD `send_note` VARCHAR(255) NULL AFTER `reason_to_leave`;
+CREATE TABLE `practice`.`employee_salary` ( `id` INT(11) NOT NULL AUTO_INCREMENT , `teacher_id` INT(11) NOT NULL , `gross_salary` VARCHAR(100) NULL , `basic` VARCHAR(100) NULL , `da` VARCHAR(100) NULL , `hra` VARCHAR(100) NULL , `conveyance` VARCHAR(100) NULL , `allowance` VARCHAR(100) NULL , `medical_allowance` VARCHAR(100) NULL , `others` VARCHAR(100) NULL , `tds` VARCHAR(100) NULL , `esi` VARCHAR(100) NULL , `pf` VARCHAR(100) NULL , `leave` VARCHAR(100) NULL , `prof_tax` VARCHAR(100) NULL , `labour_welfare` VARCHAR(100) NULL , `fund` VARCHAR(100) NULL , `createdDate` TIMESTAMP NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+CREATE TABLE `practice`.`teachers_attendance_record` ( `id` INT(11) NOT NULL AUTO_INCREMENT , `teacher_id` INT(11) NOT NULL , `login_time` VARCHAR(200) NOT NULL , `logout_time` VARCHAR(200) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+
+                                

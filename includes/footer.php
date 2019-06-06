@@ -13,6 +13,7 @@
 	<script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/fullcalendar.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/jquery.fullcalendar.js"></script>
     <script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/chart.js"></script>
+    <script type="text/javascript" src="assets/plugins/light-gallery/js/lightgallery-all.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/app.js"></script>
     <script type="text/javascript" src="<?php echo BASE_ROOT ?>assets/js/jquery.validate.js"></script>
 

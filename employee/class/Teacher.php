@@ -281,6 +281,12 @@ class Teacher extends MySQLCN {
           return $attendanceArray;
     }
 
+    function getLoginRecordsLists($teacherId, $get_current_year, $get_current_month) {
+      $fetch = "SELECT teacher_id, login_time , logout_time from teachers_attendance_record where teachers_attendance_record.teacher_id='".$teacherId."' and MONTH(teachers_attendance_record.login_time)='".$get_current_month."' and YEAR(teachers_attendance_record.login_time)='".$get_current_year."'";
+        $fetch_result = $this->select($fetch);
+        return $fetch_result;
+    }
+
     function getTeachersList() {
       $fetch = "SELECT id,first_name,last_name from users where users.user_role!='1' order by first_name";
       $fetch_result = $this->select($fetch);

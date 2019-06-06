@@ -54,6 +54,12 @@
                         <li class="<?php if($currentURL =='exams-list.php' || $currentURL =='add-exams.php'){echo 'active';}?>">
                             <a href="exams-list.php"><i class="fa fa-table" aria-hidden="true"></i>Exams List</a>
                         </li>
+                        <li class="submenu">
+                            <a href="#"><i class="fa fa-money" aria-hidden="true"></i><span> Payroll </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled" style="display: none;">
+                                <li ><a class="<?php if($currentURL =='employee-salary.php' || $currentURL =='view-employee-salary.php' || $currentURL =='add-employee-salary.php'){echo 'active';}?>" href="employee-salary.php"> Employee Salary </a></li>
+                            </ul>
+                        </li>
                         <?php } ?>
                         <?php if( ($_SESSION['user_role'] == '2') ||  ($_SESSION['user_role'] == '3')) { ?>
                         <li class="<?php if($currentURL =='all-students.php' || $currentURL =='student-profile.php'){echo 'active';}?>">
@@ -89,6 +95,15 @@
                         <?php if($_SESSION['user_role'] == '1') { ?>
                         <li class="<?php if($currentURL =='teacher-attendance-list.php' || $currentURL =='teacher-attendance-list.php'){echo 'active';}?>">
                             <a href="teacher-attendance-list.php"><i class="fa fa-table" aria-hidden="true"></i>Teacher's Attendance</a>
+                        </li>
+                        <li class="<?php if($currentURL =='teacher-login-records-list.php'){echo 'active';}?>">
+                            <a href="teacher-login-records-list.php"><i class="fa fa-table" aria-hidden="true"></i>Teachers Login Record</a>
+                        </li>
+                        <li class="<?php if($currentURL =='contacts.php' || $currentURL =='contacts.php'){echo 'active';}?>">
+                            <a href="contacts.php"><i class="fa fa-table" aria-hidden="true"></i>Contacts</a>
+                        </li>
+                        <li class="<?php if($currentURL =='gallery.php'){echo 'active';}?>">
+                            <a href="gallery.php"><i class="fa fa-table" aria-hidden="true"></i>Gallery</a>
                         </li>
                         <?php } ?>
 						<!-- <li class="submenu">

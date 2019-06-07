@@ -243,6 +243,7 @@ class Teacher extends MySQLCN {
                     $findDate = $get_current_year.'-'.$get_current_month.'-'.$search_day;
                     $unixTimestamp = strtotime($findDate);
                     $dayOfWeek = date("D", $unixTimestamp);
+                    $get_holiday = $this->checkHoliday($findDate);
                      foreach ($fetch_result as $key => $val) {
                          if ($val['day_number'] == $search_day) {
                              $attendanceArray[$search_day]['output'] = 'P';
@@ -250,7 +251,10 @@ class Teacher extends MySQLCN {
                              $attendanceArray[$search_day]['login_time'] = $val['login_time'];
                              break;
                          } else if($dayOfWeek == 'Sun') {
-                            $attendanceArray[$search_day]['output']='S';
+                            $attendanceArray[$search_day]['output']='Sun';
+                            $attendanceArray[$search_day]['date_of_attendance'] = $findDate;
+                         } else if(!empty($get_holiday)) {
+                            $attendanceArray[$search_day]['output']=$get_holiday;
                             $attendanceArray[$search_day]['date_of_attendance'] = $findDate;
                          } else {
                              $attendanceArray[$search_day]['output']='A';
@@ -262,6 +266,7 @@ class Teacher extends MySQLCN {
                     $findDate = $get_current_year.'-'.$get_current_month.'-'.$search_day;
                     $unixTimestamp = strtotime($findDate);
                     $dayOfWeek = date("D", $unixTimestamp);
+                    $get_holiday = $this->checkHoliday($findDate);
                      foreach ($fetch_result as $key => $val) {
                          if ($val['day_number'] == $search_day) {
                              $attendanceArray[$search_day]['output'] = 'P';
@@ -270,6 +275,9 @@ class Teacher extends MySQLCN {
                              break;
                          } else if($dayOfWeek == 'Sun') {
                             $attendanceArray[$search_day]['output']='Sun';
+                            $attendanceArray[$search_day]['date_of_attendance'] = $findDate;
+                         } else if(!empty($get_holiday)) {
+                            $attendanceArray[$search_day]['output']=$get_holiday;
                             $attendanceArray[$search_day]['date_of_attendance'] = $findDate;
                          } else {
                              $attendanceArray[$search_day]['output']='A';
@@ -280,6 +288,16 @@ class Teacher extends MySQLCN {
             }
           return $attendanceArray;
     }
+
+    function checkHoliday($getDate) {
+      $unixTimestamp = strtotime($getDate);
+      $findDate = date("d/m/Y", $unixTimestamp);
+      $fetch = "SELECT holiday_name from holidays where holidays.holiday_date='".$findDate."'";
+      $fetch_result = $this->select($fetch);
+      if(!empty($fetch_result)) {
+        return $fetch_result[0]['holiday_name'];
+      }
+    } 
 
     function getLoginRecordsLists($teacherId, $get_current_year, $get_current_month) {
       $fetch = "SELECT teacher_id, login_time , logout_time from teachers_attendance_record where teachers_attendance_record.teacher_id='".$teacherId."' and MONTH(teachers_attendance_record.login_time)='".$get_current_month."' and YEAR(teachers_attendance_record.login_time)='".$get_current_year."'";

@@ -93,5 +93,10 @@ CREATE TABLE `practice`.`employee_salary` ( `id` INT(11) NOT NULL AUTO_INCREMENT
 
 CREATE TABLE `practice`.`teachers_attendance_record` ( `id` INT(11) NOT NULL AUTO_INCREMENT , `teacher_id` INT(11) NOT NULL , `login_time` VARCHAR(200) NOT NULL , `logout_time` VARCHAR(200) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 
-
+CREATE TABLE `gallery_uploads` (                                                     
+                     `id` int(11) NOT NULL AUTO_INCREMENT,                                                
+                     `galleryName` varchar(255) DEFAULT NULL,                                                
+                     `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  
+                     PRIMARY KEY (`id`)                                                                   
+                   )
                                 

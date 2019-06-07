@@ -102,10 +102,10 @@
                         <li class="<?php if($currentURL =='contacts.php' || $currentURL =='contacts.php'){echo 'active';}?>">
                             <a href="contacts.php"><i class="fa fa-table" aria-hidden="true"></i>Contacts</a>
                         </li>
+                        <?php } ?>
                         <li class="<?php if($currentURL =='gallery.php'){echo 'active';}?>">
                             <a href="gallery.php"><i class="fa fa-table" aria-hidden="true"></i>Gallery</a>
                         </li>
-                        <?php } ?>
 						<!-- <li class="submenu">
                             <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Students</span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">

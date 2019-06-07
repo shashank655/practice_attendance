@@ -4,6 +4,9 @@ require_once 'employee/config/config.php';
 require_once 'employee/class/CommonFunction.php'; 
 $common_function = new CommonFunction();
 $isAdmin = $common_function->isAdmin();
+if (isset($_SESSION['userId'])) {
+    header('Location:' . BASE_ROOT.'dashboard.php');
+}
 ?>
 <!DOCTYPE html>
 <html>

@@ -124,7 +124,7 @@ if($_SESSION['user_role'] == '1') {
                             $userImage = 'assets/img/user.jpg';
                         }
                     ?>
-                        <span class="user-img"><img class="rounded-circle" src="<?php echo $userImage; ?>" width="40" alt="Admin">
+                        <span class="user-img"><img class="rounded-circle" src="<?php echo $userImage; ?>" width="40" height="40" alt="Admin">
                             <span class="status online"></span></span>
                         <span><?php echo $adminData[0]['first_name']; ?></span>
                     </a>

@@ -96,13 +96,13 @@
                         <li class="<?php if($currentURL =='teacher-attendance-list.php' || $currentURL =='teacher-attendance-list.php'){echo 'active';}?>">
                             <a href="teacher-attendance-list.php"><i class="fa fa-table" aria-hidden="true"></i>Teacher's Attendance</a>
                         </li>
+                        <?php } ?>
                         <li class="<?php if($currentURL =='teacher-login-records-list.php'){echo 'active';}?>">
                             <a href="teacher-login-records-list.php"><i class="fa fa-table" aria-hidden="true"></i>Teachers Login Record</a>
                         </li>
                         <li class="<?php if($currentURL =='contacts.php' || $currentURL =='contacts.php'){echo 'active';}?>">
                             <a href="contacts.php"><i class="fa fa-table" aria-hidden="true"></i>Contacts</a>
                         </li>
-                        <?php } ?>
                         <li class="<?php if($currentURL =='gallery.php'){echo 'active';}?>">
                             <a href="gallery.php"><i class="fa fa-table" aria-hidden="true"></i>Gallery</a>
                         </li>

@@ -109,7 +109,7 @@ require_once 'includes/sidebar.php';
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="table-responsive">
-                            <table class="table table-striped custom-table m-b-0">
+                            <table class="table table-bordered m-b-0">
                                 <thead>
                                     <tr>
                                         <th>Students</th>

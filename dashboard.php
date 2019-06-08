@@ -64,6 +64,17 @@ require_once 'includes/sidebar.php';
                             </div>
                         </div>
                     </div>
+                    <?php if( ($_SESSION['user_role'] != '1')) { ?>
+                     <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                        <div class="dash-widget dash-widget5">
+                            <span class="dash-widget-icon bg-success"><i class="fa fa-money" aria-hidden="true"></i></span>
+                            <div class="dash-widget-info">
+                                <h3>news</h3>
+                                <span>Global News</span>
+                            </div>
+                        </div>
+                    </div>
+                    <?php } ?>
                     <?php if( ($_SESSION['user_role'] == '1')) { ?>
                     <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                         <div class="dash-widget dash-widget5">

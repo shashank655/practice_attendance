@@ -105,7 +105,7 @@ require_once 'includes/sidebar.php';
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
-                            <table class="table table-striped custom-table">
+                            <table class="table table-bordered m-b-0">
                                 <thead>
                                     <tr>
                                         <th style="min-width:50px;">S.No.</th>

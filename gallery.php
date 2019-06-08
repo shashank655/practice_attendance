@@ -25,7 +25,6 @@ require_once 'includes/sidebar.php';
 						</div>
 					</div>
 				</div>
-                <?php if($_SESSION['user_role'] == '1') { ?>
                 <div class="row">
                     <div class="col-sm-4 col-5">
                         
@@ -34,7 +33,6 @@ require_once 'includes/sidebar.php';
                         <a href="#" class="btn btn-primary btn-rounded float-right" data-toggle="modal" data-target="#add_gallery"><i class="fa fa-plus"></i> Add Gallery</a>
                     </div>
                 </div>
-                <?php } ?>
                 <div id="lightgallery" class="row">
                 <?php foreach ($resultData as $key => $value) { ?>
                     <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 m-b-20">

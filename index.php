@@ -58,7 +58,7 @@ if (isset($_SESSION['userId'])) {
                 <div class="account-box">
                     <div class="account-wrapper">
                     <div class="account-logo">
-                            <a href="index.html"><img src="assets/img/logo.png" alt="SchoolAdmin"></a>
+                            <a href=""><img src="assets/img/logo.png" alt="SchoolAdmin"></a>
                         </div>
                         <form id="loginform" action="employee/process/processUser.php" method="post">
                         <input type="hidden" value="login" name="type" />

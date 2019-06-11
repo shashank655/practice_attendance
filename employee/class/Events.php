@@ -16,6 +16,15 @@ class Events extends MySQLCN {
         return $output;
     }
 
+    function eventsLoadEventsHolidaysData($data) {
+        $fetch = "SELECT * FROM events ORDER BY id ";
+        $fetch_data = $this->select($fetch);
+        $fetch_holiday = "SELECT * FROM holidays ORDER BY id ";
+        $fetch_data_holiday = $this->select($fetch_holiday);
+
+        echo "<pre>";print_r($fetch_data);die;
+    }
+
     function eventsInsertData($data) {
         $qry = 'INSERT INTO `events` 
             (`title`,`start_event`,`end_event`) 

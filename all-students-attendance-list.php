@@ -145,9 +145,7 @@ require_once 'includes/sidebar.php';
                                                     $class = 'fa fa-check fa fa-minus';
                                                 }
                                             ?>    
-                                        <td><i class="<?php echo $class; ?>"><?php if ($value1['output'] == 'S') {
-                                            echo 'Sun';
-                                            } ?></i></td>
+                                        <td><?php echo $value1['output']; ?></td>
                                     <?php } } ?>
                                     </tr>
                                     <?php } } ?>

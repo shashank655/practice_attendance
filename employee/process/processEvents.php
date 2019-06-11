@@ -7,6 +7,9 @@ $data = $_REQUEST;
 if ($data['type'] == 'loadData') {
     $result = $events->eventsLoadData($data);
     echo json_encode($result);
+} else if ($data['type'] == 'loadEventsHolidaysData') {
+    $result = $events->eventsLoadEventsHolidaysData($data);
+    echo json_encode($result);
 } else if ($_POST['type'] == 'insertData' && $_POST['title'] != NULL) {
     $result = $events->eventsInsertData($_POST);
     if ($result) {

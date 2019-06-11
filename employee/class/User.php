@@ -150,15 +150,24 @@ class User extends MySQLCN {
     }
 
     function recordTeachersAttendance($teacherId) {
-        date_default_timezone_set('Asia/Kolkata');
         $expiryTime = "+".TEACHERS_EXPIRY_TIME." minutes";
         $loginTime = date('Y-m-d H:i:s');
         $logoutTime = date('Y-m-d H:i:s', strtotime($expiryTime));
         $qry = 'INSERT INTO `teachers_attendance_record` 
             (`teacher_id`,`login_time`,`logout_time`) 
             VALUES ( "'. $teacherId . '" , "'. $loginTime . '" , "'. $logoutTime . '")';
-            $this->insert($qry);
+            $res = $this->insert($qry);
+            $_SESSION['teacher_login_record_id'] = $res;
             return true;
+    }
+
+    function teacherLoginRecordUpdate($teacher_login_record_id) {
+        $logoutTime = date('Y-m-d H:i:s');
+        $qry = "UPDATE `teachers_attendance_record` SET
+              `logout_time` = '{$logoutTime}'
+               WHERE id = '{$teacher_login_record_id}'";
+        $res = $this->updateData($qry);
+        return true;
     }
 }
 ?>

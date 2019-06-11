@@ -44,9 +44,9 @@ class StudentAttendance extends MySQLCN {
                              $attendanceArray[$search_day]['output'] = $val['attendance'];
                              break;
                          } else if($dayOfWeek == 'Sun') {
-                            $attendanceArray[$search_day]['output']='S';
+                            $attendanceArray[$search_day]['output']='Sun';
                          } else {
-                             $attendanceArray[$search_day]['output']='-';
+                             $attendanceArray[$search_day]['output']='---';
                          }
                      } 
                 } else {
@@ -59,9 +59,9 @@ class StudentAttendance extends MySQLCN {
                              $attendanceArray[$search_day]['output'] = $val['attendance'];
                              break;
                          } else if($dayOfWeek == 'Sun') {
-                            $attendanceArray[$search_day]['output']='S';
+                            $attendanceArray[$search_day]['output']='Sun';
                          } else {
-                             $attendanceArray[$search_day]['output']='-';
+                             $attendanceArray[$search_day]['output']='---';
                          }
                      }
                 }
@@ -89,9 +89,9 @@ class StudentAttendance extends MySQLCN {
                              $attendanceArray[$search_day]['output'] = $val['attendance'];
                              break;
                          } else if($dayOfWeek == 'Sun') {
-                            $attendanceArray[$search_day]['output']='S';
+                            $attendanceArray[$search_day]['output']='Sun';
                          } else {
-                             $attendanceArray[$search_day]['output']='-';
+                             $attendanceArray[$search_day]['output']='---';
                          }
                      } 
                 } else {
@@ -104,9 +104,9 @@ class StudentAttendance extends MySQLCN {
                              $attendanceArray[$search_day]['output'] = $val['attendance'];
                              break;
                          } else if($dayOfWeek == 'Sun') {
-                            $attendanceArray[$search_day]['output']='S';
+                            $attendanceArray[$search_day]['output']='Sun';
                          } else {
-                             $attendanceArray[$search_day]['output']='-';
+                             $attendanceArray[$search_day]['output']='---';
                          }
                      }
                 }

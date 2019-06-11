@@ -6,6 +6,7 @@ require_once '../class/Admin.php';
 $user = new User();
 $admin = new Admin();
 $data = $_REQUEST;
+date_default_timezone_set('Asia/Kolkata');
 if ($data['type'] == 'login') {
     $result = $user->userLogin($data);
     if ($result) {
@@ -71,6 +72,9 @@ if ($data['type'] == 'login') {
         header('Location: ' . BASE_ROOT.'forgot-password.php');
     }
 } elseif ($data['type'] == 'logout') {
+    if($_SESSION['user_role'] == '2' || $_SESSION['user_role'] == '3') {
+        $result = $user->teacherLoginRecordUpdate($_SESSION['teacher_login_record_id']);
+    }
     session_unset();
     session_destroy();
     header('Location: ' . BASE_ROOT);

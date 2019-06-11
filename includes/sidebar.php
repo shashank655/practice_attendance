@@ -61,6 +61,9 @@
                             </ul>
                         </li>
                         <?php } ?>
+                        <li class="<?php if($currentURL =='calender.php'){echo 'active';}?>">
+                            <a href="calender.php"><i class="fa fa-calendar" aria-hidden="true"></i> Calender</a>
+                        </li>
                         <?php if( ($_SESSION['user_role'] == '2') ||  ($_SESSION['user_role'] == '3')) { ?>
                         <li class="<?php if($currentURL =='all-students.php' || $currentURL =='student-profile.php'){echo 'active';}?>">
                             <a href="all-students.php"><i class="fa fa-table" aria-hidden="true"></i>All Students List</a>

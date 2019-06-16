@@ -42,9 +42,9 @@ require_once 'includes/sidebar.php';
                     </div>
                     <div class="col-sm-8 col-9 text-right m-b-20">
                         <a href="add-student.php" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Student</a>
+                        <a href="#" class="btn btn-primary btn-rounded float-right" data-toggle="modal" data-target="#student_csv_report"><i class="fa fa-plus"></i> Download CSV Report</a>
                         <div class="view-icons">
                             <a href="all-students.php" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
-                            <a href="students-list.php" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
                         </div>
                     </div>
                 </div>
@@ -145,6 +145,42 @@ require_once 'includes/sidebar.php';
                 </div>
             </div>
         </div>
+
+        <div id="student_csv_report" class="modal" role="dialog">
+            <div class="modal-dialog">
+                
+                <div class="modal-content modal-md">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Download Report</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="csvReport" action="employee/process/processDownloadCSV.php" method="post" novalidate="novalidate">
+                            <input type="hidden" name="type" value="download_student_csv" />
+                        <div class="form-group custom-mt-form-group">
+                            <select id="class_id_csv" name="class_id_csv" onchange="getSectionsCSV(this.value);">
+                                <option value='all'>All Classes</option>
+                                    <?php for ($i=0 ; $i < count($resultClasses); $i++) : ?>
+                                        <option <?php if (isset($get_class_id)) { if ($get_class_id==$resultClasses[$i]['id']) { echo 'selected'; } } ?> value="<?php echo $resultClasses[$i][ 'id']; ?>"><?php echo $resultClasses[$i][ 'class_name']; ?></option>
+                                    <?php endfor; ?>
+                             </select>
+                             <label class="control-label">Select Class</label><i class="bar"></i>
+                        </div>
+                        <div class="form-group custom-mt-form-group">
+                            <select name="section_id_csv" id="section_id_csv">
+                                <option value='' disabled="" selected="">Select Section</option>
+                            </select>
+                             <label class="control-label">Select Section</label><i class="bar"></i>
+                        </div>
+                            <div class="m-t-20 text-center">
+                                <button type="submit" class="btn btn-primary btn-lg">Download</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <?php require_once 'includes/footer.php'; ?>
     <script type="text/javascript">
@@ -178,6 +214,32 @@ require_once 'includes/sidebar.php';
                     }                    
                 }else{
                     $("#section_id").html("<option value='' selected >No Section Found</option>");
+                }
+            }
+        });
+    }
+
+    function getSectionsCSV(classID){
+        $.ajax({
+            type: "POST",
+            url: "employee/process/processAddTeacher.php",
+            data:{type:'getSection',classID:classID},
+            beforeSend : function () {
+                //$('#wait').html("Wait for checking");
+            },
+            success:function(data){                
+                
+                data = $.parseJSON(data); 
+                console.log(data);        
+                if(data.length > 0){
+                    $("#section_id_csv").html("<option value=''>Select Section</option>");
+                    for(var i=0;i<data.length;i++){        
+                       var option="<option value='"+data[i].id+"'";
+                           option+=" >"+data[i].section_name+"</option>"
+                        $("#section_id_csv").append(option);
+                    }                    
+                }else{
+                    $("#section_id_csv").html("<option value='' selected >No Section Found</option>");
                 }
             }
         });

@@ -246,7 +246,11 @@ class Teacher extends MySQLCN {
                     $get_holiday = $this->checkHoliday($findDate);
                      foreach ($fetch_result as $key => $val) {
                          if ($val['day_number'] == $search_day) {
-                             $attendanceArray[$search_day]['output'] = 'P';
+                            if(!empty($get_holiday)) { 
+                              $attendanceArray[$search_day]['output'] = 'P'.' ('.$get_holiday.') ';
+                            } else {
+                              $attendanceArray[$search_day]['output'] = 'P';
+                            }
                              $attendanceArray[$search_day]['date_of_attendance'] = $findDate;
                              $attendanceArray[$search_day]['login_time'] = $val['login_time'];
                              break;
@@ -269,7 +273,11 @@ class Teacher extends MySQLCN {
                     $get_holiday = $this->checkHoliday($findDate);
                      foreach ($fetch_result as $key => $val) {
                          if ($val['day_number'] == $search_day) {
-                             $attendanceArray[$search_day]['output'] = 'P';
+                             if(!empty($get_holiday)) { 
+                              $attendanceArray[$search_day]['output'] = 'P'.' ('.$get_holiday.') ';
+                            } else {
+                              $attendanceArray[$search_day]['output'] = 'P';
+                            }
                              $attendanceArray[$search_day]['date_of_attendance'] = $findDate;
                              $attendanceArray[$search_day]['login_time'] = $val['login_time'];
                              break;

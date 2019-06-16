@@ -31,6 +31,11 @@ require_once 'includes/sidebar.php';
                     </div>
                     <div class="col-sm-8 col-9 text-right m-b-20">
                         <a href="add-teacher.php" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Teacher</a>
+                        <form id="csvReport" action="employee/process/processDownloadCSV.php" method="post" novalidate="novalidate">
+                            <input type="hidden" name="type" value="download_teachers_csv" />
+                                <button type="submit" class="btn btn-primary btn-rounded float-right">Download CSV Report</button>
+                            
+                        </form>
                         <div class="view-icons">
                             <a href="all-teachers.php" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
                             <a href="teachers-list.php" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>

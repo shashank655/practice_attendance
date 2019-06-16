@@ -40,6 +40,20 @@ class ClassSections extends MySQLCN {
         return $class_data;
     }
 
+    function getClassesWithSectionsLists() {
+        $fetch = "SELECT * FROM `classes_name` ";
+        $fetch_data = $this->select($fetch);
+        $class_data = array();
+            foreach ($fetch_data as $key => $value) {
+                $class_data[$key]['id'] = $value['id'];
+                $class_data[$key]['class_name'] = $value['class_name'];
+                $fetch2 = "SELECT * FROM `sections` where class_id = '{$value['id']}'";
+                $fetch_data_section = $this->select($fetch2);
+                $class_data[$key]['sections'] = $fetch_data_section;
+            }
+        return $class_data;
+    }
+    
     function deleteClasses($cId) {
         $qry = "DELETE FROM `classes_name` WHERE id = '{$cId}'";
         $res = $this->deleteData($qry);

@@ -109,6 +109,19 @@
                         <li class="<?php if($currentURL =='gallery.php'){echo 'active';}?>">
                             <a href="gallery.php"><i class="fa fa-table" aria-hidden="true"></i>Gallery</a>
                         </li>
+                        <?php if ( $_SESSION['user_role'] == '1' ): ?>
+                          <li class="submenu">
+                            <a href="#"><i class="fa fa-table" aria-hidden="true"></i><span> Role and Permission </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled" style="display: none;">
+                              <li ><a class="<?php if($currentURL =='roles-list.php' || $currentURL =='add-roles.php'){echo 'active';}?>" href="roles-list.php"> Roles </a></li>
+                              <li ><a class="<?php if($currentURL =='permissions-list.php'){echo 'active';}?>" href="permissions-list.php"> Permission </a></li>
+                              <li ><a class="<?php if($currentURL == 'users-list.php' || $currentURL == 'edit-users.php'){echo 'active';}?>" href="permissions-list.php"> Users </a></li>
+                            </ul>
+                          </li>
+                          <li class="<?php if($currentURL =='gallery.php'){echo 'active';}?>">
+                              <a href="gallery.php"><i class="fa fa-table" aria-hidden="true"></i>Gallery</a>
+                          </li>
+                        <?php endif; ?>
 						<!-- <li class="submenu">
                             <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Students</span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">

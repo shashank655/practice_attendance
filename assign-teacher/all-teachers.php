@@ -1,14 +1,14 @@
-<?php 
-require_once '../employee/class/dbclass.php'; 
+<?php
+require_once '../employee/class/dbclass.php';
 require_once '../employee/config/config.php';
 require_once 'models/Teacher.php';
 $teachers = new Teacher;
-$resultTeachersList=$teachers->getTeachersList();  
+$resultTeachersList=$teachers->getTeachersList();
 ?>
 
-<?php 
-require_once 'includes/header.php'; 
-require_once 'includes/sidebar.php'; 
+<?php
+require_once 'includes/header.php';
+require_once 'includes/sidebar.php';
 ?>
 <div class="page-wrapper"> <!-- content -->
     <div class="content container-fluid">
@@ -24,8 +24,7 @@ require_once 'includes/sidebar.php';
 				</div>
 			</div>
 		</div>
-        <div class="row">
-            <div class="content-page">
+    <div class="content-page">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
@@ -35,7 +34,6 @@ require_once 'includes/sidebar.php';
                                         <th style="min-width:50px;">S.No.</th>
                                         <th style="min-width:50px;">Name</th>
                                         <th style="min-width:50px;">Email</th>
-                                        <th style="min-width:50px;">Updated On</th>
                                         <th style="min-width:50px;">Action</th>
                                     </tr>
                                 </thead>
@@ -46,7 +44,6 @@ require_once 'includes/sidebar.php';
                                     <td><?php echo $i; ?></td>
                                     <td><?php echo $value['first_name'].' '.$value['last_name'] ; ?></td>
                                     <td><?php echo $value['email_address']; ?></td>
-                                    <td><?php echo date('d M, Y', strtotime($value['updated_at'])); ?></td>
                                     <td class="text-right" >
 										<a href="assign-teacher.php?userId=<?php echo $value[0]; ?>" class="btn btn-primary btn-sm mb-1">
 											Assign
@@ -59,6 +56,5 @@ require_once 'includes/sidebar.php';
                     </div>
                 </div>
             </div>
-        </div>
     </div>
     <?php require_once '../includes/footer.php'; ?>

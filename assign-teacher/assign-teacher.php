@@ -1,30 +1,30 @@
-<?php 
-require_once '../employee/class/dbclass.php'; 
+<?php
+require_once '../employee/class/dbclass.php';
 require_once '../employee/config/config.php';
-require_once 'models/Teacher.php'; 
+require_once 'models/Teacher.php';
 require_once '../employee/class/ClassSections.php';
 $classSections = new ClassSections();
 $resultClassSections = $classSections->getClassesWithSectionsLists();
 $teachers = new Teacher();
-$userId = (isset($_REQUEST['userId'])) ? $_REQUEST['userId'] : NULL; 
-$result=$teachers->getTeacherInfo($userId); 
+$userId = (isset($_REQUEST['userId'])) ? $_REQUEST['userId'] : NULL;
+$result=$teachers->getTeacherInfo($userId);
 $assigned = $teachers->getAssignedClassSection($userId);
 $selectedIsClassTeacher = '';
 $selectedClassSection = [];
-foreach ($assigned as $key => $assign) {
+if (is_array($assigned)) {
+  foreach ($assigned as $key => $assign) {
     $classIdSectionId = $assign['class_id'].','.$assign['section_id'];
     if ($assign['is_class_teacher'] == '1'){
-        $selectedIsClassTeacher = $classIdSectionId;
+      $selectedIsClassTeacher = $classIdSectionId;
     }
     array_push($selectedClassSection, $classIdSectionId);
-} 
-// echo "<pre>";
-// print_r($selectedIsClassTeacher); exit;
+  }
+}
 ?>
 
-<?php 
-require_once 'includes/header.php'; 
-require_once 'includes/sidebar.php'; 
+<?php
+require_once 'includes/header.php';
+require_once 'includes/sidebar.php';
 ?>
 <div class="page-wrapper"> <!-- content -->
     <div class="content container-fluid">
@@ -41,37 +41,31 @@ require_once 'includes/sidebar.php';
                 </div>
             </div>
         </div>
-                
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="card-box">
                     <h4 class="card-title">Teacher</h4>
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Name</label>
                                 <input type="text" class="form-control" value="<?= $result[0]['first_name'].' '.$result[0]['last_name']; ?>" readonly>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Email</label>
                                 <input type="text" class="form-control" value="<?= $result[0]['email_address']; ?>" readonly>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Type</label>
                                 <input type="text" class="form-control" value="<?= $result[0]['designation']; ?>" readonly>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Updated At</label>
-                                <input type="text" class="form-control" value="<?= $result[0]['updated_at']; ?>" readonly>
-                            </div>
-                        </div>
-                    </div>  
+                    </div>
                 </div>
             </div>
         </div>
@@ -91,15 +85,15 @@ require_once 'includes/sidebar.php';
 												<th style="min-width:50px;">S.No.</th>
 												<th style="min-width:50px;">Is Class Teacher</th>
 				    							<th style="min-width:50px;">Class</th>
-				    							<th style="min-width:50px;">Subject</th>
+				    							<th style="min-width:50px;">Section</th>
 												<th style="min-width:50px;">Action</th>
 											</tr>
 										</thead>
 										<tbody>
 											<?php $i=1; ?>
-                                            <?php 
-                                                foreach ($resultClassSections as $key => $value) { 
-                                                    foreach ($value['sections'] as $sectionKey => $sectionValue) { 
+                                            <?php
+                                                foreach ($resultClassSections as $key => $value) {
+                                                    foreach ($value['sections'] as $sectionKey => $sectionValue) {
                                                         $classAndSection = $value['id'].','.$sectionValue['id'];
                                             ?>
 
@@ -127,16 +121,16 @@ require_once 'includes/sidebar.php';
 									</table>
 								</div>
                             </div>
-                        </div>  
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <button class="btn btn-primary btn-lg mr-2" type="submit">Update</button>
-                </div>                        
-            </div>    
-        </form>    
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 </div>

@@ -1,5 +1,5 @@
 <?php
-class Teacher extends MySQLCN {
+class TeacherModel extends MySQLCN {
 
     function getTeacherInfo($id) {
       $fetch = "SELECT * FROM `users` where users.id='{$id}'";

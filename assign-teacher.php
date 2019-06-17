@@ -1,11 +1,11 @@
 <?php
-require_once '../employee/class/dbclass.php';
-require_once '../employee/config/config.php';
-require_once 'models/Teacher.php';
-require_once '../employee/class/ClassSections.php';
+require_once 'employee/class/dbclass.php';
+require_once 'employee/config/config.php';
+require_once 'employee/class/TeacherModel.php';
+require_once 'employee/class/ClassSections.php';
 $classSections = new ClassSections();
 $resultClassSections = $classSections->getClassesWithSectionsLists();
-$teachers = new Teacher();
+$teachers = new TeacherModel();
 $userId = (isset($_REQUEST['userId'])) ? $_REQUEST['userId'] : NULL;
 $result=$teachers->getTeacherInfo($userId);
 $assigned = $teachers->getAssignedClassSection($userId);
@@ -69,7 +69,7 @@ require_once 'includes/sidebar.php';
                 </div>
             </div>
         </div>
-        <form id="assignTeacherClass" action="controller/TeacherController.php" method="post" novalidate="novalidate">
+        <form id="assignTeacherClass" action="employee/process/TeacherController.php" method="post" novalidate="novalidate">
             <input type="hidden" name="type" value="Add" />
             <input type="hidden" name="userId" value="<?php echo $userId; ?>" />
             <div class="row">
@@ -134,7 +134,7 @@ require_once 'includes/sidebar.php';
     </div>
 </div>
 </div>
-<?php require_once '../includes/footer.php'; ?>
+<?php require_once 'includes/footer.php'; ?>
     <script type="text/javascript">
         $(function(){
             $("#addRoles").validate({

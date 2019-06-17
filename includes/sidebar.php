@@ -118,6 +118,9 @@
                               <li ><a class="<?php if($currentURL == 'users-list.php' || $currentURL == 'edit-users.php'){echo 'active';}?>" href="permissions-list.php"> Users </a></li>
                             </ul>
                           </li>
+                            <li>
+                                <a class="<?php if($currentURL =='teachers.php' || $currentURL =='assign-teacher.php'){echo 'active';}?>" href="teachers.php"><i class="fa fa-table" aria-hidden="true"></i>Teachers</a>
+                            </li>
                           <li class="<?php if($currentURL =='gallery.php'){echo 'active';}?>">
                               <a href="gallery.php"><i class="fa fa-table" aria-hidden="true"></i>Gallery</a>
                           </li>

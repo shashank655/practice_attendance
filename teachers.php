@@ -1,8 +1,8 @@
 <?php
-require_once '../employee/class/dbclass.php';
-require_once '../employee/config/config.php';
-require_once 'models/Teacher.php';
-$teachers = new Teacher;
+require_once 'employee/class/dbclass.php';
+require_once 'employee/config/config.php';
+require_once 'employee/class/TeacherModel.php';
+$teachers = new TeacherModel;
 $resultTeachersList=$teachers->getTeachersList();
 ?>
 
@@ -57,4 +57,4 @@ require_once 'includes/sidebar.php';
                 </div>
             </div>
     </div>
-    <?php require_once '../includes/footer.php'; ?>
+    <?php require_once 'includes/footer.php'; ?>

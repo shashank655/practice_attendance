@@ -6,6 +6,11 @@ class Roles extends MySQLCN {
             (`role`) 
             VALUES ( "'. $data['role'] . '")';
         $res = $this->insert($qry);
+        $last_id = mysqli_insert_id($this->CONN);
+        foreach ( $data['permissions'] as $permission ) {
+            $qry4 = 'INSERT INTO `role_permission` (`permission_id`, `role_id`) VALUES ( "'. $permission . '", "'. $last_id . '")';
+            $res4 = $this->insert($qry4);
+        }
         if ($res) {
             return true;
         } else {
@@ -27,6 +32,8 @@ class Roles extends MySQLCN {
     function deleteRoles($eId) {
         $qry = "DELETE FROM `roles` WHERE id = '{$eId}'";
         $res = $this->deleteData($qry);
+        $qry2 = "DELETE FROM `role_permission` WHERE `role_id` = '{$roleId}'";
+        $res2 = $this->deleteData($qry2);
         if ($res) {
             return true;
         } else {
@@ -35,10 +42,19 @@ class Roles extends MySQLCN {
     }
 
     function roleInfoUpdate($data) {
+        $roleId = $data['roleId'];
+        $qry2 = "DELETE FROM `role_permission` WHERE `role_id` = '{$roleId}'";
+        $res2 = $this->deleteData($qry2);
+        
         $qry = "UPDATE `roles` SET
               `role` = '{$data['role']}'
-               WHERE id = '{$data['roleId']}'";
+               WHERE id = '{$roleId}'";
         $res = $this->updateData($qry);
+
+        foreach ( $data['permissions'] as $permission ) {
+            $qry4 = 'INSERT INTO `role_permission` (`permission_id`, `role_id`) VALUES ( "'. $permission . '", "'. $roleId . '")';
+            $res4 = $this->insert($qry4);
+        }
         if ($res) {
             return true;
         } else {

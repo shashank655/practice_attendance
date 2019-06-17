@@ -14,6 +14,6 @@ stages:
 Deploy Staging:
   stage: deploy_staging
   script:
-    - ssh $STAGING_USER@$STAGING_HOST "sudo su adhyay && cd $STAGING_PATH && git pull origin master"
+    - ssh $STAGING_USER@$STAGING_HOST "sudo su adhyay -c 'cd $STAGING_PATH && git pull origin master'"
   only:
   - master

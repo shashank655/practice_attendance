@@ -322,9 +322,31 @@ require_once 'includes/sidebar.php';
 	var totalStudent = <?php echo $totalStudent[0][0]?> ;
 	var totalTeacher = <?php echo $totalTeacher[0][0]?> ;
 </script>
-<?php 
+<?php
 require_once 'includes/footer.php';
 ?>
+<script type="text/javascript">
+(function($) {
+    'use strict';
+    function getStudentMonthlyCartData(class_id = '', section_id = '') {
+        $.ajax({
+            type: 'GET',
+            url: 'employee/process/dashboard-chart-ajax.php',
+            data: {
+                class_id: class_id,
+                section_id: section_id,
+                action: 'get-student-monthly-cart-data'
+            },
+            success: function (res) {
+                if (window.studentMonthlyCart) {
+                    window.studentMonthlyCart.setData(res);
+                }
+            }
+        });
+    }
+    getStudentMonthlyCartData();
+}(jQuery));
+</script>
 <script type="text/javascript">
 	$( "#delete_student" ).click(function() {
         var id = $(this).attr('val');

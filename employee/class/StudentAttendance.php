@@ -124,7 +124,7 @@ class StudentAttendance extends MySQLCN {
             $where = [];
 
             if ($class_id) $where[] = "class_id = '$class_id'";
-            if ($section_id) $where[] = "section_id = '$section_id'`";
+            if ($section_id) $where[] = "section_id = '$section_id'";
             if ($attendance_type) $where[] = "attendance = '$attendance_type'";
 
             $query .= " WHERE " . implode(' AND ', $where);

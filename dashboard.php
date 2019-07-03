@@ -338,15 +338,15 @@ require_once 'includes/sidebar.php';
             </div>
         </div>
 
-        <div class="modal" id="daily-student-attendance-cart-modal">
+        <div class="modal" id="daily-student-attendance-progress-modal">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Daily Attendance for the month of ....</h4>
+                        <h4 class="modal-title">Attendance for the month of ....</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <div id="daily-student-attendance-cart"></div>
+                        <div id="daily-student-attendance-progress"></div>
                     </div>
                 </div>
             </div>

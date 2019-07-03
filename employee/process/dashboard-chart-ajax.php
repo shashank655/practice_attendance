@@ -1,6 +1,7 @@
 <?php
 require_once '../config/config.php';
 require_once '../class/dbclass.php';
+require_once '../class/Student.php';
 require_once '../class/StudentAttendance.php';
 require_once '../class/ClassSections.php';
 require_once '../class/CommonFunction.php';
@@ -34,7 +35,7 @@ function getStudentMonthlyCartData() {
     echo json_encode($results);
 }
 
-function getStudentDailyCartData() {
+function getMonthlyAttendenceStudentWise() {
     $class_id = isset($_GET['class_id']) ? $_GET['class_id'] : null;
     $section_id = isset($_GET['section_id']) ? $_GET['section_id'] : null;
     $month_index = isset($_GET['month_index']) ? $_GET['month_index'] : 0;
@@ -44,19 +45,23 @@ function getStudentDailyCartData() {
     $month = $year . '-' . $month_index;
 
     $attendance = new StudentAttendance();
-    $total = $attendance->getStudentDailyAttendence($class_id, $section_id, $month);
-    $present = $attendance->getStudentDailyAttendence($class_id, $section_id, $month, 'P');
+    $totals = $attendance->getMonthlyAttendenceStudentWise($class_id, $section_id, $month);
+    $presents = $attendance->getMonthlyAttendenceStudentWise($class_id, $section_id, $month, 'P');
+
+    $students =  (new Student())->getStudentClassSectionWise($class_id, $section_id);
 
     $results = [];
-    $days_count = cal_days_in_month (CAL_GREGORIAN, $month_index , $year) + 1;
-    for ($i = 1; $i < $days_count; $i++) {
-        $day = $month . '-' . sprintf('%02d', $i);
-        $value = 0;
-        if ( isset($total[$day]) && $present[$day]) {
-            $value = round($present[$day] / $total[$day] * 100, 2);
-        }
 
-        array_push($results, compact('day', 'value'));
+    foreach ($students as $student_id => $name) {
+        $value = 0;
+        $total = 0;
+        $present = 0;
+        if ( isset($totals[$student_id]) && isset($presents[$student_id]) ) {
+            $total = $totals[$student_id];
+            $present = $presents[$student_id];
+            $value = round($present / $total * 100, 2);
+        }
+        array_push($results, compact('name', 'value', 'total', 'present'));
     }
 
     header('Content-type: application/json');

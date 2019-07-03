@@ -128,6 +128,20 @@ class Student extends MySQLCN {
         $fetch_list = $this->select($fetchList);
         //echo "<pre>";print_r($fetch_list);die;
         return $fetch_list;
-    }    
+    }
+
+        function getStudentClassSectionWise($class_id, $section_id) {
+            $query = "SELECT * FROM `students` WHERE class_id = '{$class_id}' AND section_id = '{$section_id}';";
+
+            if (empty( $result = $this->select($query) )) {
+                return [];
+            }
+
+            $results = [];
+            foreach ($result as $row) {
+                $results[$row['id']] = $row['first_name'] . ' ' . $row['last_name'];
+            }
+            return $results;
+        }
 }
 ?>

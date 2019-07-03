@@ -142,8 +142,8 @@ class StudentAttendance extends MySQLCN {
         return $results;
     }
 
-    function getStudentDailyAttendence($class_id = null, $section_id = null, $month = null, $attendance_type = null) {
-        $query = "SELECT count(*) as count, date_of_attendance as day";
+    function getMonthlyAttendenceStudentWise($class_id = null, $section_id = null, $month = null, $attendance_type = null) {
+        $query = "SELECT count(attendance) as count, student_id";
         $query .= " FROM students_attendance";
         if ($class_id OR $section_id OR $attendance_type) {
             $where = [];
@@ -155,7 +155,7 @@ class StudentAttendance extends MySQLCN {
 
             $query .= " WHERE " . implode(' AND ', $where);
         }
-        $query .= " GROUP BY day;";
+        $query .= " GROUP BY student_id;";
 
         if (empty( $result = $this->select($query) )) {
             return [];
@@ -163,7 +163,7 @@ class StudentAttendance extends MySQLCN {
 
         $results = [];
         foreach ($result as $row) {
-            $results[ $row['day'] ] = $row['count'];
+            $results[$row['student_id']] = $row['count'];
         }
         return $results;
     }

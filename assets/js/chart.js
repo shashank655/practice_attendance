@@ -42,25 +42,6 @@
         }
     });
 
-    var studentDailyCart = new Morris.Line({
-        element: 'daily-student-attendance-cart',
-        data: [],
-        xkey: 'day',
-        ykeys: ['value'],
-        labels: ['Value'],
-        lineColors: ['#36597c'],
-        lineWidth: 4,
-        pointSize: 6,
-        pointFillColors:['rgba(255,255,255,0.9)'],
-        pointStrokeColors: ['#01c0c8'],
-        gridLineColor: 'rgba(0,0,0,.5)',
-        resize: true,
-        gridTextColor: '#36597c',
-        xLabelFormat: function (x) {
-            return x.getDate();
-        }
-    });
-
     function getStudentMonthlyCartData(class_id = '', section_id = '') {
         $.ajax({
             type: 'GET',
@@ -76,7 +57,7 @@
         });
     }
 
-    function getStudentDailyCartData(class_id = '', section_id = '', month_index) {
+    function getMonthlyAttendenceStudentWiseData(class_id = '', section_id = '', month_index) {
         $.ajax({
             type: 'GET',
             url: '/employee/process/dashboard-chart-ajax.php',
@@ -84,10 +65,17 @@
                 class_id: class_id,
                 section_id: section_id,
                 month_index: month_index,
-                action: 'student-daily-cart-data'
+                action: 'monthly-attendence-student-wise'
+            },
+            beforeSend: function () {
+                $('#daily-student-attendance-progress .student').remove();
             },
             success: function (res) {
-                studentDailyCart.setData(res);
+                $.each(res, function (index, value) {
+                    $('#daily-student-attendance-progress').append(
+                        '<div class="student mb-4"><label>'+ value['name'] +' ('+ value['present'] +'/'+ value['total'] +')</label><div class="progress progress-md"><div class="progress-bar progress-bar-striped" role="progressbar" style="width: '+ value['value'] +'%" aria-valuenow="'+ value['value'] +'" aria-valuemin="0" aria-valuemax="100"></div></div></div>'
+                    );
+                });
             }
         });
     }
@@ -127,11 +115,11 @@
     $(document).on('click', '#incomeChart > svg > circle', function () {
         var month_index = $('#incomeChart > svg > circle').index(this);
         var month_name = months[month_index];
-        var $modal = $('#daily-student-attendance-cart-modal');
+        var $modal = $('#daily-student-attendance-progress-modal');
         var class_id = $('#monthly-student-attendance-class-id').val();
         var section_id = $('#monthly-student-attendance-section-id').val();
-        getStudentDailyCartData(class_id, section_id, month_index);
-        $modal.find('.modal-title').text('Daily Attendance for the month of ' + month_name);
+        getMonthlyAttendenceStudentWiseData(class_id, section_id, month_index);
+        $modal.find('.modal-title').text('Attendance for the month of ' + month_name);
         $modal.modal('show');
     });
 

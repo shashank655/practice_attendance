@@ -115,7 +115,7 @@
                             <ul class="list-unstyled" style="display: none;">
                               <li ><a class="<?php if($currentURL =='roles-list.php' || $currentURL =='add-roles.php'){echo 'active';}?>" href="roles-list.php"> Roles </a></li>
                               <li ><a class="<?php if($currentURL =='permissions-list.php'){echo 'active';}?>" href="permissions-list.php"> Permission </a></li>
-                              <li ><a class="<?php if($currentURL == 'users-list.php' || $currentURL == 'edit-users.php'){echo 'active';}?>" href="permissions-list.php"> Users </a></li>
+                              <li ><a class="<?php if($currentURL == 'users-list.php' || $currentURL == 'edit-users.php'){echo 'active';}?>" href="users-list.php"> Users </a></li>
                             </ul>
                           </li>
                           <li class="submenu">

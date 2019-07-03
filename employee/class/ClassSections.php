@@ -92,6 +92,21 @@ class ClassSections extends MySQLCN {
         } else {
             return false;
         }
-    }    
+    }
+
+        function getClassSections($class_id) {
+            $query = "SELECT * FROM sections WHERE class_id = '$class_id'";
+
+            if (empty( $result = $this->select($query) )) {
+                return [];
+            }
+
+            return array_map(function ($row) {
+                return [
+                    'id'      => $row['id'],
+                    'section' => $row['section_name'],
+                ];
+            }, $result);
+        }
 }
 ?>

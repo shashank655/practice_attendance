@@ -1,0 +1,19 @@
+image: ubuntu:latest
+
+before_script:
+  - apt-get update -yqq
+  - 'which ssh-agent || ( apt-get install openssh-client -yqq )'
+  - mkdir -p ~/.ssh
+  - eval $(ssh-agent -s)
+  - ssh-add <(echo "$STAGING_PKEY")
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+
+stages:
+  - deploy_staging
+
+Deploy Staging:
+  stage: deploy_staging
+  script:
+    - ssh $STAGING_USER@$STAGING_HOST "sudo su adhyay -c 'cd $STAGING_PATH && git pull origin master'"
+  only:
+  - master

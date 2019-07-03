@@ -118,6 +118,13 @@
                               <li ><a class="<?php if($currentURL == 'users-list.php' || $currentURL == 'edit-users.php'){echo 'active';}?>" href="permissions-list.php"> Users </a></li>
                             </ul>
                           </li>
+                          <li class="submenu">
+                            <a href="#"><i class="fa fa-file" aria-hidden="true"></i><span> Accounts </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled" style="display: none;">
+                              <li ><a class="<?php if($currentURL =='fee-types-list.php' || $currentURL =='add-fee-types.php'){echo 'active';}?>" href="fee-types-list.php"> Fee Types </a></li>
+                              <li ><a class="<?php if($currentURL =='admission-list.php' || $currentURL =='add-roles.php'){echo 'active';}?>" href="admission-list.php"> Admission Form </a></li>
+                            </ul>
+                          </li>
                             <li>
                                 <a class="<?php if($currentURL =='teachers.php' || $currentURL =='assign-teacher.php'){echo 'active';}?>" href="teachers.php"><i class="fa fa-table" aria-hidden="true"></i>Teachers</a>
                             </li>

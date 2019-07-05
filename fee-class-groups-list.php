@@ -1,9 +1,9 @@
 <?php 
 require_once 'employee/class/dbclass.php'; 
 require_once 'employee/config/config.php'; 
-require_once 'employee/class/FeeTypes.php';  
-$fee_types=new FeeTypes(); 
-$resultFeeTypesList=$fee_types->getFeeTypesLists(); 
+require_once 'employee/class/FeeClassGroup.php';  
+$fees=new FeeClassGroup(); 
+$resultFeesList=$fees->getFeeClassGroupLists(); 
 ?>
 
 <?php 
@@ -15,12 +15,12 @@ require_once 'includes/sidebar.php';
 			<div class="page-header">
 					<div class="row">
 						<div class="col-lg-7 col-md-12 col-sm-12 col-12">
-							<h5 class="text-uppercase">Fee Types</h5>
+							<h5 class="text-uppercase">Fee Class Groups</h5>
 						</div>
 						<div class="col-lg-5 col-md-12 col-sm-12 col-12">
 							<ul class="list-inline breadcrumb float-right">
 								<li class="list-inline-item"><a href="dashboard.php">Home</a></li>
-                                <li class="list-inline-item"> Fee Types List</li>
+                                <li class="list-inline-item"> Fees Class Groups</li>
 							</ul>
 						</div>
 					</div>
@@ -30,7 +30,7 @@ require_once 'includes/sidebar.php';
                       
                     </div>
                     <div class="col-sm-8 col-9 text-right m-b-20">
-                        <a href="add-fee-types.php" class="btn btn-primary float-right btn-rounded"><i class="fa fa-plus"></i> Add Fee Type</a>
+                        <a href="add-fee-class-groups.php" class="btn btn-primary float-right btn-rounded"><i class="fa fa-plus"></i> Add Fee Class Group</a>
                     </div>
                 </div>
 			<div class="content-page">
@@ -41,35 +41,40 @@ require_once 'includes/sidebar.php';
                                 <thead>
                                     <tr>
                                         <th style="min-width:50px;">S.No.</th>
-                                        <th style="min-width:50px;">Name</th>
-                                        <th style="min-width:50px;">Class</th>
-                                        <th style="min-width:50px;">Section</th>
-                                        <th style="min-width:50px;">Amount</th>
+                                        <th style="min-width:50px;">Title</th>
+                                        <th style="min-width:50px;">Classes</th>
                                         <th style="min-width:50px;">Created On</th>
                                         <th style="min-width:50px;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <?php $i=1; ?>
-                                	<?php foreach ($resultFeeTypesList as $key => $value) { ?>
+                                    <?php 
+                                    if ($resultFeesList) {
+                                    foreach ($resultFeesList as $key => $value) { ?>
                                     <tr>
                                         <td><?php echo $i; ?></td>
-                                        <td><?php echo $value['name']; ?></td>
-                                        <td><?php echo $value['class_name']; ?></td>
-                                        <td><?php echo $value['section_name']; ?></td>
-                                        <td><?php echo $value['fee']; ?></td>
+                                        <td><?php echo $value['title']; ?></td>
+                                        <td>
+                                        <?php 
+                                            $classes = $fees->getClasses($value['id']); 
+                                            foreach ($classes as $class) {
+                                                echo $class['class_name'].', ';
+                                            }
+                                        ?>
+                                        </td>
                                         <td><?php echo date('d M, Y', strtotime($value['created_at'])); ?></td>
                                         <td class="text-right" >
-											<a href="add-fee-types.php?feeTypeId=<?php echo $value['id']; ?>" class="btn btn-primary btn-sm mb-1">
+											<a href="add-fee-class-groups.php?feeId=<?php echo $value['id']; ?>" class="btn btn-primary btn-sm mb-1">
 												<i class="fa fa-pencil" aria-hidden="true"></i>
 											</a>
-                                            <a href="employee/process/processFeeTypes.php?type=deleteFeeTypes&id=<?php echo $value['id']; ?>" class="btn btn-danger btn-sm mb-1">
+                                            <a href="employee/process/processFeeClassGroups.php?type=deleteFeeClassGroups&id=<?php echo $value['id']; ?>" class="btn btn-danger btn-sm mb-1">
                                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                             </a>
 											
 										</td>
                                     </tr>
-                                	<?php $i++; } ?>
+                                	<?php $i++; }  } ?>
                                 </tbody>
                             </table>
                         </div>

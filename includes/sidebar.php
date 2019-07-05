@@ -121,8 +121,9 @@
                           <li class="submenu">
                             <a href="#"><i class="fa fa-file" aria-hidden="true"></i><span> Accounts </span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">
-                              <li ><a class="<?php if($currentURL =='fee-types-list.php' || $currentURL =='add-fee-types.php'){echo 'active';}?>" href="fee-types-list.php"> Fee Types </a></li>
-                              <li ><a class="<?php if($currentURL =='admission-list.php' || $currentURL =='add-roles.php'){echo 'active';}?>" href="admission-list.php"> Admission Form </a></li>
+                              <li ><a class="<?php if($currentURL =='fee-amounts-list.php' || $currentURL =='add-fee-amounts.php'){echo 'active';}?>" href="fee-amounts-list.php"> Fee Amounts </a></li>
+                              <li ><a class="<?php if($currentURL =='fee-class-groups-list.php' || $currentURL =='add-fee-class-groups.php'){echo 'active';}?>" href="fee-class-groups-list.php"> Fee Class Groups </a></li>
+                              <li ><a class="<?php if($currentURL =='admission-list.php' || $currentURL =='new-admission.php'){echo 'active';}?>" href="admission-list.php"> Admission Form </a></li>
                             </ul>
                           </li>
                             <li>

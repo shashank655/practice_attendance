@@ -19,7 +19,19 @@ $feeId = (isset($_REQUEST['feeId'])) ? $_REQUEST['feeId'] : NULL;
 if ($feeId != NULL) { 
     $result = $fee_group->getFeeGroupsInfo($feeId);  
     if ($result == NULL) { $feeId = ''; } 
-} 
+}
+$tab1 = false;
+$tab2 = false;
+if ($feeId == '') {
+    $tab1 = true;
+    $tab2 = true;
+} else {
+    if ($result[0]['class_id'] != '') {
+        $tab1 = true;
+    } else {
+        $tab2 = true;
+    }
+}
 ?>
 <?php 
 require_once 'includes/header.php'; 
@@ -58,11 +70,16 @@ require_once 'includes/sidebar.php';
                         <div class="card-box">
                             <h4 class="card-title">Add Fee Group</h4><br>
                             <ul class="nav nav-tabs nav-justified">
+                                <?php if ($tab1) { ?>
                                 <li class="nav-item"><a class="nav-link active" href="#basictab1" data-toggle="tab">Class Section Wise</a></li>
+                                <?php } 
+                                    if ($tab2) {
+                                ?>
                                 <li class="nav-item"><a class="nav-link" href="#basictab2" data-toggle="tab">Class Group Wise</a></li>
+                                <?php } ?>
                             </ul>
                             <div class="tab-content">
-                                <div class="tab-pane show active" id="basictab1">
+                                <div class="tab-pane <?php echo $tab1 ? 'show active' : ''; ?>" id="basictab1">
                                     <form id="addFeeGroups" action="employee/process/processFeeGroups.php" method="post" novalidate="novalidate">
                                         <input type="hidden" name="type" value="<?php echo $feeId == '' ? 'Add' : 'Update'; ?>" />
                                         <input type="hidden" name="feeId" value="<?php echo $feeId; ?>" />
@@ -179,7 +196,7 @@ require_once 'includes/sidebar.php';
                                         </div>
                                     </form>
                                 </div>
-                                <div class="tab-pane" id="basictab2">
+                                <div class="tab-pane <?php echo $tab2 ? 'show active' : ''; ?>" id="basictab2">
                                 <form id="addFeeGroupsTab2" action="employee/process/processFeeGroupsTab2.php" method="post" novalidate="novalidate">
                                         <input type="hidden" name="type" value="<?php echo $feeId == '' ? 'Add' : 'Update'; ?>" />
                                         <input type="hidden" name="feeId" value="<?php echo $feeId; ?>" />

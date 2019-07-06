@@ -35,10 +35,10 @@ class Particulars extends MySQLCN {
         $fetch_data = $this->select($fetch);
         return $fetch_data;
     }    
-    function deleteFeeGroups($eId) {
-        $qry1 = "DELETE FROM `fee_group_fees` WHERE fee_group_id = '{$eId}'";
+    function deleteParticulars($eId) {
+        $qry1 = "DELETE FROM `particular_fee_discounts` WHERE particular_id = '{$eId}'";
         $res1 = $this->deleteData($qry1);
-        $qry = "DELETE FROM `fee_groups` WHERE id = '{$eId}'";
+        $qry = "DELETE FROM `particulars` WHERE id = '{$eId}'";
         $res = $this->deleteData($qry);
         if ($res) {
             return true;
@@ -47,18 +47,17 @@ class Particulars extends MySQLCN {
         }
     }
 
-    function feeGroupInfoUpdate($data) {
+    function particularInfoUpdate($data) {
+        
         $feeId = $data['feeId'];
-        $qry = "UPDATE `fee_groups` SET
-              `title` = '{$data['title']}',
-              `class_id`='{$data['class_id']}',
-              `section_id`='{$data['section_id']}'
+        $qry = "UPDATE `particulars` SET
+              `title` = '{$data['title']}'
                WHERE id = '{$feeId}'";
         $res = $this->updateData($qry);
-        $qry1 = "DELETE FROM `fee_group_fees` WHERE fee_group_id = '{$feeId}'";
+        $qry1 = "DELETE FROM `particular_fee_discounts` WHERE particular_id = '{$feeId}'";
         $res1 = $this->deleteData($qry1);
-        foreach ($data['fee_amount_ids'] as $fee_amount_id) {
-            $qry2 = 'INSERT INTO `fee_group_fees` (`fee_group_id`, `fee_amount_id`) VALUES ("'.$feeId.'", "'.$fee_amount_id.'")';
+        foreach ($data['fee_amount_ids'] as $key => $fee_amount_id) {
+            $qry2 = 'INSERT INTO `particular_fee_discounts` (`particular_id`, `fee_amount_id`, `discount_type`, `discount_amount`) VALUES ("'.$feeId.'", "'.$fee_amount_id.'", "'.$data['discount_type'][$key].'", "'.$data['discount_amount'][$key].'")';
             $res2 = $this->insert($qry2);
         }
         if ($res) {

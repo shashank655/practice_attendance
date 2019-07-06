@@ -16,7 +16,7 @@ if ($data['type'] == 'Add') {
         header('Location: ' . BASE_ROOT.'particulars-list.php');
     }
 }  else if ($_POST['type'] == 'Update' && $_POST['feeId'] != NULL) {
-    $result = $fees->feeGroupInfoUpdate($_POST);
+    $result = $fees->particularInfoUpdate($_POST);
     if ($result) {
         $_SESSION['Msg'] = "Particular updated successfully!";
         $_SESSION['success'] = true;

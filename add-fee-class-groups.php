@@ -2,17 +2,17 @@
 require_once 'employee/class/dbclass.php'; 
 require_once 'employee/config/config.php'; 
 require_once 'employee/class/FeeClassGroup.php';
-require_once 'employee/class/ClassSections.php';
+require_once 'employee/class/Sections.php';
 $fee_class_group = new FeeClassGroup();
-$classes = new ClassSections();
-$allClasses = $classes->getClassesLists();
-$selectedClasses = [];
+$sections = new Sections();
+$allSections = $sections->getSectionsLists();
+$selectedSections = [];
 $feeId = (isset($_REQUEST['feeId'])) ? $_REQUEST['feeId'] : NULL; 
 if ($feeId != NULL) { 
     $result = $fee_class_group->getFeeClassGroupsInfo($feeId);  
-    $classes =  $fee_class_group->getClasses($feeId);
-    foreach($classes as $class) {
-        $selectedClasses[] = $class['class_id'];
+    $sections =  $fee_class_group->getSections($feeId);
+    foreach($sections as $section) {
+        $selectedSections[] = $section['section_id'];
     }
     if ($result == NULL) { $feeId = ''; } 
 } 
@@ -58,10 +58,10 @@ require_once 'includes/sidebar.php';
                                 <div class="col-md-10">
                                     <div class="checkbox">
                                         <?php
-                                            foreach ($allClasses as $key => $class) {
+                                            foreach ($allSections as $key => $section) {
                                         ?>
                                         <label>
-                                            <input type="checkbox" value="<?= $class['id'] ?>" name="class_ids[]" <?= in_array($class['id'], $selectedClasses) ? 'checked' : ''; ?>> <?= $class['class_name'] ?>
+                                            <input type="checkbox" value="<?= $section['id'] ?>" name="section_ids[]" <?= in_array($section['id'], $selectedSections) ? 'checked' : ''; ?>> <?= $section['class_name'].' '.$section['section_name'] ?>
                                         </label> 
                                         &nbsp; &nbsp;
                                         <?php

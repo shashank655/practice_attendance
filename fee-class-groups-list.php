@@ -42,7 +42,7 @@ require_once 'includes/sidebar.php';
                                     <tr>
                                         <th style="min-width:50px;">S.No.</th>
                                         <th style="min-width:50px;">Title</th>
-                                        <th style="min-width:50px;">Classes</th>
+                                        <th style="min-width:50px;">Classes/Sections</th>
                                         <th style="min-width:50px;">Created On</th>
                                         <th style="min-width:50px;">Action</th>
                                     </tr>
@@ -57,9 +57,9 @@ require_once 'includes/sidebar.php';
                                         <td><?php echo $value['title']; ?></td>
                                         <td>
                                         <?php 
-                                            $classes = $fees->getClasses($value['id']); 
-                                            foreach ($classes as $class) {
-                                                echo $class['class_name'].', ';
+                                            $sections = $fees->getSections($value['id']); 
+                                            foreach ($sections as $section) {
+                                                echo $section['class_name'].' '.$section['section_name'].', ';
                                             }
                                         ?>
                                         </td>

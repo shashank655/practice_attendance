@@ -7,8 +7,8 @@ class FeeClassGroup extends MySQLCN {
             VALUES ( "'. $data['title'] . '")';
         $res = $this->insert($qry);
         $last_id = mysqli_insert_id($this->CONN);
-        foreach ($data['class_ids'] as $class_id) {
-            $qry2 = 'INSERT INTO `fee_class_group_classes` (`fee_class_group_id`, `class_id`) VALUES ("'.$last_id.'", "'.$class_id.'")';
+        foreach ($data['section_ids'] as $section_id) {
+            $qry2 = 'INSERT INTO `fee_class_group_classes` (`fee_class_group_id`, `section_id`) VALUES ("'.$last_id.'", "'.$section_id.'")';
             $res2 = $this->insert($qry2);
         }
         if ($res) {
@@ -26,6 +26,12 @@ class FeeClassGroup extends MySQLCN {
     
     function getClasses($id) {
         $sql = 'SELECT `fee_class_group_classes`.`class_id`, `classes_name`.`class_name` FROM `fee_class_group_classes` LEFT JOIN `classes_name` ON `classes_name`.`id` = `fee_class_group_classes`.`class_id` WHERE `fee_class_group_id`="'.$id.'"';
+        $fetch = $this->select($sql);
+        return $fetch;
+    }
+    
+    function getSections($id) {
+        $sql = 'SELECT `fee_class_group_classes`.`section_id`, `classes_name`.`class_name`, `sections`.`section_name` FROM `fee_class_group_classes` LEFT JOIN `sections` ON `sections`.`id`=`fee_class_group_classes`.`section_id` LEFT JOIN `classes_name` ON `classes_name`.`id` = `sections`.`class_id` WHERE `fee_class_group_id`="'.$id.'"';
         $fetch = $this->select($sql);
         return $fetch;
     }
@@ -55,8 +61,8 @@ class FeeClassGroup extends MySQLCN {
         $res = $this->updateData($qry);
         $qry1 = "DELETE FROM `fee_class_group_classes` WHERE fee_class_group_id = '{$feeId}'";
         $res1 = $this->deleteData($qry1);
-        foreach ($data['class_ids'] as $class_id) {
-            $qry3 = 'INSERT INTO `fee_class_group_classes` (`fee_class_group_id`, `class_id`) VALUES ("'.$feeId.'", "'.$class_id.'")';
+        foreach ($data['section_ids'] as $section_id) {
+            $qry3 = 'INSERT INTO `fee_class_group_classes` (`fee_class_group_id`, `section_id`) VALUES ("'.$feeId.'", "'.$section_id.'")';
             $res3 = $this->insert($qry3);
         }
         if ($res) {

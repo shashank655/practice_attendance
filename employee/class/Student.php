@@ -130,6 +130,18 @@ class Student extends MySQLCN {
         return $fetch_list;
     }
 
+    function getStudents($class_id, $section_id) {
+        $fetchList = "SELECT * FROM `students` where students.class_id='{$class_id}' and students.section_id='{$section_id}' order by `first_name` asc";
+        $fetch_list = $this->select($fetchList);
+        return $fetch_list;
+    }
+    
+    function getStudentsLists() {
+        $fetchList = "SELECT * FROM `students` join classes_name on students.class_id=classes_name.id join sections on students.section_id=sections.id order by `first_name` asc";
+        $fetch_list = $this->select($fetchList);
+        return $fetch_list;
+    }
+
         function getStudentClassSectionWise($class_id, $section_id) {
             $query = "SELECT * FROM `students` WHERE class_id = '{$class_id}' AND section_id = '{$section_id}';";
 
@@ -143,5 +155,11 @@ class Student extends MySQLCN {
             }
             return $results;
         }
+    
+    function getStudentsBySection($section_id) {
+        $fetchList = "SELECT * FROM `students` WHERE section_id = '{$section_id}';";
+        $fetch_list = $this->select($fetchList);
+        return $fetch_list;
+    }
 }
 ?>

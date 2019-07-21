@@ -126,6 +126,14 @@
                               <li ><a class="<?php if($currentURL =='fee-groups-list.php' || $currentURL =='add-fee-groups.php'){echo 'active';}?>" href="fee-groups-list.php"> Fee Groups </a></li>
                               <li ><a class="<?php if($currentURL =='particulars-list.php' || $currentURL =='add-particulars.php'){echo 'active';}?>" href="particulars-list.php"> Particulars </a></li>
                               <li ><a class="<?php if($currentURL =='admission-list.php' || $currentURL =='new-admission.php'){echo 'active';}?>" href="admission-list.php"> Admission Form </a></li>
+                              <li ><a class="<?php if($currentURL =='fee-collection-list.php' || $currentURL =='add-fee-collection.php'){echo 'active';}?>" href="fee-collection-list.php"> Fee Collection </a></li>
+                                <li class="submenu">
+                                  <a href="#"><span> Expenses </span> <span class="menu-arrow"></span> </a>
+                                  <ul>
+                                      <li><a class="<?php if($currentURL =='expense-types-list.php' || $currentURL =='add-expense-types.php'){echo 'active';}?>" href="expense-types-list.php"> Expense Types </a></li>
+                                      <li><a class="<?php if($currentURL =='expenses-list.php' || $currentURL =='add-expenses.php'){echo 'active';}?>" href="expenses-list.php"> Expenses List </a></li>
+                                  </ul>
+                                </li>
                             </ul>
                           </li>
                             <li>

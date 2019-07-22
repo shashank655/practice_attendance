@@ -96,12 +96,31 @@ require_once 'includes/sidebar.php';
 					</div>
 					<div class="col-lg-6">
 						<div class="content-page">
-							<div class="page-title">Monthly Attendance</div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="page-title">Monthly Attendance</div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <select class="form-control form-control-sm" id="monthly-student-attendance-class-id">
+                                            <?php foreach ($resultClasses as $class): ?>
+                                                <option value="<?= $class['id'] ?>"><?= $class['class_name'] ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <select class="form-control form-control-sm" id="monthly-student-attendance-section-id">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
 							<div id="incomeChart" style="height: 350px;"></div>
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="row mt-4">
 					<div class="col-lg-6 col-md-12 col-12">
 						 <div class="card-box m-b-2">
@@ -318,11 +337,25 @@ require_once 'includes/sidebar.php';
                 </div>
             </div>
         </div>
+
+        <div class="modal" id="daily-student-attendance-progress-modal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Attendance for the month of ....</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="daily-student-attendance-progress"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 <script type="text/javascript">
 	var totalStudent = <?php echo $totalStudent[0][0]?> ;
 	var totalTeacher = <?php echo $totalTeacher[0][0]?> ;
 </script>
-<?php 
+<?php
 require_once 'includes/footer.php';
 ?>
 <script type="text/javascript">

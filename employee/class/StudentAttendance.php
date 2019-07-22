@@ -115,6 +115,57 @@ class StudentAttendance extends MySQLCN {
         } else {
           return false;
       }
-    }    
+    }
+
+    function getStudentMonthlyAttendence($class_id = null, $section_id = null, $attendance_type = null) {
+        $query = "SELECT count(*) as count, DATE_FORMAT(date_of_attendance, \"%Y-%m\") as month";
+        $query .= " FROM students_attendance";
+        if ($class_id OR $section_id OR $attendance_type) {
+            $where = [];
+
+            if ($class_id) $where[] = "class_id = '$class_id'";
+            if ($section_id) $where[] = "section_id = '$section_id'";
+            if ($attendance_type) $where[] = "attendance = '$attendance_type'";
+
+            $query .= " WHERE " . implode(' AND ', $where);
+        }
+        $query .= " GROUP BY month;";
+
+        if (empty( $result = $this->select($query) )) {
+            return [];
+        }
+
+        $results = [];
+        foreach ($result as $row) {
+            $results[ $row['month'] ] = $row['count'];
+        }
+        return $results;
+    }
+
+    function getMonthlyAttendenceStudentWise($class_id = null, $section_id = null, $month = null, $attendance_type = null) {
+        $query = "SELECT count(attendance) as count, student_id";
+        $query .= " FROM students_attendance";
+        if ($class_id OR $section_id OR $attendance_type) {
+            $where = [];
+
+            if ($class_id) $where[] = "class_id = '$class_id'";
+            if ($section_id) $where[] = "section_id = '$section_id'";
+            if ($month) $where[] = "DATE_FORMAT(date_of_attendance, \"%Y-%m\") = '$month'";
+            if ($attendance_type) $where[] = "attendance = '$attendance_type'";
+
+            $query .= " WHERE " . implode(' AND ', $where);
+        }
+        $query .= " GROUP BY student_id;";
+
+        if (empty( $result = $this->select($query) )) {
+            return [];
+        }
+
+        $results = [];
+        foreach ($result as $row) {
+            $results[$row['student_id']] = $row['count'];
+        }
+        return $results;
+    }
 }
 ?>

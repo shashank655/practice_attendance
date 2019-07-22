@@ -150,6 +150,13 @@ $(document).ready(function($) {
 			format: 'DD/MM/YYYY'
 		});
 	}
+
+	// timepicker
+	if($('.timepicker').length > 0) {
+		$('.timepicker').datetimepicker({
+			format: 'LT'
+		});
+	}
 	
 	// Datatable
 	if($('.datatable').length > 0) {

@@ -37,6 +37,16 @@
                             <ul class="list-unstyled" style="display: none;">
                                 <li><a class="<?php if($currentURL =='subject-lists.php'){echo 'active';}?>" href="subject-lists.php">Subjects List</a></li>
                                 <li><a class="<?php if($currentURL =='add-subjects.php'){echo 'active';}?>" class="" href="add-subjects.php">Add Subjects</a></li>
+                                <li><a class="<?php if($currentURL =='assign-subject-list.php'){echo 'active';}?>" class="" href="assign-subject-list.php">Assign Subjects List</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="#"><i class="fa fa-table" aria-hidden="true"></i> <span> Examination</span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled" style="display: none;">
+                                <li><a class="<?php if($currentURL =='exam-types-lists.php' || $currentURL =='add-exam-type.php'){echo 'active';}?>" href="exam-types-lists.php">Add Exam Type</a></li>
+                                <li><a class="<?php if($currentURL =='manage-exam-terms-lists.php' || $currentURL == 'add-exam-term.php'){echo 'active';}?>" href="manage-exam-terms-lists.php">Manage Exam Term</a></li>
+                                <li><a class="<?php if($currentURL =='exams-list.php' || $currentURL =='add-exams.php'){echo 'active';}?>" href="exams-list.php">Exams List</a></li>
+                        </li>   
                             </ul>
                         </li>
                         <li class="<?php if($currentURL =='holidays.php'){echo 'active';}?>">
@@ -50,9 +60,6 @@
                         </li>
                         <li class="<?php if($currentURL =='leave-requests-list.php' || $currentURL =='view-leave-requests.php'){echo 'active';}?>">
                             <a href="leave-requests-list.php"><i class="fa fa-table" aria-hidden="true"></i>Leave Requests List</a>
-                        </li>
-                        <li class="<?php if($currentURL =='exams-list.php' || $currentURL =='add-exams.php'){echo 'active';}?>">
-                            <a href="exams-list.php"><i class="fa fa-table" aria-hidden="true"></i>Exams List</a>
                         </li>
                         <li class="submenu">
                             <a href="#"><i class="fa fa-money" aria-hidden="true"></i><span> Payroll </span> <span class="menu-arrow"></span></a>
@@ -85,6 +92,16 @@
                             <a href="student-attendance-list.php"><i class="fa fa-table" aria-hidden="true"></i>Student Attendance</a>
                         </li>
                         <?php } ?>
+
+                        <?php if($_SESSION['user_role'] == '2') { ?>
+                        <li class="submenu">
+                            <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Examination</span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled" style="display: none;">
+                                <li><a class="<?php if($currentURL =='select-exam-list.php' || $currentURL =='add-students-marks.php'){echo 'active';}?>" href="select-exam-list.php">Add Student Marks</a></li>
+                                <li><a class="<?php if($currentURL =='select-term-session.php' || $currentURL == 'students-result.php'){echo 'active';}?>" href="select-term-session.php">Results & Analysis</a></li>
+                            </ul>
+                        </li>
+                        <?php } ?>
                         <?php if($_SESSION['user_role'] == '1') { ?>
                         <li class="<?php if($currentURL =='all-students-attendance-list.php' || $currentURL =='all-students-attendance-list.php'){echo 'active';}?>">
                             <a href="all-students-attendance-list.php"><i class="fa fa-table" aria-hidden="true"></i>Student's Attendance</a>
@@ -105,9 +122,6 @@
                         </li>
                         <li class="<?php if($currentURL =='contacts.php' || $currentURL =='contacts.php'){echo 'active';}?>">
                             <a href="contacts.php"><i class="fa fa-table" aria-hidden="true"></i>Contacts</a>
-                        </li>
-                        <li class="<?php if($currentURL =='gallery.php'){echo 'active';}?>">
-                            <a href="gallery.php"><i class="fa fa-table" aria-hidden="true"></i>Gallery</a>
                         </li>
                         <?php if ( $_SESSION['user_role'] == '1' ): ?>
                           <li class="submenu">

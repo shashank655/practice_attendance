@@ -99,4 +99,40 @@ CREATE TABLE `gallery_uploads` (
                      `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  
                      PRIMARY KEY (`id`)                                                                   
                    )
-                                
+CREATE TABLE `class_sections_subjects` (                                                                  
+            `id` int(11) NOT NULL AUTO_INCREMENT,                                                    
+            `section_id` int(11) DEFAULT NULL,                                                         
+            `subjects_id` varchar(220) DEFAULT NULL,                                                
+            `createdDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  
+            PRIMARY KEY (`id`)                                                                       
+          ) 
+Exam list exam_type change , year_session 
+CREATE TABLE `students_marks` (                                                       
+                       `id` int(11) NOT NULL AUTO_INCREMENT,                                                    
+                       `class_id` int(11) NOT NULL,                                                             
+                       `section_id` int(11) DEFAULT NULL,                                                       
+                       `exam_id` int(11) NOT NULL,                                                           
+                       `teacher_id` int(11) NOT NULL,                                                           
+                       `exam_name` int(11) NOT NULL,                                              
+                       `teachers_id` int(11) NOT NULL,  
+                        `student_id` int(11) NOT NULL,  
+      `total_marks` varchar(200) NOT NULL,  
+      `marks_obtain` varchar(200) NOT NULL,                                
+                       `createdDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  
+                       PRIMARY KEY (`id`)                                                                       
+                     )
+ CREATE TABLE `exam_type` (                                                                 
+             `id` int(11) NOT NULL AUTO_INCREMENT,                                                    
+             `exam_type` varchar(230) DEFAULT NULL,                                                   
+             `createdDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  
+             PRIMARY KEY (`id`)                                                                       
+           ) 
+CREATE TABLE `exam_term` (                                                                 
+             `id` int(11) NOT NULL AUTO_INCREMENT,                                                    
+             `exam_type_id` int(11) NOT NULL, 
+    `year_session` varchar(200) NOT NULL,
+    `start_date` varchar(200) NOT NULL,
+    `end_date` varchar(200) NOT NULL,                                                  
+             `createdDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+             PRIMARY KEY (`id`)                                                                       
+           )                                                                       

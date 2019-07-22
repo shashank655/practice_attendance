@@ -11,7 +11,7 @@ if ($data['type'] == 'Add') {
         $_SESSION['success'] = true;
         header('Location: ' . BASE_ROOT.'class-section-list.php');
     } else {
-        $_SESSION['Msg'] = "Something went wrong!";
+        $_SESSION['Msg'] = "This class is already added in the list, please edit from here!";
         $_SESSION['success'] = false;
         header('Location: ' . BASE_ROOT.'class-section-list.php');
     }
@@ -22,7 +22,7 @@ if ($data['type'] == 'Add') {
         $_SESSION['success'] = true;
         header('Location: ' . BASE_ROOT.'class-section-list.php');
     } else {
-        $_SESSION['Msg'] = "Something went wrong!";
+        $_SESSION['Msg'] = "This class is already added in the list, please edit from here!";
         $_SESSION['success'] = false;
         header('Location: ' . BASE_ROOT.'class-section-list.php');
     }    

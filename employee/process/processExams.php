@@ -4,14 +4,14 @@ require_once '../class/dbclass.php';
 require_once '../class/Exams.php';
 $exams = new Exams();
 $data = $_REQUEST;
-if ($data['type'] == 'Add' && $data['class_id']!='') {
+if ($data['type'] == 'Add' && $data['class_id']!='' && $data['exam_term_id']!='') {
     $result = $exams->addExams($data);
     if ($result) {
         $_SESSION['Msg'] = "Exam added successfully!";
         $_SESSION['success'] = true;
         header('Location: ' . BASE_ROOT.'exams-list.php');
     } else {
-        $_SESSION['Msg'] = "Something went wrong!";
+        $_SESSION['Msg'] = "This Exam is already added in the list!";
         $_SESSION['success'] = false;
         header('Location: ' . BASE_ROOT.'exams-list.php');
     }
@@ -22,7 +22,7 @@ if ($data['type'] == 'Add' && $data['class_id']!='') {
         $_SESSION['success'] = true;
         header('Location: ' . BASE_ROOT.'exams-list.php');
     } else {
-        $_SESSION['Msg'] = "Something went wrong!";
+        $_SESSION['Msg'] = "This Exam is already added in the list!";
         $_SESSION['success'] = false;
         header('Location: ' . BASE_ROOT.'exams-list.php');
     }    

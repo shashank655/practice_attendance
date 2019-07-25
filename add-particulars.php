@@ -33,12 +33,12 @@ require_once 'includes/sidebar.php';
             <div class="page-header">
                 <div class="row">
                     <div class="col-lg-7 col-md-12 col-sm-12 col-12">
-                        <h5 class="text-uppercase">Add Particular</h5>
+                        <h5 class="text-uppercase">Add Discount Fields</h5>
                     </div>
                     <div class="col-lg-5 col-md-12 col-sm-12 col-12">
                         <ul class="list-inline breadcrumb float-right">
                             <li class="list-inline-item"><a href="dashboard.php">Home</a></li>
-                            <li class="list-inline-item"> Add Particular</li>
+                            <li class="list-inline-item"> Add Discount Fields</li>
                         </ul>
                     </div>
                 </div>
@@ -48,7 +48,7 @@ require_once 'includes/sidebar.php';
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card-box">
-                            <h4 class="card-title">Add Particular</h4>
+                            <h4 class="card-title">Add Discount Fields</h4>
                             <input type="hidden" name="type" value="<?php echo $feeId == '' ? 'Add' : 'Update'; ?>" />
                             <input type="hidden" name="feeId" value="<?php echo $feeId; ?>" />
                             <div class="form-group row ">

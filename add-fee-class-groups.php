@@ -3,8 +3,11 @@ require_once 'employee/class/dbclass.php';
 require_once 'employee/config/config.php'; 
 require_once 'employee/class/FeeClassGroup.php';
 require_once 'employee/class/Sections.php';
+require_once 'employee/class/ClassSections.php';
+$classes = new ClassSections;
 $fee_class_group = new FeeClassGroup();
 $sections = new Sections();
+$allClasses = $classes->getClassesLists();
 $allSections = $sections->getSectionsLists();
 $selectedSections = [];
 $feeId = (isset($_REQUEST['feeId'])) ? $_REQUEST['feeId'] : NULL; 
@@ -45,7 +48,7 @@ require_once 'includes/sidebar.php';
                             <input type="hidden" name="type" value="<?php echo $feeId == '' ? 'Add' : 'Update'; ?>" />
                             <input type="hidden" name="feeId" value="<?php echo $feeId; ?>" />
                             <div class="form-group row ">
-                                <label class="col-form-label col-md-2">Title</label>
+                                <label class="col-form-label col-md-2">Group Name</label>
                                 <div class="col-md-10">
                                     <input type="text" name="title" class="form-control" value="<?php
                                     if (isset($result[0]['title']))
@@ -56,17 +59,41 @@ require_once 'includes/sidebar.php';
                             <div class="form-group row ">
                                 <label class="col-form-label col-md-2">Classes</label>
                                 <div class="col-md-10">
-                                    <div class="checkbox">
-                                        <?php
-                                            foreach ($allSections as $key => $section) {
-                                        ?>
-                                        <label>
-                                            <input type="checkbox" value="<?= $section['id'] ?>" name="section_ids[]" <?= in_array($section['id'], $selectedSections) ? 'checked' : ''; ?>> <?= $section['class_name'].' '.$section['section_name'] ?>
-                                        </label> 
-                                        &nbsp; &nbsp;
-                                        <?php
-                                            }
-                                        ?>
+
+                                    <div class="table-responsive">
+                                        <table class="table-bordered">
+                                            <?php
+                                                foreach ($allClasses as $class) {
+                                            ?>
+                                            <tr>
+                                                <td> <?= $class['class_name']; ?> </td>
+                                                <td>
+                                                    <table>
+                                                        <?php
+                                                            foreach ($allSections as $key => $section) {
+                                                                if ( $class['id'] == $section['class_id']) {
+                                                        ?>
+                                                        <tr> 
+                                                            <td> 
+                                                                <div class="checkbox">
+                                                                    <label>
+                                                                        <input type="checkbox" value="<?= $section['id'] ?>" name="section_ids[]" <?= in_array($section['id'], $selectedSections) ? 'checked' : ''; ?>> <?= $section['section_name'] ?>
+                                                                    </label>  
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <?php
+                                                                }
+                                                            }
+                                                        ?>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                                }
+                                            ?>
+                                            
+                                        </table>
                                     </div>
                                 </div>
                             </div>

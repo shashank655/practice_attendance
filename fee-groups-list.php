@@ -15,12 +15,12 @@ require_once 'includes/sidebar.php';
 			<div class="page-header">
 					<div class="row">
 						<div class="col-lg-7 col-md-12 col-sm-12 col-12">
-							<h5 class="text-uppercase">Fee Groups</h5>
+							<h5 class="text-uppercase">Assign Fee</h5>
 						</div>
 						<div class="col-lg-5 col-md-12 col-sm-12 col-12">
 							<ul class="list-inline breadcrumb float-right">
 								<li class="list-inline-item"><a href="dashboard.php">Home</a></li>
-                                <li class="list-inline-item"> Fees Groups</li>
+                                <li class="list-inline-item"> Assign Fees</li>
 							</ul>
 						</div>
 					</div>
@@ -30,7 +30,7 @@ require_once 'includes/sidebar.php';
                       
                     </div>
                     <div class="col-sm-8 col-9 text-right m-b-20">
-                        <a href="add-fee-groups.php" class="btn btn-primary float-right btn-rounded"><i class="fa fa-plus"></i> Add Fee Group</a>
+                        <a href="add-fee-groups.php" class="btn btn-primary float-right btn-rounded"><i class="fa fa-plus"></i> Assign Fee</a>
                     </div>
                 </div>
 			<div class="content-page">

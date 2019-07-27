@@ -41,7 +41,7 @@ require_once 'includes/sidebar.php';
                                 <thead>
                                     <tr>
                                         <th style="min-width:50px;">S.No.</th>
-                                        <th style="min-width:50px;">Title</th>
+                                        <th style="min-width:50px;">Group Name</th>
                                         <th style="min-width:50px;">Classes/Sections</th>
                                         <th style="min-width:50px;">Created On</th>
                                         <th style="min-width:50px;">Action</th>

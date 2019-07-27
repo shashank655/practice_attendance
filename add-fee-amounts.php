@@ -18,12 +18,12 @@ require_once 'includes/sidebar.php';
             <div class="page-header">
                 <div class="row">
                     <div class="col-lg-7 col-md-12 col-sm-12 col-12">
-                        <h5 class="text-uppercase">Add Fee Amount</h5>
+                        <h5 class="text-uppercase">Create Fees Structure</h5>
                     </div>
                     <div class="col-lg-5 col-md-12 col-sm-12 col-12">
                         <ul class="list-inline breadcrumb float-right">
                             <li class="list-inline-item"><a href="dashboard.php">Home</a></li>
-                            <li class="list-inline-item"> Add Fee Amount</li>
+                            <li class="list-inline-item"> Create Fees Structure</li>
                         </ul>
                     </div>
                 </div>
@@ -33,27 +33,34 @@ require_once 'includes/sidebar.php';
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card-box">
-                            <h4 class="card-title">Add Fee Amount</h4>
+                            <h4 class="card-title">Create Fees Structure</h4>
                             <input type="hidden" name="type" value="<?php echo $feeAmountId == '' ? 'Add' : 'Update'; ?>" />
                             <input type="hidden" name="feeAmountId" value="<?php echo $feeAmountId; ?>" />
-                            <div class="form-group row ">
-                                <label class="col-form-label col-md-2">Title</label>
-                                <div class="col-md-10">
-                                    <input type="text" name="title" class="form-control" value="<?php
-                                    if (isset($result[0]['title']))
-                                        echo htmlspecialchars($result[0]['title']);
-                                    ?>">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row ">
+                                        <label class="col-form-label col-md-2">Fee Type</label>
+                                        <div class="col-md-10">
+                                            <input type="text" name="title" class="form-control" value="<?php
+                                            if (isset($result[0]['title']))
+                                                echo htmlspecialchars($result[0]['title']);
+                                            ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row ">
+                                        <label class="col-form-label col-md-2">Amount</label>
+                                        <div class="col-md-10">
+                                            <input type="text" name="amount" class="form-control" value="<?php
+                                            if (isset($result[0]['amount']))
+                                                echo htmlspecialchars($result[0]['amount']);
+                                            ?>">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group row ">
-                                <label class="col-form-label col-md-2">Amount</label>
-                                <div class="col-md-10">
-                                    <input type="text" name="amount" class="form-control" value="<?php
-                                    if (isset($result[0]['amount']))
-                                        echo htmlspecialchars($result[0]['amount']);
-                                    ?>">
-                                </div>
-                            </div>
+                            
                             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
 								<div class="form-group text-center custom-mt-form-group">
 									<button class="btn btn-secondary mr-2" type="submit">Submit</button>

@@ -54,12 +54,12 @@ require_once 'includes/sidebar.php';
             <div class="page-header">
                 <div class="row">
                     <div class="col-lg-7 col-md-12 col-sm-12 col-12">
-                        <h5 class="text-uppercase">Add Fee Group</h5>
+                        <h5 class="text-uppercase">Assign Fee</h5>
                     </div>
                     <div class="col-lg-5 col-md-12 col-sm-12 col-12">
                         <ul class="list-inline breadcrumb float-right">
                             <li class="list-inline-item"><a href="dashboard.php">Home</a></li>
-                            <li class="list-inline-item"> Add Fee Group</li>
+                            <li class="list-inline-item"> Assign Fee</li>
                         </ul>
                     </div>
                 </div>
@@ -68,7 +68,7 @@ require_once 'includes/sidebar.php';
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card-box">
-                            <h4 class="card-title">Add Fee Group</h4><br>
+                            <h4 class="card-title">Assign Fee Class or Group Wise</h4><br>
                             <ul class="nav nav-tabs nav-justified">
                                 <?php if ($tab1) { ?>
                                 <li class="nav-item"><a class="nav-link active" href="#basictab1" data-toggle="tab">Class Section Wise</a></li>
@@ -153,7 +153,7 @@ require_once 'includes/sidebar.php';
                                                                 <thead>
                                                                     <tr>
                                                                         <th>#</th>
-                                                                        <th>Fee Amount Title</th>
+                                                                        <th>Fee Type</th>
                                                                         <th>Amount</th>
                                                                         <th>Action</th>
                                                                     </tr>
@@ -255,7 +255,7 @@ require_once 'includes/sidebar.php';
                                                                 <thead>
                                                                     <tr>
                                                                         <th>#</th>
-                                                                        <th>Fee Amount Title</th>
+                                                                        <th>Fee Type</th>
                                                                         <th>Amount</th>
                                                                         <th>Action</th>
                                                                     </tr>

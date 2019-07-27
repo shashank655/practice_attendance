@@ -15,12 +15,12 @@ require_once 'includes/sidebar.php';
 			<div class="page-header">
 					<div class="row">
 						<div class="col-lg-7 col-md-12 col-sm-12 col-12">
-							<h5 class="text-uppercase">Fee Amounts</h5>
+							<h5 class="text-uppercase">Create Fees Structure</h5>
 						</div>
 						<div class="col-lg-5 col-md-12 col-sm-12 col-12">
 							<ul class="list-inline breadcrumb float-right">
 								<li class="list-inline-item"><a href="dashboard.php">Home</a></li>
-                                <li class="list-inline-item"> Fee Amounts List</li>
+                                <li class="list-inline-item"> Create Fees Structure List</li>
 							</ul>
 						</div>
 					</div>
@@ -30,7 +30,7 @@ require_once 'includes/sidebar.php';
                       
                     </div>
                     <div class="col-sm-8 col-9 text-right m-b-20">
-                        <a href="add-fee-amounts.php" class="btn btn-primary float-right btn-rounded"><i class="fa fa-plus"></i> Add Fee Amount</a>
+                        <a href="add-fee-amounts.php" class="btn btn-primary float-right btn-rounded"><i class="fa fa-plus"></i> Create Fees Structure</a>
                     </div>
                 </div>
 			<div class="content-page">
@@ -41,7 +41,7 @@ require_once 'includes/sidebar.php';
                                 <thead>
                                     <tr>
                                         <th style="min-width:50px;">S.No.</th>
-                                        <th style="min-width:50px;">Title</th>
+                                        <th style="min-width:50px;">Fee Type</th>
                                         <th style="min-width:50px;">Amount</th>
                                         <th style="min-width:50px;">Created On</th>
                                         <th style="min-width:50px;">Action</th>

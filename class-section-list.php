@@ -37,12 +37,12 @@ require_once 'includes/sidebar.php';
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
-                            <table class="table table-striped custom-table datatable">
+                            <table class="table custom-table datatable">
                                 <thead>
                                     <tr>
                                         <th style="min-width:50px;">S.No.</th>
                                         <th style="min-width:50px;">Class Name</th>
-                                        <th style="min-width:50px;">Sections</th>
+                                        <th colspan="2" style="min-width:50px;">Sections</th>
                                     </tr>
                                 </thead>
                                 <tbody>

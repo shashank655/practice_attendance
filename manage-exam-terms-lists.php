@@ -37,7 +37,7 @@ require_once 'includes/sidebar.php';
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
-                            <table class="table table-striped custom-table datatable">
+                            <table class="table custom-table">
                                 <thead>
                                     <tr>
                                         <th style="min-width:50px;">S.No.</th>
@@ -45,6 +45,7 @@ require_once 'includes/sidebar.php';
                                         <th style="min-width:50px;">Session</th>
                                         <th style="min-width:50px;">Start Date</th>
                                         <th style="min-width:50px;">End Date</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>

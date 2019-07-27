@@ -49,6 +49,8 @@ require_once 'includes/sidebar.php';
                                                     <th style="min-width:74px;">Last Name</th>
                                                     <th style="min-width:50px;">Present</th>
                                                     <th style="min-width:50px;">Absent</th>
+                                                    <th style="min-width:50px;">Half Day</th>
+                                                    <th style="min-width:50px;">Leave</th>
                                                     <th>Date</th>
                                                 </tr>
                                             </thead>
@@ -74,6 +76,18 @@ require_once 'includes/sidebar.php';
                                                     <td>
                                                         <label class="custom_checkbox red">
                                                           <input type="radio" name="attendance[<?php echo $key?>]" value="A">
+                                                          <span class="checkmark"></span>
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <label class="custom_checkbox">
+                                                          <input type="radio" name="" value="P">
+                                                          <span class="checkmark"></span>
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <label class="custom_checkbox">
+                                                          <input type="radio" name="" value="P">
                                                           <span class="checkmark"></span>
                                                         </label>
                                                     </td>

@@ -52,11 +52,14 @@ require_once 'includes/sidebar.php';
                 <li class="list-inline-item"><a href="dashboard.php">Home</a></li>
                 <li class="list-inline-item"> Student Marks</li>
             </ul>
-        </div>
+        </div>       
 
-        <?php if(!empty($get_total_class_students)) { ?>
-        <div class="contact-cat col-sm-4 col-lg-3">
-            <div class="roles-menu">
+    </div>
+</div>
+<div class="row">
+    <?php if(!empty($get_total_class_students)) { ?>
+        <div class="contact-cat col-sm-12 col-lg-3 pr-1">
+            <div class="roles-menu m-0 h-100">
                 <ul>
                     <?php foreach ($get_total_class_students as $key => $value) { ?>
                     <li class=""><a href="javascript:void();" studentId="<?php echo $value['id'] ?> " class="student_id" /><?php echo $value['first_name'].' '.$value['last_name']; ?></a></li>
@@ -64,37 +67,46 @@ require_once 'includes/sidebar.php';
                 </ul>
             </div>
         </div>
-        <?php } ?>
+    <?php } ?>
+    <div class="col-sm-12 col-lg-9">
+    <div class="content-page">
+    <div class="d-flex">
+       <div class="col">
+            <ul>
+                <li>Year Session: <?php echo $examTermData[0]['year_session']?></li>
+                <li>Exams start date: <?php echo $examTermData[0]['start_date']?></li>
+            </ul>
+       </div>
+        <div class="col">
+            <ul>
+                <li>Exams end date: <?php echo $examTermData[0]['end_date']?></li>
+                <li>Exam Type: <?php echo $examTermData[0]['exam_type']?></li>
+            </ul>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form id="addStudentMarks" action="employee/process/processStudentsMarks.php" method="post" novalidate="novalidate">
+                    <div class="table-responsive">
+                        <table class="table table-bordered m-b-0">
+                            <thead>
+                                <tr>
 
-    </div>
-</div>
-<div class="content-page">
-    <ul>
-        <li>Year Session: <?php echo $examTermData[0]['year_session']?></li>
-        <li>Exams start date: <?php echo $examTermData[0]['start_date']?></li>
-        <li>Exams end date: <?php echo $examTermData[0]['end_date']?></li>
-        <li>Exam Type: <?php echo $examTermData[0]['exam_type']?></li>
-    </ul>
-    <div class="row">
-        <div class="col-md-12">
-            <form id="addStudentMarks" action="employee/process/processStudentsMarks.php" method="post" novalidate="novalidate">
-                <div class="table-responsive">
-                    <table class="table table-bordered m-b-0">
-                        <thead>
-                            <tr>
-
-                                <th style="min-width:50px;">Subjects Name</th>
-                                <th style="min-width:50px;">Maximum Marks</th>
-                                <th style="min-width:50px;">Marks obtain</th>
-                            </tr>
-                        </thead>
-                        <tbody class="student-data-show">
-                
-                        </tbody>
-                    </table>
+                                    <th style="min-width:50px;">Subjects Name</th>
+                                    <th style="min-width:50px;">Maximum Marks</th>
+                                    <th style="min-width:50px;">Marks obtain</th>
+                                </tr>
+                            </thead>
+                            <tbody class="student-data-show">
+                    
+                            </tbody>
+                        </table>
+                    </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </div>
 <?php require_once 'includes/footer.php'; ?>
@@ -131,6 +143,8 @@ require_once 'includes/sidebar.php';
                     }
                 }
             });
+            $(this).parent().addClass('active');
+            $(this).parent().siblings().removeClass('active');
         });
 
     });

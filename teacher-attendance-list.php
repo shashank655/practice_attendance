@@ -44,9 +44,17 @@ require_once 'includes/sidebar.php';
 								<li class="list-inline-item"><a href="dashboard.php">Home</a></li>
                                 <li class="list-inline-item"> Attendance List</li>
 							</ul>
+
 						</div>
 					</div>
 				</div>
+                <div class="row">
+                <div class="col-sm-4 col-3">
+                    </div>
+                <div class="col-sm-8 col-9 text-right m-b-20">
+                    <a href="" class="btn btn-primary btn-rounded"></i>Upload CSV</a>
+                </div>
+                </div>
 			<div class="content-page">
                 <form id="searchAttendance" action="teacher-attendance-list.php" method="get" novalidate="novalidate">
                  <div class="row">

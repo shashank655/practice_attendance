@@ -54,12 +54,6 @@
                         <li class="<?php if($currentURL =='exams-list.php' || $currentURL =='add-exams.php'){echo 'active';}?>">
                             <a href="exams-list.php"><i class="fa fa-table" aria-hidden="true"></i>Exams List</a>
                         </li>
-                        <li class="submenu">
-                            <a href="#"><i class="fa fa-money" aria-hidden="true"></i><span> Payroll </span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled" style="display: none;">
-                                <li ><a class="<?php if($currentURL =='employee-salary.php' || $currentURL =='view-employee-salary.php' || $currentURL =='add-employee-salary.php'){echo 'active';}?>" href="employee-salary.php"> Employee Salary </a></li>
-                            </ul>
-                        </li>
                         <?php } ?>
                         <li class="<?php if($currentURL =='calender.php'){echo 'active';}?>">
                             <a href="calender.php"><i class="fa fa-calendar" aria-hidden="true"></i> Calender</a>
@@ -119,21 +113,32 @@
                             </ul>
                           </li>
                           <li class="submenu">
+                            <a href="#"><i class="fa fa-table" aria-hidden="true"></i><span> HR </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled" style="display: none;">
+                              <li ><a class="<?php if($currentURL =='admission-list.php' || $currentURL =='new-admission.php'){echo 'active';}?>" href="admission-list.php"> Admission Form </a></li>
+                            </ul>
+                          </li>
+                          <li class="submenu">
                             <a href="#"><i class="fa fa-file" aria-hidden="true"></i><span> Accounts </span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">
                               <li ><a class="<?php if($currentURL =='fee-amounts-list.php' || $currentURL =='add-fee-amounts.php'){echo 'active';}?>" href="fee-amounts-list.php"> Create Fees Structure </a></li>
                               <li ><a class="<?php if($currentURL =='fee-class-groups-list.php' || $currentURL =='add-fee-class-groups.php'){echo 'active';}?>" href="fee-class-groups-list.php"> Fee Class Groups </a></li>
                               <li ><a class="<?php if($currentURL =='fee-groups-list.php' || $currentURL =='add-fee-groups.php'){echo 'active';}?>" href="fee-groups-list.php"> Assign Fees </a></li>
                               <li ><a class="<?php if($currentURL =='particulars-list.php' || $currentURL =='add-particulars.php'){echo 'active';}?>" href="particulars-list.php"> Discounts </a></li>
-                              <li ><a class="<?php if($currentURL =='admission-list.php' || $currentURL =='new-admission.php'){echo 'active';}?>" href="admission-list.php"> Admission Form </a></li>
                               <li ><a class="<?php if($currentURL =='fee-collection-list.php' || $currentURL =='add-fee-collection.php'){echo 'active';}?>" href="fee-collection-list.php"> Fee Collection </a></li>
-                                <li class="submenu">
-                                  <a href="#"><span> Expenses </span> <span class="menu-arrow"></span> </a>
-                                  <ul>
-                                      <li><a class="<?php if($currentURL =='expense-types-list.php' || $currentURL =='add-expense-types.php'){echo 'active';}?>" href="expense-types-list.php"> Expense Types </a></li>
-                                      <li><a class="<?php if($currentURL =='expenses-list.php' || $currentURL =='add-expenses.php'){echo 'active';}?>" href="expenses-list.php"> Expenses List </a></li>
+                              <li class="submenu">
+                                  <a href="#"><span> Payroll </span> <span class="menu-arrow"></span></a>
+                                  <ul class="list-unstyled" style="display: none;">
+                                      <li ><a class="<?php if($currentURL =='employee-salary.php' || $currentURL =='view-employee-salary.php' || $currentURL =='add-employee-salary.php'){echo 'active';}?>" href="employee-salary.php"> Employee Salary </a></li>
                                   </ul>
-                                </li>
+                              </li>
+                              <li class="submenu">
+                                <a href="#"><span> Expenses </span> <span class="menu-arrow"></span> </a>
+                                <ul>
+                                  <li><a class="<?php if($currentURL =='expense-types-list.php' || $currentURL =='add-expense-types.php'){echo 'active';}?>" href="expense-types-list.php"> Expense Types </a></li>
+                                  <li><a class="<?php if($currentURL =='expenses-list.php' || $currentURL =='add-expenses.php'){echo 'active';}?>" href="expenses-list.php"> Expenses List </a></li>
+                                </ul>
+                              </li>
                             </ul>
                           </li>
                             <li>

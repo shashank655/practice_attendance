@@ -110,6 +110,7 @@
                               <li ><a class="<?php if($currentURL =='roles-list.php' || $currentURL =='add-roles.php'){echo 'active';}?>" href="roles-list.php"> Roles </a></li>
                               <li ><a class="<?php if($currentURL =='permissions-list.php'){echo 'active';}?>" href="permissions-list.php"> Permission </a></li>
                               <li ><a class="<?php if($currentURL == 'users-list.php' || $currentURL == 'edit-users.php'){echo 'active';}?>" href="users-list.php"> Users </a></li>
+                              <li><a class="<?php if($currentURL =='teachers.php' || $currentURL =='assign-teacher.php'){echo 'active';}?>" href="teachers.php">Teachers</a></li>
                             </ul>
                           </li>
                           <li class="submenu">
@@ -141,9 +142,6 @@
                               </li>
                             </ul>
                           </li>
-                            <li>
-                                <a class="<?php if($currentURL =='teachers.php' || $currentURL =='assign-teacher.php'){echo 'active';}?>" href="teachers.php"><i class="fa fa-table" aria-hidden="true"></i>Teachers</a>
-                            </li>
                           <li class="<?php if($currentURL =='gallery.php'){echo 'active';}?>">
                               <a href="gallery.php"><i class="fa fa-table" aria-hidden="true"></i>Gallery</a>
                           </li>

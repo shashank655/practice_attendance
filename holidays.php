@@ -132,7 +132,8 @@ require_once 'includes/sidebar.php';
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form id="sending_sms" action="employee/process/processSendSMS.php" method="post" novalidate="novalidate">
+                         <input type="hidden" name="type" value="send_sms" />
                             <div class="form-group custom-mt-form-group">
                                 <input type="text" name="holiday_name" value="" />
                                 <label class="control-label">Holiday Name <span class="text-danger">*</span></label><i class="bar"></i>
@@ -140,6 +141,10 @@ require_once 'includes/sidebar.php';
                             <div class="form-group custom-mt-form-group">
                                 <input class="form-control floating datetimepicker" type="text" name="holiday_date" value="" >
                                 <label class="control-label">Holiday Date <span class="text-danger">*</span></label><i class="bar"></i>
+                            </div>
+                            <div class="form-group custom-mt-form-group">
+                                <input class="form-control floating" type="text" name="phone_number" value="" >
+                                <label class="control-label">Phone Number <span class="text-danger">*</span></label><i class="bar"></i>
                             </div>
                             <div class="m-t-20 text-center">
                                 <button class="btn btn-primary btn-lg">Send SMS</button>
@@ -186,6 +191,21 @@ require_once 'includes/sidebar.php';
                     required:true
                 },                
                 holiday_date:{
+                    required:true
+                }
+            }
+        });
+
+        $("#sending_sms").validate({
+            ignore: "input[type='text']:hidden",
+            rules:{
+                holiday_name:{
+                    required:true
+                },
+                holiday_date:{
+                    required:true
+                },
+                phone_number:{
                     required:true
                 }
             }

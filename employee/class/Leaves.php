@@ -3,8 +3,8 @@ class Leaves extends MySQLCN {
 
     function addLeaveTypes($data) {
         $qry = 'INSERT INTO `leave_types` 
-            (`leave_type`,`days`) 
-            VALUES ( "'. $data['leave_type'] . '" , "'. $data['days'] . '")';
+            (`leave_type`,`days`,`paid_type`,`paid_leave_amount`) 
+            VALUES ( "'. $data['leave_type'] . '" , "'. $data['days'] . '" , "'. $data['paid_type'] . '" , "'. $data['paid_leave_amount'] . '")';
         $res = $this->insert($qry);
         if ($res) {
             return true;
@@ -40,7 +40,9 @@ class Leaves extends MySQLCN {
     function leaveInfoUpdate($data) {
         $qry = "UPDATE `leave_types` SET
               `leave_type` = '{$data['leave_type']}',
-              `days` = '{$data['days']}'
+              `days` = '{$data['days']}',
+              `paid_type` = '{$data['paid_type']}',
+              `paid_leave_amount` = '{$data['paid_leave_amount']}'
                WHERE id = '{$data['leaveId']}'";
         $res = $this->updateData($qry);
         if ($res) {

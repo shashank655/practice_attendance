@@ -3,8 +3,12 @@ require_once 'employee/class/dbclass.php';
 require_once 'employee/config/config.php'; 
 require_once 'employee/class/Exams.php';
 require_once 'employee/class/CommonFunction.php'; 
-$common_function=new CommonFunction(); 
-$resultClasses = $common_function->getAllClassesName(); 
+require_once 'employee/class/ExamType.php'; 
+$common_function=new CommonFunction();
+$exam_type=new ExamType(); 
+$resultClasses = $common_function->getAllClassesName();
+$resultSubjects=$common_function->getAllSubjects(); 
+$examTypeList = $exam_type->getExamTypeLists();
 $exams=new Exams(); 
 $examId = (isset($_REQUEST['examId'])) ? $_REQUEST['examId'] : NULL; 
 if ($examId != NULL) { $result = $exams->getExamInfo($examId); 
@@ -37,6 +41,25 @@ require_once 'includes/sidebar.php';
                             <form id="addExams" action="employee/process/processExams.php" method="post" novalidate="novalidate">
                             <input type="hidden" name="type" value="<?php echo $examId == '' ? 'Add' : 'Update'; ?>" />
                             <input type="hidden" name="examId" value="<?php echo $examId; ?>" />
+                            <div class="form-group row">
+                                    <label class="col-form-label col-md-2">Select Exam Type</label>
+                                    <div class="col-md-10">
+                                        <select id="exam_type_id" class="form-control" name="exam_type_id" onchange="getExamTerm(this.value);">
+                                            <option value="">Exam Type</option>
+                                            <?php for ($i=0 ; $i < count($examTypeList); $i++) : ?>
+                                                <option <?php if (isset($result[0]['exam_type_id'])) { if ($result[0]['exam_type_id']==$examTypeList[$i]['id']) { echo 'selected'; } } ?> value="<?php echo $examTypeList[$i][ 'id']; ?>"><?php echo $examTypeList[$i][ 'exam_type']; ?></option>
+                                            <?php endfor; ?>    
+                                            </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-form-label col-md-2">Select Exam Term</label>
+                                    <div class="col-md-10">
+                                        <select class="form-control" name="exam_term_id" id="exam_term_id">
+                                            <option value='' selected="" disabled="">Select Exam Term</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-2">Class</label>
                                     <div class="col-md-10">
@@ -66,12 +89,26 @@ require_once 'includes/sidebar.php';
                                     </div>
                                 </div>
                                 <div class="form-group row ">
+                                    <label class="col-form-label col-md-2">Time</label>
+                                    <div class="col-md-10">
+                                        <input type="text" name="time_of_exam" class="form-control timepicker" value="<?php
+                                                if (isset($result[0]['time_of_exam']))
+                                                echo htmlspecialchars($result[0]['time_of_exam']);
+                                                ?>">
+                                    </div>
+                                </div>
+                               <div class="form-group row">
                                     <label class="col-form-label col-md-2">Exam Name</label>
                                     <div class="col-md-10">
-                                        <input type="text" name="exam_name" class="form-control" value="<?php
-                                                if (isset($result[0]['exam_name']))
-                                                echo htmlspecialchars($result[0]['exam_name']);
-                                                ?>">
+                                        <select name="exam_name" class="form-control" id="exam_name">
+                                                <option selected="" value="">Select Exam</option>
+                                                <?php for ($i=0 ; $i < count($resultSubjects); $i++) : ?>
+                                                <option <?php if (isset($result[0][ 'exam_name'])) { if ($result[0][ 'exam_name']==$resultSubjects[$i][ 'id']) { echo 'selected'; } } ?> value="
+                                                    <?php echo $resultSubjects[$i][ 'id']; ?>">
+                                                    <?php echo $resultSubjects[$i][ 'subject_name']; ?>
+                                                </option>
+                                                <?php endfor; ?>
+                                            </select>
                                     </div>
                                 </div>
 
@@ -95,6 +132,14 @@ require_once 'includes/sidebar.php';
         $("#addExams").validate({
             ignore: "input[type='text']:hidden",
             rules:{
+                exam_type_id:{
+                    required:true,
+                    dropdownValidation:true
+                },
+                exam_term_id:{
+                    required:true,
+                    dropdownValidation:true
+                },
                 class_id:{
                     required:true,
                     dropdownValidation:true
@@ -105,9 +150,13 @@ require_once 'includes/sidebar.php';
                 },
                 date_of_exam:{
                     required:true
-                },                
-                exam_name:{
+                },
+                time_of_exam:{
                     required:true
+                },                 
+                exam_name:{
+                    required:true,
+                    dropdownValidation:true
                 }
             }
         });
@@ -115,6 +164,9 @@ require_once 'includes/sidebar.php';
     <?php  if($examId!=''){ ?>        
         section_id='<?php echo $result[0]['section_id']; ?>';
         getSections('<?php echo $result[0]['class_id']; ?>');
+
+        exam_term_id='<?php echo $result[0]['exam_term_id']; ?>';
+        getExamTerm('<?php echo $result[0]['exam_type_id']; ?>');
      <?php }?>
 
     function getSections(classID){
@@ -140,6 +192,34 @@ require_once 'includes/sidebar.php';
                     }                    
                 }else{
                     $("#section_id").html("<option value='' selected >No Section Found</option>");
+                }
+            }
+        });
+    }
+
+    function getExamTerm(examTypeID){
+        $.ajax({
+            type: "POST",
+            url: "employee/process/processExamType.php",
+            data:{type:'getExamTerm',examTypeID:examTypeID},
+            beforeSend : function () {
+                //$('#wait').html("Wait for checking");
+            },
+            success:function(data){                
+                
+                data = $.parseJSON(data);         
+                if(data.length > 0){
+                    $("#exam_term_id").html("<option value=''>Select Exam Term</option>");
+                    for(var i=0;i<data.length;i++){        
+                       var option="<option value='"+data[i].id+"'";
+                            if(data[i].id==exam_term_id){
+                               option+=" selected";
+                            }
+                           option+=" >"+'Session: '+data[i].year_session+', Start Date: '+data[i].start_date+', End Date: '+data[i].end_date+"</option>"
+                        $("#exam_term_id").append(option);
+                    }                    
+                }else{
+                    $("#exam_term_id").html("<option value='' selected >No result Found</option>");
                 }
             }
         });

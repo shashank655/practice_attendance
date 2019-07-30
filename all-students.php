@@ -43,6 +43,7 @@ require_once 'includes/sidebar.php';
                     <div class="col-sm-8 col-9 text-right m-b-20">
                         <a href="add-student.php" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Student</a>
                         <a href="#" class="btn btn-primary btn-rounded float-right" data-toggle="modal" data-target="#student_csv_report"><i class="fa fa-plus"></i> Download CSV Report</a>
+                        <a href="" class="btn btn-primary btn-rounded float-right"></i>Upload CSV</a>
                         <div class="view-icons">
                             <a href="all-students.php" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
                         </div>

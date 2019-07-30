@@ -48,7 +48,7 @@ require_once 'includes/sidebar.php';
                                         <div class="contact-box">
                                         <div class="row">
                                             <div class="contact-cat col-sm-4 col-lg-3">
-                                                <div class="roles-menu">
+                                                <div class="roles-menu m-0">
                                                     <ul>
                                                         <li class="<?php if($search ==''){echo 'active';}?>"><a href="contacts.php">Teachers</a></li>
                                                         <li class="<?php if($search =='students'){echo 'active';}?>"><a href="contacts.php?search=students">students</a></li>

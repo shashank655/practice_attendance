@@ -5,10 +5,14 @@ require_once 'employee/class/CommonFunction.php';
 require_once 'employee/class/Exams.php';
 require_once 'employee/class/Holidays.php';
 require_once 'employee/class/Student.php';
+require_once 'employee/class/GlobalNews.php';
 $common_function=new CommonFunction(); 
 $exams=new Exams();
 $student=new Student();
 $holidays=new Holidays();
+$global_news = new GlobalNews;
+$get_news=$global_news->getGlobalNews();
+
 $class_id = (isset($_REQUEST['class_id'])) ? $_REQUEST['class_id'] : NULL;
 $get_class_id = $class_id;
 $section_id = (isset($_REQUEST['section_id'])) ? $_REQUEST['section_id'] : NULL;
@@ -26,14 +30,21 @@ require_once 'includes/header.php';
 require_once 'includes/sidebar.php';
 ?>
 <div class="page-wrapper"> <!-- content -->
+<?php if(!empty($get_news)) { ?>
+<div class="animatedText">
+    <marquee class="marquee" direction="left">
+    <?php echo $get_news[0]['news']; ?>
+    </marquee>
+    </div>
+<?php } ?>
             <div class="content container-fluid">
                <div class="row">
                     <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                         <div class="dash-widget dash-widget5">
                             <span class="dash-widget-icon bg-primary"><i class="fa fa-users" aria-hidden="true"></i></span>
                             <div class="dash-widget-info">
-                                <h3><?php echo $totalStudent[0][0]; ?></h3>
-                                <span>Students</span>
+                                <h3>Rs. 500000</h3>
+                                <span>Total Earning</span>
                             </div>
                         </div>
                     </div>
@@ -41,46 +52,48 @@ require_once 'includes/sidebar.php';
                         <div class="dash-widget dash-widget5">
                             <span class="dash-widget-icon bg-info"><i class="fa fa-user" aria-hidden="true"></i></span>
                             <div class="dash-widget-info">
-                                <h3><?php echo $totalTeacher[0][0]; ?></h3>
-                                <span>Teachers</span>
+                                <h3>Rs. 80000</h3>
+                                <span>Total Expenses</span>
                             </div>
                         </div>
                     </div>
-                   <!--  <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-                        <div class="dash-widget dash-widget5">
-                            <span class="dash-widget-icon bg-warning"><i class="fa fa-user-plus" aria-hidden="true"></i></span>
-                            <div class="dash-widget-info">
-                                <h3><?php //echo $totalStudent[0][0]; ?></h3>
-                                <span>Parents</span>
-                            </div>
-                        </div>
-                    </div> -->
-                    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-                        <div class="dash-widget dash-widget5">
-                            <span class="dash-widget-icon bg-success"><i class="fa fa-money" aria-hidden="true"></i></span>
-                            <div class="dash-widget-info">
-                                <h3>1000</h3>
-                                <span>Total Absentees</span>
-                            </div>
-                        </div>
-                    </div>
-                    <?php if( ($_SESSION['user_role'] != '1')) { ?>
+                    <?php if( ($_SESSION['user_role'] == '1')) { ?>
                      <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                         <div class="dash-widget dash-widget5">
                             <span class="dash-widget-icon bg-success"><i class="fa fa-money" aria-hidden="true"></i></span>
                             <div class="dash-widget-info">
-                                <h3>news</h3>
-                                <span>Global News</span>
+                                <h3>Global News</h3>
+                                <span><a href="#" data-toggle="modal" data-target="#global_news">Update news</a></span>
                             </div>
                         </div>
                     </div>
-                    <?php } ?>
-                    <?php if( ($_SESSION['user_role'] == '1')) { ?>
                     <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                         <div class="dash-widget dash-widget5">
                             <span class="dash-widget-icon bg-success"><i class="fa fa-user" aria-hidden="true"></i></span>
                             <div class="dash-widget-info">
-                            <span><a href="#" data-toggle="modal" data-target="#assign_teacher_password">Teacher Global Password</a></span>
+                            <h3>***</h3>
+                            <span><a href="#" data-toggle="modal" data-target="#assign_teacher_password">Create Teacher's Password</a></span>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+
+                <?php if( ($_SESSION['user_role'] == '2')) { ?>
+                     <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                        <div class="dash-widget dash-widget5">
+                            <span class="dash-widget-icon bg-success"><i class="fa fa-money" aria-hidden="true"></i></span>
+                            <div class="dash-widget-info">
+                                <h3>My Attendance</h3>
+                                <span>17</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                        <div class="dash-widget dash-widget5">
+                            <span class="dash-widget-icon bg-success"><i class="fa fa-user" aria-hidden="true"></i></span>
+                            <div class="dash-widget-info">
+                            <h3>Students Attendance</h3>
+                            <span>19</span>
                             </div>
                         </div>
                     </div>
@@ -310,6 +323,30 @@ require_once 'includes/sidebar.php';
 			</div>
 		</div>
 	</div>
+    <div id="global_news" class="modal" role="dialog">
+            <div class="modal-dialog">
+                
+                <div class="modal-content modal-md">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Update news</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="adding-news" action="employee/process/processAddNews.php" method="post" novalidate="novalidate">
+                            <input type="hidden" name="type" value="assign_global_news" />
+                            <div class="form-group custom-mt-form-group">
+                                <input type="text" id="global_news" name="global_news" value="" />
+                                <label class="control-label">Enter News <span class="text-danger">*</span></label><i class="bar"></i>
+                            </div>
+                            <div class="m-t-20 text-center">
+                                <button type="submit" class="btn btn-primary btn-lg">Create</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 	<div id="assign_teacher_password" class="modal" role="dialog">
             <div class="modal-dialog">
 				
@@ -388,6 +425,15 @@ require_once 'includes/footer.php';
                 repeat_password:{
                     required:true,
                     equalTo:"#password"
+                }
+            }
+        });
+
+        $("#adding-news").validate({
+            ignore: "input[type='text']:hidden",
+            rules:{
+                global_news:{
+                    required:true
                 }
             }
         });

@@ -10,14 +10,14 @@
                         </li>
                         <?php if($_SESSION['user_role'] == '1' ) { ?>
 						<li class="submenu">
-                            <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Teachers</span> <span class="menu-arrow"></span></a>
+                            <a href="#"><i class="fa fa-users" aria-hidden="true"></i> <span> Teachers Listing</span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">
                                 <li><a class="<?php if($currentURL =='all-teachers.php' || $currentURL == 'teacher-profile.php'){echo 'active';}?>" href="all-teachers.php">All Teachers</a></li>
                                 <li><a class="<?php if($currentURL =='add-teacher.php'){echo 'active';}?>" href="add-teacher.php">Add Teacher</a></li>
                             </ul>
                         </li>
                         <li class="submenu">
-                            <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Students</span> <span class="menu-arrow"></span></a>
+                            <a href="#"><i class="fa fa-users" aria-hidden="true"></i> <span> Students Listing</span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">
                                 <li><a class="<?php if($currentURL =='all-students.php' || $currentURL == 'student-profile.php'){echo 'active';}?>" href="all-students.php">All Students</a></li>
                                 <li><a class="<?php if($currentURL =='add-student.php'){echo 'active';}?>" class="" href="add-student.php">Add Student</a></li>
@@ -26,123 +26,158 @@
                         <?php } ?>
                         <?php if($_SESSION['user_role'] == '1' ) { ?>
                         <li class="submenu">
-                            <a href="#"><i class="fa fa-table" aria-hidden="true"></i> <span> Classes & Sections</span> <span class="menu-arrow"></span></a>
+                            <a href="#"><i class="fa fa-building" aria-hidden="true"></i> <span> Classes & Sections</span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">
                                 <li><a class="<?php if($currentURL =='class-section-list.php'){echo 'active';}?>" href="class-section-list.php">Classes List</a></li>
                                 <li><a class="<?php if($currentURL =='class-section.php'){echo 'active';}?>" class="" href="class-section.php">Add Classes</a></li>
                             </ul>
                         </li>
                         <li class="submenu">
-                            <a href="#"><i class="fa fa-table" aria-hidden="true"></i> <span> Subjects</span> <span class="menu-arrow"></span></a>
+                            <a href="#"><i class="fa fa-book" aria-hidden="true"></i> <span> Subjects</span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">
                                 <li><a class="<?php if($currentURL =='subject-lists.php'){echo 'active';}?>" href="subject-lists.php">Subjects List</a></li>
                                 <li><a class="<?php if($currentURL =='add-subjects.php'){echo 'active';}?>" class="" href="add-subjects.php">Add Subjects</a></li>
+
                             </ul>
                         </li>
-                        <li class="<?php if($currentURL =='holidays.php'){echo 'active';}?>">
-                            <a href="holidays.php"><i class="fa fa-tasks" aria-hidden="true"></i> Holidays</a>
-                        </li>
-                        <li class="<?php if($currentURL =='events.php'){echo 'active';}?>">
-                            <a href="events.php"><i class="fa fa-calendar" aria-hidden="true"></i> Events</a>
-                        </li>
-                        <li class="<?php if($currentURL =='leaves-types.php' || $currentURL =='add-leaves-type.php'){echo 'active';}?>">
-                            <a href="leaves-types.php"><i class="fa fa-table" aria-hidden="true"></i>Add Leaves Types</a>
-                        </li>
-                        <li class="<?php if($currentURL =='leave-requests-list.php' || $currentURL =='view-leave-requests.php'){echo 'active';}?>">
-                            <a href="leave-requests-list.php"><i class="fa fa-table" aria-hidden="true"></i>Leave Requests List</a>
-                        </li>
-                        <li class="<?php if($currentURL =='exams-list.php' || $currentURL =='add-exams.php'){echo 'active';}?>">
-                            <a href="exams-list.php"><i class="fa fa-table" aria-hidden="true"></i>Exams List</a>
+                        <li class="submenu">
+                            <a href="#"><i class="fa fa-graduation-cap" aria-hidden="true"></i> <span> Exam Management</span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled" style="display: none;">
+                                <li><a class="<?php if($currentURL =='exam-types-lists.php' || $currentURL =='add-exam-type.php'){echo 'active';}?>" href="exam-types-lists.php">Add Exam Type</a></li>
+                                <li><a class="<?php if($currentURL =='manage-exam-terms-lists.php' || $currentURL == 'add-exam-term.php'){echo 'active';}?>" href="manage-exam-terms-lists.php">Manage Exam Term</a></li>
+                                <li><a class="<?php if($currentURL =='exams-list.php' || $currentURL =='add-exams.php'){echo 'active';}?>" href="exams-list.php">Exams List</a></li>
+                            </ul>
+                        </li>   
                         </li>
                         <li class="submenu">
-                            <a href="#"><i class="fa fa-money" aria-hidden="true"></i><span> Payroll </span> <span class="menu-arrow"></span></a>
+                            <a href="#"><i class="fa fa-bullhorn" aria-hidden="true"></i> <span>Leave Management</span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">
-                                <li ><a class="<?php if($currentURL =='employee-salary.php' || $currentURL =='view-employee-salary.php' || $currentURL =='add-employee-salary.php'){echo 'active';}?>" href="employee-salary.php"> Employee Salary </a></li>
+                            <li> <a href="leaves-types.php" class="<?php if($currentURL =='leaves-types.php' || $currentURL =='add-leaves-type.php'){echo 'active';}?>">Add Leaves Types</a>
+                            </li>
+                            <li> <a href="leave-requests-list.php" class="<?php if($currentURL =='leave-requests-list.php' || $currentURL =='view-leave-requests.php'){echo 'active';}?>">
+                                Leave Requests List</a>
+                            </li>
                             </ul>
                         </li>
                         <?php } ?>
-                        <li class="<?php if($currentURL =='calender.php'){echo 'active';}?>">
-                            <a href="calender.php"><i class="fa fa-calendar" aria-hidden="true"></i> Calender</a>
+                        <li class="submenu">
+                            <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> <span>Holidays /
+                            Events </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled" style="display: none;">
+                            <li><a href="calender.php" class="<?php if($currentURL =='calender.php'){echo 'active';}?>">Calender</a>
+                            </li>
+                            <li><a href="holidays.php" class="<?php if($currentURL =='holidays.php'){echo 'active';}?>">Holidays</a>
+                            </li>
+                            <li><a href="events.php" class="<?php if($currentURL =='events.php'){echo 'active';}?>">
+                                Events</a>
+                            </li>
+                            </ul>
                         </li>
                         <?php if( ($_SESSION['user_role'] == '2') ||  ($_SESSION['user_role'] == '3')) { ?>
                         <li class="<?php if($currentURL =='all-students.php' || $currentURL =='student-profile.php'){echo 'active';}?>">
-                            <a href="all-students.php"><i class="fa fa-table" aria-hidden="true"></i>All Students List</a>
+                            <a href="all-students.php"><i class="fa fa-users" aria-hidden="true"></i>All Students List</a>
                         </li>
                         <?php } ?>
                         <?php if( ($_SESSION['user_role'] == '2') ||  ($_SESSION['user_role'] == '3')) { ?>
                         <li class="<?php if($currentURL =='request-leave-list.php' || $currentURL =='add-leaves-type.php'){echo 'active';}?>">
-                            <a href="request-leave-list.php"><i class="fa fa-table" aria-hidden="true"></i>Request Leave List</a>
-                        </li>
-                        <li class="<?php if($currentURL =='holidays.php'){echo 'active';}?>">
-                            <a href="holidays.php"><i class="fa fa-tasks" aria-hidden="true"></i> Holidays</a>
-                        </li>
-                        <li class="<?php if($currentURL =='events.php'){echo 'active';}?>">
-                            <a href="events.php"><i class="fa fa-calendar" aria-hidden="true"></i> Events</a>
+                            <a href="request-leave-list.php"><i class="fa fa-bullhorn" aria-hidden="true"></i>Request Leave List</a>
                         </li>
                         <?php } ?>
                         <?php if($_SESSION['user_role'] == '2') { ?>
                         <li class="<?php if($currentURL =='student-attendance-list.php' || $currentURL =='student-attendance.php'){echo 'active';}?>">
-                            <a href="student-attendance-list.php"><i class="fa fa-table" aria-hidden="true"></i>Student Attendance</a>
+                            <a href="student-attendance-list.php"><i class="fa fa-address-card-o" aria-hidden="true"></i>Student Attendance</a>
+                        </li>
+                        <?php } ?>
+
+                        <?php if($_SESSION['user_role'] == '2') { ?>
+                        <li class="submenu">
+                            <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Exam Management</span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled" style="display: none;">
+                                <li><a class="<?php if($currentURL =='select-exam-list.php' || $currentURL =='add-students-marks.php'){echo 'active';}?>" href="select-exam-list.php">Add Student Marks</a></li>
+                                <li><a class="<?php if($currentURL =='select-term-session.php' || $currentURL == 'students-result.php'){echo 'active';}?>" href="select-term-session.php">Results & Analysis</a></li>
+                            </ul>
                         </li>
                         <?php } ?>
                         <?php if($_SESSION['user_role'] == '1') { ?>
-                        <li class="<?php if($currentURL =='all-students-attendance-list.php' || $currentURL =='all-students-attendance-list.php'){echo 'active';}?>">
-                            <a href="all-students-attendance-list.php"><i class="fa fa-table" aria-hidden="true"></i>Student's Attendance</a>
+                        <li class="submenu">
+                            <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Attend. Management</span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled" style="display: none;">
+                                <li> <a href="all-students-attendance-list.php" class="<?php if($currentURL =='all-students-attendance-list.php' || $currentURL =='all-students-attendance-list.php'){echo 'active';}?>">
+                                    Student's Attendance</a>
+                                </li>
+                                <li> <a href="teacher-attendance-list.php" class="<?php if($currentURL =='teacher-attendance-list.php' || $currentURL =='teacher-attendance-list.php'){echo 'active';}?>">
+                                    Teacher's Attendance</a>
+                                </li>
+                            </ul>
                         </li>
                         <?php } ?>
+
                         <?php if($_SESSION['user_role'] == '2' || $_SESSION['user_role'] == '3') { ?>
                         <li class="<?php if($currentURL =='teacher-attendance-list.php' || $currentURL =='teacher-attendance-list.php'){echo 'active';}?>">
-                            <a href="teacher-attendance-list.php"><i class="fa fa-table" aria-hidden="true"></i>My Attendance</a>
+                            <a href="teacher-attendance-list.php"><i class="fa fa-address-card-o" aria-hidden="true"></i>My Attendance</a>
                         </li>
                         <?php } ?>
-                        <?php if($_SESSION['user_role'] == '1') { ?>
-                        <li class="<?php if($currentURL =='teacher-attendance-list.php' || $currentURL =='teacher-attendance-list.php'){echo 'active';}?>">
-                            <a href="teacher-attendance-list.php"><i class="fa fa-table" aria-hidden="true"></i>Teacher's Attendance</a>
-                        </li>
-                        <?php } ?>
+                        <?php 
+                            if($_SESSION['user_role'] == '1') {
+                                $text = 'Teachers';
+                            } else {
+                                $text = 'My';
+                            }
+                        ?>
                         <li class="<?php if($currentURL =='teacher-login-records-list.php'){echo 'active';}?>">
-                            <a href="teacher-login-records-list.php"><i class="fa fa-table" aria-hidden="true"></i>Teachers Login Record</a>
+                            <a href="teacher-login-records-list.php"><i class="fa fa-files-o" aria-hidden="true"></i><?php echo $text; ?> Login Record</a>
                         </li>
                         <li class="<?php if($currentURL =='contacts.php' || $currentURL =='contacts.php'){echo 'active';}?>">
-                            <a href="contacts.php"><i class="fa fa-table" aria-hidden="true"></i>Contacts</a>
-                        </li>
-                        <li class="<?php if($currentURL =='gallery.php'){echo 'active';}?>">
-                            <a href="gallery.php"><i class="fa fa-table" aria-hidden="true"></i>Gallery</a>
+                            <a href="contacts.php"><i class="fa fa-address-book" aria-hidden="true"></i>Contacts</a>
                         </li>
                         <?php if ( $_SESSION['user_role'] == '1' ): ?>
                           <li class="submenu">
-                            <a href="#"><i class="fa fa-table" aria-hidden="true"></i><span> Role and Permission </span> <span class="menu-arrow"></span></a>
+                            <a href="#"><i class="fa fa-shield" aria-hidden="true"></i><span> Role and Permission </span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">
                               <li ><a class="<?php if($currentURL =='roles-list.php' || $currentURL =='add-roles.php'){echo 'active';}?>" href="roles-list.php"> Roles </a></li>
                               <li ><a class="<?php if($currentURL =='permissions-list.php'){echo 'active';}?>" href="permissions-list.php"> Permission </a></li>
                               <li ><a class="<?php if($currentURL == 'users-list.php' || $currentURL == 'edit-users.php'){echo 'active';}?>" href="users-list.php"> Users </a></li>
+                              <li><a class="<?php if($currentURL =='teachers.php' || $currentURL =='assign-teacher.php'){echo 'active';}?>" href="teachers.php">Teachers</a></li>
                             </ul>
                           </li>
                           <li class="submenu">
-                            <a href="#"><i class="fa fa-file" aria-hidden="true"></i><span> Accounts </span> <span class="menu-arrow"></span></a>
+                            <a href="#"><i class="fa fa-table" aria-hidden="true"></i><span> HR </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled" style="display: none;">
+                              <li ><a class="<?php if($currentURL =='admission-list.php' || $currentURL =='new-admission.php'){echo 'active';}?>" href="admission-list.php"> Admission Form </a></li>
+                            </ul>
+                          </li>
+                          <li class="submenu">
+                            <a href="#"><i class="fa fa-money" aria-hidden="true"></i><span> Accounts </span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">
                               <li ><a class="<?php if($currentURL =='fee-amounts-list.php' || $currentURL =='add-fee-amounts.php'){echo 'active';}?>" href="fee-amounts-list.php"> Create Fees Structure </a></li>
                               <li ><a class="<?php if($currentURL =='fee-class-groups-list.php' || $currentURL =='add-fee-class-groups.php'){echo 'active';}?>" href="fee-class-groups-list.php"> Fee Class Groups </a></li>
                               <li ><a class="<?php if($currentURL =='fee-groups-list.php' || $currentURL =='add-fee-groups.php'){echo 'active';}?>" href="fee-groups-list.php"> Assign Fees </a></li>
                               <li ><a class="<?php if($currentURL =='particulars-list.php' || $currentURL =='add-particulars.php'){echo 'active';}?>" href="particulars-list.php"> Discounts </a></li>
-                              <li ><a class="<?php if($currentURL =='admission-list.php' || $currentURL =='new-admission.php'){echo 'active';}?>" href="admission-list.php"> Admission Form </a></li>
                               <li ><a class="<?php if($currentURL =='fee-collection-list.php' || $currentURL =='add-fee-collection.php'){echo 'active';}?>" href="fee-collection-list.php"> Fee Collection </a></li>
-                                <li class="submenu">
-                                  <a href="#"><span> Expenses </span> <span class="menu-arrow"></span> </a>
-                                  <ul>
-                                      <li><a class="<?php if($currentURL =='expense-types-list.php' || $currentURL =='add-expense-types.php'){echo 'active';}?>" href="expense-types-list.php"> Expense Types </a></li>
-                                      <li><a class="<?php if($currentURL =='expenses-list.php' || $currentURL =='add-expenses.php'){echo 'active';}?>" href="expenses-list.php"> Expenses List </a></li>
+                              <li class="submenu">
+                                  <a href="#"><span> Payroll </span> <span class="menu-arrow"></span></a>
+                                  <ul class="list-unstyled" style="display: none;">
+                                      <li ><a class="<?php if($currentURL =='employee-salary.php' || $currentURL =='view-employee-salary.php' || $currentURL =='add-employee-salary.php'){echo 'active';}?>" href="employee-salary.php"> Employee Salary </a></li>
                                   </ul>
-                                </li>
+                              </li>
+                              <li class="submenu">
+                                <a href="#"><span> Expenses </span> <span class="menu-arrow"></span> </a>
+                                <ul>
+                                  <li><a class="<?php if($currentURL =='expense-types-list.php' || $currentURL =='add-expense-types.php'){echo 'active';}?>" href="expense-types-list.php"> Expense Types </a></li>
+                                  <li><a class="<?php if($currentURL =='expenses-list.php' || $currentURL =='add-expenses.php'){echo 'active';}?>" href="expenses-list.php"> Expenses List </a></li>
+                                </ul>
+                              </li>
                             </ul>
                           </li>
-                            <li>
-                                <a class="<?php if($currentURL =='teachers.php' || $currentURL =='assign-teacher.php'){echo 'active';}?>" href="teachers.php"><i class="fa fa-table" aria-hidden="true"></i>Teachers</a>
-                            </li>
-                          <li class="<?php if($currentURL =='gallery.php'){echo 'active';}?>">
-                              <a href="gallery.php"><i class="fa fa-table" aria-hidden="true"></i>Gallery</a>
-                          </li>
                         <?php endif; ?>
+                        <?php if ( $_SESSION['user_role'] != '1' ): ?>
+                            <li class="<?php if($currentURL =='view-employee-salary.php'){echo 'active';}?>">
+                              <a href="view-employee-salary.php"><i class="fa fa-money" aria-hidden="true"></i>My Pay Slip</a>
+                          </li>
+                        <?php endif; ?>    
+                        <li class="<?php if($currentURL =='gallery.php'){echo 'active';}?>">
+                              <a href="gallery.php"><i class="fa fa-picture-o" aria-hidden="true"></i>Gallery</a>
+                          </li>
 						<!-- <li class="submenu">
                             <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Students</span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">

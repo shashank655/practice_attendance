@@ -37,12 +37,12 @@ require_once 'includes/sidebar.php';
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
-                            <table class="table table-striped custom-table datatable">
+                            <table class="table custom-table datatable">
                                 <thead>
                                     <tr>
                                         <th style="min-width:50px;">S.No.</th>
                                         <th style="min-width:50px;">Class Name</th>
-                                        <th style="min-width:50px;">Sections</th>
+                                        <th colspan="2" style="min-width:50px;">Sections</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -56,7 +56,7 @@ require_once 'includes/sidebar.php';
 											<a href="class-section.php?id=<?php echo $value['id']; ?>" class="btn btn-primary btn-sm mb-1">
 												<i class="fa fa-pencil" aria-hidden="true"></i>
 											</a>
-											<a href="employee/process/processClassSections.php?type=deleteClasses&id=<?php echo $value['id']; ?>" class="btn btn-danger btn-sm mb-1">
+											<a href="employee/process/processClassSections.php?type=deleteClasses&id=<?php echo $value['id']; ?>" onclick="return confirm('Are you sure you want to delete this?')" class="btn btn-danger btn-sm mb-1">
                                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                             </a>
 										</td>

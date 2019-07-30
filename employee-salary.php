@@ -72,7 +72,7 @@ require_once 'includes/sidebar.php';
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive mt-2">
-                            <table class="table table-striped custom-table datatable">
+                            <table class="table custom-table datatable">
                                 <thead>
                                     <tr>
                                         <th style="width:25%;">Teacher</th>

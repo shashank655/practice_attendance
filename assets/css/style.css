@@ -963,7 +963,7 @@ textarea.form-control {
 	height: 60px;
 	padding: 0 20px;
 	position: relative;
-	text-align: center;
+	text-align: left;
 	width: 220px;
 	z-index: 1;
 }
@@ -980,6 +980,7 @@ textarea.form-control {
 }
 .logo img{
 	height: 57px;
+	margin-left: 10px;
 	vertical-align: top;
 }
 .header .navbar-nav .badge {
@@ -4112,7 +4113,10 @@ html.menu-opened body {
 [24. Roles & Permissions]
 */
 .roles-menu {
+	height: 260px;
+	overflow: auto;
 	margin-top: 20px;
+	background: #fff;
 	box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
 }
 
@@ -4136,16 +4140,37 @@ html.menu-opened body {
 	position: relative;
 }
 
-.roles-menu > ul > li.active a {
-	border-color: #01c0c8;
-	color: #01c0c8;
+.roles-menu > ul > li.active a,
+.roles-menu > ul > li:focus-within a:focus-within{
+	border-color: #fff;
+	color: #fff;
+	background-color: #254769;
 }
 
 .roles-menu > ul > li a:hover {
-	border-color: #01c0c8;
-	background-color: #eee;
+	color: #fff;
+	border-color: #fff;
+	background-color:#254769;
+}
+/* width */
+.roles-menu::-webkit-scrollbar {
+  width: 10px;
 }
 
+/* Track */
+.roles-menu::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.roles-menu::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+.roles-menu::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
 .material-switch > input[type="checkbox"] {
 	display: none;
 }
@@ -6018,6 +6043,15 @@ label.error:before {
     top: -10px;
     left: 10px;
     border-color: transparent transparent #cd2e26 transparent;
+}
+
+.animatedText .marquee{
+	display: block;
+	padding: 10px 0; 
+	color: #4e87c0;
+	font-size: 16px;
+	box-shadow: 0 0px 5px 1px #ddd;
+
 }
 /*------------------------------------------------------------------
 [47. Responsive]

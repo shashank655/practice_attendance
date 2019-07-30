@@ -2,17 +2,30 @@
 class ClassSections extends MySQLCN {
 
     function addClasses($data) {
-        $qry = 'INSERT INTO `classes_name` 
-            (`class_name`) 
+        $result = $this->checkClassIfExists($data);
+        if($result) {
+            return false;
+        }
+
+        $qry = 'INSERT INTO `classes_name`
+            (`class_name`)
             VALUES ( "'. $data['className'] . '")';
         $res = $this->insert($qry);
         if ($res) {
             if(!empty($data['addSection'])){
                 foreach ($data['addSection'] as $key => $value) {
-                    $qry2 = 'INSERT INTO `sections` 
-                        (`class_id`,`section_name`) 
+                    $qry2 = 'INSERT INTO `sections`
+                        (`class_id`,`section_name`)
                     VALUES ("'. $res . '", "'. $value . '")';
                     $res2 = $this->insert($qry2);
+
+                        if(!empty($data['subjects_id'])) {
+                            $subjectsId = implode(',', $data['subjects_id']);
+                            $qry3 = 'INSERT INTO `class_sections_subjects`
+                                (`class_id`,`section_id`,`subjects_id`)
+                                VALUES ("'. $res . '","'. $res2 . '", "'. $subjectsId . '")';
+                            $res3 = $this->insert($qry3);
+                        }
                 }
             }
             return true;
@@ -53,7 +66,7 @@ class ClassSections extends MySQLCN {
             }
         return $class_data;
     }
-    
+
     function deleteClasses($cId) {
         $qry = "DELETE FROM `classes_name` WHERE id = '{$cId}'";
         $res = $this->deleteData($qry);
@@ -67,7 +80,7 @@ class ClassSections extends MySQLCN {
     }
 
     function getClassInfo($id){
-        $fetch = "SELECT `classes_name`.`id`, `classes_name`.`class_name`, `classes_name`.`createdDate`, `sections`.`section_name` FROM `classes_name` left join sections on classes_name.id=sections.class_id where classes_name.id='{$id}' ";
+        $fetch = "SELECT classes_name.*, sections.*, sections.id as secId FROM `classes_name` left join sections on classes_name.id=sections.class_id where classes_name.id='{$id}' ";
         $fetch_data = $this->select($fetch);
         return $fetch_data;
     }
@@ -78,14 +91,27 @@ class ClassSections extends MySQLCN {
                WHERE id = '{$data['classId']}'";
         $res = $this->updateData($qry);
         if ($res) {
-            $qry2 = "DELETE FROM `sections` WHERE class_id = '{$data['classId']}'";
-            $res2 = $this->deleteData($qry2);
             if(!empty($data['addSection'])){
                 foreach ($data['addSection'] as $key => $value) {
-                    $qry3 = 'INSERT INTO `sections` 
-                        (`class_id`,`section_name`) 
-                    VALUES ("'. $data['classId'] . '", "'. $value . '")';
-                    $res3 = $this->insert($qry3);
+                    if(!empty($data['sectionsIds'][$key])) {
+                        $qry2 = "UPDATE `sections` SET `section_name` = '{$value}' WHERE id = '{$data['sectionsIds'][$key]}'";
+                        $res2 = $this->updateData($qry2);
+                        if(!empty($data['subjects_id'])) {
+                            $subjectsId = implode(',', $data['subjects_id']);
+                            $qry3 = "UPDATE `class_sections_subjects` SET `subjects_id` = '{$subjectsId}' WHERE class_id = '{$data['classId']}' and section_id = '{$data['sectionsIds'][$key]}'";
+                            $res3 = $this->updateData($qry3);
+                        }
+                    } else {
+                        $qry4 = 'INSERT INTO `sections`
+                            (`class_id`,`section_name`)
+                        VALUES ("'. $data['classId'] . '", "'. $value . '")';
+                        $res4 = $this->insert($qry4);
+
+                        $qry5 = 'INSERT INTO `class_sections_subjects`
+                                (`class_id`,`section_id`,`subjects_id`)
+                                VALUES ("'. $data['classId'] . '","'. $res4 . '", "'. $subjectsId . '")';
+                        $res5 = $this->insert($qry5);
+                    }
                 }
             }
             return true;
@@ -94,6 +120,21 @@ class ClassSections extends MySQLCN {
         }
     }
 
+    function get_subject_ids($secId){
+        $fetch = "SELECT * FROM `class_sections_subjects` where section_id='{$secId}' ";
+        $fetch_data = $this->select($fetch);
+        return $fetch_data;
+    }
+
+    function checkClassIfExists($data) {
+        $fetch = "SELECT id FROM `classes_name` where class_name='{$data['className']}' ";
+        $fetch_data = $this->select($fetch);
+        if ($fetch_data != NULL) {
+            return true;
+        } else {
+            return false;
+        }
+    }
         function getClassSections($class_id) {
             $query = "SELECT * FROM sections WHERE class_id = '$class_id'";
 

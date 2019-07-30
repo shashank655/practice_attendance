@@ -3,8 +3,14 @@ require_once 'employee/class/dbclass.php';
 require_once 'employee/config/config.php'; 
 require_once 'employee/config/months.php'; 
 require_once 'employee/class/CollectFees.php';
+require_once 'employee/class/FeeAmounts.php';
 $collect_fees = new CollectFees;
 $resultCollectFees = $collect_fees->getCollectFees();
+$feeAmounts = new FeeAmounts;
+$allFeeAmounts = $feeAmounts->getFeeAmountsLists();
+if (isset($_GET['fee_amount_title']) || isset($_GET['fee_paying_mode']) || isset($_GET['from_date']) || isset($_GET['to_date'])) {
+    $resultCollectFees = $collect_fees->getCollectFeesBy($_GET['fee_amount_title'], $_GET['fee_paying_mode'], $_GET['from_date'], $_GET['to_date']);
+}
 ?>
 
 <?php 
@@ -39,7 +45,34 @@ require_once 'includes/sidebar.php';
                     <div class="col-md-12">
                         <form action="" method="get" class="form-inline">
                             <div class="form-group">
-                                <label> </label>
+                                <select name="fee_amount_title" class="form-control">
+                                    <option value="">Select Fee Amount</option>
+                                    <?php 
+                                        foreach ($allFeeAmounts as $feeAmount) {
+                                    ?>
+                                        <option value="<?= $feeAmount['title']; ?>"><?= $feeAmount['title']; ?></option>
+                                    <?php
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select name="fee_paying_mode" class="form-control">
+                                    <option value="">Select Payment Duration</option>
+                                    <option value="Monthly">Monthly</option>
+                                    <option value="Quarterly">Quarterly</option>
+                                    <option value="Half Yearly">Half Yearly</option>
+                                    <option value="Yearly">Yearly</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input name="from_date" class="datetimepicker form-control">
+                            </div>
+                            <div class="form-group">
+                                <input name="to_date" class="datetimepicker form-control">
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Search" class="btn btn-primary">
                             </div>
                         </form>
                     </div>
@@ -57,15 +90,15 @@ require_once 'includes/sidebar.php';
                                         <th style="min-width:50px;">Section</th>
                                         <th style="min-width:50px;">Student</th>
                                         <th style="min-width:50px;">Fee Group</th>
-                                        <th style="min-width:50px;">Month</th>
                                         <th style="min-width:50px;">Due Fees</th>
                                         <th style="min-width:50px;">Created On</th>
                                         <th style="min-width:50px;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <?php $i=1; ?>
-                                	<?php foreach ($resultCollectFees as $key => $value) { ?>
+                                <?php 
+                                    $i=1; 
+                                    foreach ($resultCollectFees as $key => $value) { ?>
                                     <tr>
                                         <td><?php echo $i; ?></td>
                                         <td><?php echo $value['paid_fee']; ?></td>
@@ -76,7 +109,6 @@ require_once 'includes/sidebar.php';
                                         <td><?php echo $value['section_name']; ?></td>
                                         <td><?php echo $value['first_name'].' '.$value['last_name'] ; ?></td>
                                         <td><?php echo $value['title'] ; ?></td>
-                                        <td><?php echo $months[$value['month_id']] ; ?></td>
                                         <td><?php echo $value['due_fee'] ; ?></td>
                                         <td><?php echo date('d M, Y', strtotime($value['created_at'])); ?></td>
                                         <td class="text-right" >

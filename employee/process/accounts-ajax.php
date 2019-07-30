@@ -28,6 +28,14 @@ function getStudentsWithFeeGroups() {
     echo json_encode(['students' => $allStudents, 'fee_groups' => $allFeeGroups]);
 }
 
+function getStudents() {
+    $fee_group_id = isset($_GET['fee_group_id']) ? $_GET['fee_group_id'] : null;
+    $students = new Student;
+    $allStudents = $students->getStudentsByFeeGroup($fee_group_id);
+    header('Content-type: application/json');
+    echo json_encode($allStudents);
+}
+
 if ( isset($_GET['action'])  ) {
     $function = actionToFunctionName($_GET['action']);
     if ( function_exists($function) ) {

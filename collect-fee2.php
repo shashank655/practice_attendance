@@ -8,15 +8,22 @@ require_once 'employee/class/Student.php';
 require_once 'employee/class/FeeGroups.php';
 require_once 'employee/class/CollectFees.php';
 $collect_fees = new CollectFees;
-$classes=new ClassSections();
-$class = $classes->getClassInfo($_GET['class_id']);
-$sections=new Sections();
-$section = $sections->getSectionInfo($_GET['section_id']);
 $student=new Student();
 $student = $student->getStudentInfo($_GET['student_id']);
 $feeGroups=new FeeGroups();
 $feeGroup = $feeGroups->getFeeGroupsInfo($_GET['fee_group_id']);
+$classes=new ClassSections();
+$class = $classes->getClassInfo($feeGroup[0]['class_id']);
+$sections=new Sections();
+$section = $sections->getSectionInfo($feeGroup[0]['section_id']);
 $feeGroupFee = $feeGroups->getFeeGroupFees($_GET['fee_group_id']);
+$feePayingMode = $_GET['fee_paying_mode'];
+
+if ($feePayingMode == 'Monthly') $times = 1;
+if ($feePayingMode == 'Quarterly') $times = 3;
+if ($feePayingMode == 'Half Yearly') $times = 6;
+if ($feePayingMode == 'Yearly') $times = 12;
+
 if (isset($_GET['feeCollectId'])) {
     $resultCollectFee = $collect_fees->getCollectFeeInfo($_GET['feeCollectId']);
     $due_amount = $collect_fees->getDueAmount($_GET['feeCollectId']);
@@ -71,8 +78,8 @@ require_once 'includes/sidebar.php';
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
-                        <label>Month</label>
-                        <input type="text" class="form-control" value="<?= $months[$_GET['month_id']] ?>" readonly>
+                        <label>Fee Paying Mode</label>
+                        <input type="text" class="form-control" value="<?= $feePayingMode ?>" readonly>
                     </div>
                 </div>
             </div>
@@ -96,16 +103,17 @@ require_once 'includes/sidebar.php';
                                     $total_discount = 0;
                                     $grand_total = 0;
                                     foreach($feeGroupFee as $amount) { 
-                                        $discount = $feeGroups->calculateDiscount($student[0]['particular_id'], $amount['fee_amount_id'], $amount['amount']);
-                                        $sub_total = $amount['amount'] - $discount;
-                                        $total_amount = $total_amount + $amount['amount'];
+                                        $amnt = $amount['amount'] * $times;
+                                        $discount = $feeGroups->calculateDiscount($student[0]['particular_id'], $amount['fee_amount_id'], $amnt);
+                                        $sub_total = $amnt - $discount;
+                                        $total_amount = $total_amount + $amnt;
                                         $total_discount = $total_discount + $discount;
                                         $grand_total = $grand_total + $sub_total;
                                 ?>
                                 <tr>
                                     <td><?= $i++; ?></td>
                                     <td><?= $amount['title'] ?></td>
-                                    <td><?= $amount['amount'] ?></td>
+                                    <td><?= $amnt ?></td>
                                     <td><?= $discount ?></td>
                                     <td><?= $sub_total ?></td>
                                 </tr>
@@ -127,12 +135,11 @@ require_once 'includes/sidebar.php';
             <form id="collectFeeForm" action="employee/process/processCollectFee.php" method="post" novalidate="novalidate">
                 <input type="hidden" name="feeCollectId" value="<?php if (isset($_GET['feeCollectId'])) echo $_GET['feeCollectId']; ?>">
                 <input type="hidden" name="grand_total" id="grand_total" value="<?= $grand_total ?>">
-                <input type="hidden" name="class_id" value="<?= $_GET['class_id'] ?>">
-                <input type="hidden" name="section_id" value="<?= $_GET['section_id'] ?>">
+                <input type="hidden" name="class_id" value="<?= $class[0]['id'] ?>">
+                <input type="hidden" name="section_id" value="<?= $section[0]['id'] ?>">
                 <input type="hidden" name="student_id" value="<?= $_GET['student_id'] ?>">
                 <input type="hidden" name="particular_id" value="<?= $student[0]['particular_id'] ?>">
                 <input type="hidden" name="fee_group_id" value="<?= $feeGroup[0]['id'] ?>">
-                <input type="hidden" name="month_id" value="<?= $_GET['month_id'] ?>">
                 <input type="hidden" name="fee_paying_mode" value="<?= $_GET['fee_paying_mode'] ?>">
                 <div class="row">
                     <div class="col-md-3">
@@ -159,6 +166,75 @@ require_once 'includes/sidebar.php';
                             <input type="text" name="collected_by" value="<?= $_SESSION['name'] ?>" class="form-control" readonly>
                         </div>
                     </div>
+                    <?php 
+                        $from   = false;
+                        $to     = false;
+                        $yearly = false;
+                        if ($feePayingMode == 'Monthly') { 
+                            $label = 'Select Month';
+                            $from = true;
+                        } 
+                        if ($feePayingMode == 'Quarterly') { 
+                            $label = 'From';
+                            $from = true;
+                            $to = true;
+                        } 
+                        if ($feePayingMode == 'Half Yearly') { 
+                            $label = 'From';
+                            $from = true;
+                            $to = true;
+                        } 
+                        if ($feePayingMode == 'Yearly') { 
+                            $label = 'From';
+                            $from = true;
+                            $to = true;
+                        } 
+                        
+                    ?>
+                    <?php if ($from) { ?>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label><?= $label ?></label>
+                            <select name="from_month_id" class="form-control">
+                                <?php
+                                    foreach ($months as $key => $month) {
+                                ?>
+                                <option value="<?= $key ?>"
+                                <?php 
+                                    if (count($resultCollectFee) > 0)
+                                    {
+                                        if($resultCollectFee[0]['from_month_id'] == $key) echo 'selected';
+                                    }
+                                ?>><?= $month ?></option>
+                                <?php
+                                    }
+                                ?>
+                            </select>    
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <?php if ($to) { ?>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label> To </label>
+                            <select name="to_month_id" class="form-control">
+                                <?php
+                                    foreach ($months as $key => $month) {
+                                ?>
+                                <option value="<?= $key ?>"
+                                <?php 
+                                    if (count($resultCollectFee) > 0)
+                                    {
+                                        if($resultCollectFee[0]['to_month_id'] == $key) echo 'selected';
+                                    }
+                                ?>><?= $month ?></option>
+                                <?php
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <?php } ?>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Payment Mode</label>
@@ -175,12 +251,6 @@ require_once 'includes/sidebar.php';
                                         if ($resultCollectFee[0]['payment_mode'] == 'Cash') echo 'selected'; 
                                     }
                                 ?>>Cash</option>
-                                <option value="Online"
-                                <?php 
-                                    if (count($resultCollectFee) > 0) {
-                                        if ($resultCollectFee[0]['payment_mode'] == 'Online') echo 'selected'; 
-                                    }
-                                ?>>Online</option>
                             </select>
                         </div>
                     </div>
@@ -204,13 +274,21 @@ require_once 'includes/sidebar.php';
 </div>
     <?php require_once 'includes/footer.php'; ?>
     <script>
-        $(document).on("change", "#paid_fee", function () {
+        function dueFee() {
             var grand_total = $("#grand_total").val();
-            var due_fee = grand_total - $(this).val();
+            var due_fee = grand_total - $("#paid_fee").val();
             if (due_fee > 0) {
                 $("#due_fee").val(due_fee);
             } else {
                 $("#due_fee").val(0);
             }
+        }
+        
+        <?php if (count($resultCollectFee) > 0) { ?>
+            dueFee();
+        <?php } ?>
+        $(document).on("change", "#paid_fee", function () {
+            dueFee();
         });
+        
     </script>

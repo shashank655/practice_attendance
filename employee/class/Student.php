@@ -136,6 +136,15 @@ class Student extends MySQLCN {
         return $fetch_list;
     }
     
+    function getStudentsByFeeGroup($fee_group_id) {
+        $feeGroup = "SELECT * FROM `fee_groups` WHERE id='{$fee_group_id}'";
+        $fetch = $this->select($feeGroup);
+        if ($fetch[0]['class_id'] != '' && $fetch[0]['section_id'] != '') {
+            return $this->getStudents($fetch[0]['class_id'], $fetch[0]['section_id']);
+        }
+        return [];
+    }
+
     function getStudentsLists() {
         $fetchList = "SELECT * FROM `students` join classes_name on students.class_id=classes_name.id join sections on students.section_id=sections.id order by `first_name` asc";
         $fetch_list = $this->select($fetchList);

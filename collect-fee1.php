@@ -53,41 +53,21 @@ require_once 'includes/sidebar.php';
                         <div class="card-box">
                             <h4 class="card-title">Collect Fee Step 1</h4>
                             <div class="form-group row ">
-                                <label class="col-form-label col-md-2">Select Class</label>
+                                <label class="col-form-label col-md-2">Select Fee Group</label>
                                 <div class="col-md-10">
-                                    <select name="class_id" class="form-control" id="class_id">
-                                        <option value="">Select Class</option>
+                                    <select name="fee_group_id" class="form-control" id="fee_group_id">
+                                        <option value="">Select Fee Group</option>
                                         <?php 
-                                            foreach ($allClasses as $class) {
+                                            foreach ($allFeeGroups as $fee_group) {
                                         ?>
-                                        <option value="<?= $class['id'] ?>"
+                                        <option value="<?= $fee_group['id'] ?>"
                                         <?php 
                                             if (count($resultCollectFee) > 0)
                                             {
-                                                if($resultCollectFee[0]['class_id'] == $class['id']) echo 'selected';
+                                                if($resultCollectFee[0]['fee_group_id'] == $fee_group['id']) echo 'selected';
                                             }
-                                        ?>><?= $class['class_name'] ?></option>
+                                        ?>><?= $fee_group['title'] ?></option>
                                         <?php
-                                            }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row ">
-                                <label class="col-form-label col-md-2">Select Section</label>
-                                <div class="col-md-10">
-                                    <select name="section_id" class="form-control" id="section_id">
-                                        <?php
-                                            if (count($resultSections) > 0) {
-                                                foreach ($resultSections as $_section) {
-                                        ?>
-                                        <option value="<?= $_section['id'] ?>"
-                                        <?php
-                                            if($resultCollectFee[0]['section_id'] == $_section['id']) echo 'selected';
-                                        ?>
-                                        ><?= $_section['section_name'] ?></option>
-                                        <?php
-                                                }
                                             }
                                         ?>
                                     </select>
@@ -114,47 +94,7 @@ require_once 'includes/sidebar.php';
                                 </div>
                             </div>
                             <div class="form-group row ">
-                                <label class="col-form-label col-md-2">Select Fee Group</label>
-                                <div class="col-md-10">
-                                    <select name="fee_group_id" class="form-control" id="fee_group_id">
-                                        <?php
-                                            if (count($resultFeeGroups) > 0) {
-                                                foreach ($resultFeeGroups as $_feeGroup) {
-                                        ?>
-                                        <option value="<?= $_feeGroup['id'] ?>"
-                                        <?php
-                                            if($resultCollectFee[0]['fee_group_id'] == $_feeGroup['id']) echo 'selected';
-                                        ?>
-                                        ><?= $_feeGroup['title'] ?></option>
-                                        <?php
-                                                }
-                                            }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row ">
-                                <label class="col-form-label col-md-2">Select Month</label>
-                                <div class="col-md-10">
-                                    <select name="month_id" class="form-control" id="month_id">
-                                        <?php
-                                            foreach ($months as $key => $month) {
-                                        ?>
-                                        <option value="<?= $key ?>"
-                                        <?php 
-                                            if (count($resultCollectFee) > 0)
-                                            {
-                                                if($resultCollectFee[0]['month_id'] == $key) echo 'selected';
-                                            }
-                                        ?>><?= $month ?></option>
-                                        <?php
-                                            }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row ">
-                                <label class="col-form-label col-md-2">Select Fee Paying Mode</label>
+                                <label class="col-form-label col-md-2">Select Payment Duration</label>
                                 <div class="col-md-10">
                                     <select name="fee_paying_mode" class="form-control" id="fee_paying_mode">
                                         <option value="Monthly" 
@@ -200,32 +140,15 @@ require_once 'includes/sidebar.php';
     <?php require_once 'includes/footer.php'; ?>
     <script>
         
-        $(document).on("change", "#class_id", function () {
-            var class_id = $(this).val();
-            var option = '<option value="">Select Section</option>';
-            $("#section_id").html('');
-            $("#section_id").append(option);
-            $.get('employee/process/accounts-ajax.php', { action: 'sections', class_id: class_id }, function(res) {
-                $.each(res, function(index, section) {
-                    option = '<option value="'+section.id+'">'+section.section_name+'</option>';
-                    $("#section_id").append(option);
-                });
-            });
-        });
-
-        $(document).on("change", "#section_id", function () {
-            var class_id = $("#class_id").val();
-            var section_id = $(this).val();
-            var option = '';
+        $(document).on("change", "#fee_group_id", function () {
+            var fee_group_id = $(this).val();
+            var option = '<option value="">Select Student</option>';
             $("#student_id").html('');
-            $.get('employee/process/accounts-ajax.php', { action: 'students-with-fee-groups', class_id: class_id, section_id: section_id }, function(res) {
-                $.each(res.students, function(index, student) {
+            $("#student_id").append(option);
+            $.get('employee/process/accounts-ajax.php', { action: 'students', fee_group_id: fee_group_id }, function(res) {
+                $.each(res, function(index, student) {
                     option = '<option value="'+student.id+'">'+student.first_name+' '+student.last_name+'</option>';
                     $("#student_id").append(option);
-                });
-                $.each(res.fee_groups, function(index, fee_group) {
-                    option = '<option value="'+fee_group.id+'">'+fee_group.title+'</option>';
-                    $("#fee_group_id").append(option);
                 });
             });
         });

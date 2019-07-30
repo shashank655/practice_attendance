@@ -67,7 +67,7 @@ class ClassSections extends MySQLCN {
     }
 
     function getClassInfo($id){
-        $fetch = "SELECT * FROM `classes_name` left join sections on classes_name.id=sections.class_id where classes_name.id='{$id}' ";
+        $fetch = "SELECT `classes_name`.`id`, `classes_name`.`class_name`, `classes_name`.`createdDate`, `sections`.`section_name` FROM `classes_name` left join sections on classes_name.id=sections.class_id where classes_name.id='{$id}' ";
         $fetch_data = $this->select($fetch);
         return $fetch_data;
     }

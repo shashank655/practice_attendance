@@ -135,4 +135,47 @@ CREATE TABLE `exam_term` (
     `end_date` varchar(200) NOT NULL,                                                  
              `createdDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
              PRIMARY KEY (`id`)                                                                       
-           )                                                                       
+           ) 
+attendance_status in students_attendance
+delete paid_amount from leave_types table
+new table added employee_leave_record                                                                    
+CREATE TABLE `admission_form_listing` (
+  `id` int(11) NOT NULL,
+  `first_name` varchar(255) DEFAULT NULL,
+  `last_name` varchar(200) DEFAULT NULL,
+  `email_address` varchar(255) DEFAULT NULL,
+  `gender` varchar(100) DEFAULT NULL,
+  `dob` varchar(150) DEFAULT NULL,
+  `class_id` int(11) DEFAULT NULL,
+  `section_id` int(11) DEFAULT NULL,
+  `religion` varchar(100) DEFAULT NULL,
+  `date_of_joining` varchar(100) DEFAULT NULL,
+  `mobile_number` varchar(200) DEFAULT NULL,
+  `admission_no` varchar(200) DEFAULT NULL,
+  `roll_number` varchar(200) DEFAULT NULL,
+  `fathers_name` varchar(255) DEFAULT NULL,
+  `fathers_occupation` varchar(200) DEFAULT NULL,
+  `parents_mobile_number` varchar(255) DEFAULT NULL,
+  `present_address` text,
+  `mothers_name` varchar(255) DEFAULT NULL,
+  `mothers_occupation` varchar(200) DEFAULT NULL,
+  `nationality` varchar(100) DEFAULT NULL,
+  `permanent_address` text,
+  `fees_submit_status` int(11) NOT NULL DEFAULT '0',
+  `createdDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+)
+
+
+CREATE TABLE `transfer_certificate` (
+  `id` int(11) NOT NULL,
+  `student_name` varchar(255) NOT NULL,
+  `guardian_name` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `religion` varchar(255) NOT NULL,
+  `joining` varchar(255) NOT NULL,
+  `from_date` varchar(255) NOT NULL,
+  `to_date` varchar(255) NOT NULL,
+  `class_name` varchar(255) NOT NULL,
+  `tc_date` varchar(255) NOT NULL,
+  `createdDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+)

@@ -54,8 +54,8 @@ if ($leaveId != NULL) { $result = $leaves->getLeaveTypeInfo($leaveId);
                         <label class="col-form-label col-md-2">Select Paid/Unpaid</label>
                         <div class="col-md-10">
                         <select class="form-control" name="paid_type" id="paid_type">
-                                <option <?php if($result[0]['paid_type'] == 'unpaid'){echo 'selected'; } ?> value="unpaid">Un Paid</option>
                                 <option <?php if($result[0]['paid_type'] == 'paid'){echo 'selected'; } ?> value="paid">Paid</option>
+                                <option <?php if($result[0]['paid_type'] == 'unpaid'){echo 'selected'; } ?> value="unpaid">Un Paid</option>
                         </select>
                         </div>
                     </div>
@@ -97,7 +97,7 @@ if ($leaveId != NULL) { $result = $leaves->getLeaveTypeInfo($leaveId);
         });
 
         var paidType = $('#paid_type').val();
-        $('#paid_type').change(function(){
+        $('#paid_type_bk').change(function(){
             if($('#paid_type').val() == 'paid') {
                 $('#paid_div_show').show();  
             } else {

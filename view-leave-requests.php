@@ -33,7 +33,10 @@ require_once 'includes/sidebar.php';
                             <h4 class="card-title">Leave Request</h4>
                             <form id="leaveRequest" action="employee/process/processLeavesTypes.php" method="post" novalidate="novalidate">
                             <input type="hidden" name="type" value="assign_leave_status" />
+                            <input type="hidden" name="leave_type_id" value="<?php echo $result[0]['leave_type_id']; ?>" />
                             <input type="hidden" name="leaveId" value="<?php echo $leaveId; ?>" />
+                            <input type="hidden" name="userId" value="<?php echo $result[0]['userId']; ?>" />
+                            <input type="hidden" name="number_of_days" value="<?php echo $result[0]['number_of_days']; ?>" />
                                 <div class="form-group row ">
                                     <label class="col-form-label col-md-2">Employee Name</label>
                                     <div class="col-md-10">
@@ -110,7 +113,7 @@ require_once 'includes/sidebar.php';
                                 <div class="form-group row ">
                                     <label class="col-form-label col-md-2">Download Attachment</label>
                                     <div class="col-md-10">
-                                        <a href="<?php if (isset($result[0]['leaveAttachmentName'])) echo PROFILE_PIC_IMAGE_PATH . $result[0]['leaveAttachmentName']; ?>">Click here to Save</a>
+                                        <a href="<?php if (isset($result[0]['leaveAttachmentName'])) echo LEAVES_ATTACHMENT_PATH . $result[0]['leaveAttachmentName']; ?>">Click here to Save</a>
                                     </div>
                                 </div>
                                 <?php } ?>

@@ -4,7 +4,7 @@ class RequestLeave extends MySQLCN {
     function addLeaveRequest($data) {
         if ($_FILES['leave_attachment']['error'] == '0') {
             $leaveAttachmentName = time() . strtolower(basename($_FILES['leave_attachment']['name']));
-            $target = PROFILE_PIC_IMAGE_ROOT . $leaveAttachmentName;
+            $target = LEAVES_ATTACHMENT_ROOT . $leaveAttachmentName;
             move_uploaded_file($_FILES['leave_attachment']['tmp_name'], $target);
         } else {
             $leaveAttachmentName = '';
@@ -28,8 +28,8 @@ class RequestLeave extends MySQLCN {
         return $fetch_data;
     }
 
-    function getLeavesAppliedLists($userId) {
-        $fetch = "SELECT * FROM `leaves_request` join leave_types on leaves_request.leave_type_id=leave_types.id where userId='{$userId}' order by leaves_request.id DESC";
+    function getLeavesAppliedLists($userId, $get_current_year, $get_current_month) {
+        $fetch = "SELECT * FROM `leaves_request` join leave_types on leaves_request.leave_type_id=leave_types.id where userId='{$userId}' and MONTH(leaves_request.createdDate)='".$get_current_month."' and YEAR(leaves_request.createdDate)='".$get_current_year."'order by leaves_request.id DESC";
         $fetch_data = $this->select($fetch);
         return $fetch_data;
     }
@@ -62,6 +62,20 @@ class RequestLeave extends MySQLCN {
         } else {
             return false;
         }
+    }
+
+    function getEmployeeLeaveRecord($userId) {
+        $fetch = "SELECT * FROM `leave_types`";
+        $fetch_data = $this->select($fetch);
+        $leaveData = array();
+            foreach ($fetch_data as $key => $value) {
+                $fetch2 = "SELECT * FROM `employee_leave_record` where leave_type_id = '{$value['id']}' and user_id = '{$userId}' ";
+                $fetch_data2 = $this->select($fetch2);
+                $leaveData[$key]['leave_type'] = $value['leave_type']; 
+                $leaveData[$key]['total_leave'] = $value['days']; 
+                $leaveData[$key]['total_leave_availed'] = $fetch_data2[0]['leave_count']; 
+            }
+        return $leaveData;
     }
 
 }

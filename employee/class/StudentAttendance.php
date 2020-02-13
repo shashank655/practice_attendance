@@ -7,9 +7,14 @@ class StudentAttendance extends MySQLCN {
         $class_id = $data['class_id'];
         $section_id = $data['section_id'];
         foreach ($data['student_id'] as $key => $value) {
+            if(empty($data['attendance_status'][$key])) {
+                $attenStatus = '';
+            } else {
+                $attenStatus = $data['attendance_status'][$key];
+            }
           $qry = 'INSERT INTO `students_attendance` 
-              (`class_id`,`section_id`,`student_id`,`teacher_id`,`date_of_attendance`,`attendance`) 
-              VALUES ( "'. $class_id . '", "'. $section_id . '", "'. $value . '", "'. $teacher_id . '", "'. $todaysDate . '", "'. $data['attendance'][$key] . '")';
+              (`class_id`,`section_id`,`student_id`,`teacher_id`,`date_of_attendance`,`attendance`,`attendance_status`) 
+              VALUES ( "'. $class_id . '", "'. $section_id . '", "'. $value . '", "'. $teacher_id . '", "'. $todaysDate . '", "'. $data['attendance'][$key] . '", "'. $attenStatus . '")';
           $res = $this->insert($qry);
         }
         return true;  
@@ -28,8 +33,8 @@ class StudentAttendance extends MySQLCN {
     }
 
     function getCurrentMonthAttendance($classId , $teacherId , $currentMonth , $currentYear , $studentId , $numberOfDays) {
-        $fetch = "SELECT students_attendance.attendance , DAY(date_of_attendance) as day_number from students_attendance where students_attendance.class_id='".$classId."' and students_attendance.teacher_id= '".$teacherId."' and students_attendance.student_id= '".$studentId."' and MONTH(students_attendance.date_of_attendance)='".$currentMonth."' and YEAR(students_attendance.date_of_attendance)='".$currentYear."'";
-        $fetch_result = $this->select($fetch); 
+        $fetch = "SELECT students_attendance.attendance, students_attendance.attendance_status , DAY(date_of_attendance) as day_number from students_attendance where students_attendance.class_id='".$classId."' and students_attendance.teacher_id= '".$teacherId."' and students_attendance.student_id= '".$studentId."' and MONTH(students_attendance.date_of_attendance)='".$currentMonth."' and YEAR(students_attendance.date_of_attendance)='".$currentYear."'";
+        $fetch_result = $this->select($fetch);
         if (!empty($fetch_result)) {
           $student_data = array();
           $attendanceArray = array();

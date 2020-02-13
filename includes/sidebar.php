@@ -9,6 +9,24 @@
                             <a href="dashboard.php"><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</a>
                         </li>
                         <?php if($_SESSION['user_role'] == '1' ) { ?>
+
+                        <li class="submenu">
+                            <a href="#"><i class="fa fa-files-o" aria-hidden="true"></i> <span> Admission Form</span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled" style="display: none;">
+                                <li><a class="<?php if($currentURL =='admission-form-listing.php'){echo 'active';}?>" href="admission-form-listing.php">All Listing</a></li>
+                                <li><a class="<?php if($currentURL =='add-admission-form.php'){echo 'active';}?>" class="" href="add-admission-form.php">Fill Admission Form</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="submenu">
+                            <a href="#"><i class="fa fa-files-o" aria-hidden="true"></i> <span> Transfer Certificate</span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled" style="display: none;">
+                                <li><a class="<?php if($currentURL =='transfer-certificate-listing.php'){echo 'active';}?>" href="transfer-certificate-listing.php">All Transfer Certificate</a></li>
+                                <li><a class="<?php if($currentURL =='add-transfer-certificate.php'){echo 'active';}?>" class="" href="add-transfer-certificate.php">Add T.C.</a></li>
+
+                            </ul>
+                        </li>
+
 						<li class="submenu">
                             <a href="#"><i class="fa fa-users" aria-hidden="true"></i> <span> Teachers Listing</span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">
@@ -79,7 +97,7 @@
                         </li>
                         <?php } ?>
                         <?php if( ($_SESSION['user_role'] == '2') ||  ($_SESSION['user_role'] == '3')) { ?>
-                        <li class="<?php if($currentURL =='request-leave-list.php' || $currentURL =='add-leaves-type.php'){echo 'active';}?>">
+                        <li class="<?php if($currentURL =='request-leave-list.php' || $currentURL =='add-leaves-type.php' || $currentURL == 'request-leave.php'){echo 'active';}?>">
                             <a href="request-leave-list.php"><i class="fa fa-bullhorn" aria-hidden="true"></i>Request Leave List</a>
                         </li>
                         <?php } ?>

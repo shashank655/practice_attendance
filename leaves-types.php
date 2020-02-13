@@ -44,6 +44,7 @@ require_once 'includes/sidebar.php';
                                         <th style="min-width:50px;">S.No.</th>
                                         <th style="min-width:50px;">Leave Type</th>
                                         <th style="min-width:50px;">Number of days</th>
+                                        <th style="min-width:50px;">Leave Type</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -53,11 +54,12 @@ require_once 'includes/sidebar.php';
                                         <td><?php echo $i; ?></td>
                                         <td><?php echo $value['leave_type']; ?></td>
                                         <td><?php echo $value['days']; ?></td>
+                                        <td><?php echo $value['paid_type']; ?></td>
                                         <td class="text-right" >
 											<a href="add-leaves-type.php?id=<?php echo $value['id']; ?>" class="btn btn-primary btn-sm mb-1">
 												<i class="fa fa-pencil" aria-hidden="true"></i>
 											</a>
-                                            <a href="employee/process/processLeavesTypes.php?type=deleteLeaves&id=<?php echo $value['id']; ?>" class="btn btn-danger btn-sm mb-1">
+                                            <a href="employee/process/processLeavesTypes.php?type=deleteLeaves&id=<?php echo $value['id']; ?>" onclick="return confirm('Are you sure you want to delete this?')" class="btn btn-danger btn-sm mb-1">
                                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                             </a>
 											

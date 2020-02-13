@@ -63,8 +63,8 @@ require_once 'includes/sidebar.php';
                                                 <input type="hidden" name="student_id[]" value="<?php echo $value['id'] ?>" />
                                                 <tr>
                                                     <td>
-                                                        <h2><a href="profile.html" class="avatar text-white">P</a></h2>
-                                                        <h2><a href="profile.html"><?php echo $value['first_name']; ?> <span></span></a></h2>
+                                                        
+                                                        <h2><?php echo $value['first_name']; ?> <span></span></h2>
                                                     </td>
                                                     <td><?php echo $value['last_name']; ?></td>
                                                     <td>
@@ -81,13 +81,13 @@ require_once 'includes/sidebar.php';
                                                     </td>
                                                     <td>
                                                         <label class="custom_checkbox">
-                                                          <input type="radio" name="" value="P">
+                                                          <input type="checkbox" name="attendance_status[<?php echo $key?>]" value="half_day">
                                                           <span class="checkmark"></span>
                                                         </label>
                                                     </td>
                                                     <td>
                                                         <label class="custom_checkbox">
-                                                          <input type="radio" name="" value="P">
+                                                          <input type="checkbox" name="attendance_status[<?php echo $key?>]" value="on_leave">
                                                           <span class="checkmark"></span>
                                                         </label>
                                                     </td>

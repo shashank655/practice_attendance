@@ -12,5 +12,9 @@ define("PROFILE_PIC_IMAGE_PATH",ROOT."upload/");
 define("LEAVE_ATTACHMENT",ROOT."upload/leave_attachment/");
 define("GALLERY_UPLOADS_ROOT",$_SERVER['DOCUMENT_ROOT']."/practice_attendance/employee/upload/gallery_uploads/");
 define("GALLERY_UPLOADS_PATH",ROOT."upload/gallery_uploads/");
+
+define("LEAVES_ATTACHMENT_ROOT",$_SERVER['DOCUMENT_ROOT']."/practice_attendance/employee/upload/request_leaves/");
+define("LEAVES_ATTACHMENT_PATH",ROOT."upload/request_leaves/");
+
 define("TEACHERS_EXPIRY_TIME","20");
 ?>

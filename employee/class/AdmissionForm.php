@@ -40,6 +40,12 @@ class AdmissionForm extends MySQLCN {
         return $fetch_list;
     }
     
+    function getFormInfo($id) {
+        $fetch = "SELECT * FROM `admission_form_listing` join classes_name on admission_form_listing.class_id=classes_name.id join sections on admission_form_listing.section_id=sections.id where admission_form_listing.id ='" . $id . "'";
+        $fetch_data = $this->select($fetch);
+        return $fetch_data;
+    }
+        
     function getStudentsByFeeGroup($fee_group_id) {
         $feeGroup = "SELECT * FROM `fee_groups` WHERE id='{$fee_group_id}'";
         $fetch = $this->select($feeGroup);

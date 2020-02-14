@@ -19,6 +19,12 @@ class TransferCertificate extends MySQLCN {
         }
     }
 
+    function getFormInfo($id) {
+        $fetch = "SELECT * FROM `transfer_certificate` where id ='" . $id . "'";
+        $fetch_data = $this->select($fetch);
+        return $fetch_data;
+    }
+
     function checkStudentExist($data) {
         $qry = "SELECT * FROM admission_form_listing WHERE email_address = '{$data['email_address']}'";
         $result = $this->select($qry);

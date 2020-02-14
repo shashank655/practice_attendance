@@ -30,7 +30,7 @@ require_once 'includes/sidebar.php';
                       
                     </div>
                     <div class="col-sm-8 col-9 text-right m-b-20">
-                        <a href="add-transfer-certificate.php" class="btn btn-primary float-right btn-rounded"><i class="fa fa-plus"></i> Add Admission Form</a>
+                        <a href="add-transfer-certificate.php" class="btn btn-primary float-right btn-rounded"><i class="fa fa-plus"></i> Add T.C. Form</a>
                     </div>
                 </div>
             <div class="content-page">
@@ -46,10 +46,7 @@ require_once 'includes/sidebar.php';
                                         <th style="min-width:50px;">Address</th>
                                         <th style="min-width:50px;">Religion/Category</th>
                                         <th style="min-width:50px;">Joining Date</th>
-                                        <th style="min-width:50px;">From</th>
-                                        <th style="min-width:50px;">To</th>
-                                        <th style="min-width:50px;">Class Name</th>
-                                        <th style="min-width:50px;">Date</th>
+                                        <th style="min-width:50px;">View</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -62,10 +59,7 @@ require_once 'includes/sidebar.php';
                                         <td><?php echo $value['address']; ?></td>
                                         <td><?php echo $value['religion']; ?></td>
                                         <td><?php echo $value['joining'];?></td>
-                                        <td><?php echo $value['from_date']; ?></td>
-                                        <td><?php echo $value['to_date']; ?></td>
-                                        <td><?php echo $value['class_name']; ?></td>
-                                        <td><?php echo $value['tc_date']; ?></td>
+                                        <td><a href="view-tc-form.php?tcId=<?php echo $value[0];?>">View</a></td>
                                     </tr>
                                     <?php $i++; } ?>
                                 </tbody>

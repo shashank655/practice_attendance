@@ -48,10 +48,7 @@ require_once 'includes/sidebar.php';
                                         <th style="min-width:50px;">Gender</th>
                                         <th style="min-width:50px;">Class</th>
                                         <th style="min-width:50px;">Sections</th>
-                                        <th style="min-width:50px;">Email Address</th>
-                                        <th style="min-width:50px;">DOB</th>
-                                        <th style="min-width:50px;">Mobile Number</th>
-                                        <th style="min-width:50px;">Address</th>
+                                        <th style="min-width:50px;">View</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -70,10 +67,7 @@ require_once 'includes/sidebar.php';
                                         <td><?php echo $value['gender']; ?></td>
                                         <td><?php echo $value['class_name'];?></td>
                                         <td><?php echo $value['section_name']; ?></td>
-                                        <td><?php echo $value['email_address']; ?></td>
-                                        <td><?php echo $value['dob']; ?></td>
-                                        <td><?php echo $value['mobile_number']; ?></td>
-                                        <td><?php echo $value['present_address']; ?></td>
+                                        <td><a href="view-admission-form.php?formId=<?php echo $value[0];?>">View</a></td>
                                     </tr>
                                     <?php $i++; } ?>
                                 </tbody>

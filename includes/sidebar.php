@@ -27,6 +27,13 @@
                             </ul>
                         </li>
 
+                        <li class="submenu">
+                            <a href="#"><i class="fa fa-files-o" aria-hidden="true"></i> <span> Upload CSV</span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled" style="display: none;">
+                                <li><a class="<?php if($currentURL =='upload-student-csv.php'){echo 'active';}?>" href="upload-student-csv.php">Upload Student CSV</a></li>
+                            </ul>
+                        </li>
+
 						<li class="submenu">
                             <a href="#"><i class="fa fa-users" aria-hidden="true"></i> <span> Teachers Listing</span> <span class="menu-arrow"></span></a>
                             <ul class="list-unstyled" style="display: none;">

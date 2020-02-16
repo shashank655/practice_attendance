@@ -1,390 +1,298 @@
-<?php $currentURL = basename($_SERVER['REQUEST_URI'], '?' . $_SERVER['QUERY_STRING']);
+<?php
+$current_url = basename($_SERVER['REQUEST_URI'], '?' . $_SERVER['QUERY_STRING']);
+$menus = [
+    'Dashboard' => [
+        'to' => 'dashboard.php',
+        'icon' => 'fa fa-tachometer'
+    ],
+    'Admission Form' => [
+        'icon' => 'fa fa-files-o',
+        'can' => $_SESSION['user_role'] == 1,
+        'childs' => [
+            'All Listing' => [
+                'to' => 'admission-form-listing.php',
+                'related' => ['view-admission-form.php']
+            ],
+            'Fill Admission Form' => [
+                'to' => 'add-admission-form.php'
+            ]
+        ]
+    ],
+    'Transfer Certificate' => [
+        'icon' => 'fa fa-files-o',
+        'can' => $_SESSION['user_role'] == 1,
+        'childs' => [
+            'All Transfer Certificate' => [
+                'to' => 'transfer-certificate-listing.php',
+                'related' => ['view-tc-form.php']
+            ],
+            'Add T.C.' => [
+                'to' => 'add-transfer-certificate.php'
+            ]
+        ]
+    ],
+    'Teachers Listing' => [
+        'icon' => 'fa fa-users',
+        'can' => $_SESSION['user_role'] == 1,
+        'childs' => [
+            'All Teachers' => [
+                'to' => 'all-teachers.php',
+                'related' => ['teacher-profile.php']
+            ],
+            'Add Teacher' => [
+                'to' => 'add-teacher.php'
+            ]
+        ]
+    ],
+    'Students Listing' => [
+        'icon' => 'fa fa-users',
+        'can' => $_SESSION['user_role'] == 1,
+        'childs' => [
+            'All Students' => [
+                'to' => 'all-students.php',
+                'related' => ['student-profile.php']
+            ],
+            'Add Student' => [
+                'to' => 'add-student.php'
+            ]
+        ]
+    ],
+    'Classes & Sections' => [
+        'icon' => 'fa fa-building',
+        'can' => $_SESSION['user_role'] == 1,
+        'childs' => [
+            'Classes List' => [
+                'to' => 'class-section-list.php'
+            ],
+            'Add Classes' => [
+                'to' => 'class-section.php'
+            ]
+        ]
+    ],
+    'Subjects' => [
+        'icon' => 'fa fa-book',
+        'can' => $_SESSION['user_role'] == 1,
+        'childs' => [
+            'Subjects List' => [
+                'to' => 'subject-lists.php'
+            ],
+            'Add Subjects' => [
+                'to' => 'add-subjects.php'
+            ]
+        ]
+    ],
+    'Exam Management' => [
+        'icon' => 'fa fa-graduation-cap',
+        'can' => $_SESSION['user_role'] == 1,
+        'childs' => [
+            'Add Exam Type' => [
+                'to' => 'exam-types-lists.php',
+                'related' => ['add-exam-type.php']
+            ],
+            'Manage Exam Term' => [
+                'to' => 'manage-exam-terms-lists.php',
+                'related' => ['add-exam-term.php']
+            ],
+            'Exams List' => [
+                'to' => 'exams-list.php',
+                'related' => ['add-exams.php']
+            ]
+        ]
+    ],
+    'Leave Management' => [
+        'icon' => 'fa fa-bullhorn',
+        'can' => $_SESSION['user_role'] == 1,
+        'childs' => [
+            'Add Leaves Types' => [
+                'to' => 'leaves-types.php',
+                'related' => ['add-leaves-type.php']
+            ],
+            'Leave Requests List' => [
+                'to' => 'leave-requests-list.php',
+                'related' => ['view-leave-requests.php']
+            ]
+        ]
+    ],
+    'Holidays / Events' => [
+        'icon' => 'fa fa-calendar',
+        'childs' => [
+            'Calender' => [
+                'to' => 'calender.php'
+            ],
+            'Holidays' => [
+                'to' => 'holidays.php'
+            ],
+            'Events' => [
+                'to' => 'events.php'
+            ]
+        ]
+    ],
+    'All Students List' => [
+        'to' => 'all-students.php',
+        'icon' => 'fa fa-users',
+        'can' => $_SESSION['user_role'] == 2 || $_SESSION['user_role'] == 3,
+        'related' => ['student-profile.php']
+    ],
+    'Request Leave List' => [
+        'to' => 'request-leave-list.php',
+        'icon' => 'fa fa-bullhorn',
+        'can' => $_SESSION['user_role'] == 2 || $_SESSION['user_role'] == 3,
+        'related' => ['add-leaves-type.php']
+    ],
+    'Student Attendance' => [
+        'to' => 'student-attendance-list.php',
+        'icon' => 'fa fa-address-card-o',
+        'can' => $_SESSION['user_role'] == 2,
+        'related' => ['student-attendance.php']
+    ],
+    'Exam Management' => [
+        'icon' => 'fa fa-user',
+        'can' => $_SESSION['user_role'] == 2,
+        'childs' => [
+            'Add Student Marks' => [
+                'to' => 'select-exam-list.php',
+                'related' => ['student-attendance.php']
+            ],
+            'Results & Analysis' => [
+                'to' => 'add-students-marks.php',
+                'related' => ['students-result.php']
+            ]
+        ]
+    ],
+    'Attend. Management' => [
+        'icon' => 'fa fa-user',
+        'can' => $_SESSION['user_role'] == 1,
+        'childs' => [
+            'Student\'s Attendance' => [
+                'to' => 'all-students-attendance-list.php'
+            ],
+            'Teacher\'s Attendance' => [
+                'to' => 'teacher-attendance-list.php'
+            ]
+        ]
+    ],
+    'My Attendance' => [
+        'to' => 'teacher-attendance-list.php',
+        'icon' => 'fa fa-address-card-o',
+        'can' => $_SESSION['user_role'] == 2 || $_SESSION['user_role'] == 3
+    ],
+    $_SESSION['user_role'] == 1 ? 'Teachers' : 'My' . ' Login Record' => [
+        'to' => 'teacher-login-records-list.php',
+        'icon' => 'fa fa-files-o'
+    ],
+    'Contacts' => [
+        'to' => 'contacts.php',
+        'icon' => 'fa fa-address-book'
+    ],
+    'Role and Permission' => [
+        'icon' => 'fa fa-shield',
+        'can' => $_SESSION['user_role'] == 1,
+        'childs' => [
+            'Roles' => [
+                'to' => 'roles-list.php',
+                'related' => ['add-roles.php']
+            ],
+            'Permission' => [
+                'to' => 'permissions-list.php'
+            ],
+            'Users' => [
+                'to' => 'users-list.php',
+                'related' => ['edit-users.php']
+            ],
+            'Teachers' => [
+                'to' => 'teachers.php',
+                'related' => ['assign-teacher.php']
+            ]
+        ]
+    ],
+    'HR' => [
+        'icon' => 'fa fa-table',
+        'childs' => [
+            'Admission Form' => [
+                'to' => 'admission-list.php',
+                'related' => ['new-admission.php']
+            ]
+        ]
+    ],
+    'Accounts' => [
+        'icon' => 'fa fa-money',
+        'childs' => [
+            'Fees Head' => [
+                'to' => 'fee-head.php',
+                'related' => ['add-edit-fee-head.php']
+            ]
+        ]
+    ],
+    'My Pay Slip' => [
+        'to' => 'view-employee-salary.php',
+        'icon' => 'fa fa-money',
+        'can' => $_SESSION['user_role'] == 2 || $_SESSION['user_role'] == 3
+    ],
+    'Gallery' => [
+        'to' => 'gallery.php',
+        'icon' => 'fa fa-picture-o'
+    ]
+];
+
+$menus = array_filter($menus, function ($menu) {
+    if (isset($menu['can']) && false === $menu['can']) return;
+    if (isset($menu['childs'])) {
+        $menu['childs'] = array_filter($menu['childs'], function ($child) {
+            if (isset($child['can']) && false === $child['can']) return;
+
+            if (user_has_permission($child['to'])) return $child;
+        });
+        if (count($menu['childs'])) return $menu;
+    }
+    if (user_has_permission($menu['to'])) return $menu;
+});
+
+$menus =  array_map(function ($menu) {
+    if (!isset($menu['to'])) $menu['to'] = '#';
+    if (!isset($menu['childs'])) $menu['childs'] = [];
+    if (!isset($menu['related'])) $menu['related'] = [];
+    if ($menu['to'] != '#') array_push($menu['related'], $menu['to']);
+
+    $menu['childs'] = array_map(function ($child) {
+        if (!isset($child['related'])) $child['related'] = [];
+
+        if ($child['to'] != '#') array_push($child['related'], $child['to']);
+        return $child;
+    }, $menu['childs']);
+
+    return $menu;
+}, $menus);
 ?>
-<div class="sidebar" id="sidebar"> <!-- sidebar -->
-            <div class="sidebar-inner slimscroll">
-                <div id="sidebar-menu" class="sidebar-menu">
-                    <ul>
-                        <li class="menu-title">Main</li>
-                    	<li class="<?php if($currentURL =='dashboard.php'){echo 'active';}?>">
-                            <a href="dashboard.php"><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</a>
-                        </li>
-                        <?php if($_SESSION['user_role'] == '1' ) { ?>
 
-                        <li class="submenu">
-                            <a href="#"><i class="fa fa-files-o" aria-hidden="true"></i> <span> Admission Form</span> <span class="menu-arrow"></span></a>
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-inner slimscroll">
+        <div id="sidebar-menu" class="sidebar-menu">
+            <ul>
+                <li class="menu-title">Main</li>
+                <?php foreach ($menus as $text => $menu) : ?>
+                    <?php
+                    $class_names = [];
+                    if (count($menu['childs'])) array_push($class_names, 'submenu');
+                    if (in_array($current_url, $menu['related'])) array_push($class_names, 'active');
+                    ?>
+                    <li class="<?= implode(', ', $class_names); ?>">
+                        <a href="<?= $menu['to']; ?>">
+                            <i class="<?= $menu['icon']; ?>" aria-hidden="true"></i>
+                            <span><?= $text; ?></span>
+                            <?php if (count($menu['childs'])) : ?>
+                                <span class="menu-arrow"></span>
+                            <?php endif; ?>
+                        </a>
+                        <?php if (count($menu['childs'])) : ?>
                             <ul class="list-unstyled" style="display: none;">
-                                <li><a class="<?php if($currentURL =='admission-form-listing.php'  || $currentURL =='view-admission-form.php'){echo 'active';}?>" href="admission-form-listing.php">All Listing</a></li>
-                                <li><a class="<?php if($currentURL =='add-admission-form.php'){echo 'active';}?>" class="" href="add-admission-form.php">Fill Admission Form</a></li>
+                                <?php foreach ($menu['childs'] as $child_text => $child) : ?>
+                                    <li><a class="<?= in_array($current_url, $child['related']) ? 'active' : ''; ?>" href="<?= $child['to']; ?>"><?= $child_text; ?></a></li>
+                                <?php endforeach; ?>
                             </ul>
-                        </li>
-
-                        <li class="submenu">
-                            <a href="#"><i class="fa fa-files-o" aria-hidden="true"></i> <span> Transfer Certificate</span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled" style="display: none;">
-                                <li><a class="<?php if($currentURL =='transfer-certificate-listing.php' || $currentURL =='view-tc-form.php'){echo 'active';}?>" href="transfer-certificate-listing.php">All Transfer Certificate</a></li>
-                                <li><a class="<?php if($currentURL =='add-transfer-certificate.php'){echo 'active';}?>" class="" href="add-transfer-certificate.php">Add T.C.</a></li>
-
-                            </ul>
-                        </li>
-
-                        <li class="submenu">
-                            <a href="#"><i class="fa fa-files-o" aria-hidden="true"></i> <span> Upload CSV</span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled" style="display: none;">
-                                <li><a class="<?php if($currentURL =='upload-student-csv.php'){echo 'active';}?>" href="upload-student-csv.php">Upload Student CSV</a></li>
-                            </ul>
-                        </li>
-
-						<li class="submenu">
-                            <a href="#"><i class="fa fa-users" aria-hidden="true"></i> <span> Teachers Listing</span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled" style="display: none;">
-                                <li><a class="<?php if($currentURL =='all-teachers.php' || $currentURL == 'teacher-profile.php'){echo 'active';}?>" href="all-teachers.php">All Teachers</a></li>
-                                <li><a class="<?php if($currentURL =='add-teacher.php'){echo 'active';}?>" href="add-teacher.php">Add Teacher</a></li>
-                            </ul>
-                        </li>
-                        <li class="submenu">
-                            <a href="#"><i class="fa fa-users" aria-hidden="true"></i> <span> Students Listing</span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled" style="display: none;">
-                                <li><a class="<?php if($currentURL =='all-students.php' || $currentURL == 'student-profile.php'){echo 'active';}?>" href="all-students.php">All Students</a></li>
-                                <li><a class="<?php if($currentURL =='add-student.php'){echo 'active';}?>" class="" href="add-student.php">Add Student</a></li>
-                            </ul>
-                        </li>
-                        <?php } ?>
-                        <?php if($_SESSION['user_role'] == '1' ) { ?>
-                        <li class="submenu">
-                            <a href="#"><i class="fa fa-building" aria-hidden="true"></i> <span> Classes & Sections</span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled" style="display: none;">
-                                <li><a class="<?php if($currentURL =='class-section-list.php'){echo 'active';}?>" href="class-section-list.php">Classes List</a></li>
-                                <li><a class="<?php if($currentURL =='class-section.php'){echo 'active';}?>" class="" href="class-section.php">Add Classes</a></li>
-                            </ul>
-                        </li>
-                        <li class="submenu">
-                            <a href="#"><i class="fa fa-book" aria-hidden="true"></i> <span> Subjects</span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled" style="display: none;">
-                                <li><a class="<?php if($currentURL =='subject-lists.php'){echo 'active';}?>" href="subject-lists.php">Subjects List</a></li>
-                                <li><a class="<?php if($currentURL =='add-subjects.php'){echo 'active';}?>" class="" href="add-subjects.php">Add Subjects</a></li>
-
-                            </ul>
-                        </li>
-                        <li class="submenu">
-                            <a href="#"><i class="fa fa-graduation-cap" aria-hidden="true"></i> <span> Exam Management</span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled" style="display: none;">
-                                <li><a class="<?php if($currentURL =='exam-types-lists.php' || $currentURL =='add-exam-type.php'){echo 'active';}?>" href="exam-types-lists.php">Add Exam Type</a></li>
-                                <li><a class="<?php if($currentURL =='manage-exam-terms-lists.php' || $currentURL == 'add-exam-term.php'){echo 'active';}?>" href="manage-exam-terms-lists.php">Manage Exam Term</a></li>
-                                <li><a class="<?php if($currentURL =='exams-list.php' || $currentURL =='add-exams.php'){echo 'active';}?>" href="exams-list.php">Exams List</a></li>
-                            </ul>
-                        </li>   
-                        </li>
-                        <li class="submenu">
-                            <a href="#"><i class="fa fa-bullhorn" aria-hidden="true"></i> <span>Leave Management</span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled" style="display: none;">
-                            <li> <a href="leaves-types.php" class="<?php if($currentURL =='leaves-types.php' || $currentURL =='add-leaves-type.php'){echo 'active';}?>">Add Leaves Types</a>
-                            </li>
-                            <li> <a href="leave-requests-list.php" class="<?php if($currentURL =='leave-requests-list.php' || $currentURL =='view-leave-requests.php'){echo 'active';}?>">
-                                Leave Requests List</a>
-                            </li>
-                            </ul>
-                        </li>
-                        <?php } ?>
-                        <li class="submenu">
-                            <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> <span>Holidays /
-                            Events </span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled" style="display: none;">
-                            <li><a href="calender.php" class="<?php if($currentURL =='calender.php'){echo 'active';}?>">Calender</a>
-                            </li>
-                            <li><a href="holidays.php" class="<?php if($currentURL =='holidays.php'){echo 'active';}?>">Holidays</a>
-                            </li>
-                            <li><a href="events.php" class="<?php if($currentURL =='events.php'){echo 'active';}?>">
-                                Events</a>
-                            </li>
-                            </ul>
-                        </li>
-                        <?php if( ($_SESSION['user_role'] == '2') ||  ($_SESSION['user_role'] == '3')) { ?>
-                        <li class="<?php if($currentURL =='all-students.php' || $currentURL =='student-profile.php'){echo 'active';}?>">
-                            <a href="all-students.php"><i class="fa fa-users" aria-hidden="true"></i>All Students List</a>
-                        </li>
-                        <?php } ?>
-                        <?php if( ($_SESSION['user_role'] == '2') ||  ($_SESSION['user_role'] == '3')) { ?>
-                        <li class="<?php if($currentURL =='request-leave-list.php' || $currentURL =='add-leaves-type.php' || $currentURL == 'request-leave.php'){echo 'active';}?>">
-                            <a href="request-leave-list.php"><i class="fa fa-bullhorn" aria-hidden="true"></i>Request Leave List</a>
-                        </li>
-                        <?php } ?>
-                        <?php if($_SESSION['user_role'] == '2') { ?>
-                        <li class="<?php if($currentURL =='student-attendance-list.php' || $currentURL =='student-attendance.php'){echo 'active';}?>">
-                            <a href="student-attendance-list.php"><i class="fa fa-address-card-o" aria-hidden="true"></i>Student Attendance</a>
-                        </li>
-                        <?php } ?>
-
-                        <?php if($_SESSION['user_role'] == '2') { ?>
-                        <li class="submenu">
-                            <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Exam Management</span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled" style="display: none;">
-                                <li><a class="<?php if($currentURL =='select-exam-list.php' || $currentURL =='add-students-marks.php'){echo 'active';}?>" href="select-exam-list.php">Add Student Marks</a></li>
-                                <li><a class="<?php if($currentURL =='select-term-session.php' || $currentURL == 'students-result.php'){echo 'active';}?>" href="select-term-session.php">Results & Analysis</a></li>
-                            </ul>
-                        </li>
-                        <?php } ?>
-                        <?php if($_SESSION['user_role'] == '1') { ?>
-                        <li class="submenu">
-                            <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Attend. Management</span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled" style="display: none;">
-                                <li> <a href="all-students-attendance-list.php" class="<?php if($currentURL =='all-students-attendance-list.php' || $currentURL =='all-students-attendance-list.php'){echo 'active';}?>">
-                                    Student's Attendance</a>
-                                </li>
-                                <li> <a href="teacher-attendance-list.php" class="<?php if($currentURL =='teacher-attendance-list.php' || $currentURL =='teacher-attendance-list.php'){echo 'active';}?>">
-                                    Teacher's Attendance</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <?php } ?>
-
-                        <?php if($_SESSION['user_role'] == '2' || $_SESSION['user_role'] == '3') { ?>
-                        <li class="<?php if($currentURL =='teacher-attendance-list.php' || $currentURL =='teacher-attendance-list.php'){echo 'active';}?>">
-                            <a href="teacher-attendance-list.php"><i class="fa fa-address-card-o" aria-hidden="true"></i>My Attendance</a>
-                        </li>
-                        <?php } ?>
-                        <?php 
-                            if($_SESSION['user_role'] == '1') {
-                                $text = 'Teachers';
-                            } else {
-                                $text = 'My';
-                            }
-                        ?>
-                        <li class="<?php if($currentURL =='teacher-login-records-list.php'){echo 'active';}?>">
-                            <a href="teacher-login-records-list.php"><i class="fa fa-files-o" aria-hidden="true"></i><?php echo $text; ?> Login Record</a>
-                        </li>
-                        <li class="<?php if($currentURL =='contacts.php' || $currentURL =='contacts.php'){echo 'active';}?>">
-                            <a href="contacts.php"><i class="fa fa-address-book" aria-hidden="true"></i>Contacts</a>
-                        </li>
-                        <?php if ( $_SESSION['user_role'] == '1' ): ?>
-                          <li class="submenu">
-                            <a href="#"><i class="fa fa-shield" aria-hidden="true"></i><span> Role and Permission </span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled" style="display: none;">
-                              <li ><a class="<?php if($currentURL =='roles-list.php' || $currentURL =='add-roles.php'){echo 'active';}?>" href="roles-list.php"> Roles </a></li>
-                              <li ><a class="<?php if($currentURL =='permissions-list.php'){echo 'active';}?>" href="permissions-list.php"> Permission </a></li>
-                              <li ><a class="<?php if($currentURL == 'users-list.php' || $currentURL == 'edit-users.php'){echo 'active';}?>" href="users-list.php"> Users </a></li>
-                              <li><a class="<?php if($currentURL =='teachers.php' || $currentURL =='assign-teacher.php'){echo 'active';}?>" href="teachers.php">Teachers</a></li>
-                            </ul>
-                          </li>
-                          <li class="submenu">
-                            <a href="#"><i class="fa fa-table" aria-hidden="true"></i><span> HR </span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled" style="display: none;">
-                              <li ><a class="<?php if($currentURL =='admission-list.php' || $currentURL =='new-admission.php'){echo 'active';}?>" href="admission-list.php"> Admission Form </a></li>
-                            </ul>
-                          </li>
-                          <li class="submenu">
-                            <a href="#"><i class="fa fa-money" aria-hidden="true"></i><span> Accounts </span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled" style="display: none;">
-                              <li ><a class="<?php if($currentURL =='fee-amounts-list.php' || $currentURL =='add-fee-amounts.php'){echo 'active';}?>" href="fee-amounts-list.php"> Create Fees Structure </a></li>
-                              <li ><a class="<?php if($currentURL =='fee-class-groups-list.php' || $currentURL =='add-fee-class-groups.php'){echo 'active';}?>" href="fee-class-groups-list.php"> Fee Class Groups </a></li>
-                              <li ><a class="<?php if($currentURL =='fee-groups-list.php' || $currentURL =='add-fee-groups.php'){echo 'active';}?>" href="fee-groups-list.php"> Assign Fees </a></li>
-                              <li ><a class="<?php if($currentURL =='particulars-list.php' || $currentURL =='add-particulars.php'){echo 'active';}?>" href="particulars-list.php"> Discounts </a></li>
-                              <li ><a class="<?php if($currentURL =='fee-collection-list.php' || $currentURL =='add-fee-collection.php'){echo 'active';}?>" href="fee-collection-list.php"> Fee Collection </a></li>
-                              <li class="submenu">
-                                  <a href="#"><span> Payroll </span> <span class="menu-arrow"></span></a>
-                                  <ul class="list-unstyled" style="display: none;">
-                                      <li ><a class="<?php if($currentURL =='employee-salary.php' || $currentURL =='view-employee-salary.php' || $currentURL =='add-employee-salary.php'){echo 'active';}?>" href="employee-salary.php"> Employee Salary </a></li>
-                                  </ul>
-                              </li>
-                              <li class="submenu">
-                                <a href="#"><span> Expenses </span> <span class="menu-arrow"></span> </a>
-                                <ul>
-                                  <li><a class="<?php if($currentURL =='expense-types-list.php' || $currentURL =='add-expense-types.php'){echo 'active';}?>" href="expense-types-list.php"> Expense Types </a></li>
-                                  <li><a class="<?php if($currentURL =='expenses-list.php' || $currentURL =='add-expenses.php'){echo 'active';}?>" href="expenses-list.php"> Expenses List </a></li>
-                                </ul>
-                              </li>
-                            </ul>
-                          </li>
                         <?php endif; ?>
-                        <?php if ( $_SESSION['user_role'] != '1' ): ?>
-                            <li class="<?php if($currentURL =='view-employee-salary.php'){echo 'active';}?>">
-                              <a href="view-employee-salary.php"><i class="fa fa-money" aria-hidden="true"></i>My Pay Slip</a>
-                          </li>
-                        <?php endif; ?>    
-                        <li class="<?php if($currentURL =='gallery.php'){echo 'active';}?>">
-                              <a href="gallery.php"><i class="fa fa-picture-o" aria-hidden="true"></i>Gallery</a>
-                          </li>
-						<!-- <li class="submenu">
-                            <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Students</span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled" style="display: none;">
-                                <li><a href="all-students.html">All Students</a></li>
-                                <li><a href="add-student.html">Add Student</a></li>
-                                <li><a href="edit-student.html">Edit Student</a></li>
-								<li><a href="about-student.html">About Student</a></li>
-                            </ul>
-                        </li>
-						<li class="submenu">
-                            <a href="#"><i class="fa fa-user" aria-hidden="true"></i> <span> Parents</span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled" style="display: none;">
-                                <li><a href="all-parents.html">All Parents</a></li>
-                                <li><a href="add-parent.html">Add Parent</a></li>
-                                <li><a href="edit-parent.html">Edit Parent</a></li>
-								<li><a href="about-parent.html">About Parent</a></li>
-                            </ul>
-                        </li>
-						<li class="submenu">
-                            <a href="javascript:void(0);"><i class="fa fa-share-alt" aria-hidden="true"></i> <span>Apps</span> <span class="menu-arrow"></span></a>
-                            <ul style="display: none;">
-                                <li class="submenu">
-                                    <a href="javascript:void(0);"><span>Email</span> <span class="menu-arrow"></span></a>
-                                    <ul style="display: none;">
-                                        <li><a href="compose.html"><span>Compose Mail</span></a></li>
-                                        <li>
-                                            <a href="inbox.html"> <span> Inbox</span> </a>
-										</li>
-                                        <li><a href="mail-view.html"><span>Mailview</span></a></li>
-                                    </ul>
-                                </li>
-                                <li>
-									<a href="chat.html"> Chat <span class="badge badge-pill bg-primary float-right">5</span></a>
-								</li>
-								 <li class="submenu">
-									<a href="#"><span> Calls</span> <span class="menu-arrow"></span></a>
-									<ul class="list-unstyled" style="display: none;">
-										<li><a href="voice-call.html">Voice Call</a></li>
-										<li><a href="video-call.html">Video Call</a></li>
-										<li><a href="incoming-call.html">Incoming Call</a></li>
-									</ul>
-								</li>
-								 <li>
-									<a href="contacts.html"> Contacts</a>
-								</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="calendar.html" style="width: 80%; display: inline-block;"><i class="fa fa-calendar" aria-hidden="true"></i> Calendar</a>
-                        </li>
-						<li>
-                            <a href="exam-list.html"><i class="fa fa-table" aria-hidden="true"></i> Exam list</a>
-                        </li>
-                        <li>
-                            <a href="holidays.html"><i class="fa fa-tasks" aria-hidden="true"></i> Holidays</a>
-                        </li>
-						<li>
-                            <a href="calendar.html"><i class="fa fa-table" aria-hidden="true"></i> Events</a>
-                        </li>
-						<li class="submenu">
-							<a href="#"><i class="fa fa-book" aria-hidden="true"></i><span> Accounts </span> <span class="menu-arrow"></span></a>
-							<ul class="list-unstyled" style="display: none;">
-								<li><a href="invoices.html">Invoices</a></li>
-								<li><a href="payments.html">Payments</a></li>
-								<li><a href="expenses.html">Expenses</a></li>
-								<li><a href="provident-fund.html">Provident Fund</a></li>
-								<li><a href="taxes.html">Taxes</a></li>
-							</ul>
-						</li>
-						 <li class="submenu">
-							<a href="#"><i class="fa fa-money" aria-hidden="true"></i><span> Payroll </span> <span class="menu-arrow"></span></a>
-							<ul class="list-unstyled" style="display: none;">
-								<li><a href="salary.html"> Employee Salary </a></li>
-								<li><a href="salary-view.html"> Payslip </a></li>
-							</ul>
-						</li>
-                        <li class="submenu">
-                            <a href="#"><i class="fa fa-commenting-o" aria-hidden="true"></i> <span> Blog</span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled" style="display: none;">
-                                <li><a href="blog.html">Blog</a></li>
-                                <li><a href="blog-details.html">Blog View</a></li>
-                                <li><a href="add-blog.html">Add Blog</a></li>
-                                <li><a href="edit-blog.html">Edit Blog</a></li>
-                            </ul>
-                        </li>
-						 <li class="submenu">
-                            <a href="javascript:void(0);" class="noti-dot"><i class="fa fa-rocket" aria-hidden="true"></i> <span>Management </span> <span class="menu-arrow"></span></a>
-                            <ul style="display: none;">
-                                <li class="submenu">
-                                    <a href="#" class="noti-dot"><span> Employees</span> <span class="menu-arrow"></span></a>
-                                    <ul class="list-unstyled" style="display: none;">
-										<li><a href="all-employees.html">All Employees</a></li>
-                                        <li><a href="holidays.html">Holidays</a></li>
-                                        <li><a href="leaves.html"><span>Leave Requests</span> <span class="badge badge-pill bg-primary float-right">1</span></a></li>
-                                        <li><a href="attendance.html">Attendance</a></li>
-                                        <li><a href="departments.html">Departments</a></li>
-                                        <li><a href="designations.html">Designations</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="activities.html">Activities</a>
-                                </li>
-                                <li>
-                                    <a  href="users.html">Users</a>
-                                </li>
-                                <li class="submenu">
-                                    <a href="#"><span> Reports </span> <span class="menu-arrow"></span></a>
-                                    <ul class="list-unstyled" style="display: none;">
-                                        <li><a href="expense-reports.html"> Expense Report </a></li>
-                                        <li><a href="invoice-reports.html"> Invoice Report </a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="settings.html"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
-                        </li>
-                        <li class="menu-title">UI Elements</li>
-                        <li class="submenu">
-                            <a href="#"><i class="fa fa-laptop" aria-hidden="true"></i> <span> Components</span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled" style="display: none;">
-                                <li><a href="uikit.html">UI Kit</a></li>
-                                <li><a href="typography.html">Typography</a></li>
-                                <li><a href="tabs.html">Tabs</a></li>
-                            </ul>
-                        </li>
-                         <li class="submenu">
-                            <a href="#"><i class="fa fa-edit" aria-hidden="true"></i> <span> Forms</span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled" style="display: none;">
-                                <li><a href="basic-inputs.html">Basic Input</a></li>
-                                <li><a href="form-basic-inputs.html">Basic Inputs</a></li>
-                                <li><a href="form-input-groups.html">Input Groups</a></li>
-                                <li><a href="form-horizontal.html">Horizontal Form</a></li>
-                                <li><a href="form-vertical.html">Vertical Form</a></li>
-                            </ul>
-                        </li>
-                        <li class="submenu">
-                            <a href="#"><i class="fa fa-table" aria-hidden="true"></i> <span> Tables</span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled" style="display: none;">
-                                <li><a href="tables-basic.html">Basic Tables</a></li>
-                                <li><a href="tables-datatables.html">Data Table</a></li>
-                            </ul>
-                        </li>
-                        <li class="menu-title">Extras</li>
-                        <li class="submenu">
-                            <a href="#"><i class="fa fa-columns" aria-hidden="true"></i> <span>Pages</span> <span class="menu-arrow"></span></a>
-                            <ul class="list-unstyled" style="display: none;">
-                                <li><a href="login.html"> Login </a></li>
-                                <li><a href="register.html"> Register </a></li>
-                                <li><a href="forgot-password.html"> Forgot Password </a></li>
-                                <li><a href="change-password2.html"> Change Password </a></li>
-                                <li><a href="lock-screen.html"> Lock Screen </a></li>
-                                <li><a href="profile.html"> Profile </a></li>
-                                <li><a href="gallery.html"> Gallery </a></li>
-                                <li><a href="error-404.html">404 Error </a></li>
-                                <li><a href="error-500.html">500 Error </a></li>
-                                <li><a href="blank-page.html"> Blank Page </a></li>
-                            </ul>
-                        </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);"><i class="fa fa-share-alt" aria-hidden="true"></i> <span>Multi Level</span> <span class="menu-arrow"></span></a>
-                            <ul style="display: none;">
-                                <li class="submenu">
-                                    <a href="javascript:void(0);"><span>Level 1</span> <span class="menu-arrow"></span></a>
-                                    <ul style="display: none;">
-                                        <li><a href="javascript:void(0);"><span>Level 2</span></a></li>
-                                        <li class="submenu">
-                                            <a href="javascript:void(0);"> <span> Level 2</span> <span class="menu-arrow"></span></a>
-                                            <ul class="list-unstyled" style="display: none;">
-                                                <li><a href="javascript:void(0);">Level 3</a></li>
-                                                <li><a href="javascript:void(0);">Level 3</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="javascript:void(0);"><span>Level 2</span></a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);"><span>Level 1</span></a>
-                                </li> -->
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
         </div>
+    </div>
+</div>

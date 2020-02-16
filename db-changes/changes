@@ -179,3 +179,46 @@ CREATE TABLE `transfer_certificate` (
   `tc_date` varchar(255) NOT NULL,
   `createdDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 )
+
+ALTER TABLE `transfer_certificate` ADD `amount_figures` VARCHAR(200) NULL AFTER `to_date`, ADD `amount_words` VARCHAR(200) NULL AFTER `amount_figures`, ADD `additional_info` VARCHAR(255) NULL AFTER `amount_words`;
+
+
+CREATE TABLE `admission_form_listing` (
+  `id` int(11) NOT NULL,
+  `first_name` varchar(255) DEFAULT NULL,
+  `last_name` varchar(200) DEFAULT NULL,
+  `email_address` varchar(255) DEFAULT NULL,
+  `gender` varchar(100) DEFAULT NULL,
+  `dob` varchar(150) DEFAULT NULL,
+  `class_id` int(11) DEFAULT NULL,
+  `section_id` int(11) DEFAULT NULL,
+  `religion` varchar(100) DEFAULT NULL,
+  `date_of_joining` varchar(100) DEFAULT NULL,
+  `mobile_number` varchar(200) DEFAULT NULL,
+  `admission_no` varchar(200) DEFAULT NULL,
+  `roll_number` varchar(200) DEFAULT NULL,
+  `fathers_name` varchar(255) DEFAULT NULL,
+  `fathers_occupation` varchar(200) DEFAULT NULL,
+  `parents_mobile_number` varchar(255) DEFAULT NULL,
+  `present_address` text,
+  `mothers_name` varchar(255) DEFAULT NULL,
+  `mothers_occupation` varchar(200) DEFAULT NULL,
+  `nationality` varchar(100) DEFAULT NULL,
+  `blood_group` varchar(100) DEFAULT NULL,
+  `fathers_adhar_card` varchar(150) DEFAULT NULL,
+  `mothers_adhar_card` varchar(150) DEFAULT NULL,
+  `current_address` varchar(255) DEFAULT NULL,
+  `annual_income` varchar(200) DEFAULT NULL,
+  `name_address_local_guardian` varchar(255) DEFAULT NULL,
+  `name_address_previous_school` varchar(255) DEFAULT NULL,
+  `name_date_tc_issued` varchar(150) DEFAULT NULL,
+  `previous_school_cbse_status` varchar(150) DEFAULT NULL,
+  `previous_school_board_name` varchar(100) DEFAULT NULL,
+  `previous_school_result` varchar(100) DEFAULT NULL,
+  `tc_attached_status` varchar(100) DEFAULT NULL,
+  `mother_tongue` varchar(100) DEFAULT NULL,
+  `home_town` varchar(255) DEFAULT NULL,
+  `todays_date` text,
+  `fees_submit_status` int(11) NOT NULL DEFAULT '0',
+  `createdDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+)

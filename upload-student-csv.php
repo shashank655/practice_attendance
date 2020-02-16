@@ -33,7 +33,7 @@ require_once 'includes/sidebar.php';
                         
                         <input type="file" name="CsvData" class="btn btn-primary btn-rounded float-left">
 
-                        <a href="#" class="btn btn-primary btn-rounded float-right" data-toggle="modal" data-target="#student_csv_report"><i class="fa fa-plus"></i> Download CSV Format</a>
+                        <a href="<?php echo BASE_ROOT ?>assets/students_record.csv" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Download CSV Format</a>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-3">

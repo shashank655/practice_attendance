@@ -19,7 +19,7 @@ require_once 'includes/header.php';
 require_once 'includes/sidebar.php'; 
 ?>
 <style type="text/css">
-    .logo {
+    .logo_bk {
         height: 57px;
         margin-left: 10px;
         vertical-align: top;
@@ -34,7 +34,7 @@ require_once 'includes/sidebar.php';
     </div>
 	<div class="admissionForm print-div">
 	<div class="row justify-content-between">
-		<div class="col text-center"><img src="<?php echo BASE_ROOT; ?>assets/img/logo2.png" class="logo" alt="school logo"></div>
+		<div class="col text-center"><img src="<?php echo BASE_ROOT; ?>assets/img/logo-tc.jpg" class="logo" alt="school logo"></div>
 		<div class="col text-center">
 			<h3>U.P. Global School</h3>
 			<p>Affiliated to CBSE New Delhi</p>

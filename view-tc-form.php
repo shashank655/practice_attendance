@@ -19,17 +19,21 @@ if ($tcId != NULL) { $result = $transferCertificate->getFormInfo($tcId);
         width: 190px;
         padding:0 10px;
     }
-    .logo {
+    .logo_bk {
         height: 57px;
         margin-left: 10px;
         vertical-align: top;
     }
 </style>    
         <div class="page-wrapper"> <!-- content -->
+        <div class="row">
+        <div class="col-sm-8 col-9 text-right m-b-20">
+            <a href="javascript:void();" id="print_button" class="btn btn-primary btn-rounded float-left"><i class="fa fa-plus"></i> Print</a>
+        </div>
+         </div>
         <div class="content container-fluid print-div">
          <div class="row justify-content-between">
-        <div class="col"><img src="<?php echo BASE_ROOT; ?>assets/img/logo2.png" alt="" class="logo">
-            <a href="javascript:void();" id="print_button" class="btn btn-primary btn-rounded float-left"><i class="fa fa-plus"></i> Print</a>
+        <div class="col"><img src="<?php echo BASE_ROOT; ?>assets/img/logo-tc.jpg" alt="" class="logo">
         </div>
         <div class="col text-center">
             <h3>U.P. Global School</h3>

@@ -18,6 +18,15 @@ $menus = [
             ]
         ]
     ],
+    'Upload CSV' => [
+        'icon' => 'fa fa-files-o',
+        'can' => $_SESSION['user_role'] == 1,
+        'childs' => [
+            'Upload Student CSV' => [
+                'to' => 'upload-student-csv.php'
+            ]
+        ]
+    ],
     'Transfer Certificate' => [
         'icon' => 'fa fa-files-o',
         'can' => $_SESSION['user_role'] == 1,

@@ -229,6 +229,42 @@ $menus = [
             'Fees Head' => [
                 'to' => 'fee-head.php',
                 'related' => ['add-edit-fee-head.php']
+            ],
+            'Discounts' => [
+                'to' => 'discount.php',
+                'related' => ['monthly-discount.php']
+            ],
+            'Admission Fee' => [
+                'to' => 'admission-fee.php',
+                'related' => ['add-edit-admission-fee.php', 'collect-admission-fee.php']
+            ],
+            'Monthly Fee' => [
+                'to' => 'monthly-fee.php',
+                'related' => ['add-edit-monthly-fee.php', 'collect-monthly-fee.php']
+            ]
+        ]
+    ],
+    'Payroll' => [
+        'icon' => 'fa fa-money',
+        'can' => $_SESSION['user_role'] == 1,
+        'childs' => [
+            'Employee Salary' => [
+                'to' => 'employee-salary.php',
+                'related' => ['view-employee-salary.php', 'add-employee-salary.php']
+            ]
+        ]
+    ],
+    'Expenses' => [
+        'icon' => 'fa fa-money',
+        'can' => $_SESSION['user_role'] == 1,
+        'childs' => [
+            'Expense Types' => [
+                'to' => 'expense-types-list.php',
+                'related' => ['add-expense-types.php']
+            ],
+            'Expenses List' => [
+                'to' => 'expenses-list.php',
+                'related' => ['add-expenses.php']
             ]
         ]
     ],

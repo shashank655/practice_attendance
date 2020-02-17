@@ -1,0 +1,18 @@
+name: Deploy Master
+
+on:
+  push:
+    branches:    
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Deploy Master
+      run: |
+          mkdir -p ~/.ssh
+          eval $(ssh-agent -s)
+          ssh-add <(echo "${{ secrets.STAGING_PKEY }}")
+          ssh -o StrictHostKeyChecking=no ${{ secrets.STAGING_USER }}@${{ secrets.STAGING_HOST }} "sudo su adhyay -c 'cd ${{ secrets.STAGING_PATH }} && git pull origin master'"

@@ -34,7 +34,7 @@ require_once 'includes/sidebar.php';
                         </form>    
                     </div>
                     <div class="col-sm-8 col-9 text-right m-b-20">
-                        <a href="add-transfer-certificate.php" class="btn btn-primary float-right btn-rounded">Download Sample Student CSV</a>
+                        <a href="<?php echo BASE_ROOT;?>assets/students_record.csv" class="btn btn-primary float-right btn-rounded">Download Sample Student CSV</a>
                     </div>
                 </div>
             <div class="content-page">

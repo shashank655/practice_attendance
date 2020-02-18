@@ -26,7 +26,7 @@ require_once 'includes/sidebar.php';
 		
 		<div class="admissionForm">
 	<div class="row justify-content-between">
-		<div class="col text-center"><img src="<?php echo BASE_ROOT; ?>assets/img/logo2.png" class="logo" alt="school logo"></div>
+		<div class="col text-center"><img src="<?php echo BASE_ROOT; ?>assets/img/logo-tc.jpg" class="logo" alt="school logo"></div>
 		<div class="col text-center">
 			<h3>U.P. Global School</h3>
 			<p>Affiliated to CBSE New Delhi</p>
@@ -41,7 +41,7 @@ require_once 'includes/sidebar.php';
 	<input type="hidden" name="studentId" value="<?php echo $studentId; ?>" />
 	<div class="col-md-6">
 			<label>Admission Number: </label>
-			<input type="text" readonly="readonly" name="admission_no" value="<?php
+			<input type="text" class="form-control" readonly="readonly" name="admission_no" value="<?php
 			if (isset($admissionNo))
 				echo ($admissionNo);
 			?>"/>

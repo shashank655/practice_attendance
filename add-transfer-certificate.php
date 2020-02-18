@@ -28,7 +28,7 @@ if ($leaveId != NULL) { $result = $leaves->getLeaveTypeInfo($leaveId);
         <div class="page-wrapper"> <!-- content -->
         <div class="content container-fluid">
          <div class="row justify-content-between">
-        <div class="col"><img src="<?php echo BASE_ROOT; ?>assets/img/logo2.png" alt="" class="logo"></div>
+        <div class="col"><img src="<?php echo BASE_ROOT; ?>assets/img/logo-tc.jpg" alt="" class="logo"></div>
         <div class="col text-center">
             <h3>U.P. Global School</h3>
             <p>Affiliated to CBSE New Delhi</p>

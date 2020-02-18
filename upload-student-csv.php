@@ -26,14 +26,14 @@ require_once 'includes/sidebar.php';
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-4 col-3">
-                        <form method="post" action="employee/process/processUploadCSV.php" novalidate="novalidate" enctype="multipart/form-data">
+                    <div class="col-sm-6">
+                        <form method="post" class="form-inline" action="employee/process/processUploadCSV.php" novalidate="novalidate" enctype="multipart/form-data">
                             <input type="hidden" name="type" value="upload_student_csv" />
-                            <input type="file" name="CsvData" class="btn btn-primary btn-rounded float-left">
-                            <button class="btn btn-primary btn-block" type="submit">Submit</button>
+                            <input type="file" name="CsvData" class="form-control-file w-auto">
+                            <button class="btn btn-primary" type="submit">Submit</button>
                         </form>    
                     </div>
-                    <div class="col-sm-8 col-9 text-right m-b-20">
+                    <div class="col-sm-6 m-b-20 mt-4 mt-sm-0 text-md-right">
                         <a href="<?php echo BASE_ROOT;?>assets/students_record.csv" class="btn btn-primary float-right btn-rounded">Download Sample Student CSV</a>
                     </div>
                 </div>

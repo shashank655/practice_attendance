@@ -5,38 +5,12 @@ $menus = [
         'to' => 'dashboard.php',
         'icon' => 'fa fa-tachometer'
     ],
-    'Admission Form' => [
-        'icon' => 'fa fa-files-o',
-        'can' => $_SESSION['user_role'] == 1,
-        'childs' => [
-            'All Listing' => [
-                'to' => 'admission-form-listing.php',
-                'related' => ['view-admission-form.php']
-            ],
-            'Fill Admission Form' => [
-                'to' => 'add-admission-form.php'
-            ]
-        ]
-    ],
     'Upload CSV' => [
         'icon' => 'fa fa-files-o',
         'can' => $_SESSION['user_role'] == 1,
         'childs' => [
             'Upload Student CSV' => [
                 'to' => 'upload-student-csv.php'
-            ]
-        ]
-    ],
-    'Transfer Certificate' => [
-        'icon' => 'fa fa-files-o',
-        'can' => $_SESSION['user_role'] == 1,
-        'childs' => [
-            'All Transfer Certificate' => [
-                'to' => 'transfer-certificate-listing.php',
-                'related' => ['view-tc-form.php']
-            ],
-            'Add T.C.' => [
-                'to' => 'add-transfer-certificate.php'
             ]
         ]
     ],
@@ -218,8 +192,12 @@ $menus = [
         'icon' => 'fa fa-table',
         'childs' => [
             'Admission Form' => [
-                'to' => 'admission-list.php',
-                'related' => ['new-admission.php']
+                'to' => 'admission-form-listing.php',
+                'related' => ['add-admission-form.php']
+            ],
+            'TC Form' => [
+                'to' => 'transfer-certificate-listing.php',
+                'related' => ['add-transfer-certificate.php']
             ]
         ]
     ],

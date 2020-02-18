@@ -29,7 +29,6 @@ require_once 'includes/sidebar.php';
 	<div class="content container-fluid">
 	<div class="row">
         <div class="col-sm-8 col-9 text-right m-b-20">
-            <a href="javascript:void();" id="print_button" class="btn btn-primary btn-rounded float-left"><i class="fa fa-plus"></i> Print</a>
         </div>
     </div>
 	<div class="admissionForm print-div">
@@ -40,7 +39,7 @@ require_once 'includes/sidebar.php';
 			<p>Affiliated to CBSE New Delhi</p>
 		</div>
 		<div class="col  text-center">
-			<!-- <img src="" alt="student pic"> -->
+			<a href="javascript:void();" id="print_button" class="btn btn-primary btn-rounded float-left"><i class="fa fa-plus"></i> Print</a>
 		</div>
 	</div>
 	<form id="addStudentForm" action="employee/process/processAddAdmissionForm.php" method="post" novalidate="novalidate" enctype="multipart/form-data">
@@ -49,7 +48,7 @@ require_once 'includes/sidebar.php';
 	<input type="hidden" name="studentId" value="<?php echo $studentId; ?>" />
 	<div class="col-md-6">
 			<label>Admission Number: </label>
-			<input type="text" readonly="readonly" name="admission_no" value="<?php
+			<input type="text" class="form-control" readonly="readonly" name="admission_no" value="<?php
 			if (isset($result[0]['admission_no']))
 				echo ($result[0]['admission_no']);
 			?>"/>

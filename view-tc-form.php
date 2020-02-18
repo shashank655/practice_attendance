@@ -28,7 +28,6 @@ if ($tcId != NULL) { $result = $transferCertificate->getFormInfo($tcId);
         <div class="page-wrapper"> <!-- content -->
         <div class="row">
         <div class="col-sm-8 col-9 text-right m-b-20">
-            <a href="javascript:void();" id="print_button" class="btn btn-primary btn-rounded float-left"><i class="fa fa-plus"></i> Print</a>
         </div>
          </div>
         <div class="content container-fluid print-div">
@@ -40,6 +39,7 @@ if ($tcId != NULL) { $result = $transferCertificate->getFormInfo($tcId);
             <p>Affiliated to CBSE New Delhi</p>
         </div>
         <div class="col  text-center">
+        <a href="javascript:void();" id="print_button" class="btn btn-primary btn-rounded float-left"><i class="fa fa-plus"></i> Print</a>
         </div>
     </div>
     <div class="row justify-content-between">

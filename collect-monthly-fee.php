@@ -17,7 +17,7 @@ $monthly_fee = $accounts->getMonthlyFee($id);
 $monthly_total_fee = $accounts->getMonthlyTotalFee($id);
 $monthly_total_payment = $accounts->getMonthlyTotalPayment($id);
 
-if ($monthly_total_fee == 0 || $monthly_total_fee <= $monthly_total_payment) {
+if (!($monthly_total_fee = $monthly_total_fee - $monthly_total_payment)) {
     $accounts->redirect(BASE_ROOT . 'monthly-fee.php');
 }
 
@@ -53,7 +53,7 @@ require_once 'includes/sidebar.php';
             </div>
         <?php endif; ?>
         <div class="card-box">
-            <form class="form-validate" action="" method="post" novalidate="novalidate">
+            <form class="form-validate" action="" id="collect-monthly-fee-form" name="collect-monthly-fee-form" method="post" novalidate="novalidate">
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
@@ -251,18 +251,30 @@ require_once 'includes/sidebar.php';
                 $('[name="fee_due_date"]').removeClass('required').val('').attr('readonly', 'true');
             }
         }
-        $(document).on('blur', '[name="fee_paid"]', function() {
-            var fee_paid = $(this).val();
+
+        function validate_fee_paid_amount() {
+            var fee_paid = $('[name="fee_paid"]').val();
             if (isNaN(fee_paid) || 0 >= fee_paid) {
                 alert('Fee amount should be a number and greater than zero.');
+                return false;
             }
 
             if (fee_paid > total_fee) {
                 alert('Fee amount should not be more than total fee.');
-                return;
+                return false;
             }
 
             update_due_fee();
+
+            return true;
+        }
+
+        $(document).on('blur', '[name="fee_paid"]', function() {
+            return validate_fee_paid_amount();
+        });
+
+        $(document).on('submit', '#collect-monthly-fee-form', function(e) {
+            return validate_fee_paid_amount();
         });
     }(jQuery));
 </script>

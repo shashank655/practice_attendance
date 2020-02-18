@@ -8,6 +8,9 @@ $accounts = new Accounts();
 
 $id = isset($_GET['id']) ? intval($_GET['id']) : null;
 if (isset($_POST['action']) && $_POST['action'] == 'collect-admission-fee') {
+    echo '<pre>';
+    print_r($_POST);
+    exit;
     $result = $accounts->collectAdmissionFee($_POST, $id);
 
     $accounts->redirect(BASE_ROOT . 'admission-fee.php');
@@ -17,8 +20,8 @@ $admission_fee = $accounts->getAdmissionFee($id);
 $admission_total_fee = $accounts->getAdmissionTotalFee($id);
 $admission_total_payment = $accounts->getAdmissionTotalPayment($id);
 
-if ($admission_total_fee == 0 || $admission_total_fee <= $admission_total_payment) {
-    $accounts->redirect(BASE_ROOT . 'admission-fee.php');
+if (!($admission_total_fee = $admission_total_fee - $admission_total_payment)) {
+    $accounts->redirect(BASE_ROOT . 'monthly-fee.php');
 }
 
 $student = $accounts->getStudentByAdmssionNo($admission_fee->admission_no);
@@ -53,7 +56,7 @@ require_once 'includes/sidebar.php';
             </div>
         <?php endif; ?>
         <div class="card-box">
-            <form class="form-validate" action="" method="post" novalidate="novalidate">
+            <form class="form-validate" action="" id="collect-admission-fee-form" name="collect-admission-fee-form" method="post" novalidate="novalidate">
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
@@ -251,18 +254,30 @@ require_once 'includes/sidebar.php';
                 $('[name="fee_due_date"]').removeClass('required').val('').attr('readonly', 'true');
             }
         }
-        $(document).on('blur', '[name="fee_paid"]', function() {
-            var fee_paid = $(this).val();
+
+        function validate_fee_paid_amount() {
+            var fee_paid = $('[name="fee_paid"]').val();
             if (isNaN(fee_paid) || 0 >= fee_paid) {
                 alert('Fee amount should be a number and greater than zero.');
+                return false;
             }
 
             if (fee_paid > total_fee) {
                 alert('Fee amount should not be more than total fee.');
-                return;
+                return false;
             }
 
             update_due_fee();
+
+            return true;
+        }
+
+        $(document).on('blur', '[name="fee_paid"]', function() {
+            return validate_fee_paid_amount();
+        });
+
+        $(document).on('submit', '#collect-admission-fee-form', function (e) {
+            return validate_fee_paid_amount();
         });
     }(jQuery));
 </script>

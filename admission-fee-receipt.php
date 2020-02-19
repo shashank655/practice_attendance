@@ -60,6 +60,13 @@ require_once 'includes/sidebar.php';
                 </button>
             </div>
         <?php endif; ?>
+        <div class="row print-button-div mb-2">
+            <div class="col-12">
+                <div class="pull-right">
+                    <button type="button" id="print" class="btn btn-sm btn-dark">Print</button>
+                </div>
+            </div>
+        </div>
         <div class="content-page">
             <div class="row">
                 <div class="col-md-12">
@@ -201,3 +208,26 @@ require_once 'includes/sidebar.php';
         </div>
     </div>
     <?php require_once 'includes/footer.php'; ?>
+    <style type="text/css">
+        @media print {
+
+            .header,
+            #sidebar,
+            .page-header,
+            .print-button-div {
+                display: none;
+            }
+
+            .page-wrapper {
+                margin-left: 0;
+            }
+        }
+    </style>
+    <script type="text/javascript">
+        (function($) {
+            $(document).on('click', '#print', function(e) {
+                e.preventDefault();
+                window.print();
+            });
+        }(jQuery));
+    </script>

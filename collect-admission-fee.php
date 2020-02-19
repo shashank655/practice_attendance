@@ -8,9 +8,6 @@ $accounts = new Accounts();
 
 $id = isset($_GET['id']) ? intval($_GET['id']) : null;
 if (isset($_POST['action']) && $_POST['action'] == 'collect-admission-fee') {
-    echo '<pre>';
-    print_r($_POST);
-    exit;
     $result = $accounts->collectAdmissionFee($_POST, $id);
 
     $accounts->redirect(BASE_ROOT . 'admission-fee.php');

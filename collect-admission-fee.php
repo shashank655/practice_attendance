@@ -18,7 +18,7 @@ $admission_total_fee = $accounts->getAdmissionTotalFee($id);
 $admission_total_payment = $accounts->getAdmissionTotalPayment($id);
 
 if (!($admission_total_fee = $admission_total_fee - $admission_total_payment)) {
-    $accounts->redirect(BASE_ROOT . 'monthly-fee.php');
+    $accounts->redirect(BASE_ROOT . 'admission-fee.php');
 }
 
 $student = $accounts->getStudentByAdmssionNo($admission_fee->admission_no);

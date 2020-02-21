@@ -178,7 +178,7 @@ $menus = [
         'icon' => 'fa fa-address-card-o',
         'can' => $_SESSION['user_role'] == 2 || $_SESSION['user_role'] == 3
     ],
-    $_SESSION['user_role'] == 1 ? 'Teachers' : 'My' . ' Login Record' => [
+    ($_SESSION['user_role'] == 1 ? 'Teachers' : 'My') . ' Login Record' => [
         'to' => 'teacher-login-records-list.php',
         'icon' => 'fa fa-files-o'
     ],

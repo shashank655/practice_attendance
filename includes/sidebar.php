@@ -1,7 +1,7 @@
 <?php
 $current_url = basename($_SERVER['REQUEST_URI'], '?' . $_SERVER['QUERY_STRING']);
 $menus = [
-    'Dashboardsss' => [
+    'Dashboard' => [
         'to' => 'dashboard.php',
         'icon' => 'fa fa-tachometer'
     ],

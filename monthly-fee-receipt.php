@@ -1,5 +1,4 @@
 <?php
-require_once 'employee/class/dbclass.php';
 require_once 'employee/config/config.php';
 require_once 'employee/class/Accounts.php';
 

@@ -1,5 +1,4 @@
 <?php
-require_once 'employee/class/dbclass.php';
 require_once 'employee/config/config.php';
 require_once 'employee/class/Accounts.php';
 require_once 'employee/class/Optional.php';
@@ -17,7 +16,7 @@ $monthly_fee = $accounts->getMonthlyFee($id);
 $monthly_total_fee = $accounts->getMonthlyTotalFee($id);
 $monthly_total_payment = $accounts->getMonthlyTotalPayment($id);
 
-if (!($monthly_total_fee = $monthly_total_fee - $monthly_total_payment)) {
+if (0 >= ($monthly_total_fee = $monthly_total_fee - $monthly_total_payment)) {
     $accounts->redirect(BASE_ROOT . 'monthly-fee.php');
 }
 

@@ -1,5 +1,4 @@
 <?php
-require_once 'employee/class/dbclass.php';
 require_once 'employee/config/config.php';
 require_once 'employee/class/Accounts.php';
 require_once 'employee/class/Optional.php';
@@ -17,7 +16,7 @@ $admission_fee = $accounts->getAdmissionFee($id);
 $admission_total_fee = $accounts->getAdmissionTotalFee($id);
 $admission_total_payment = $accounts->getAdmissionTotalPayment($id);
 
-if (!($admission_total_fee = $admission_total_fee - $admission_total_payment)) {
+if (0 >= ($admission_total_fee = $admission_total_fee - $admission_total_payment)) {
     $accounts->redirect(BASE_ROOT . 'admission-fee.php');
 }
 

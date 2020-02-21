@@ -12,12 +12,11 @@ class UploadCSV extends MySQLCN {
             $csv_file = $_FILES['CsvData'];
                 if(!empty($csv_file['name'])){
                     $imagename=$csv_file['name'];
-                    $cscName = strtolower(basename($imagename));
-                    $target = GALLERY_UPLOADS_ROOT . $cscName;
-                    move_uploaded_file($csv_file['tmp_name'], $target);    
-                    }
+                    $target = GALLERY_UPLOADS_ROOT . $imagename;
+                    move_uploaded_file($_FILES['CsvData']['tmp_name'], $target);
+                }
                 /* File Upload */
-                    $handle = fopen(GALLERY_UPLOADS_PATH.$cscName, "r");
+                    $handle = fopen(GALLERY_UPLOADS_PATH.$imagename, "r");
                         while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                             $item = array();
                             if($data[0] == 'S.No.' || $data[1] == 'FirstName' || $data[1] == 'LastName'){

@@ -5,6 +5,21 @@ $menus = [
         'to' => 'dashboard.php',
         'icon' => 'fa fa-tachometer'
     ],
+    'Send SMS' => [
+        'icon' => 'fa fa-users',
+        'can' => $_SESSION['user_role'] == 1,
+        'childs' => [
+            'Students Listing' => [
+                'to' => 'students-sms-listing.php'
+            ],
+            'Add Students' => [
+                'to' => 'add-students-sms-number.php'
+            ],
+            'Send SMS' => [
+                'to' => 'send-sms-students.php'
+            ]
+        ]
+    ],
     'Upload CSV' => [
         'icon' => 'fa fa-files-o',
         'can' => $_SESSION['user_role'] == 1,
@@ -133,13 +148,17 @@ $menus = [
         'can' => $_SESSION['user_role'] == 2,
         'childs' => [
             'Add Student Marks' => [
-                'to' => 'select-exam-list.php',
-                'related' => ['student-attendance.php']
-            ],
-            'Results & Analysis' => [
-                'to' => 'add-students-marks.php',
-                'related' => ['students-result.php']
+                'to' => 'students-exam-list.php',
+                'related' => ['students-exam-list.php']
             ]
+            // 'Add Student Marks' => [
+            //     'to' => 'select-exam-list.php',
+            //     'related' => ['student-attendance.php']
+            // ],
+            // 'Results & Analysis' => [
+            //     'to' => 'add-students-marks.php',
+            //     'related' => ['students-result.php']
+            // ]
         ]
     ],
     'Attend. Management' => [
@@ -190,6 +209,7 @@ $menus = [
     ],
     'HR' => [
         'icon' => 'fa fa-table',
+        'can' => $_SESSION['user_role'] == 1,
         'childs' => [
             'Admission Form' => [
                 'to' => 'admission-form-listing.php',
@@ -203,6 +223,7 @@ $menus = [
     ],
     'Accounts' => [
         'icon' => 'fa fa-money',
+        'can' => $_SESSION['user_role'] == 1,
         'childs' => [
             'Fees Head' => [
                 'to' => 'fee-head.php',

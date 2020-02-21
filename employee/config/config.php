@@ -16,8 +16,11 @@ define("GALLERY_UPLOADS_PATH",ROOT."upload/gallery_uploads/");
 define("LEAVES_ATTACHMENT_ROOT",$_SERVER['DOCUMENT_ROOT']."/practice_attendance/employee/upload/request_leaves/");
 define("LEAVES_ATTACHMENT_PATH",ROOT."upload/request_leaves/");
 
+define("PDF_ATTACHMENT_ROOT",$_SERVER['DOCUMENT_ROOT']."/practice_attendance/employee/upload/pdf_attachments/");
+define("PDF_ATTACHMENT_PATH",ROOT."upload/pdf_attachments/");
+
 define("UPLOAD_CSV_PATH",ROOT."upload/upload_csv/");
 define("UPLOAD_CSV_ROOT",$_SERVER['DOCUMENT_ROOT']."/practice_attendance/employee/upload/upload_csv/");
 
-define("TEACHERS_EXPIRY_TIME","20");
+define("TEACHERS_EXPIRY_TIME","2000");
 ?>

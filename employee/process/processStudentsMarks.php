@@ -18,6 +18,19 @@ if ($data['type'] == 'student_marks') {
 } else if($data['type'] == 'get_student_marks') {
         $getData = $student_marks->getStudentsMarks($data['examTermId'],$data['student_id']);
         echo json_encode($getData);
+} else if($data['type'] == 'sample-exam-scores') {
+        $getData = $student_marks->addSampleStudentsMarks($data['studentId']);
+        if ($getData) {
+            $_SESSION['Msg'] = "Student Marks added successfully!";
+            $_SESSION['success'] = true;
+            header('Location: ' . BASE_ROOT.'students-exam-list.php');
+        } else {
+            $_SESSION['Msg'] = "Something went wrong!";
+            $_SESSION['success'] = false;
+            header('Location: ' . BASE_ROOT.'students-exam-list.php');
+        }
+
+        echo json_encode($getData);
 } else {
     header("Location: ". BASE_ROOT.'dashboard.php');
 }

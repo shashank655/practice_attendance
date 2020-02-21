@@ -241,3 +241,72 @@ CREATE TABLE `students_sample_csv` (
   `permanent_address` text,
   `createdDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+students_sms_listing
+
+/*
+SQLyog Community Edition- MySQL GUI v5.20
+Host - 5.7.28-0ubuntu0.16.04.2 : Database - practice
+*********************************************************************
+Server version : 5.7.28-0ubuntu0.16.04.2
+*/
+
+
+SET NAMES utf8;
+
+SET SQL_MODE='';
+
+create database if not exists `practice`;
+
+USE `practice`;
+
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO';
+
+/*Table structure for table `sample_examination_marks` */
+
+CREATE TABLE `sample_examination_marks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) DEFAULT NULL,
+  `hindi_periodic_test` varchar(100) DEFAULT NULL,
+  `hindi_note_book` varchar(100) DEFAULT NULL,
+  `hindi_subject_enrichment` varchar(100) DEFAULT NULL,
+  `hindi_annual_examination` varchar(100) DEFAULT NULL,
+  `hindi_marks_obtained` varchar(100) DEFAULT NULL,
+  `hindi_grade` varchar(100) DEFAULT NULL,
+  `english_periodic_test` varchar(100) DEFAULT NULL,
+  `english_note_book` varchar(100) DEFAULT NULL,
+  `english_subject_enrichment` varchar(100) DEFAULT NULL,
+  `english_annual_examination` varchar(100) DEFAULT NULL,
+  `english_marks_obtained` varchar(100) DEFAULT NULL,
+  `english_grade` varchar(100) DEFAULT NULL,
+  `maths_periodic_test` varchar(100) DEFAULT NULL,
+  `maths_note_book` varchar(100) DEFAULT NULL,
+  `maths_subject_enrichment` varchar(100) DEFAULT NULL,
+  `maths_annual_examination` varchar(100) DEFAULT NULL,
+  `maths_marks_obtained` varchar(100) DEFAULT NULL,
+  `maths_grade` varchar(100) DEFAULT NULL,
+  `gs_periodic_test` varchar(100) DEFAULT NULL,
+  `gs_note_book` varchar(100) DEFAULT NULL,
+  `gs_subject_enrichment` varchar(100) DEFAULT NULL,
+  `gs_annual_examination` varchar(100) DEFAULT NULL,
+  `gs_marks_obtained` varchar(100) DEFAULT NULL,
+  `gs_grade` varchar(100) DEFAULT NULL,
+  `ss_periodic_test` varchar(100) DEFAULT NULL,
+  `ss_note_book` varchar(100) DEFAULT NULL,
+  `ss_subject_enrichment` varchar(100) DEFAULT NULL,
+  `ss_annual_examination` varchar(100) DEFAULT NULL,
+  `ss_marks_obtained` varchar(100) DEFAULT NULL,
+  `ss_grade` varchar(100) DEFAULT NULL,
+  `art_education` varchar(100) DEFAULT NULL,
+  `health_pysical_education` varchar(100) DEFAULT NULL,
+  `teachers_remark` varchar(100) DEFAULT NULL,
+  `final_result` varchar(100) DEFAULT NULL,
+  `createdDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `sample_examination_marks` */
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

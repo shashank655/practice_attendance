@@ -1,4 +1,6 @@
 <?php
+//require_once '../../dompdf/dompdf_config.inc.php';
+
 class StudentMarks extends MySQLCN {
 
     function addingStudentsMarks($data) { 
@@ -43,6 +45,45 @@ class StudentMarks extends MySQLCN {
 
     function getExamTermData($examTermId) {
         $qry = "SELECT * FROM exam_term join exam_type on exam_term.exam_type_id= exam_type.id WHERE exam_term.id = '{$examTermId}' ";
+        $result = $this->select($qry);
+        if ($result != NULL) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    function addSampleStudentsMarks($studentId) {
+        $qryDel = "DELETE FROM `sample_examination_marks` WHERE student_id = '{$studentId}' ";
+        $res = $this->deleteData($qryDel);
+
+        $qryInsert = "INSERT INTO `sample_examination_marks`
+            (`student_id`,`hindi_periodic_test`,`hindi_note_book`,`hindi_subject_enrichment`,`hindi_annual_examination`,`hindi_marks_obtained`,`hindi_grade`,`english_periodic_test`,`english_note_book`,`english_subject_enrichment`,`english_annual_examination`,`english_marks_obtained`,`english_grade`,`maths_periodic_test`,`maths_note_book`,`maths_subject_enrichment`,`maths_annual_examination`,`maths_marks_obtained`,`maths_grade`,`gs_periodic_test`,`gs_note_book`,`gs_subject_enrichment`,`gs_annual_examination`,`gs_marks_obtained`,`gs_grade`,`ss_periodic_test`,`ss_note_book`,`ss_subject_enrichment`,`ss_annual_examination`,`ss_marks_obtained`,`ss_grade`,`art_education`,`health_pysical_education`,`teachers_remark`,`final_result`)
+            VALUES
+            ('{$studentId}', '{$_POST['hindi_periodic_test']}', '{$_POST['hindi_note_book']}', '{$_POST['hindi_subject_enrichment']}', '{$_POST['hindi_annual_examination']}', '{$_POST['hindi_marks_obtained']}', '{$_POST['hindi_grade']}', '{$_POST['english_periodic_test']}', '{$_POST['english_note_book']}', '{$_POST['english_subject_enrichment']}', '{$_POST['english_annual_examination']}', '{$_POST['english_marks_obtained']}', '{$_POST['english_grade']}', '{$_POST['maths_periodic_test']}', '{$_POST['maths_note_book']}', '{$_POST['maths_subject_enrichment']}', '{$_POST['maths_annual_examination']}', '{$_POST['maths_marks_obtained']}', '{$_POST['maths_grade']}', '{$_POST['gs_periodic_test']}', '{$_POST['gs_note_book']}', '{$_POST['gs_subject_enrichment']}', '{$_POST['gs_annual_examination']}', '{$_POST['gs_marks_obtained']}', '{$_POST['gs_grade']}', '{$_POST['ss_periodic_test']}', '{$_POST['ss_note_book']}', '{$_POST['ss_subject_enrichment']}', '{$_POST['ss_annual_examination']}', '{$_POST['ss_marks_obtained']}', '{$_POST['ss_grade']}', '{$_POST['art_education']}', '{$_POST['health_pysical_education']}', '{$_POST['teachers_remark']}', '{$_POST['final_result']}' )";
+        $aboutUsId = $this->insert($qryInsert);
+
+        //$create_pdf = $this->createPDF();
+
+        return true;
+
+    }
+
+    function createPDF() {
+        $txt = '';
+        $txt = str_replace('&nbsp;', '', $txt);
+        $dompdf = new DOMPDF();
+        $dompdf->load_html(html_entity_decode($txt));
+        $dompdf->render();
+        $output = $dompdf->output();
+        $pdfname = md5(strtotime('now')) . '.pdf';
+        file_put_contents(PDF_ATTACHMENT_ROOT . $pdfname, $output); 
+
+        echo "done";die;
+    }
+
+    function getSampleStudentMarks($studentId) {
+        $qry = "SELECT * FROM sample_examination_marks WHERE student_id = '{$studentId}'";
         $result = $this->select($qry);
         if ($result != NULL) {
             return $result;

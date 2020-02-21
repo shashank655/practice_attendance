@@ -17,8 +17,9 @@ $pdfname = md5(strtotime('now')) . '.pdf';
 $student = new Student(); 
 $student_marks = new StudentMarks(); 
 $studentId = (isset($_REQUEST['sID'])) ? $_REQUEST['sID'] : NULL; 
-if ($studentId != NULL) { $result = $student_marks->getSampleStudentMarks($studentId); 
-	if ($result == NULL) { $studentId = ''; } } 
+if ($studentId != NULL) { $result = $student_marks->getSampleStudentMarks($studentId);
+$resultStudent = $student->getStudentInfo($studentId);
+	if ($resultStudent == NULL) { $studentId = ''; } } 
     ?>
 <?php 
 require_once 'includes/header.php'; 
@@ -100,16 +101,16 @@ require_once 'includes/sidebar.php';
     </div>
     <div class="row mb-3">
         <div class="col-12">
-            <p class="mb-1"><strong>Roll No.: <?php echo $result[0]['roll_number'];?></strong></p>
+            <p class="mb-1"><strong>Roll No.: <?php echo $resultStudent[0]['roll_number'];?></strong></p>
         </div>
         <div class="col-12">
-            <p class="mb-1"><strong>Student's Name: <?php echo $result[0]['first_name'].' '.$result[0]['last_name']?></strong></p>
+            <p class="mb-1"><strong>Student's Name: <?php echo $resultStudent[0]['first_name'].' '.$resultStudent[0]['last_name']?></strong></p>
         </div>
         <div class="col-12">
-            <p class="mb-1"><strong>Mother's / Father's / Guardian's Name: <?php echo $result[0]['fathers_name'];?> </strong></p>
+            <p class="mb-1"><strong>Mother's / Father's / Guardian's Name: <?php echo $resultStudent[0]['fathers_name'];?> </strong></p>
         </div>
         <div class="col-12">
-            <p class="mb-1"><strong>Date of Birth: <?php echo $result[0]['dob'];?></strong></p>
+            <p class="mb-1"><strong>Date of Birth: <?php echo $resultStudent[0]['dob'];?></strong></p>
         </div>
     </div>
     <div class="row">

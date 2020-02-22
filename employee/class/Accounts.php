@@ -396,8 +396,8 @@ class Accounts
                 $this->setAlert('Admission Fee added successfully.');
                 $id = $result->insert_id;
             } else {
-                // $result = $this->insert('admission_fees', $data, compact('id'));
-                // $this->setAlert('Admission Fee updated successfully.');
+                $result = $this->update('admission_fees', $data, compact('id'));
+                $this->setAlert('Admission Fee updated successfully.');
             }
 
             $admission_fee_id = $id;
@@ -532,8 +532,8 @@ class Accounts
                 $this->setAlert('Monthly Fee added successfully.');
                 $id = $result->insert_id;
             } else {
-                // $result = $this->insert('monthly_fees', $data, compact('id'));
-                // $this->setAlert('Monthly Fee updated successfully.');
+                $result = $this->update('monthly_fees', $data, compact('id'));
+                $this->setAlert('Monthly Fee updated successfully.');
             }
 
             $monthly_fee_id = $id;

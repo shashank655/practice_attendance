@@ -5,36 +5,39 @@ require_once 'employee/class/Optional.php';
 
 $accounts = new Accounts();
 
-$id = isset($_GET['id']) ? intval($_GET['id']) : null;
+if ($id = isset($_GET['id']) ? intval($_GET['id']) : null) {
+    $monthly_fee = $accounts->getMonthlyFee($id);
+    $monthly_fee_items = $accounts->getMonthlyFeeItems($id);
+    $_GET['date'] = $accounts->date('d/m/Y', $monthly_fee->date);
+    $_GET['fee_head_id'] = $monthly_fee->fee_head_id;
+    $_GET['admission_no'] = $monthly_fee->admission_no;
+} else {
+    $monthly_fee = new Optional();
+}
+
 if (isset($_POST['action']) && $_POST['action'] == 'add-edit-monthly-fee') {
     $result = $accounts->addEditMonthlyFee($_POST, $id);
     if ($_POST['payment_time'] == 'now') {
         if ($result->success) {
-            $id = $result->insert_id;
+            if (is_null($id)) $id = $result->insert_id;
             $accounts->redirect(BASE_ROOT . 'collect-monthly-fee.php?id=' . $id);
         }
     }
     $accounts->redirect(BASE_ROOT . 'monthly-fee.php');
 }
 
-
 $date = isset($_GET['date']) ? urldecode($_GET['date']) : null;
 $fee_head_id = isset($_GET['fee_head_id']) ? urldecode($_GET['fee_head_id']) : null;
 $admission_no = isset($_GET['admission_no']) ? urldecode($_GET['admission_no']) : null;
-$search_form = new Optional(compact('fee_head_id', 'date', 'admission_no'));
 
 if ($fee_head_id && $date && $admission_no) {
-    $student = $accounts->getStudentByAdmssionNo($_GET['admission_no']);
+    $student = $accounts->getStudentByAdmssionNo($admission_no);
 } else {
     $student = new Optional();
+    $monthly_fee_items = new Optional();
 }
 
-if ($id) {
-    // $monthly_fee = $accounts->getMonthlyFee($id);
-    $monthly_fee = new Optional();
-} else {
-    $monthly_fee = new Optional();
-}
+$search_form = new Optional(compact('fee_head_id', 'date', 'admission_no'));
 
 $fee_heads_results = [];
 $fee_heads = $accounts->getFeeHeads();
@@ -75,58 +78,62 @@ require_once 'includes/sidebar.php';
             </div>
         <?php endif; ?>
         <div class="card-box">
-            <ul class="nav nav-tabs nav-tabs-top nav-justified">
-                <li class="nav-item">
-                    <a class="nav-link<?= $current_url == 'add-edit-admission-fee.php' ? ' active show' : '' ?>" href="discount.php">
-                        <h4>Admission Fee</h4>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link<?= $current_url == 'add-edit-monthly-fee.php' ? ' active show' : '' ?>" href="monthly-discount.php">
-                        <h4>Monthly Fee</h4>
-                    </a>
-                </li>
-            </ul>
-            <form class="form-validate" action="" method="get" novalidate="novalidate">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Fee Head</label>
-                            <select name="fee_head_id" id="fee_head_id" class="form-control required">
-                                <?php if ($fee_heads->count) : ?>
-                                    <option value="">Select fee head</option>
-                                    <?php foreach ($fee_heads->results as $fee_head) : ?>
-                                        <option value="<?= $fee_head->id; ?>" <?= ($search_form->fee_head_id == $fee_head->id) ? 'selected' : ''; ?>><?= $fee_head->title; ?></option>
-                                    <?php endforeach; ?>
-                                <?php else : ?>
-                                    <option value="">No fee head</option>
-                                <?php endif; ?>
-                            </select>
+            <?php if (is_null($id)) : ?>
+                <ul class="nav nav-tabs nav-tabs-top nav-justified">
+                    <li class="nav-item">
+                        <a class="nav-link<?= $current_url == 'add-edit-admission-fee.php' ? ' active show' : '' ?>" href="add-edit-monthly-fee.php">
+                            <h4>Admission Fee</h4>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link<?= $current_url == 'add-edit-monthly-fee.php' ? ' active show' : '' ?>" href="add-edit-monthly-fee.php">
+                            <h4>Monthly Fee</h4>
+                        </a>
+                    </li>
+                </ul>
+            <?php endif; ?>
+            <?php if (is_null($id)) : ?>
+                <form class="form-validate" action="" method="get" novalidate="novalidate">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Fee Head</label>
+                                <select name="fee_head_id" id="fee_head_id" class="form-control required">
+                                    <?php if ($fee_heads->count) : ?>
+                                        <option value="">Select fee head</option>
+                                        <?php foreach ($fee_heads->results as $fee_head) : ?>
+                                            <option value="<?= $fee_head->id; ?>" <?= ($search_form->fee_head_id == $fee_head->id) ? 'selected' : ''; ?>><?= $fee_head->title; ?></option>
+                                        <?php endforeach; ?>
+                                    <?php else : ?>
+                                        <option value="">No fee head</option>
+                                    <?php endif; ?>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Date</label>
-                            <input type="text" name="date" class="form-control datetimepicker required" value="<?= $search_form->date; ?>" required>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input type="text" name="date" class="form-control datetimepicker required" value="<?= $search_form->date; ?>" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Admission No</label>
-                            <input type="text" name="admission_no" class="form-control required" value="<?= $search_form->admission_no; ?>" required>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Monthly No</label>
+                                <input type="text" name="admission_no" class="form-control required" value="<?= $search_form->admission_no; ?>" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Action</label>
-                            <div class="d-flex">
-                                <button class="btn btn-light w-100 shadow-none" type="submit">Search</button>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Action</label>
+                                <div class="d-flex">
+                                    <button class="btn btn-light w-100 shadow-none" type="submit">Search</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
-            <hr>
+                </form>
+                <hr>
+            <?php endif; ?>
             <form class="form-validate" action="" name="add-fee-form" id="add-fee-form" method="post" novalidate="novalidate">
                 <div class="row">
                     <div class="col-md-2">
@@ -156,13 +163,13 @@ require_once 'includes/sidebar.php';
                     <div class="col-md-2">
                         <div class="form-group">
                             <label>Date From</label>
-                            <input type="text" name="date_from" class="form-control datetimepicker required" required>
+                            <input type="text" name="date_from" class="form-control datetimepicker required" required value="<?= $monthly_fee->date_from ? $accounts->date('d-m-Y', $monthly_fee->date_from) : ''; ?>">
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <label>Date To</label>
-                            <input type="text" name="date_to" class="form-control datetimepicker required" required>
+                            <input type="text" name="date_to" class="form-control datetimepicker required" required value="<?= $monthly_fee->date_to ? $accounts->date('d-m-Y', $monthly_fee->date_to) : ''; ?>">
                         </div>
                     </div>
                 </div>
@@ -171,19 +178,19 @@ require_once 'includes/sidebar.php';
                     <div class="col-md-2">
                         <div class="form-group">
                             <label>Fee Type</label>
-                            <input type="text" id="fee_type" class="form-control required" required>
+                            <input type="text" id="fee_type" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <label>Fee Amount</label>
-                            <input type="text" id="fee_amount" class="form-control required" required>
+                            <input type="text" id="fee_amount" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <label>Discount Head</label>
-                            <select id="discount_head" class="form-control required">
+                            <select id="discount_head" class="form-control">
                                 <?php if ($discount_heads->count) : ?>
                                     <option value="">Select fee head</option>
                                     <?php foreach ($discount_heads->results as $discount_head) : ?>
@@ -198,7 +205,8 @@ require_once 'includes/sidebar.php';
                     <div class="col-md-2">
                         <div class="form-group">
                             <label>Discount Type</label>
-                            <select id="discount_type" class="form-control required">
+                            <select id="discount_type" class="form-control">
+                                <option value="">Select discount type</option>
                                 <option value="fixed">Fixed</option>
                                 <option value="percentage">Percentage</option>
                             </select>
@@ -207,7 +215,7 @@ require_once 'includes/sidebar.php';
                     <div class="col-md-2">
                         <div class="form-group">
                             <label>Discount Value</label>
-                            <input type="text" id="discount_value" class="form-control required" required>
+                            <input type="text" id="discount_value" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -289,9 +297,16 @@ require_once 'includes/sidebar.php';
 <script type="text/javascript">
     (function($) {
         var discounts_results = <?= json_encode($discounts_results); ?>;
+        var monthly_fee_items = <?= ($monthly_fee_items->success && $monthly_fee_items->count) ? json_encode($monthly_fee_items->results) : '[]'; ?>;
+        monthly_fee_items = monthly_fee_items.map(function(fee_item) {
+            fee_item.discount_head_id = fee_item.discount_head_id || '';
+            fee_item.discount_amount = fee_item.discount_amount || 0;
+            return fee_item;
+        });
         var blank_row_tr = '<tr id="blank_row_tr"><td class="text-center" colspan="7">No data here</td></tr>';
 
         function new_row_template(fee_type, fee_amount, discount_head_id, discount_type, discount_amount, total) {
+            if (discount_amount == 0) discount_head_id = discount_type = '';
             return '<tr>' +
                 '<td class="counter"></td>' +
                 '<td class="fee_type_td">' +
@@ -444,5 +459,18 @@ require_once 'includes/sidebar.php';
             }
             return true;
         });
+
+        if (monthly_fee_items.length) {
+            if ($('#add-fee-table tbody tr#blank_row_tr').length) {
+                $('#add-fee-table tbody tr#blank_row_tr').remove();
+            }
+            for (var i = 0; i < monthly_fee_items.length; i++) {
+                var fee_item = monthly_fee_items[i];
+                $('#add-fee-table tbody').append(
+                    new_row_template(fee_item.fee_type, fee_item.fee_amount, fee_item.discount_head_id, fee_item.discount_type, fee_item.discount_amount, fee_item.total)
+                );
+            }
+            calculate_total();
+        }
     }(jQuery));
 </script>

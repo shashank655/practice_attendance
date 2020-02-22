@@ -233,11 +233,11 @@ $menus = [
                 'to' => 'discount.php',
                 'related' => ['monthly-discount.php']
             ],
-            'Admission Fee' => [
+            'Admission Fee List' => [
                 'to' => 'admission-fee.php',
                 'related' => ['add-edit-admission-fee.php', 'collect-admission-fee.php']
             ],
-            'Monthly Fee' => [
+            'Monthly Fee List' => [
                 'to' => 'monthly-fee.php',
                 'related' => ['add-edit-monthly-fee.php', 'collect-monthly-fee.php']
             ]

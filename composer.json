@@ -1,0 +1,15 @@
+{
+    "name": "adhyay/adhyay",
+    "description": "Adhyay",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Ajay Nautiyal",
+            "email": "aju@nautiyal.co.in"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "dompdf/dompdf": "dev-master"
+    }
+}

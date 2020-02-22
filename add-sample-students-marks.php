@@ -1,29 +1,29 @@
-<?php 
-require_once 'employee/class/dbclass.php'; 
-require_once 'employee/config/config.php'; 
+<?php
+require_once 'employee/class/dbclass.php';
+require_once 'employee/config/config.php';
 require_once 'employee/class/Student.php';
 require_once 'employee/class/StudentMarks.php';
-require_once("dompdf/dompdf_config.inc.php");
+require_once 'vendor/autoload.php';
 
-$txt = "hello world lorem ipsum orem ipsum";
-$txt = str_replace('&nbsp;', '', $txt);
-$dompdf = new DOMPDF();
-$dompdf->load_html(html_entity_decode($txt));
-$dompdf->render();
-$output = $dompdf->output();
-$pdfname = md5(strtotime('now')) . '.pdf';
-//file_put_contents(PDF_ATTACHMENT_ROOT . $pdfname, $output); 
+// $txt = "hello world lorem ipsum orem ipsum";
+// $txt = str_replace('&nbsp;', '', $txt);
+// $dompdf = new DOMPDF();
+// $dompdf->load_html(html_entity_decode($txt));
+// $dompdf->render();
+// $output = $dompdf->output();
+// $pdfname = md5(strtotime('now')) . '.pdf';
+// //file_put_contents(PDF_ATTACHMENT_ROOT . $pdfname, $output);
 
-$student = new Student(); 
-$student_marks = new StudentMarks(); 
-$studentId = (isset($_REQUEST['sID'])) ? $_REQUEST['sID'] : NULL; 
+$student = new Student();
+$student_marks = new StudentMarks();
+$studentId = (isset($_REQUEST['sID'])) ? $_REQUEST['sID'] : NULL;
 if ($studentId != NULL) { $result = $student_marks->getSampleStudentMarks($studentId);
 $resultStudent = $student->getStudentInfo($studentId);
-	if ($resultStudent == NULL) { $studentId = ''; } } 
+	if ($resultStudent == NULL) { $studentId = ''; } }
     ?>
-<?php 
-require_once 'includes/header.php'; 
-require_once 'includes/sidebar.php'; 
+<?php
+require_once 'includes/header.php';
+require_once 'includes/sidebar.php';
 ?>
 <style type="text/css">
     .reportCardForm *{
@@ -45,11 +45,11 @@ require_once 'includes/sidebar.php';
         width:100%;
     }
     .reportCardTable,.reportCardTable2{
-        border: 1px solid black; 
+        border: 1px solid black;
     }
     .reportCardTable th,
     .reportCardTable td{
-        border: 1px solid black; 
+        border: 1px solid black;
         text-align: center;
         font-size: 15px;
     }
@@ -129,7 +129,7 @@ require_once 'includes/sidebar.php';
                     <th>Annual <br> Examination <br> (80)</th>
                     <th>Marks <br> Obtained (100)</th>
                     <th>Grade</th>
-                </tr> 
+                </tr>
                 <tr>
                     <td>Hindi</td>
                     <td><input type="text" name="hindi_periodic_test" value="<?php if (isset($result[0]['hindi_periodic_test'])) echo $result[0]['hindi_periodic_test']; ?>"  /></td>
@@ -180,7 +180,7 @@ require_once 'includes/sidebar.php';
             <h3 class="mb-3">Grand Total</h3>
             <div class="table-responsive">
                 <table class="table reportCardTable2">
-                    <tr>    
+                    <tr>
                         <td style="width: 50%;">Co- Scholastic Areas on a 5 Points (A-E) grading scale</td>
                         <td>Grade</td>
                     </tr>
@@ -205,7 +205,7 @@ require_once 'includes/sidebar.php';
         <div class="col-12">
             <p>Class Teacher's Remarks ................................</p>
             <p>Result: <input type="text" name="final_result" value="<?php if (isset($result[0]['final_result'])) echo $result[0]['final_result']; ?>"  /></p>
-            
+
         </div>
     </div>
     <div class="row justify-content-between">
@@ -225,7 +225,7 @@ require_once 'includes/sidebar.php';
         </div>
     </div>
     </form>
-</div>		
+</div>
     </div>
 </div>
     <?php require_once 'includes/footer.php'; ?>

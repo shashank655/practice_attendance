@@ -3,8 +3,8 @@
 
 class StudentMarks extends MySQLCN {
 
-    function addingStudentsMarks($data) { 
-        $teacher_id = $_SESSION['userId']; 
+    function addingStudentsMarks($data) {
+        $teacher_id = $_SESSION['userId'];
         $class_id = $data['class_id'];
         $section_id = $data['section_id'];
         $exam_id = $data['exam_id'];
@@ -15,14 +15,14 @@ class StudentMarks extends MySQLCN {
         $res = $this->deleteData($qry);
 
         foreach ($data['student_id'] as $key => $value) {
-          $qry1 = 'INSERT INTO `students_marks` 
-              (`class_id`,`section_id`,`exam_id`,`exam_term_id`,`teacher_id`,`exam_name`,`student_id`,`total_marks`,`marks_obtain`) 
+          $qry1 = 'INSERT INTO `students_marks`
+              (`class_id`,`section_id`,`exam_id`,`exam_term_id`,`teacher_id`,`exam_name`,`student_id`,`total_marks`,`marks_obtain`)
               VALUES ( "'. $class_id . '", "'. $section_id . '", "'. $exam_id . '", "'. $exam_term_id . '", "'. $teacher_id . '", "'. $exam_name . '", "'. $value . '", "'.$data['total_marks'].'", "'. $data['marks_obtain'][$key] . '")';
           $res1 = $this->insert($qry1);
         }
-        return true;  
+        return true;
     }
-    
+
     function getStudentsSubjectMarks($examId, $teacherId) {
         $qry = "SELECT student_id,total_marks,marks_obtain FROM students_marks WHERE exam_id = '{$examId}' AND teacher_id = '{$teacherId}' ";
         $result = $this->select($qry);
@@ -72,12 +72,12 @@ class StudentMarks extends MySQLCN {
     function createPDF() {
         $txt = '';
         $txt = str_replace('&nbsp;', '', $txt);
-        $dompdf = new DOMPDF();
+        $dompdf = new \Dompdf\Dompdf();
         $dompdf->load_html(html_entity_decode($txt));
         $dompdf->render();
         $output = $dompdf->output();
         $pdfname = md5(strtotime('now')) . '.pdf';
-        file_put_contents(PDF_ATTACHMENT_ROOT . $pdfname, $output); 
+        file_put_contents(PDF_ATTACHMENT_ROOT . $pdfname, $output);
 
         echo "done";die;
     }
@@ -109,8 +109,8 @@ class StudentMarks extends MySQLCN {
         } else {
             $studentData['status'] = false;
             $studentData['message'] = 'data not found!';
-        } 
-        return $studentData;  
+        }
+        return $studentData;
     }
 }
 ?>

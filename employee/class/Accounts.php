@@ -34,6 +34,15 @@ class Accounts
         $_SESSION['alert'] = compact('type', 'message');
     }
 
+    public function date($format, $string = null)
+    {
+        if (is_null($string)) {
+            $string = $format;
+            $format = 'Y-m-d';
+        }
+        return date($format, strtotime(str_replace('/', '-', $string)));
+    }
+
     public function redirect($path)
     {
         die("<script type=\"text/javascript\">window.location.href = '{$path}'</script>");
@@ -57,7 +66,7 @@ class Accounts
         return array_keys($array) !== range(0, count($array) - 1);
     }
 
-    protected function array_only($array, $keys)
+    protected function arrayOnly($array, $keys)
     {
         return array_intersect_key($array, array_flip((array) $keys));
     }
@@ -220,7 +229,7 @@ class Accounts
     public function addEditFeeHead($request, $id = null)
     {
         try {
-            $data = $this->array_only($request, 'title');
+            $data = $this->arrayOnly($request, 'title');
 
             if (is_null($id)) {
                 $result = $this->insert('fee_heads', $data);
@@ -263,7 +272,7 @@ class Accounts
     public function addEditDiscount($request, $id = null)
     {
         try {
-            $data = $this->array_only($request, ['fee_head_id', 'discount_type', 'discount_head']);
+            $data = $this->arrayOnly($request, ['fee_head_id', 'discount_type', 'discount_head']);
             if (is_null($id)) {
                 $result = $this->insert('discounts', $data);
                 $this->setAlert('Discount added successfully.');
@@ -294,7 +303,7 @@ class Accounts
     public function addEditMonthlyDiscount($request, $id = null)
     {
         try {
-            $data = $this->array_only($request, ['fee_head_id', 'discount_type', 'discount_head']);
+            $data = $this->arrayOnly($request, ['fee_head_id', 'discount_type', 'discount_head']);
             if (is_null($id)) {
                 $result = $this->insert('monthly_discounts', $data);
                 $this->setAlert('Monthly Discount added successfully.');
@@ -385,10 +394,10 @@ class Accounts
         try {
             $data = [
                 'student_roll_no' => $request['student_roll_no'],
-                'date' => date('Y-m-d', strtotime(urldecode($_GET['date']))),
+                'date' => $this->date(urldecode($_GET['date'])),
                 'fee_head_id' => urldecode($_GET['fee_head_id']),
                 'admission_no' => urldecode($_GET['admission_no']),
-                'due_date' => date('Y-m-d', strtotime('+15 days'))
+                'due_date' => $this->date('+15 days')
             ];
 
             if (is_null($id)) {
@@ -435,11 +444,11 @@ class Accounts
             $admission_fee = $this->getAdmissionFee($admission_fee_id);
             $student = $this->getStudentByAdmssionNo($admission_fee->admission_no);
 
-            $data = $this->array_only($request, ['fee_paid', 'payment_date', 'payment_method', 'comment', 'payment_information']);
+            $data = $this->arrayOnly($request, ['fee_paid', 'payment_date', 'payment_method', 'comment', 'payment_information']);
 
             $data['admission_fee_id'] = $admission_fee->id;
             $data['student_id'] = $student->id;
-            $data['payment_date'] = date('Y-m-d', strtotime(str_replace('/', '-', $request['payment_date'])));
+            $data['payment_date'] = $this->date($request['payment_date']);
             $data['billing_address'] = serialize($request['billing']);
 
             $result = $this->insert('admission_fee_payments', $data);
@@ -449,9 +458,9 @@ class Accounts
 
             $updated_due_date = null;
             if ($admission_total_fee > $admission_total_payment) {
-                $updated_due_date = date('Y-m-d', strtotime(
-                    isset($request['fee_due_date']) ? str_replace('/', '-', $request['fee_due_date']) : '+15 days'
-                ));
+                $updated_due_date = $this->date(
+                    isset($request['fee_due_date']) ? $request['fee_due_date'] : '+15 days'
+                );
             }
 
             $this->update('admission_fees', ['due_date' => $updated_due_date], ['id' => $admission_fee->id]);
@@ -519,12 +528,12 @@ class Accounts
         try {
             $data = [
                 'student_roll_no' => $request['student_roll_no'],
-                'date' => date('Y-m-d', strtotime(urldecode($_GET['date']))),
+                'date' => $this->date(urldecode($_GET['date'])),
                 'fee_head_id' => urldecode($_GET['fee_head_id']),
                 'admission_no' => urldecode($_GET['admission_no']),
-                'date_from' => date('Y-m-d', strtotime(str_replace('/', '-', $request['date_from']))),
-                'date_to' => date('Y-m-d', strtotime(str_replace('/', '-', $request['date_to']))),
-                'due_date' => date('Y-m-d', strtotime('+15 days'))
+                'date_from' => $this->date($request['date_from']),
+                'date_to' => $this->date($request['date_to']),
+                'due_date' => $this->date('+15 days')
             ];
 
             if (is_null($id)) {
@@ -571,11 +580,11 @@ class Accounts
             $monthly_fee = $this->getMonthlyFee($monthly_fee_id);
             $student = $this->getStudentByAdmssionNo($monthly_fee->admission_no);
 
-            $data = $this->array_only($request, ['fee_paid', 'payment_date', 'payment_method', 'comment', 'payment_information']);
+            $data = $this->arrayOnly($request, ['fee_paid', 'payment_date', 'payment_method', 'comment', 'payment_information']);
 
             $data['monthly_fee_id'] = $monthly_fee->id;
             $data['student_id'] = $student->id;
-            $data['payment_date'] = date('Y-m-d', strtotime(str_replace('/', '-', $request['payment_date'])));
+            $data['payment_date'] = $this->date($request['payment_date']);
             $data['billing_address'] = serialize($request['billing']);
 
             $result = $this->insert('monthly_fee_payments', $data);
@@ -585,9 +594,9 @@ class Accounts
 
             $updated_due_date = null;
             if ($monthly_total_fee > $monthly_total_payment) {
-                $updated_due_date = date('Y-m-d', strtotime(
-                    isset($request['fee_due_date']) ? str_replace('/', '-', $request['fee_due_date']) : '+15 days'
-                ));
+                $updated_due_date = $this->date(
+                    isset($request['fee_due_date']) ? $request['fee_due_date'] : '+15 days'
+                );
             }
 
             $this->update('monthly_fees', ['due_date' => $updated_due_date], ['id' => $monthly_fee->id]);

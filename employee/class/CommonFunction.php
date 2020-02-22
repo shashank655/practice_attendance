@@ -54,4 +54,43 @@ class CommonFunction extends MySQLCN {
             return false;
         }
     }
-}    
+
+    public function getHolidaysDates()
+    {
+        $query = 'SELECT holiday_date FROM holidays';
+        $return = [];
+        if(empty($results = $this->select($query))) {
+            return [];
+        } else {
+            foreach ($results as $value) {
+                $date = str_replace('/', '-', $value['holiday_date']);
+                array_push($return, date('Y-m-d', strtotime($date)));
+            }
+        }
+
+        return $return;
+    }
+
+    public function studentsCount($class_id, $section_id)
+    {
+        $query = "SELECT COUNT(*) AS count FROM students WHERE class_id = '{$class_id}' AND section_id = '{$section_id }'";
+        $return = [];
+        if(empty($results = $this->select($query))) {
+            return 0;
+        } else {
+            return $results[0]['count'];
+        }
+    }
+
+    public function teachersCount()
+    {
+        $query = "SELECT COUNT(*) AS count FROM teachers";
+        $return = [];
+        if(empty($results = $this->select($query))) {
+            return 0;
+        } else {
+            return $results[0]['count'];
+        }
+    }
+
+}

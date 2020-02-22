@@ -122,47 +122,47 @@ class StudentAttendance extends MySQLCN {
       }
     }
 
-    function getStudentMonthlyAttendence($class_id = null, $section_id = null, $attendance_type = null) {
+    function getStudentMonthlyAttendence($class_id = null, $section_id = null, $attendance_type = null)
+    {
         $query = "SELECT count(*) as count, DATE_FORMAT(date_of_attendance, \"%Y-%m\") as month";
         $query .= " FROM students_attendance";
-        if ($class_id OR $section_id OR $attendance_type) {
-            $where = [];
 
-            if ($class_id) $where[] = "class_id = '$class_id'";
-            if ($section_id) $where[] = "section_id = '$section_id'";
-            if ($attendance_type) $where[] = "attendance = '$attendance_type'";
+            $where = [];
+        if ($class_id) array_push($where,  "class_id = '{$class_id}'");
+        if ($section_id) array_push($where, "section_id = '{$section_id}'");
+        if ($attendance_type) array_push($where, "attendance = '{$attendance_type}'");
+        array_push($where, "DATE_FORMAT(date_of_attendance, \"%Y\") = '" . date('Y') . "'");
 
             $query .= " WHERE " . implode(' AND ', $where);
-        }
         $query .= " GROUP BY month;";
 
-        if (empty( $result = $this->select($query) )) {
+        if (empty($result = $this->select($query))) {
             return [];
         }
 
         $results = [];
         foreach ($result as $row) {
-            $results[ $row['month'] ] = $row['count'];
+            $results[$row['month']] = $row['count'];
         }
         return $results;
     }
 
-    function getMonthlyAttendenceStudentWise($class_id = null, $section_id = null, $month = null, $attendance_type = null) {
+    function getMonthlyAttendenceStudentWise($class_id = null, $section_id = null, $month = null, $attendance_type = null)
+    {
         $query = "SELECT count(attendance) as count, student_id";
         $query .= " FROM students_attendance";
-        if ($class_id OR $section_id OR $attendance_type) {
-            $where = [];
 
-            if ($class_id) $where[] = "class_id = '$class_id'";
-            if ($section_id) $where[] = "section_id = '$section_id'";
-            if ($month) $where[] = "DATE_FORMAT(date_of_attendance, \"%Y-%m\") = '$month'";
-            if ($attendance_type) $where[] = "attendance = '$attendance_type'";
+            $where = [];
+        if ($class_id) array_push($where,  "class_id = '{$class_id}'");
+        if ($section_id) array_push($where, "section_id = '{$section_id}'");
+        if ($month) array_push($where, "DATE_FORMAT(date_of_attendance, \"%Y-%m\") = '{$month}'");
+        if ($attendance_type) array_push($where, "attendance = '{$attendance_type}'");
+        array_push($where, "DATE_FORMAT(date_of_attendance, \"%Y\") = '" . date('Y') . "'");
 
             $query .= " WHERE " . implode(' AND ', $where);
-        }
         $query .= " GROUP BY student_id;";
 
-        if (empty( $result = $this->select($query) )) {
+        if (empty($result = $this->select($query))) {
             return [];
         }
 
@@ -173,4 +173,3 @@ class StudentAttendance extends MySQLCN {
         return $results;
     }
 }
-?>

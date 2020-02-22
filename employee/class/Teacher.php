@@ -318,5 +318,48 @@ class Teacher extends MySQLCN {
       $fetch_result = $this->select($fetch);
       return $fetch_result;
     }     
+
+    public function getTeacherMonthlyAttendence()
+    {
+        $query = "SELECT count(*) as count, DATE_FORMAT(date_of_attendance, \"%Y-%m\") as month FROM teachers_attendance WHERE DATE_FORMAT(date_of_attendance, \"%Y\") = '" . date('Y') . "' GROUP BY month";
+
+        if (empty($result = $this->select($query))) {
+            return [];
+        }
+
+        $results = [];
+        foreach ($result as $row) {
+            $results[$row['month']] = $row['count'];
+        }
+        return $results;
+    }
+
+    public function getAllTeacher()
+    {
+        $query = 'SELECT * FROM teachers LEFT JOIN users ON users.id =teachers.user_id';
+        if (empty($result = $this->select($query))) {
+            return [];
+        }
+
+        $results = [];
+        foreach ($result as $row) {
+            $results[$row['id']] = $row['first_name'] . ' ' . $row['last_name'];
+        }
+        return $results;
+    }
+
+    public function getMonthlyAttendenceTeacherWise($month)
+    {
+        $query = "SELECT count(*) as count, teacher_id FROM teachers_attendance WHERE DATE_FORMAT(date_of_attendance, \"%Y-%m\") = '{$month}' AND DATE_FORMAT(date_of_attendance, \"%Y\") = '" . date('Y') . "' GROUP BY teacher_id";
+
+        if (empty($result = $this->select($query))) {
+            return [];
+        }
+
+        $results = [];
+        foreach ($result as $row) {
+            $results[$row['teacher_id']] = $row['count'];
+        }
+        return $results;
+    }
 }
-?>

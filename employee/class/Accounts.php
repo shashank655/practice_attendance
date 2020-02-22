@@ -345,6 +345,19 @@ class Accounts
 
     public function getAdmissionFeeList()
     {
+        $filters = [
+            'class_id' => 's.class_id = ?',
+            'section_id' => 's.section_id = ?',
+            'admission_no' => 'af.admission_no = ?',
+            'date_from' => 'af.due_date >= ?',
+            'date_to' => 'af.due_date <= ?'
+        ];
+
+        $where = $this->arrayOnly($_GET, array_keys($filters));
+
+        if (isset($where['date_from'])) $where['date_from'] = $this->date($where['date_from']);
+        if (isset($where['date_to'])) $where['date_to'] = $this->date($where['date_to']);
+
         $query = "SELECT
                     af.id,
                     af.admission_no,
@@ -353,7 +366,11 @@ class Accounts
                     (SELECT SUM(afi.total) FROM admission_fee_items AS afi WHERE afi.admission_fee_id = af.id) AS total_fee_amount,
                     (SELECT SUM(afp.fee_paid) FROM admission_fee_payments AS afp WHERE afp.admission_fee_id = af.id) AS total_fee_payment
                     FROM admission_fees as af LEFT JOIN students as s ON af.admission_no = s.admission_no";
-        return $this->prepareExecute($query, []);
+
+        if (count($where) > 0) {
+            $query .= ' WHERE '. implode(' AND ', $this->arrayOnly($filters, array_keys($where)));
+        }
+        return $this->prepareExecute($query, array_values($where));
     }
 
     public function getAdmissionFee($id)
@@ -479,15 +496,32 @@ class Accounts
 
     public function getMonthlyFeeList()
     {
+        $filters = [
+            'class_id' => 's.class_id = ?',
+            'section_id' => 's.section_id = ?',
+            'admission_no' => 'mf.admission_no = ?',
+            'date_from' => 'mf.due_date >= ?',
+            'date_to' => 'mf.due_date <= ?'
+        ];
+
+        $where = $this->arrayOnly($_GET, array_keys($filters));
+
+        if (isset($where['date_from'])) $where['date_from'] = $this->date($where['date_from']);
+        if (isset($where['date_to'])) $where['date_to'] = $this->date($where['date_to']);
+
         $query = "SELECT
-                    af.id,
-                    af.admission_no,
+                    mf.id,
+                    mf.admission_no,
                     CONCAT(s.first_name, ' ', s.last_name) AS student_name,
-                    af.due_date,
-                    (SELECT SUM(afi.total) FROM monthly_fee_items AS afi WHERE afi.monthly_fee_id = af.id) AS total_fee_amount,
-                    (SELECT SUM(afp.fee_paid) FROM monthly_fee_payments AS afp WHERE afp.monthly_fee_id = af.id) AS total_fee_payment
-                    FROM monthly_fees as af LEFT JOIN students as s ON af.admission_no = s.admission_no";
-        return $this->prepareExecute($query, []);
+                    mf.due_date,
+                    (SELECT SUM(mfi.total) FROM monthly_fee_items AS mfi WHERE mfi.monthly_fee_id = mf.id) AS total_fee_amount,
+                    (SELECT SUM(mfp.fee_paid) FROM monthly_fee_payments AS mfp WHERE mfp.monthly_fee_id = mf.id) AS total_fee_payment
+                    FROM monthly_fees as mf LEFT JOIN students as s ON mf.admission_no = s.admission_no";
+
+        if (count($where) > 0) {
+            $query .= ' WHERE '. implode(' AND ', $this->arrayOnly($filters, array_keys($where)));
+        }
+        return $this->prepareExecute($query, array_values($where));
     }
 
     public function getMonthlyFee($id)

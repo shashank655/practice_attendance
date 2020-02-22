@@ -1,10 +1,14 @@
 <?php
 require_once 'employee/config/config.php';
 require_once 'employee/class/Accounts.php';
+require_once 'employee/class/Optional.php';
 
 $accounts = new Accounts();
 
 $monthly_fees = $accounts->getMonthlyFeeList();
+$classes = $accounts->getClasses();
+$sections = $accounts->getSections();
+$search = new Optional($_GET);
 ?>
 
 <?php
@@ -43,11 +47,71 @@ require_once 'includes/sidebar.php';
                 </button>
             </div>
         <?php endif; ?>
+        <form class="form-validate" action="" method="get" novalidate="novalidate" id="filter-monthly-fee-list" name="filter-monthly-fee-list">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Class</label>
+                        <select name="class_id" id="class_id" class="form-control">
+                            <?php if ($classes->count) : ?>
+                                <option value="">Select class</option>
+                                <?php foreach ($classes->results as $class) : ?>
+                                    <option value="<?= $class->id; ?>" <?= ($search->class_id == $class->id) ? 'selected' : ''; ?>><?= $class->class_name; ?></option>
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <option value="">No fee head</option>
+                            <?php endif; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Section</label>
+                        <select name="section_id" id="section_id" class="form-control">
+                            <?php if ($sections->count) : ?>
+                                <option value="">Select class</option>
+                                <?php foreach ($sections->results as $section) : ?>
+                                    <option value="<?= $section->id; ?>" <?= ($search->section_id == $section->id) ? 'selected' : ''; ?>><?= $section->section_name; ?></option>
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <option value="">No fee head</option>
+                            <?php endif; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Admission No</label>
+                        <input type="text" name="admission_no" id="admission_no" class="form-control" value="<?= $search->admission_no ?: ''; ?>">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Date From</label>
+                        <input type="text" name="date_from" class="form-control datetimepicker required" required value="<?= $search->date_from ? $accounts->date('d-m-Y', $search->date_from) : ''; ?>">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Date To</label>
+                        <input type="text" name="date_to" class="form-control datetimepicker required" required value="<?= $search->date_to ? $accounts->date('d-m-Y', $search->date_to) : ''; ?>">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Action</label>
+                        <div class="d-flex">
+                            <button class="btn btn-light w-100 shadow-none" type="submit">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
         <div class="content-page">
             <div class="row">
                 <div class="col-md-12">
                     <div class="table-responsive">
-                        <table class="table datatable">
+                        <table class="table" id="monthly-fee-list">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -74,21 +138,30 @@ require_once 'includes/sidebar.php';
                                             <td><?= $monthly_fee->due_date ? date('d/m/Y', strtotime($monthly_fee->due_date)) : '-'; ?></td>
                                             <td>
                                                 <?php if ($monthly_fee->total_fee_payment) : ?>
-                                                    <a href="monthly-fee-receipt.php?id=<?= $monthly_fee->id; ?>" class="btn btn-sm btn-dark">
-                                                        View
+                                                    <a href="monthly-fee-receipt.php?id=<?= $monthly_fee->id; ?>" class="text-dark p-2">
+                                                        <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i>
                                                     </a>
                                                 <?php else : ?>
                                                     -
                                                 <?php endif; ?>
                                             </td>
                                             <td>
-                                                <?php if ($monthly_fee->total_fee_amount > $monthly_fee->total_fee_payment) : ?>
-                                                    <a href="collect-monthly-fee.php?id=<?= $monthly_fee->id; ?>" class="btn btn-sm btn-dark">
-                                                        Collect
-                                                    </a>
-                                                <?php else : ?>
-                                                    -
-                                                <?php endif; ?>
+                                                <div class="d-flex justify-content-center">
+                                                    <?php if ($monthly_fee->total_fee_payment == 0) : ?>
+                                                        <a href="add-edit-monthly-fee.php?id=<?= $monthly_fee->id; ?>" class="text-dark p-2">
+                                                            <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+                                                        </a>
+                                                    <?php endif; ?>
+
+                                                    <?php if ($monthly_fee->total_fee_amount > $monthly_fee->total_fee_payment) : ?>
+                                                        <a href="collect-monthly-fee.php?id=<?= $monthly_fee->id; ?>" class="text-dark p-2">
+                                                            <i class="fa fa-rupee fa-lg" aria-hidden="true"></i>
+                                                        </a>
+                                                    <?php else : ?>
+                                                        -
+                                                    <?php endif; ?>
+                                                </div>
+
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -105,3 +178,32 @@ require_once 'includes/sidebar.php';
         </div>
     </div>
     <?php require_once 'includes/footer.php'; ?>
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
+    <style>
+        .dt-buttons {
+            float: right !important;
+        }
+
+        #monthly-fee-list {
+            margin-top: 0 !important;
+        }
+    </style>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+    <script type="text/javascript">
+        (function($) {
+            $('#filter-monthly-fee-list').submit(function(e) {
+                $(this).find('select,input').map(function(i, element) {
+                    element.disabled = !$(element).val();
+                });
+            });
+            $('#monthly-fee-list').DataTable({
+                dom: 'Blrtip',
+                buttons: [
+                    'excel', 'print'
+                ]
+            });
+        }(jQuery))
+    </script>

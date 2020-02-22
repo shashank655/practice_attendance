@@ -2,8 +2,14 @@
 require_once 'employee/config/config.php';
 require_once 'employee/class/Accounts.php';
 require_once 'employee/class/Optional.php';
+require_once 'employee/class/MinavoVSMS.php';
 
 $accounts = new Accounts();
+
+if (isset($_POST['action']) && $_POST['action'] == 'send-reminder' && count($_POST['student_id'])) {
+    $accounts->sendDueFeeReminder( array_unique($_POST['student_id']) );
+    $accounts->redirect(BASE_ROOT . 'admission-fee.php');
+}
 
 $admission_fees = $accounts->getAdmissionFeeList();
 $classes = $accounts->getClasses();
@@ -37,6 +43,7 @@ require_once 'includes/sidebar.php';
             </div>
             <div class="col-sm-8 col-9 text-right m-b-20">
                 <a href="add-edit-admission-fee.php" class="btn btn-primary float-right btn-rounded"><i class="fa fa-plus"></i> Add Admission Fee</a>
+                <a href="#" id="send-reminder" class="btn btn-primary float-right btn-rounded">Send Reminder</a>
             </div>
         </div>
         <?php if ($alert = $accounts->alert()) : ?>
@@ -114,6 +121,7 @@ require_once 'includes/sidebar.php';
                         <table class="table" id="admission-fee-list">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>#</th>
                                     <th>Admission No</th>
                                     <th>Student Name</th>
@@ -129,6 +137,7 @@ require_once 'includes/sidebar.php';
                                 <?php if ($admission_fees->success && $admission_fees->count) : ?>
                                     <?php foreach ($admission_fees->results as $key => $admission_fee) : ?>
                                         <tr>
+                                            <td><?= $admission_fee->student_id; ?></td>
                                             <td><?= $key + 1; ?></td>
                                             <td><?= $admission_fee->admission_no; ?></td>
                                             <td><?= $admission_fee->student_name; ?></td>
@@ -176,15 +185,18 @@ require_once 'includes/sidebar.php';
         </div>
     </div>
     <?php require_once 'includes/footer.php'; ?>
+    <link rel="stylesheet" href="<?= BASE_ROOT; ?>assets/css/dataTables.checkboxes.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
     <style>
         .dt-buttons {
             float: right !important;
         }
+
         #admission-fee-list {
             margin-top: 0 !important;
         }
     </style>
+    <script type="text/javascript" src="<?= BASE_ROOT; ?>assets/js/dataTables.checkboxes.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
@@ -196,11 +208,47 @@ require_once 'includes/sidebar.php';
                     element.disabled = !$(element).val();
                 });
             });
-            $('#admission-fee-list').DataTable({
+
+            var table = $('#admission-fee-list').DataTable({
                 dom: 'Blrtip',
                 buttons: [
                     'excel', 'print'
-                ]
+                ],
+                columnDefs: [{
+                    targets: 0,
+                    checkboxes: {
+                        selectRow: true
+                    }
+                }],
+                select: {
+                    style: 'multi'
+                }
+            });
+
+            $(document).on('click', '#send-reminder', function(e) {
+                e.preventDefault();
+
+                var selected = table.column(0).checkboxes.selected();
+                if (selected.length == 0) {
+                    alert('Select records before send reminder.');
+                    return;
+                }
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '';
+                $.each(selected, function(i, student_id) {
+                    var input = document.createElement('input');
+                    input.name = 'student_id[]';
+                    input.value = student_id;
+                    form.appendChild(input);
+                });
+
+                var submit = document.createElement('input');
+                submit.name = 'action';
+                submit.value = 'send-reminder';
+                form.appendChild(submit);
+                document.body.appendChild(form);
+                form.submit();
             });
         }(jQuery))
     </script>

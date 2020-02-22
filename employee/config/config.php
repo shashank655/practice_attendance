@@ -23,4 +23,6 @@ define("UPLOAD_CSV_PATH",ROOT."upload/upload_csv/");
 define("UPLOAD_CSV_ROOT",$_SERVER['DOCUMENT_ROOT']."/practice_attendance/employee/upload/upload_csv/");
 
 define("TEACHERS_EXPIRY_TIME","2000");
-?>
+
+define('MinavoVSMSAuthKey', '');
+define('MinavoVSMSSenderId', '');

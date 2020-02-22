@@ -338,6 +338,13 @@ class Accounts
         return $student;
     }
 
+    public function getStudentsByIds($ids)
+    {
+        $where = implode(',', array_fill(0, count($ids), '?'));
+        $query = 'SELECT * FROM students WHERE id IN (' . $where . ')';
+        return $this->prepareExecute($query, $ids);
+    }
+
     public function getAdmissionFees()
     {
         return $this->select('admission_fees');
@@ -361,6 +368,7 @@ class Accounts
         $query = "SELECT
                     af.id,
                     af.admission_no,
+                    s.id as student_id,
                     CONCAT(s.first_name, ' ', s.last_name) AS student_name,
                     af.due_date,
                     (SELECT SUM(afi.total) FROM admission_fee_items AS afi WHERE afi.admission_fee_id = af.id) AS total_fee_amount,
@@ -368,7 +376,7 @@ class Accounts
                     FROM admission_fees as af LEFT JOIN students as s ON af.admission_no = s.admission_no";
 
         if (count($where) > 0) {
-            $query .= ' WHERE '. implode(' AND ', $this->arrayOnly($filters, array_keys($where)));
+            $query .= ' WHERE ' . implode(' AND ', $this->arrayOnly($filters, array_keys($where)));
         }
         return $this->prepareExecute($query, array_values($where));
     }
@@ -512,6 +520,7 @@ class Accounts
         $query = "SELECT
                     mf.id,
                     mf.admission_no,
+                    s.id as student_id,
                     CONCAT(s.first_name, ' ', s.last_name) AS student_name,
                     mf.due_date,
                     (SELECT SUM(mfi.total) FROM monthly_fee_items AS mfi WHERE mfi.monthly_fee_id = mf.id) AS total_fee_amount,
@@ -519,7 +528,7 @@ class Accounts
                     FROM monthly_fees as mf LEFT JOIN students as s ON mf.admission_no = s.admission_no";
 
         if (count($where) > 0) {
-            $query .= ' WHERE '. implode(' AND ', $this->arrayOnly($filters, array_keys($where)));
+            $query .= ' WHERE ' . implode(' AND ', $this->arrayOnly($filters, array_keys($where)));
         }
         return $this->prepareExecute($query, array_values($where));
     }
@@ -637,6 +646,34 @@ class Accounts
             $this->setAlert('Monthly Fee collected successfully.');
 
             return $result;
+        } catch (\Throwable $th) {
+            return $this->throwException($th);
+        }
+    }
+
+    public function sendDueFeeReminder($student_ids)
+    {
+        $message = 'Dear User,' . "\r\n" . 'We would like to inform you that you have fee due.' . "\r\n" . 'We request you to make the payment of the due amount before the due date.';
+
+        try {
+            $mobilenumbers = [];
+            $students = $this->getStudentsByIds($student_ids);
+            if ($students->success && $students->count) {
+                $mobilenumbers = array_map(function ($student) {
+                    $number = $student->parents_mobile_number;
+                    if (strlen($number) == 11 && substr($number, 0, 1) == '0') $number = substr($number, 1, 10);
+                    if (strlen($number) == 12 && substr($number, 0, 2) == '91') $number = substr($number, 2, 10);
+                    if (strlen($number) == 13 && substr($number, 0, 3) == '+91') $number = substr($number, 3, 10);
+                    return $number;
+                }, $students->results);
+            }
+
+            $response = MinavoVSMS::bulksms($mobilenumbers, $message);
+            if ($response->status === 'success') {
+                $this->setAlert('Fee reminder has been sent successfully.');
+            } else {
+                $this->setAlert('Oops! Something went wrong.');
+            }
         } catch (\Throwable $th) {
             return $this->throwException($th);
         }

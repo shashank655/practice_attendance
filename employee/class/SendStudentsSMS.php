@@ -25,6 +25,28 @@ class SendStudentsSMS extends MySQLCN {
         return $fetch_data;
     }
 
+    function SendingSMS($data) {
+        if($data['type'] == 'sending-sms') {
+            foreach ($data['studentsID'] as $key => $value) {
+                $fetch = "SELECT * FROM `students_sms_listing` where id='{$value}'";
+                $fetch_data = $this->select($fetch);
+                $phoneNumber = $fetch_data[0]['mobile_number'];
+                // Get cURL resource
+                    $curl = curl_init();
+                    // Set some options - we are passing in a useragent too here
+                    curl_setopt_array($curl, [
+                        CURLOPT_RETURNTRANSFER => 1,
+                        CURLOPT_URL => 'https://vsms.minavo.in/api/singlesms.php?auth_key=e7a1c23b0323cc6767bd547f4246c8d820180328124449&mobilenumber='.$phoneNumber.'&message=AdhyaySoftware&sid=Minavo&mtype=N'
+                    ]);
+                    // Send the request & save response to $resp
+                    $resp = curl_exec($curl);
+                    // Close request to clear up some resources
+                    curl_close($curl);
+            }
+            return true;
+        }
+    }
+
     function getStudentInfo($id) {
         $fetch = "SELECT * FROM `students_sms_listing` where id='{$id}'";
         $fetch_data = $this->select($fetch);

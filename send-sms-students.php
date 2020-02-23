@@ -3,7 +3,14 @@ require_once 'employee/class/dbclass.php';
 require_once 'employee/config/config.php'; 
 require_once 'employee/class/SendStudentsSMS.php';  
 $send_sms=new SendStudentsSMS(); 
-$resultSendSMS=$send_sms->getSMSStudentsLists(); ;
+$resultSendSMS=$send_sms->getSMSStudentsLists();
+
+if($_REQUEST['type'] == 'sending-sms' && is_array($_REQUEST['studentsID'])) {
+    $resultSendSMS=$send_sms->SendingSMS($_REQUEST);
+        $_SESSION['Msg'] = "SMS sent successfully!";
+        $_SESSION['success'] = true;
+        header('Location: ' . BASE_ROOT.'send-sms-students.php');
+}
 ?>
 
 <?php 
@@ -27,6 +34,8 @@ require_once 'includes/sidebar.php';
                     </div>
                 </div>
             <div class="content-page">
+            <form id="addStudents" action="employee/process/processSendStudentsSMS.php" method="post" novalidate="novalidate">
+            <input type="hidden" name="type" value="sending-sms" />
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
@@ -56,13 +65,13 @@ require_once 'includes/sidebar.php';
                                 </tbody>
                             </table>
                         </div>
+                        <div class="form-group text-center custom-mt-form-group">
+                            <button class="btn btn-primary btn-lg mr-2" type="submit">Send</button>
+                        </div>
                     </div>
                 </div>
+                </form>
             </div>
-            <div class="form-group text-center custom-mt-form-group">
-                <button class="btn btn-primary btn-lg mr-2" type="submit">Send</button>
-            </div>
-            </form>
         </div>
         <?php require_once 'includes/footer.php'; ?>
         <script type="text/javascript">

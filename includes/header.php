@@ -93,6 +93,7 @@ function user_has_permission($page = null)
     <link rel="stylesheet" type="text/css" href="<?php echo BASE_ROOT ?>assets/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo BASE_ROOT ?>assets/plugins/morris/morris.css">
     <link rel="stylesheet" type="text/css" href="<?php echo BASE_ROOT ?>assets/css/style.css">
+    <link rel="stylesheet" type="text/css" media="print" href="<?php echo BASE_ROOT ?>assets/css/print.css">
     <!--[if lt IE 9]>
         <script src="assets/js/html5shiv.min.js"></script>
         <script src="assets/js/respond.min.js"></script>

@@ -6830,3 +6830,19 @@ label.error:before {
 		}
 
 	}
+	.tcForm p{
+        line-height: 40px;
+        font-size: 16px;
+    }
+    .tcForm input[type="text"]{
+        border: 0;
+        border-bottom: 1px dotted #000;
+        width: 190px;
+        padding:0 10px;
+    }
+    .logo_bk {
+        height: 57px;
+        margin-left: 10px;
+        vertical-align: top;
+    }
+    

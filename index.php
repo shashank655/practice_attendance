@@ -62,6 +62,20 @@ if (isset($_SESSION['userId'])) {
                         </div>
                         <form id="loginform" action="employee/process/processUser.php" method="post">
                         <input type="hidden" value="login" name="type" />
+                        <div class="row">
+                            <div class="custom-control custom-checkbox">
+                              <input type="radio" name="user_role" checked="checked" value="super_admin">
+                              <label>Super Admin</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                              <input type="radio" name="user_role" value="parents">
+                              <label>Parents</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                              <input type="radio" name="user_role" value="teachers">
+                              <label>Teachers</label>
+                            </div>
+                        </div>    
 							<div class="form-group custom-mt-form-group">
 								<input type="text" data-validetta="required" placeholder="Email Address"/ name="email_address">
                                 <i class="bar"></i>
@@ -112,6 +126,9 @@ if (isset($_SESSION['userId'])) {
         $("#loginformsssss").validate({
             ignore: "input[type='text']:hidden",
             rules:{
+                user_role:{
+                    required:true
+                },
                 email_address:{
                     required:true,
                     email:true

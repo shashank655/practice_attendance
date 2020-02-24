@@ -8,7 +8,11 @@ $admin = new Admin();
 $data = $_REQUEST;
 date_default_timezone_set('Asia/Kolkata');
 if ($data['type'] == 'login') {
-    $result = $user->userLogin($data);
+        if($data['user_role'] == 'parents') {
+            $result = $user->parentsLogin($data);
+        } else {
+            $result = $user->userLogin($data);
+        }
     if ($result) {
         header('Location: ' . BASE_ROOT.'dashboard.php');
     } else {

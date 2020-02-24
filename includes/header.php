@@ -168,7 +168,10 @@ function user_has_permission($page = null)
                             <a class="dropdown-item" href="admin-profile.php">My Profile</a>
                             <a class="dropdown-item" href="edit-admin-profile.php">Edit Profile</a>
                             <a class="dropdown-item" href="employee/process/processUser.php?type=logout">Logout</a>
-                        <?php } else { ?>
+                         <?php } else if($_SESSION['user_role'] == '4') { ?>
+                            <a class="dropdown-item" href="parents-profile.php?userId=<?php echo $_SESSION['userId'] ?>">My Profile</a>
+                            <a class="dropdown-item" href="employee/process/processUser.php?type=logout">Logout</a>
+                       <?php } else { ?>
                             <a class="dropdown-item" href="teacher-profile.php?userId=<?php echo $_SESSION['userId'] ?>">My Profile</a>
                             <a class="dropdown-item" href="employee/process/processUser.php?type=logout">Logout</a>
                         <?php } ?>

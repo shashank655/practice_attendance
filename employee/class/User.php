@@ -26,6 +26,21 @@ class User extends MySQLCN {
         }
     }
 
+    function parentsLogin($data) {
+        $qry = "SELECT * FROM students WHERE parents_email_address = '{$data['email_address']}' AND parents_password = md5('{$data['password']}')";
+        $result = $this->select($qry);
+        if ($result != NULL) {
+            $_SESSION['userId'] = $result[0]['id'];
+            $_SESSION['name'] = $result[0]['fathers_name'];
+            $_SESSION['email_address'] = $result[0]['parents_email_address'];
+            $_SESSION['user_role'] = '4';
+            $_SESSION['last_login_timestamp'] = time();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     function userRegistration($data) {
         $result = $this->checkUserSignUp($data);
             if($result) {

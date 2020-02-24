@@ -187,7 +187,7 @@ if ($tcId != NULL) { $result = $transferCertificate->getFormInfo($tcId);
             }, 500);*/
             $('.print-div').printThis({
                 importCSS: true,
-                loadCSS:"http://localhost/practice_attendance/assets/css/style.css"
+                loadCSS:"<?php echo BASE_ROOT; ?>assets/css/style.css"
             });
         });
     });

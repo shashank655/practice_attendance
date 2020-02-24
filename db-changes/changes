@@ -310,3 +310,5 @@ CREATE TABLE `sample_examination_marks` (
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+
+parents_password and parents_email_address

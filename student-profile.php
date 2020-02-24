@@ -65,8 +65,8 @@ require_once 'includes/sidebar.php';
                                                     <span class="text"><?php echo $result[0]['mobile_number'];?></span>
                                                 </li>
                                                 <li>
-                                                    <span class="title">Email:</span>
-                                                    <span class="text"><?php echo $result[0]['email_address'];?></span>
+                                                    <span class="title">Parents Email:</span>
+                                                    <span class="text"><?php echo $result[0]['parents_email_address'];?></span>
                                                 </li>
                                                 <li>
                                                     <span class="title">Birthday:</span>

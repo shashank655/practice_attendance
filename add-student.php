@@ -154,12 +154,19 @@ require_once 'includes/sidebar.php';
 															<i class="bar"></i>
 														</div>
 														<div class="form-group custom-mt-form-group">
-													<input type="text"  name="email_address" placeholder="Email" value="<?php
-                                        		if (isset($result[0]['email_address']))
-                                            	echo htmlspecialchars($result[0]['email_address']);
+													<input type="text"  name="parents_email_address" placeholder="Email" value="<?php
+                                        		if (isset($result[0]['parents_email_address']))
+                                            	echo htmlspecialchars($result[0]['parents_email_address']);
                                         		?>"/>
 													<i class="bar"></i>
 												</div>
+												<div class="form-group custom-mt-form-group">
+															<input type="text"  name="nationality" placeholder="Nationality" value="<?php
+                                        		if (isset($result[0]['nationality']))
+                                            	echo htmlspecialchars($result[0]['nationality']);
+                                        		?>"/>
+															<i class="bar"></i>
+														</div>
 														<div class="form-group custom-mt-form-group">
 															<input type="number"  name="parents_mobile_number" placeholder="Mobile number" value="<?php
                                         		if (isset($result[0]['parents_mobile_number']))
@@ -189,9 +196,9 @@ require_once 'includes/sidebar.php';
 															<i class="bar"></i>
 														</div>
 														<div class="form-group custom-mt-form-group">
-															<input type="text"  name="nationality" placeholder="Nationality" value="<?php
-                                        		if (isset($result[0]['nationality']))
-                                            	echo htmlspecialchars($result[0]['nationality']);
+															<input type="password"  name="parents_password" placeholder="Password" value="<?php
+                                        		if (isset($result[0]['[parents_password]']))
+                                            	echo htmlspecialchars($result[0]['[parents_password]']);
                                         		?>"/>
 															<i class="bar"></i>
 														</div>
@@ -297,6 +304,21 @@ require_once 'includes/sidebar.php';
                     required:true
                 },
                 religion:{
+                	required:true
+                },
+                fathers_name:{
+                	required:true
+                },
+                mothers_name:{
+                	required:true
+                },
+                fathers_occupation:{
+                	required:true
+                },
+                parents_email_address:{
+                	required:true
+                },
+                parents_password:{
                 	required:true
                 },
                 parents_mobile_number:{

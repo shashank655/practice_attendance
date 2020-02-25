@@ -21,33 +21,6 @@ if ($formId != NULL) { $result = $admissionForm->getFormInfo($formId);
 require_once 'includes/header.php'; 
 require_once 'includes/sidebar.php'; 
 ?>
-<style type="text/css">
-	.formHeaderBar, .formHeaderBar *{
-		color:#336699;
-	}
-	.admissionForm *{
-		color:#336699;
-		border-color:#336699;
-	}
-	.adm-number {
-		border: 1px solid #336699;
-	}
-	.admissionForm input[type="text"],
-	.admissionForm input[type="number"],
-	.admissionForm select{
-		flex: auto;
-		border-radius: 0;
-		border:none;
-		border-bottom: 1px solid #336699;
-		flex:  auto;
-		width: auto;
-		color: #000;
-	}
-	.admissionForm label{
-		text-transform: capitalize;
-		margin-right: 5px;
-	}
-</style>
 <div class="page-wrapper">
     <!-- content -->
     <div class="content container-fluid">
@@ -465,7 +438,7 @@ require_once 'includes/sidebar.php';
 	$('#print_button').on("click", function () {
       $('.print-div').printThis({
                 importCSS: true,
-                loadCSS:"<?php echo BASE_ROOT; ?>assets/css/print.css"
+                loadCSS:["<?php echo BASE_ROOT; ?>assets/css/style.css","<?php echo BASE_ROOT; ?>assets/css/print.css"]
             });
     });
 

@@ -50,6 +50,11 @@ if ($tcId != NULL) { $result = $transferCertificate->getFormInfo($tcId);
 <div class="page-wrapper tcFormBlock">
     <!-- content -->
     <div class="content container-fluid print-div">
+        <dib class="row">
+            <div class="col  text-right d-print-none">
+                <a href="javascript:void();" style="text-align: right;" id="print_button" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Print</a>
+            </div>
+        </dib>
         <div class="tcFormBlock">
             <div class="container">
                 <div class="row d-print-flex d-none justify-content-between mb-5 formHeaderBar">
@@ -75,9 +80,6 @@ if ($tcId != NULL) { $result = $transferCertificate->getFormInfo($tcId);
                     <div class="col-md-3 text-md-right text-center pt-5">
                         <p class="poweredBy">Powered by Adhyay <img src="<?php echo BASE_ROOT; ?>assets/img/adhyay-logo-color.png" style="width: 30px;"></p>
                     </div>
-                    <div class="col  text-right" style="text-align: right">
-        <a href="javascript:void(0);" id="print_button" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Print</a>
-        </div>
                 </div>
                 <div class="row justify-content-between mb-3 tcformHeading">
                     <div class="col">

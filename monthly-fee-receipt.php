@@ -8,7 +8,7 @@ $accounts = new Accounts();
 $id = isset($_GET['id']) ? intval($_GET['id']) : null;
 $is_download = isset($_GET['download']) ? boolval($_GET['download']) : null;
 
-$user = $accounts->getUser($_SESSION['userId']);
+$admin_user = $accounts->getAdminUser();
 $monthly_fee = $accounts->getMonthlyFee($id);
 $monthly_total_fee = $accounts->getMonthlyTotalFee($id);
 $monthly_total_payment = $accounts->getMonthlyTotalPayment($id);

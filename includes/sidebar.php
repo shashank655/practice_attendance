@@ -243,6 +243,16 @@ $menus = [
             ]
         ]
     ],
+    'Admission Fee List' => [
+        'icon' => 'fa fa-money',
+        'can' => $_SESSION['user_role'] == 4,
+        'to' => 'admission-fee-list.php'
+    ],
+    'Monthly Fee List' => [
+        'icon' => 'fa fa-money',
+        'can' => $_SESSION['user_role'] == 4,
+        'to' => 'monthly-fee-list.php'
+    ],
     'Payroll' => [
         'icon' => 'fa fa-money',
         'can' => $_SESSION['user_role'] == 1,
@@ -285,8 +295,11 @@ $menus = array_filter($menus, function ($menu) {
             if (isset($child['can']) && false === $child['can']) return;
 
             if (user_has_permission($child['to'])) return $child;
+            return;
         });
+
         if (count($menu['childs'])) return $menu;
+        return;
     }
     if (user_has_permission($menu['to'])) return $menu;
 });

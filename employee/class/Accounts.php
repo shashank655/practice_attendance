@@ -1,5 +1,7 @@
 <?php
 
+if (!defined('DEBUG')) define('DEBUG', false);
+
 class Accounts
 {
     protected $mysqli;
@@ -11,7 +13,7 @@ class Accounts
 
     protected function throwException(Throwable $th)
     {
-        if (defined('DEBUG') && DEBUG) throw $th;
+        if (DEBUG) throw $th;
         $this->setAlert('danger', $th->getMessage());
     }
 
@@ -204,7 +206,7 @@ class Accounts
     {
         if (!$message) $message = '<h1>Not Found</h1><p>The requested URL was not found on this server.</p>';
 
-        if (defined('DEBUG') && DEBUG) throw new Exception($message, 404);
+        if (DEBUG) throw new Exception($message, 404);
 
         die($message);
     }
@@ -381,6 +383,22 @@ class Accounts
         return $this->prepareExecute($query, array_values($where));
     }
 
+    public function getStudentAdmissionFeeList($student_id)
+    {
+        $query = "SELECT
+                    af.id,
+                    af.admission_no,
+                    s.id as student_id,
+                    CONCAT(s.first_name, ' ', s.last_name) AS student_name,
+                    af.due_date,
+                    (SELECT SUM(afi.total) FROM admission_fee_items AS afi WHERE afi.admission_fee_id = af.id) AS total_fee_amount,
+                    (SELECT SUM(afp.fee_paid) FROM admission_fee_payments AS afp WHERE afp.admission_fee_id = af.id) AS total_fee_payment
+                    FROM admission_fees as af LEFT JOIN students as s ON af.admission_no = s.admission_no
+                    WHERE s.id = ?";
+
+        return $this->prepareExecute($query, [$student_id]);
+    }
+
     public function getAdmissionFee($id)
     {
         $admission_fee = $this->select('admission_fees', '*', compact('id'), ['limit' => 1]);
@@ -533,6 +551,22 @@ class Accounts
         return $this->prepareExecute($query, array_values($where));
     }
 
+    public function getStudentMonthlyFeeList($student_id)
+    {
+        $query = "SELECT
+                    mf.id,
+                    mf.admission_no,
+                    s.id as student_id,
+                    CONCAT(s.first_name, ' ', s.last_name) AS student_name,
+                    mf.due_date,
+                    (SELECT SUM(mfi.total) FROM monthly_fee_items AS mfi WHERE mfi.monthly_fee_id = mf.id) AS total_fee_amount,
+                    (SELECT SUM(mfp.fee_paid) FROM monthly_fee_payments AS mfp WHERE mfp.monthly_fee_id = mf.id) AS total_fee_payment
+                    FROM monthly_fees as mf LEFT JOIN students as s ON mf.admission_no = s.admission_no
+                    WHERE s.id = ?";
+
+        return $this->prepareExecute($query, [$student_id]);
+    }
+
     public function getMonthlyFee($id)
     {
         $monthly_fee = $this->select('monthly_fees', '*', compact('id'), ['limit' => 1]);
@@ -651,6 +685,89 @@ class Accounts
         }
     }
 
+    public function collectFeeOnline($request, $type, $fee_id, $amount)
+    {
+        $_SESSION['orderNo'] = $order_id = rand() . '-' . $fee_id;
+
+        return CCAvenue::redirect([
+            'order_id' => $order_id,
+            'amount' => $amount,
+            'redirect_url' => BASE_ROOT . 'process-online-fee.php',
+            'cancel_url' => BASE_ROOT . 'process-online-fee.php',
+            'billing_name' => $request['billing']['first_name'] . ' ' . $request['billing']['last_name'],
+            'billing_address' => $request['billing']['address_1'] . ' ' . $request['billing']['address_2'],
+            'billing_city' => $request['billing']['city'],
+            'billing_state' => $request['billing']['state'],
+            'billing_zip' => $request['billing']['postal_code'],
+            'billing_country' => $request['billing']['country'],
+            'billing_tel' => $request['billing']['phone'],
+            'billing_email' => $request['billing']['email'],
+            'merchant_param1' => $type,
+            'merchant_param2' => $fee_id
+        ]);
+    }
+
+    public function processOnlinePayment($request)
+    {
+        try {
+            if (!(isset($request['orderNo']) && isset($_SESSION['orderNo']) && $_SESSION['orderNo'] == $request['orderNo'])) {
+                $this->setAlert('danger', 'Oops! Something went wrong.');
+                return;
+            }
+
+            unset($_SESSION['orderNo']);
+
+            if (isset($request['encResp'])) {
+                $result = CCAvenue::response();
+                if ($result->success === true && isset($result->response) && is_array($response = $result->response)) {
+                    if ($response['order_status'] === 'Success') {
+                        $payment_information = "Order Id: {$response['order_id']}, Tracking Id: {$response['tracking_id']}, Bank Ref No: {$response['bank_ref_no']}, Payment Mode: {$response['payment_mode']}, Card Name: {$response['card_name']}, Trans Date: {$response['trans_date']}";
+                        $data = [
+                            'fee_paid' => $response['amount'],
+                            'payment_date' => $this->date('now'),
+                            'payment_method' => 'Online Payment',
+                            'comment' => 'Online Payment',
+                            'payment_information' => $payment_information
+                        ];
+
+                        list($first_name, $last_name) = explode(' ', $response['billing_name'], 2);
+
+                        $data['billing'] = [
+                            'first_name' => $first_name,
+                            'last_name' => $last_name,
+                            'address_1' => $response['billing_address'],
+                            'address_2' => '',
+                            'city' => $response['billing_city'],
+                            'state' => $response['billing_state'],
+                            'postal_code' => $response['billing_zip'],
+                            'country' => $response['billing_country'],
+                            'phone' => $response['billing_tel'],
+                            'email' => $response['billing_email'],
+                        ];
+
+                        switch ($result->response['merchant_param1']) {
+                            case 'admission':
+                                $this->collectAdmissionFee($data, $result->response['merchant_param2']);
+                            break;
+
+                            case 'monthly':
+                                $this->collectMonthlyFee($data, $result->response['merchant_param2']);
+                            break;
+
+                            default:
+                                # code...
+                            break;
+                        }
+
+                        return $result->response['merchant_param1'];
+                    }
+                }
+            }
+        } catch (\Throwable $th) {
+            return $this->throwException($th);
+        }
+    }
+
     public function sendDueFeeReminder($student_ids)
     {
         $message = 'Dear User,' . "\r\n" . 'We would like to inform you that you have fee due.' . "\r\n" . 'We request you to make the payment of the due amount before the due date.';
@@ -672,16 +789,16 @@ class Accounts
             if ($response->status === 'success') {
                 $this->setAlert('Fee reminder has been sent successfully.');
             } else {
-                $this->setAlert('Oops! Something went wrong.');
+                $this->setAlert('danger', 'Oops! Something went wrong.');
             }
         } catch (\Throwable $th) {
             return $this->throwException($th);
         }
     }
 
-    public function getUser($id)
+    public function getAdminUser()
     {
-        $user = $this->select('users', '*', compact('id'));
+        $user = $this->select('users', '*', ['user_role' => 1], ['limit' => 1]);
         if (!$user->success || !$user->count) {
             $this->notFound();
         }

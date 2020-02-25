@@ -8,7 +8,7 @@ $accounts = new Accounts();
 $id = isset($_GET['id']) ? intval($_GET['id']) : null;
 $is_download = isset($_GET['download']) ? boolval($_GET['download']) : null;
 
-$user = $accounts->getUser($_SESSION['userId']);
+$admin_user = $accounts->getAdminUser();
 $admission_fee = $accounts->getAdmissionFee($id);
 $admission_total_fee = $accounts->getAdmissionTotalFee($id);
 $admission_total_payment = $accounts->getAdmissionTotalPayment($id);

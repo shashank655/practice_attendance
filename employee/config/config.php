@@ -24,5 +24,15 @@ define("UPLOAD_CSV_ROOT",$_SERVER['DOCUMENT_ROOT']."/practice_attendance/employe
 
 define("TEACHERS_EXPIRY_TIME","2000");
 
+define('CCAvenueTestMode', false);
+
+define('CCAvenueTestMerchantID', '');
+define('CCAvenueTestAccessCode', '');
+define('CCAvenueTestWorkingKey', '');
+
+define('CCAvenueMerchantID', '');
+define('CCAvenueAccessCode', '');
+define('CCAvenueWorkingKey', '');
+
 define('MinavoVSMSAuthKey', '');
 define('MinavoVSMSSenderId', '');

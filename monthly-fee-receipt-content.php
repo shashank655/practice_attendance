@@ -61,9 +61,9 @@ $base_path_or_url = $is_download ? DOCUMENT_ROOT : BASE_ROOT;
         <div class="row">
             <div class="col-md-12">
                 <ul class="list-unstyled m-b-0">
-                    <li><?= $user->school_name; ?></li>
-                    <li><?= $user->phone_number; ?></li>
-                    <li><?= $user->address; ?></li>
+                    <li><?= $admin_user->school_name; ?></li>
+                    <li><?= $admin_user->phone_number; ?></li>
+                    <li><?= $admin_user->address; ?></li>
                 </ul>
             </div>
         </div>

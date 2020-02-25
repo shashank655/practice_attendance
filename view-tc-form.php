@@ -10,43 +10,7 @@ $adminData = $admin->getAdminInfo($_SESSION['userId']);
 $tcId = (isset($_REQUEST['tcId'])) ? $_REQUEST['tcId'] : NULL; 
 if ($tcId != NULL) { $result = $transferCertificate->getFormInfo($tcId); 
     if ($result == NULL) { $tcId = ''; } }
-?>
-<style type="text/css">
-
-    .formHeaderBar, .formHeaderBar *{
-        color:#336699;
-    }
-    .poweredBy{
-        font-size: 12px;
-    }
-    .tcFormBlock h3{
-        font-size: 18px;
-        font-weight: 600;
-        margin-bottom: 4px;
-    }
-    .tcFormBlock p{
-        font-size: 14px;
-    }
-    .tcFormBlock h5{
-        font-size: 14px;
-        color: #336699;
-        font-weight: 600;
-    }
-    .tcformHeading p{
-        color: #336699;
-    }
-    .tcForm p{
-        line-height: 40px;
-        color: #336699;
-    }
-    .tcForm input[type="text"]{
-        border: 0;
-        border-bottom: 1px dotted #336699;
-        width: 190px;
-        color: #000;
-        padding:0 10px;
-    }
-</style>    
+?>   
 <div class="page-wrapper tcFormBlock">
     <!-- content -->
     <div class="content container-fluid print-div">
@@ -212,7 +176,7 @@ if ($tcId != NULL) { $result = $transferCertificate->getFormInfo($tcId);
         $('#print_button').on("click", function () {
             $('.print-div').printThis({
                 importCSS: true,
-                loadCSS:"<?php echo BASE_ROOT; ?>assets/css/print.css"
+                loadCSS:["<?php echo BASE_ROOT; ?>assets/css/style.css","<?php echo BASE_ROOT; ?>assets/css/print.css"]
             });
         });
     });

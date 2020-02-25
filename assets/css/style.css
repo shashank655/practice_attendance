@@ -6053,6 +6053,63 @@ label.error:before {
 	box-shadow: 0 0px 5px 1px #ddd;
 
 }
+
+.formHeaderBar, .formHeaderBar *{
+		color:#336699;
+	}
+	.admissionForm *{
+		color:#336699;
+		border-color:#336699;
+	}
+	.adm-number {
+		border: 1px solid #336699;
+	}
+	.admissionForm input[type="text"],
+	.admissionForm input[type="number"],
+	.admissionForm select{
+		flex: auto;
+		border-radius: 0;
+		border:none;
+		border-bottom: 1px solid #336699;
+		flex:  auto;
+		width: auto;
+		color: #000;
+	}
+	.admissionForm label{	
+		text-transform: capitalize;
+		margin-right: 5px;
+	}
+	
+    .poweredBy{
+        font-size: 12px;
+    }
+    .tcFormBlock h3{
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+    .tcFormBlock p{
+        font-size: 14px;
+    }
+    .tcFormBlock h5{
+        font-size: 14px;
+        color: #336699;
+        font-weight: 600;
+    }
+    .tcformHeading p{
+        color: #336699;
+    }
+    .tcForm p{
+        line-height: 40px;
+        color: #336699;
+    }
+    .tcForm input[type="text"]{
+        border: 0;
+        border-bottom: 1px dotted #336699;
+        width: 190px;
+        color: #000;
+        padding:0 10px;
+    }
 /*------------------------------------------------------------------
 [47. Responsive]
 */

@@ -2,24 +2,32 @@
     body{
         margin: 15mm 5mm;
     }
-        .tcFormBlock .print-div{
-            margin-top: 100cm;
-        }
-       .tcForm p{
-            line-height: 60px  !important;
-        }
-        .tcForm input[type="text"]{
-            border: 0  !important;
-            border-bottom: 1px dotted #000  !important;
-            width: 190px;
-            padding:0 10px;
-        }
-        .logo_bk {
-            height: 57px;
-            margin-left: 10px;
-            vertical-align: top;
-        }
-        #print_button{
-            display: none;
-        }
+    @page {
+        /*margin: 0;*/
     }
+    .tcFormBlock .print-div{
+        margin-top: 100cm;
+    }
+   .tcForm p{
+        line-height: 60px  !important;
+    }
+    .tcForm input[type="text"]{
+        border: 0  !important;
+        border-bottom: 1px dotted #000  !important;
+        width: 190px;
+        padding:0 10px;
+    }
+    .logo_bk {
+        height: 57px;
+        margin-left: 10px;
+        vertical-align: top;
+    }
+    #print_button{
+        display: none;
+    }
+    .admissionForm select{
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+}

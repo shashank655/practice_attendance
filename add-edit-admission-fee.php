@@ -13,6 +13,7 @@ if ($id = isset($_GET['id']) ? intval($_GET['id']) : null) {
     $_GET['admission_no'] = $admission_fee->admission_no;
 } else {
     $admission_fee = new Optional();
+    $admission_fee_items = new Optional();
 }
 
 if (isset($_POST['action']) && $_POST['action'] == 'add-edit-admission-fee') {
@@ -34,7 +35,6 @@ if ($fee_head_id && $date && $admission_no) {
     $student = $accounts->getStudentByAdmssionNo($admission_no);
 } else {
     $student = new Optional();
-    $admission_fee_items = new Optional();
 }
 
 $search_form = new Optional(compact('fee_head_id', 'date', 'admission_no'));

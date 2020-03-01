@@ -118,7 +118,7 @@ require_once 'includes/sidebar.php';
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Monthly No</label>
+                                <label>Admission No</label>
                                 <input type="text" name="admission_no" class="form-control required" value="<?= $search_form->admission_no; ?>" required>
                             </div>
                         </div>

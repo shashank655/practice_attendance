@@ -82,7 +82,7 @@ require_once 'includes/sidebar.php';
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label>Total Acmount</label>
+                            <label>Total Amount</label>
                             <input type="text" name="total_amount" class="form-control required" value="<?= $monthly_total_fee; ?>" required readonly>
                         </div>
                     </div>

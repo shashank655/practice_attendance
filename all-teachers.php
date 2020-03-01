@@ -36,7 +36,6 @@ require_once 'includes/sidebar.php';
                                 <button type="submit" class="btn btn-primary btn-rounded float-right">Download CSV Report</button>
                             
                         </form>
-                        <a href="" class="btn btn-primary btn-rounded float-right"></i>Upload CSV</a>
                         <div class="view-icons">
                             <a href="all-teachers.php" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
                             <a href="teachers-list.php" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
@@ -44,7 +43,7 @@ require_once 'includes/sidebar.php';
                     </div>
                 </div>
 			<div class="content-page">
-                <div class="row filter-row">
+                <!-- <div class="row filter-row">
                     <div class="col-sm-6 col-md-3">
 						<div class="form-group custom-mt-form-group">
 							<input type="text"  />
@@ -72,7 +71,7 @@ require_once 'includes/sidebar.php';
                     <div class="col-sm-6 col-md-3">
                         <a href="#" class="btn btn-primary btn-block mt-4 mb-2"> Search </a>
                     </div>
-                </div>
+                </div> -->
                 <div class="row staff-grid-row">
                 <?php foreach ($resultAllTeachers as $key => $value) { 
                     if(!empty($value['profile_image'])) {

@@ -8,7 +8,7 @@ $resultSubjects=$common_function->getAllSubjects();
 $resultClasses = $common_function->getAllClassesName(); 
 $admissionForm = new AdmissionForm(); 
 $getLastId = $admissionForm->getLastFormId();
-$admissionNo = date("Y").'00'.$getLastId[0]['id'];
+$admissionNo = $getLastId[0]['admission_no']+1;
 ?>
 <?php 
 require_once 'includes/header.php'; 
@@ -41,7 +41,7 @@ require_once 'includes/sidebar.php';
 	<input type="hidden" name="studentId" value="<?php echo $studentId; ?>" />
 	<div class="col-md-6">
 			<label>Admission Number: </label>
-			<input type="text" class="form-control" readonly="readonly" name="admission_no" value="<?php
+			<input type="text" class="form-control" name="admission_no" value="<?php
 			if (isset($admissionNo))
 				echo ($admissionNo);
 			?>"/>
@@ -87,14 +87,6 @@ require_once 'includes/sidebar.php';
 					if (isset($result[0]['dob']))
 					echo htmlspecialchars($result[0]['dob']);
 				?>">
-			  	</div>
-		  </div>
-		  <div class="col-md-6">
-		  		<div class="form-group">
-		  		<input type="number" class="form-control" name="mobile_number" placeholder="Mobile number" value="<?php
-					if (isset($result[0]['mobile_number']))
-					echo htmlspecialchars($result[0]['mobile_number']);
-				?>" />
 			  	</div>
 		  </div>
 		  <div class="col-md-6">
@@ -191,9 +183,9 @@ require_once 'includes/sidebar.php';
 		  	</div>
 		  	<div class="col-md-6">
   				<div class="form-group">
-  				<input type="text" class="form-control" name="email_address" placeholder="Email" value="<?php
-					if (isset($result[0]['email_address']))
-						echo htmlspecialchars($result[0]['email_address']);
+  				<input type="text" class="form-control" name="parents_email_address" placeholder="Parents Email" value="<?php
+					if (isset($result[0]['parents_email_address']))
+						echo htmlspecialchars($result[0]['parents_email_address']);
 					?>"/>
 			  	</div>
 		  	</div>
@@ -356,6 +348,51 @@ require_once 'includes/sidebar.php';
 </div>
 <?php require_once 'includes/footer.php'; ?>
 <script type="text/javascript">
+
+	jQuery.validator.addMethod("isCheckAdmissionNo", function(value, element) {
+        var admissionNoValue = $.trim(value);
+        var oldAdmissionNo = $("input[name=oldAdmissionNo]").val();
+        var check_result = false;
+        $.ajax({
+           type: "POST",
+           async: false,
+           url: "employee/process/processAddStudent.php",
+           data:{oldAdmissionNo:oldAdmissionNo, admissionNo:admissionNoValue, type:'isCheckAdmissionNo'},
+           success: function(response)
+           {
+              // if the url exists, it returns a string "true"
+              if(response == true) {
+                check_result =  false;  // already exists
+              } else {
+                check_result =  true;   // url is free to use
+              } 
+           }
+        });
+        return check_result;
+    }, "This Admission Number already exist in student Database!");
+
+	jQuery.validator.addMethod("isCheckParentEmail", function(value, element) {
+        var parentEmailValue = $.trim(value);
+        var oldParentEmail = $("input[name=oldParentEmail]").val();
+        var check_result = false;
+        $.ajax({
+           type: "POST",
+           async: false,
+           url: "employee/process/processAddStudent.php",
+           data:{oldParentEmail:oldParentEmail, parentEmail:parentEmailValue, type:'isCheckParentEmail'},
+           success: function(response)
+           {
+              // if the url exists, it returns a string "true"
+              if(response == true) {
+                check_result =  false;  // already exists
+              } else {
+                check_result =  true;   // url is free to use
+              } 
+           }
+        });
+        return check_result;
+    }, "Parent email address already exist in student Database!");
+
 	jQuery.validator.addMethod("dropdownValidation", function(value, element, params) {        
 		return $.trim(value) != '';
 	},'This field is required.');
@@ -389,7 +426,8 @@ require_once 'includes/sidebar.php';
 					required:true
 				},
 				admission_no:{
-					required:true
+					required:true,
+					isCheckAdmissionNo:true
 				},
 				dob:{
 					required:true
@@ -418,8 +456,9 @@ require_once 'includes/sidebar.php';
 				fathers_occupation:{
 					required:true
 				},
-				email_address:{
-					required:true
+				parents_email_address:{
+					required:true,
+					isCheckParentEmail:true
 				},
 				nationality:{
 					required:true

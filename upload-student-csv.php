@@ -34,7 +34,7 @@ require_once 'includes/sidebar.php';
                         </form>    
                     </div>
                     <div class="col-sm-6 m-b-20 mt-4 mt-sm-0 text-md-right">
-                        <a href="<?php echo BASE_ROOT;?>assets/students_record.csv" class="btn btn-primary float-right btn-rounded">Download Sample Student CSV</a>
+                        <a href="<?php echo BASE_ROOT;?>assets/students_sample_sheet.csv" class="btn btn-primary float-right btn-rounded">Download Sample Student CSV</a>
                     </div>
                 </div>
             <div class="content-page">
@@ -47,9 +47,11 @@ require_once 'includes/sidebar.php';
                                         <th style="min-width:50px;">S.No.</th>
                                         <th style="min-width:50px;">Admission.No.</th>
                                         <th style="min-width:50px;">Student Name</th>
+                                        <th style="min-width:50px;">Class</th>
+                                        <th style="min-width:50px;">Section</th>
                                         <th style="min-width:50px;">Father's Name</th>
                                         <th style="min-width:50px;">Parents Mobile </th>
-                                        <th style="min-width:50px;">Email Address</th>
+                                        <th style="min-width:50px;">Parents Email Address</th>
                                         <th style="min-width:50px;">Gender</th>
                                         <th style="min-width:50px;">DOB</th>
                                         <th style="min-width:50px;">Religion</th>
@@ -63,9 +65,11 @@ require_once 'includes/sidebar.php';
                                         <td><?php echo $i; ?></td>
                                         <td><?php echo  $value['admission_no']; ?></td>
                                         <td><?php echo $value['first_name'].' '.$value['last_name']; ?></td>
+                                        <td><?php echo $value['class_name']; ?></td>
+                                        <td><?php echo $value['section_name']; ?></td>
                                         <td><?php echo $value['fathers_name']; ?></td>
                                         <td><?php echo $value['parents_mobile_number']; ?></td>
-                                        <td><?php echo $value['email_address'];?></td>
+                                        <td><?php echo $value['parents_email_address'];?></td>
                                         <td><?php echo $value['gender'];?></td>
                                         <td><?php echo $value['dob'];?></td>
                                         <td><?php echo $value['religion'];?></td>

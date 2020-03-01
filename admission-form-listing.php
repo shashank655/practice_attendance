@@ -41,6 +41,7 @@ require_once 'includes/sidebar.php';
                                 <thead>
                                     <tr>
                                         <th style="min-width:50px;">S.No.</th>
+                                        <th style="min-width:50px;">Paid</th>
                                         <th style="min-width:50px;">Fees Status</th>
                                         <th style="min-width:50px;">Full Name</th>
                                         <th style="min-width:50px;">Admission Number</th>
@@ -56,6 +57,7 @@ require_once 'includes/sidebar.php';
                                     <?php foreach ($resultAllListing as $key => $value) { ?>
                                     <tr>
                                         <td><?php echo $i; ?></td>
+                                        <td><a href="employee/process/processAddStudent.php?type=addAdmissionStudent&admissionNo=<?php echo $value['admission_no']; ?>">Paid</a></td>
                                         <td><?php if($value['fees_submit_status'] == '0') {
                                             echo 'Not Paid';
                                             } else {

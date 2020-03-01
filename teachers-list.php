@@ -40,7 +40,7 @@ require_once 'includes/sidebar.php';
                     </div>
                 </div>
 			<div class="content-page">
-                <div class="row filter-row">
+                <!-- <div class="row filter-row">
                     <div class="col-sm-6 col-md-3">
 						<div class="form-group custom-mt-form-group">
 							<input type="text"  />
@@ -68,7 +68,7 @@ require_once 'includes/sidebar.php';
                     <div class="col-sm-6 col-md-3">
                         <a href="#" class="btn btn-success btn-block mt-4 mb-2"> Search </a>
                     </div>
-                </div>
+                </div> -->
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">

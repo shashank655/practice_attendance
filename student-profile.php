@@ -61,10 +61,6 @@ require_once 'includes/sidebar.php';
                                         <div class="col-md-7">
                                             <ul class="personal-info">
                                                 <li>
-                                                    <span class="title">Phone:</span>
-                                                    <span class="text"><?php echo $result[0]['mobile_number'];?></span>
-                                                </li>
-                                                <li>
                                                     <span class="title">Parents Email:</span>
                                                     <span class="text"><?php echo $result[0]['parents_email_address'];?></span>
                                                 </li>

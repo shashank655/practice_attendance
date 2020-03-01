@@ -36,8 +36,8 @@ class Student extends MySQLCN {
         }
   
         $qry = 'INSERT INTO `students` 
-            (`first_name`,`last_name`, `gender`, `dob`,`class_id`,`section_id`,`religion`,`date_of_joining`,`mobile_number`,`admission_no`,`roll_number`,`fathers_name`,`fathers_occupation`,`parents_email_address`,`parents_password`,`parents_mobile_number`,`present_address`,`mothers_name`,`mothers_occupation`,`nationality`,`permanent_address`,`student_profile_image`,`parents_profile_image`) 
-            VALUES ( "'. $data['first_name'] . '", "'. $data['last_name'] . '" , "'. $data['gender'] .'" ,"'. $data['dob'].'" ,"'. $data['class_id'].'" ,"'. $data['section_id'].'" ,"'. $data['religion'].'" ,"'. $data['date_of_joining'].'" ,"'. $data['mobile_number'].'" ,"'. $data['admission_no'].'" ,"'. $data['roll_number'].'" ,"'. $data['fathers_name'].'" ,"'. $data['fathers_occupation'].'","'. $data['parents_email_address'].'","'. md5($data['parents_password']).'" ,"'. $data['parents_mobile_number'].'","'. $data['present_address'].'","'. $data['mothers_name'].'","'. $data['mothers_occupation'].'" ,"'. $data['nationality'].'" ,"'. $data['permanent_address'].'" ,"'.$studentProfileImageName.'" ,"'.$parentsProfileImageName.'")';
+            (`first_name`,`last_name`, `gender`, `dob`,`class_id`,`section_id`,`religion`,`date_of_joining`,`admission_no`,`roll_number`,`fathers_name`,`fathers_occupation`,`parents_email_address`,`parents_password`,`parents_mobile_number`,`present_address`,`mothers_name`,`mothers_occupation`,`nationality`,`permanent_address`,`student_profile_image`,`parents_profile_image`) 
+            VALUES ( "'. $data['first_name'] . '", "'. $data['last_name'] . '" , "'. $data['gender'] .'" ,"'. $data['dob'].'" ,"'. $data['class_id'].'" ,"'. $data['section_id'].'" ,"'. $data['religion'].'" ,"'. $data['date_of_joining'].'" ,"'. $data['admission_no'].'" ,"'. $data['roll_number'].'" ,"'. $data['fathers_name'].'" ,"'. $data['fathers_occupation'].'","'. $data['parents_email_address'].'","'. md5($data['parents_password']).'" ,"'. $data['parents_mobile_number'].'","'. $data['present_address'].'","'. $data['mothers_name'].'","'. $data['mothers_occupation'].'" ,"'. $data['nationality'].'" ,"'. $data['permanent_address'].'" ,"'.$studentProfileImageName.'" ,"'.$parentsProfileImageName.'")';
         $res = $this->insert($qry);
         if ($res) {
             return true;
@@ -46,8 +46,7 @@ class Student extends MySQLCN {
         }
     }
 
-    function StudentInfoUpdate($data,$files) {
-
+    function StudentInfoUpdate($data,$files) {  
         if ($_FILES['student_profile_image']['error'] == '0') {
             $studentProfileImageName = time() . strtolower(basename($_FILES['student_profile_image']['name']));
             $target = PROFILE_PIC_IMAGE_ROOT . $studentProfileImageName;
@@ -73,7 +72,6 @@ class Student extends MySQLCN {
               `section_id` = '{$data['section_id']}',
               `religion` = '{$data['religion']}',
               `date_of_joining` = '{$data['date_of_joining']}',
-              `mobile_number` = '{$data['mobile_number']}',
               `admission_no` = '{$data['admission_no']}',
               `roll_number` = '{$data['roll_number']}',
               `fathers_name` = '{$data['fathers_name']}',
@@ -170,6 +168,75 @@ class Student extends MySQLCN {
         $fetchList = "SELECT * FROM `students` WHERE section_id = '{$section_id}';";
         $fetch_list = $this->select($fetchList);
         return $fetch_list;
+    }
+
+    function isCheckAdmissionNo() {
+        if($_POST['oldAdmissionNo'] == $_POST['admissionNo']) {
+            return false;
+        } else {
+            $fetch = "SELECT * FROM `students` where admission_no='".$_POST['admissionNo']."'";
+            $fetch_result = $this->select($fetch);
+            if (!empty($fetch_result)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    function isCheckParentEmail() {
+        if($_POST['oldParentEmail'] == $_POST['parentEmail']) {
+            return false;
+        } else {
+            $fetch = "SELECT * FROM `students` where parents_email_address='".$_POST['parentEmail']."'";
+            $fetch_result = $this->select($fetch);
+            if (!empty($fetch_result)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    function AddAdmissionStudent($data) {
+        if(!empty($data['admissionNo'])) {
+
+            $fetchAdmissionNo = "SELECT * FROM `admission_form_listing` WHERE admission_no = '{$data['admissionNo']}';";
+            $fetch_admission_no = $this->select($fetchAdmissionNo);
+            if(!empty($fetch_admission_no)) {
+
+                $fetchStudent = "SELECT * FROM `students` WHERE admission_no = '{$data['admissionNo']}';";
+                $fetch_student = $this->select($fetchStudent);
+
+            if(!empty($fetch_student)) {
+                $result['status'] = false;
+                $result['message'] = 'This Admission No. is already present in Student Database!';
+            } else {
+                $data = $fetch_admission_no[0];
+                
+                $qry_student = 'INSERT INTO `students` 
+            (`first_name`,`last_name`, `gender`, `dob`,`class_id`,`section_id`,`religion`,`date_of_joining`,`admission_no`,`roll_number`,`fathers_name`,`fathers_occupation`,`parents_email_address`,`parents_mobile_number`,`present_address`,`mothers_name`,`mothers_occupation`,`nationality`) 
+            VALUES ( "'. $data['first_name'] . '", "'. $data['last_name'] . '" , "'. $data['gender'] .'" ,"'. $data['dob'].'" ,"'. $data['class_id'].'" ,"'. $data['section_id'].'" ,"'. $data['religion'].'" ,"'. $data['date_of_joining'].'" ,"'. $data['admission_no'].'" ,"'. $data['roll_number'].'" ,"'. $data['fathers_name'].'" ,"'. $data['fathers_occupation'].'","'. $data['parents_email_address'].'" ,"'. $data['parents_mobile_number'].'","'. $data['present_address'].'","'. $data['mothers_name'].'","'. $data['mothers_occupation'].'" ,"'. $data['nationality'].'")';
+            $res = $this->insert($qry_student);
+
+                if($res) {
+                    $result['status'] = true;
+                } else {
+                    $result['status'] = false;
+                    $result['message'] = 'Something Went Wrong, please try again';
+                }
+            }
+
+            } else {
+                $result['status'] = false;
+                $result['message'] = 'Admission No. is incorrect';
+            }
+        return $result;
+
+        } else {
+            $result['status'] = false;
+            $result['message'] = 'Admission No. is incorrect';
+        }
     }
 }
 ?>

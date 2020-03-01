@@ -12,7 +12,7 @@ if ($data['type'] == 'Add') {
         $_SESSION['success'] = true;
         header('Location: ' . BASE_ROOT.'admission-form-listing.php');
     } else {
-        $_SESSION['Msg'] = "Student Email address already exist!";
+        $_SESSION['Msg'] = "Student Admission No already exist in Student database!";
         $_SESSION['success'] = false;
         header('Location: ' . BASE_ROOT.'admission-form-listing.php');
     } 

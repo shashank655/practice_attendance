@@ -10,10 +10,10 @@ $class_id = (isset($_REQUEST['class_id'])) ? $_REQUEST['class_id'] : NULL;
 $get_class_id = $class_id;
 $section_id = (isset($_REQUEST['section_id'])) ? $_REQUEST['section_id'] : NULL;
 $get_section_id = $section_id;
-$roll_number = (isset($_REQUEST['roll_number'])) ? $_REQUEST['roll_number'] : NULL;
+$admission_no = (isset($_REQUEST['admission_no'])) ? $_REQUEST['admission_no'] : NULL;
 $student_name = (isset($_REQUEST['student_name'])) ? $_REQUEST['student_name'] : NULL;
 
-$resultAllStudents=$student->getAllStudents($get_class_id,$get_section_id,$roll_number,$student_name);
+$resultAllStudents=$student->getAllStudents($get_class_id,$get_section_id,$admission_no,$student_name);
 
 ?>
 
@@ -73,8 +73,8 @@ require_once 'includes/sidebar.php';
                     </div>
                     <div class="col-sm-6 col-md-3">
                         <div class="form-group custom-mt-form-group">
-                            <input type="text" value="<?php if(isset($roll_number)) { echo $roll_number; } ?>"  name="roll_number" />
-                            <label class="control-label">Roll Number</label><i class="bar"></i>
+                            <input type="text" value="<?php if(isset($admission_no)) { echo $admission_no; } ?>"  name="admission_no" />
+                            <label class="control-label">Admission Number</label><i class="bar"></i>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3">

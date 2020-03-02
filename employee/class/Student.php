@@ -121,9 +121,22 @@ class Student extends MySQLCN {
         }
     }
 
-    function getAllStudents($get_class_id,$get_section_id,$roll_number,$student_name) {
-        $fetchList = "SELECT * FROM `students` join classes_name on students.class_id=classes_name.id join sections on students.section_id=sections.id where students.first_name='{$student_name}' or students.roll_number='{$roll_number}' or ( students.class_id='{$get_class_id}' and students.section_id='{$get_section_id}' ) order by `first_name` asc";
-       // echo $fetchList;die;
+    function getAllStudents($get_class_id,$get_section_id,$admission_no,$student_name) {
+        $sWhere = "WHERE 1=1";
+        if(!empty($student_name)) {
+            $sWhere.=" and students.first_name like '%$student_name%'";
+        }
+        if(!empty($admission_no)) {
+            $sWhere.=" and students.admission_no = '$admission_no'";
+        }
+        if(!empty($get_class_id)) {
+            $sWhere.=" and students.class_id = '$get_class_id'";
+        }
+        if(!empty($get_section_id)) {
+            $sWhere.=" and students.section_id = '$get_section_id'";
+        }
+                
+        $fetchList = "SELECT * FROM `students` left join classes_name on students.class_id=classes_name.id left join sections on students.section_id=sections.id $sWhere order by `first_name` asc limit 100";
         $fetch_list = $this->select($fetchList);
         //echo "<pre>";print_r($fetch_list);die;
         return $fetch_list;

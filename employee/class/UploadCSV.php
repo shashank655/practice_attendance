@@ -11,14 +11,17 @@ class UploadCSV extends MySQLCN {
             /* File Upload */
             $csv_file = $_FILES['CsvData'];
                 if(!empty($csv_file['name'])){
-                    $imagename=$csv_file['name'];
+                    $imagename=time().'_'.$csv_file['name'];
                     $target = UPLOAD_CSV_ROOT . $imagename;
-                    move_uploaded_file($_FILES['CsvData']['tmp_name'], $target);
+                    if(move_uploaded_file($csv_file['tmp_name'], $target)) {
+                    } else {
+                        $_SESSION['Msg'] = "CSV not uploaded successfully! ";
+                        header('Location: ' . BASE_ROOT.'upload-student-csv.php');  
+                    }
                 }
                 /* File Upload */
                     $handle = fopen(UPLOAD_CSV_PATH.$imagename, "r");
                         while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                            $item = array();
                             if($data[0] == 'S.No.' || $data[1] == 'FirstName' || $data[1] == 'LastName'){
                                 continue;
                             }
@@ -47,7 +50,10 @@ class UploadCSV extends MySQLCN {
                     continue;
                 }   
             }    
-            unlink(UPLOAD_CSV_PATH.$imagename);
+            $newtargetfile = UPLOAD_CSV_PATH.$imagename;
+            if (file_exists($newtargetfile)) {
+              unlink($newtargetfile);
+            }    
             return true;
                 fclose($handle);
             }

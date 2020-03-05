@@ -228,11 +228,17 @@ class Accounts
         return $fee_head;
     }
 
+    public function getFeeHeadFeesTypes($id)
+    {
+        $get_fees_type = $this->select('fees_head_fees_type', '*', ['fee_head_id' => $id]);
+        if (!$get_fees_type->success || !$get_fees_type->count) $this->notFound();
+        return $get_fees_type;
+    }
+
     public function addEditFeeHead($request, $id = null)
     {
         try {
             $data = $this->arrayOnly($request, 'title');
-
             if (is_null($id)) {
                 $result = $this->insert('fee_heads', $data);
                 $this->setAlert('Fee Head added successfully.');
@@ -252,6 +258,17 @@ class Accounts
                     }
                 }
             }
+
+            $this->delete('fees_head_fees_type', compact('fee_head_id'));
+
+            if (isset($request['addFeesTypes']) && is_array($request['addFeesTypes'])) {
+                foreach ($request['addFeesTypes'] as $key => $value) {
+                        $fees_type = $request['addFeesTypes'][$key];
+                        $amount = $request['addAmount'][$key];
+                        $this->insert('fees_head_fees_type', compact('fee_head_id', 'fees_type', 'amount'));
+                }
+            }
+
             return $result;
         } catch (\Throwable $th) {
             return $this->throwException($th);

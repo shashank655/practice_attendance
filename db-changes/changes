@@ -313,3 +313,5 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 
 parents_password and parents_email_address
 changes in admission form
+
+CREATE TABLE `up_global`.`fees_head_fees_type` ( `id` INT(11) NOT NULL AUTO_INCREMENT , `fee_head_id` INT(11) NOT NULL , `fees_type` VARCHAR(200) NULL , `amount` VARCHAR(200) NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;

@@ -235,6 +235,13 @@ class Accounts
         return $get_fees_type;
     }
 
+    public function getTransportationFees()
+    {
+        $get_fees_trans = $this->select('transportation_fees');
+        if (!$get_fees_trans->success || !$get_fees_trans->count) $this->notFound();
+        return $get_fees_trans;
+    }
+
     public function addEditFeeHead($request, $id = null)
     {
         try {
@@ -269,6 +276,26 @@ class Accounts
                 }
             }
 
+            return $result;
+        } catch (\Throwable $th) {
+            return $this->throwException($th);
+        }
+    }
+
+    public function addTransportationFees($request)
+    {  
+        try {
+            $type = 'transportation'; 
+            $this->delete('transportation_fees', compact('type'));
+
+            if (isset($request['routeName']) && is_array($request['routeName'])) {
+                foreach ($request['routeName'] as $key => $value) {
+                        $routeName = $request['routeName'][$key];
+                        $addAmount = $request['addAmount'][$key];
+                        $this->insert('transportation_fees', compact('routeName', 'addAmount'));
+                }
+            }
+            $this->setAlert('Transportation Fees added successfully.');
             return $result;
         } catch (\Throwable $th) {
             return $this->throwException($th);

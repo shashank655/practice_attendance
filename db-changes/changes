@@ -315,3 +315,5 @@ parents_password and parents_email_address
 changes in admission form
 
 CREATE TABLE `up_global`.`fees_head_fees_type` ( `id` INT(11) NOT NULL AUTO_INCREMENT , `fee_head_id` INT(11) NOT NULL , `fees_type` VARCHAR(200) NULL , `amount` VARCHAR(200) NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+CREATE TABLE `up_global`.`transportation_fees` ( `id` INT(11) NOT NULL AUTO_INCREMENT , `routeName` VARCHAR(220) NULL , `addAmount` VARCHAR(220) NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;

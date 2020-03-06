@@ -94,6 +94,10 @@ $menus = [
                 'to' => 'fee-head.php',
                 'related' => ['add-edit-fee-head.php']
             ],
+            'Transportation' => [
+                'to' => 'fees-transportation.php',
+                'related' => ['fees-transportation.php']
+            ],
             'Discounts' => [
                 'to' => 'discount.php',
                 'related' => ['monthly-discount.php']

@@ -237,9 +237,7 @@ class Accounts
 
     public function getTransportationFees()
     {
-        $get_fees_trans = $this->select('transportation_fees');
-        if (!$get_fees_trans->success || !$get_fees_trans->count) $this->notFound();
-        return $get_fees_trans;
+        return $this->select('transportation_fees');
     }
 
     public function addEditFeeHead($request, $id = null)

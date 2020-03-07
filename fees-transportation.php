@@ -38,7 +38,7 @@
          </button>
       </div>
       <?php endif; ?>
-      <form class="form-validate" action="" method="post" novalidate="novalidate">
+      <form class="form-validate" id="fees-transportation-form" action="" method="post" novalidate="novalidate">
          <div class="card-box mb-0">
             <div class="card-header border-0">
                <h4 class="card-title">Transportation Fees</h4>
@@ -66,6 +66,9 @@
                     <label class="col-form-label">Amount</label>
                     <div class="col-md-3">
                         <input type="text" value = "<?= $fees->addAmount; ?>" name="addAmount[]" class="addAmount form-control">
+                    </div>
+                    <div class="col-md-3">
+                      <img title="DELETE" src="<?php echo BASE_ROOT;?>assets/img/cancel.png" onclick="javascript:deleteAddress(this.name)" style="cursor: pointer;" name="trans-fees-<?php echo $i;?>">
                     </div>
                 </div>
                 <?php
@@ -100,6 +103,9 @@
                     <div class="col-md-3">
                         <input type="text" name="addAmount[]" class="addAmount form-control">
                     </div>
+                    <div class="col-md-3">
+                      <img id="delete-icon" title="DELETE" src="<?php echo BASE_ROOT;?>assets/img/cancel.png" border="0" onclick="javascript:deleteAddress(this.name)" style="cursor: pointer;" />
+                    </div>
 </div>
 <?php require_once 'includes/footer.php'; ?>
 <script type="text/javascript" src="<?= BASE_ROOT; ?>assets/js/accounts.js"></script>
@@ -119,8 +125,28 @@
                 amountBox.attr('id', 'addAmount' + k);
                 amountBox.attr('placeholder', 'Amount');
 
+                var deleteicon = aboutAddrow.find('#delete-icon');
+                deleteicon.attr('id', 'newdelete' + k);
+                deleteicon.attr('name', 'trans-fees-' + k);
+
                 $("#fees-types-div").append(aboutAddrow);
 
                 k = k + 1;
         }
+
+        function deleteAddress(deleteid) {
+            $('#' + deleteid).remove();
+        }
+
+        $("#fees-transportation-form").validate({
+            ignore: "input[type='text']:hidden",
+            rules:{
+                'routeName[]':{
+                    required:true
+                },                
+                'addAmount[]':{
+                    required:true
+                }
+            }
+        });
 </script>

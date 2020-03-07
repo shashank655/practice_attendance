@@ -64,22 +64,28 @@ if (isset($_SESSION['userId'])) {
                         <input type="hidden" value="login" name="type" />
                         <div class="row">
                             <div class="custom-control custom-checkbox">
-                              <input type="radio" name="user_role" checked="checked" value="super_admin">
+                              <input type="radio" class="user_role" name="user_role" checked="checked" value="super_admin">
                               <label>Super Admin</label>
                             </div>
                             <div class="custom-control custom-checkbox">
-                              <input type="radio" name="user_role" value="parents">
+                              <input class="user_role" type="radio" name="user_role" value="parents">
                               <label>Parents</label>
                             </div>
                             <div class="custom-control custom-checkbox">
-                              <input type="radio" name="user_role" value="teachers">
+                              <input class="user_role" type="radio" name="user_role" value="teachers">
                               <label>Teachers</label>
                             </div>
                         </div>    
-							<div class="form-group custom-mt-form-group">
+							<div class="form-group custom-mt-form-group" id="email-address-div">
 								<input type="text" data-validetta="required" placeholder="Email Address"/ name="email_address">
                                 <i class="bar"></i>
 							</div>
+
+                            <div class="form-group custom-mt-form-group" id="admission-no-div" style="display: none">
+                                <input type="text" data-validetta="required" placeholder="Admission Number"/ name="admission_no">
+                                <i class="bar"></i>
+                            </div>
+
                             <div class="form-group custom-mt-form-group">
 								<input type="password" data-validetta="required" placeholder="Password"/ name="password">
 								<!-- <label class="control-label">Password</label> -->
@@ -117,13 +123,13 @@ if (isset($_SESSION['userId'])) {
 </html>
 <script type="text/javascript">
     $(function(){
-        $("#loginform").validetta({
+        $("#loginforssm").validetta({
             bubblePosition: "bottom",
             bubbleGapTop: 10,
             bubbleGapLeft: -5
         });
 
-        $("#loginformsssss").validate({
+        $("#loginform").validate({
             ignore: "input[type='text']:hidden",
             rules:{
                 user_role:{
@@ -132,11 +138,28 @@ if (isset($_SESSION['userId'])) {
                 email_address:{
                     required:true,
                     email:true
+                },
+                admission_no:{
+                    required:true
                 },                
                 password:{
                     required:true
                 }
             }
         });
+
+        $(document).ready( function(){
+          $(".user_role").click(function(){
+            var usersValue = this.value;
+                if(usersValue == 'parents') {
+                    $('#admission-no-div').show();
+                    $('#email-address-div').hide();
+                } else {
+                    $('#email-address-div').show();
+                    $('#admission-no-div').hide();
+                }
+          });
+        });
+
     });    
 </script>

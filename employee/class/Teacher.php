@@ -178,6 +178,14 @@ class Teacher extends MySQLCN {
         }
     }
 
+    function assignParentsPassword($data) {
+      $pPass = md5($data['parents_password']);
+        $qry2 = "UPDATE `students` SET
+              `parents_password` = '{$pPass}'";
+        $res2 = $this->updateData($qry2);
+        return true;
+      }
+
     function emailDetailsToTeacher($result,$teachPass) {
         if (!empty($result)) {
                 $to = $result['email_address'];

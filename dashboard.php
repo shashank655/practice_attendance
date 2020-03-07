@@ -48,15 +48,6 @@ require_once 'includes/sidebar.php';
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-                        <div class="dash-widget dash-widget5">
-                            <span class="dash-widget-icon bg-info"><i class="fa fa-user" aria-hidden="true"></i></span>
-                            <div class="dash-widget-info">
-                                <h3>Rs. 80000</h3>
-                                <span>Total Expenses</span>
-                            </div>
-                        </div>
-                    </div>
                     <?php if( ($_SESSION['user_role'] == '1')) { ?>
                      <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                         <div class="dash-widget dash-widget5">
@@ -73,6 +64,15 @@ require_once 'includes/sidebar.php';
                             <div class="dash-widget-info">
                             <h3>***</h3>
                             <span><a href="#" data-toggle="modal" data-target="#assign_teacher_password">Create Teacher's Password</a></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                        <div class="dash-widget dash-widget5">
+                            <span class="dash-widget-icon bg-success"><i class="fa fa-user" aria-hidden="true"></i></span>
+                            <div class="dash-widget-info">
+                            <h3>***</h3>
+                            <span><a href="#" data-toggle="modal" data-target="#assign_parents_password">Create Parent's Password</a></span>
                             </div>
                         </div>
                     </div>
@@ -379,6 +379,34 @@ require_once 'includes/sidebar.php';
             </div>
         </div>
 
+        <div id="assign_parents_password" class="modal" role="dialog">
+            <div class="modal-dialog">
+                
+                <div class="modal-content modal-md">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Assign Parent's Password</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="parents_password_form" action="employee/process/processAddTeacher.php" method="post" novalidate="novalidate">
+                            <input type="hidden" name="type" value="assign_parents_password" />
+                            <div class="form-group custom-mt-form-group">
+                                <input type="password" id="parents_password" name="parents_password" value="" />
+                                <label class="control-label">Enter Password <span class="text-danger">*</span></label><i class="bar"></i>
+                            </div>
+                            <div class="form-group custom-mt-form-group">
+                                <input type="password" name="repeat_parents_password" value="" >
+                                <label class="control-label">Re-Enter Password <span class="text-danger">*</span></label><i class="bar"></i>
+                            </div>
+                            <div class="m-t-20 text-center">
+                                <button type="submit" class="btn btn-primary btn-lg">Create</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="modal" id="daily-student-attendance-progress-modal">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -443,6 +471,20 @@ require_once 'includes/footer.php';
                 repeat_password:{
                     required:true,
                     equalTo:"#password"
+                }
+            }
+        });
+
+        $("#parents_password_form").validate({
+            ignore: "input[type='text']:hidden",
+            rules:{
+                parents_password:{
+                    required:true,
+                    minlength: 4
+                },
+                repeat_parents_password:{
+                    required:true,
+                    equalTo:"#parents_password"
                 }
             }
         });

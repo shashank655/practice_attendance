@@ -59,6 +59,17 @@ if ($data['type'] == 'Add') {
         $_SESSION['success'] = false;
         header('Location: ' . BASE_ROOT.'dashboard.php');
     }
+} else if ($_POST['type'] == 'assign_parents_password' && $_POST['parents_password'] != NULL) {
+    $res = $teacher->assignParentsPassword($_POST);
+    if ($res) {
+        $_SESSION['Msg'] = "Parent's password has been created successfully!";
+        $_SESSION['success'] = true;
+        header('Location: ' . BASE_ROOT.'dashboard.php');
+    } else {
+        $_SESSION['Msg'] = "Something went wrong, please try again!";
+        $_SESSION['success'] = false;
+        header('Location: ' . BASE_ROOT.'dashboard.php');
+    }
 } else {
     header("Location: ". BASE_ROOT.'dashboard.php');
 }

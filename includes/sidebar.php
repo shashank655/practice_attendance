@@ -34,6 +34,24 @@ $menus = [
             ]
         ]    
     ],
+    'Exam Management' => [
+        'icon' => 'fa fa-graduation-cap',
+        'can' => $_SESSION['user_role'] == 1,
+        'childs' => [
+            'Add Exam Type' => [
+                'to' => 'exam-types-lists.php',
+                'related' => ['add-exam-type.php']
+            ],
+            'Manage Exam Term' => [
+                'to' => 'manage-exam-terms-lists.php',
+                'related' => ['add-exam-term.php']
+            ],
+            'Exams List' => [
+                'to' => 'exams-list.php',
+                'related' => ['add-exams.php']
+            ]
+        ]
+    ],
     'Classes & Sections' => [
         'icon' => 'fa fa-building',
         'can' => $_SESSION['user_role'] == 1,
@@ -101,6 +119,10 @@ $menus = [
             'Discounts' => [
                 'to' => 'discount.php',
                 'related' => ['monthly-discount.php']
+            ],
+            'Collect Fees' => [
+                'to' => 'deposit-monthly-fees.php',
+                'related' => ['deposit-monthly-fees.php']
             ],
             'Admission Fee List' => [
                 'to' => 'admission-fee.php',

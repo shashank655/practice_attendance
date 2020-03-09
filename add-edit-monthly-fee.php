@@ -79,20 +79,6 @@ require_once 'includes/sidebar.php';
         <?php endif; ?>
         <div class="card-box">
             <?php if (is_null($id)) : ?>
-                <ul class="nav nav-tabs nav-tabs-top nav-justified">
-                    <li class="nav-item">
-                        <a class="nav-link<?= $current_url == 'add-edit-admission-fee.php' ? ' active show' : '' ?>" href="add-edit-monthly-fee.php">
-                            <h4>Admission Fee</h4>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link<?= $current_url == 'add-edit-monthly-fee.php' ? ' active show' : '' ?>" href="add-edit-monthly-fee.php">
-                            <h4>Monthly Fee</h4>
-                        </a>
-                    </li>
-                </ul>
-            <?php endif; ?>
-            <?php if (is_null($id)) : ?>
                 <form class="form-validate" action="" method="get" novalidate="novalidate">
                     <div class="row">
                         <div class="col-md-3">

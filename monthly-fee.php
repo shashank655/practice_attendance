@@ -9,7 +9,7 @@ $accounts = new Accounts();
 $monthly_fees = $accounts->getMonthlyFeeList();
 
 if (isset($_POST['action']) && $_POST['action'] == 'send-reminder' && count($_POST['student_id'])) {
-    $accounts->sendDueFeeReminder( array_unique($_POST['student_id']) );
+    $accounts->sendMonthlyDueFeeReminder(array_unique($_POST['student_id']));
     $accounts->redirect(BASE_ROOT . 'monthly-fee.php');
 }
 
@@ -76,14 +76,7 @@ require_once 'includes/sidebar.php';
                     <div class="form-group">
                         <label>Section</label>
                         <select name="section_id" id="section_id" class="form-control">
-                            <?php if ($sections->count) : ?>
-                                <option value="">Select class</option>
-                                <?php foreach ($sections->results as $section) : ?>
-                                    <option value="<?= $section->id; ?>" <?= ($search->section_id == $section->id) ? 'selected' : ''; ?>><?= $section->section_name; ?></option>
-                                <?php endforeach; ?>
-                            <?php else : ?>
-                                <option value="">No fee head</option>
-                            <?php endif; ?>
+                            <option value=""><?= $sections->count ? 'Select Section' : 'No fee head'; ?></option>
                         </select>
                     </div>
                 </div>
@@ -204,8 +197,31 @@ require_once 'includes/sidebar.php';
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+
     <script type="text/javascript">
         (function($) {
+            var sections = <?= ($sections->success && $sections->count) ? json_encode($sections->results) : '[]'; ?>;
+
+            <?php if ($search->class_id) : ?>
+                setTimeout(() => {
+                    $('[name="class_id"]').trigger('change');
+                }, 1000);
+            <?php endif; ?>
+
+            $(document).on('change', '[name="class_id"]', function(event) {
+                var $sectionEl = $('[name="section_id"]');
+                $sectionEl.find('option:not(:first-child)').remove();
+                for (let index = 0; index < sections.length; index++) {
+                    if (sections[index]['class_id'] == $(this).val()) {
+                        $sectionEl.append(
+                            $('<option />', {
+                                value: sections[index]['id']
+                            }).text(sections[index]['section_name'])
+                        );
+                    }
+                }
+            });
+
             $('#filter-monthly-fee-list').submit(function(e) {
                 $(this).find('select,input').map(function(i, element) {
                     element.disabled = !$(element).val();

@@ -32,9 +32,9 @@ $fee_head_id = isset($_GET['fee_head_id']) ? urldecode($_GET['fee_head_id']) : n
 $admission_no = isset($_GET['admission_no']) ? urldecode($_GET['admission_no']) : null;
 
 if ($fee_head_id && $date && $admission_no) {
-    $student = $accounts->getStudentByAdmssionNo($admission_no);
+    $admission = $accounts->getAdmissionByAdmssionNo($admission_no);
 } else {
-    $student = new Optional();
+    $admission = new Optional();
 }
 
 $search_form = new Optional(compact('fee_head_id', 'date', 'admission_no'));
@@ -125,25 +125,25 @@ require_once 'includes/sidebar.php';
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Student Roll No</label>
-                            <input type="text" name="student_roll_no" class="form-control required" value="<?= $student->roll_number; ?>" required readonly>
+                            <input type="text" name="student_roll_no" class="form-control required" value="<?= $admission->roll_number; ?>" required readonly>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Student Name</label>
-                            <input type="text" name="student_name" class="form-control required" value="<?= $student->first_name . ' ' . $student->last_name; ?>" required readonly>
+                            <input type="text" name="student_name" class="form-control required" value="<?= $admission->first_name . ' ' . $admission->last_name; ?>" required readonly>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Class</label>
-                            <input type="text" name="student_class" class="form-control required" value="<?= $student->class_name; ?>" required readonly>
+                            <input type="text" name="student_class" class="form-control required" value="<?= $admission->class_name; ?>" required readonly>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Section</label>
-                            <input type="text" name="student_section" class="form-control required" value="<?= $student->section_name; ?>" required readonly>
+                            <input type="text" name="student_section" class="form-control required" value="<?= $admission->section_name; ?>" required readonly>
                         </div>
                     </div>
                 </div>

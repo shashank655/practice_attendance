@@ -268,9 +268,9 @@ class Accounts
 
             if (isset($request['addFeesTypes']) && is_array($request['addFeesTypes'])) {
                 foreach ($request['addFeesTypes'] as $key => $value) {
-                        $fees_type = $request['addFeesTypes'][$key];
-                        $amount = $request['addAmount'][$key];
-                        $this->insert('fees_head_fees_type', compact('fee_head_id', 'fees_type', 'amount'));
+                    $fees_type = $request['addFeesTypes'][$key];
+                    $amount = $request['addAmount'][$key];
+                    $this->insert('fees_head_fees_type', compact('fee_head_id', 'fees_type', 'amount'));
                 }
             }
 
@@ -281,16 +281,16 @@ class Accounts
     }
 
     public function addTransportationFees($request)
-    {  
+    {
         try {
-            $type = 'transportation'; 
+            $type = 'transportation';
             $this->delete('transportation_fees', compact('type'));
 
             if (isset($request['routeName']) && is_array($request['routeName'])) {
                 foreach ($request['routeName'] as $key => $value) {
-                        $routeName = $request['routeName'][$key];
-                        $addAmount = $request['addAmount'][$key];
-                        $this->insert('transportation_fees', compact('routeName', 'addAmount'));
+                    $routeName = $request['routeName'][$key];
+                    $addAmount = $request['addAmount'][$key];
+                    $this->insert('transportation_fees', compact('routeName', 'addAmount'));
                 }
             }
             $this->setAlert('Transportation Fees added successfully.');
@@ -373,8 +373,8 @@ class Accounts
 
         $student = $student->results[0];
 
-        $class = $this->select('classes_name', '*', ['id' => $student->class_id]);
-        $section = $this->select('sections', '*', ['id' => $student->section_id]);
+        $class = $this->select('classes_name', '*', ['id' => $student->class_id], ['limit' => 1]);
+        $section = $this->select('sections', '*', ['id' => $student->section_id], ['limit' => 1]);
 
         $student->class_name = $class->results[0]->class_name;
         $student->section_name = $section->results[0]->section_name;
@@ -382,11 +382,50 @@ class Accounts
         return $student;
     }
 
-    public function getStudentsByIds($ids)
+    public function getAdmissionByAdmssionNo($admission_no)
+    {
+        $admission = $this->select('admission_form_listing', '*', compact('admission_no'), ['limit' => 1]);
+
+        if (!$admission->success || !$admission->count) {
+            $this->setAlert('danger', 'Admission not found.');
+            return new Optional();
+        }
+
+        $admission = $admission->results[0];
+
+        $class = $this->select('classes_name', '*', ['id' => $admission->class_id], ['limit' => 1]);
+        $section = $this->select('sections', '*', ['id' => $admission->section_id], ['limit' => 1]);
+
+        $admission->class_name = $class->results[0]->class_name;
+        $admission->section_name = $section->results[0]->section_name;
+
+        return $admission;
+    }
+
+    public function getStudentsMobileNumberByIds($ids)
     {
         $where = implode(',', array_fill(0, count($ids), '?'));
-        $query = 'SELECT * FROM students WHERE id IN (' . $where . ')';
-        return $this->prepareExecute($query, $ids);
+        $query = 'SELECT parents_mobile_number FROM students WHERE id IN (' . $where . ')';
+        $result = $this->prepareExecute($query, $ids);
+        if ($result->success && $result->count) {
+            return array_map(function ($item) {
+                return $item->parents_mobile_number;
+            }, $result->results);
+        }
+        return [];
+    }
+
+    public function getAdmissionsMobileNumberByIds($ids)
+    {
+        $where = implode(',', array_fill(0, count($ids), '?'));
+        $query = 'SELECT parents_mobile_number FROM admission_form_listing WHERE id IN (' . $where . ')';
+        $result = $this->prepareExecute($query, $ids);
+        if ($result->success && $result->count) {
+            return array_map(function ($item) {
+                return $item->parents_mobile_number;
+            }, $result->results);
+        }
+        return [];
     }
 
     public function getAdmissionFees()
@@ -397,8 +436,8 @@ class Accounts
     public function getAdmissionFeeList()
     {
         $filters = [
-            'class_id' => 's.class_id = ?',
-            'section_id' => 's.section_id = ?',
+            'class_id' => 'a.class_id = ?',
+            'section_id' => 'a.section_id = ?',
             'admission_no' => 'af.admission_no = ?',
             'date_from' => 'af.due_date >= ?',
             'date_to' => 'af.due_date <= ?'
@@ -412,12 +451,12 @@ class Accounts
         $query = "SELECT
                     af.id,
                     af.admission_no,
-                    s.id as student_id,
-                    CONCAT(s.first_name, ' ', s.last_name) AS student_name,
+                    a.id as admission_id,
+                    CONCAT(a.first_name, ' ', a.last_name) AS student_name,
                     af.due_date,
                     (SELECT SUM(afi.total) FROM admission_fee_items AS afi WHERE afi.admission_fee_id = af.id) AS total_fee_amount,
                     (SELECT SUM(afp.fee_paid) FROM admission_fee_payments AS afp WHERE afp.admission_fee_id = af.id) AS total_fee_payment
-                    FROM admission_fees as af LEFT JOIN students as s ON af.admission_no = s.admission_no";
+                    FROM admission_fees as af LEFT JOIN admission_form_listing as a ON af.admission_no = a.admission_no";
 
         if (count($where) > 0) {
             $query .= ' WHERE ' . implode(' AND ', $this->arrayOnly($filters, array_keys($where)));
@@ -527,12 +566,10 @@ class Accounts
     {
         try {
             $admission_fee = $this->getAdmissionFee($admission_fee_id);
-            $student = $this->getStudentByAdmssionNo($admission_fee->admission_no);
 
             $data = $this->arrayOnly($request, ['fee_paid', 'payment_date', 'payment_method', 'comment', 'payment_information']);
 
             $data['admission_fee_id'] = $admission_fee->id;
-            $data['student_id'] = $student->id;
             $data['payment_date'] = $this->date($request['payment_date']);
             $data['billing_address'] = serialize($request['billing']);
 
@@ -790,15 +827,15 @@ class Accounts
                         switch ($result->response['merchant_param1']) {
                             case 'admission':
                                 $this->collectAdmissionFee($data, $result->response['merchant_param2']);
-                            break;
+                                break;
 
                             case 'monthly':
                                 $this->collectMonthlyFee($data, $result->response['merchant_param2']);
-                            break;
+                                break;
 
                             default:
                                 # code...
-                            break;
+                                break;
                         }
 
                         return $result->response['merchant_param1'];
@@ -810,22 +847,17 @@ class Accounts
         }
     }
 
-    public function sendDueFeeReminder($student_ids)
+    protected function sendDueFeeReminder($mobilenumbers)
     {
         $message = 'Dear User,' . "\r\n" . 'We would like to inform you that you have fee due.' . "\r\n" . 'We request you to make the payment of the due amount before the due date.';
 
         try {
-            $mobilenumbers = [];
-            $students = $this->getStudentsByIds($student_ids);
-            if ($students->success && $students->count) {
-                $mobilenumbers = array_map(function ($student) {
-                    $number = $student->parents_mobile_number;
-                    if (strlen($number) == 11 && substr($number, 0, 1) == '0') $number = substr($number, 1, 10);
-                    if (strlen($number) == 12 && substr($number, 0, 2) == '91') $number = substr($number, 2, 10);
-                    if (strlen($number) == 13 && substr($number, 0, 3) == '+91') $number = substr($number, 3, 10);
-                    return $number;
-                }, $students->results);
-            }
+            $mobilenumbers = array_map(function ($number) {
+                if (strlen($number) == 11 && substr($number, 0, 1) == '0') $number = substr($number, 1, 10);
+                if (strlen($number) == 12 && substr($number, 0, 2) == '91') $number = substr($number, 2, 10);
+                if (strlen($number) == 13 && substr($number, 0, 3) == '+91') $number = substr($number, 3, 10);
+                return $number;
+            }, $mobilenumbers);
 
             $response = MinavoVSMS::bulksms($mobilenumbers, $message);
             if ($response->status === 'success') {
@@ -836,6 +868,20 @@ class Accounts
         } catch (\Throwable $th) {
             return $this->throwException($th);
         }
+    }
+
+    public function sendMonthlyDueFeeReminder($student_ids)
+    {
+        return $this->sendDueFeeReminder(
+            $this->getStudentsMobileNumberByIds($student_ids)
+        );
+    }
+
+    public function sendAdmissionDueFeeReminder($admission_ids)
+    {
+        return $this->sendDueFeeReminder(
+            $this->getAdmissionsMobileNumberByIds($admission_ids)
+        );
     }
 
     public function getAdminUser()

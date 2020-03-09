@@ -6,8 +6,8 @@ require_once 'employee/class/MinavoVSMS.php';
 
 $accounts = new Accounts();
 
-if (isset($_POST['action']) && $_POST['action'] == 'send-reminder' && count($_POST['student_id'])) {
-    $accounts->sendDueFeeReminder( array_unique($_POST['student_id']) );
+if (isset($_POST['action']) && $_POST['action'] == 'send-reminder' && count($_POST['admission_id'])) {
+    $accounts->sendAdmissionDueFeeReminder(array_unique($_POST['admission_id']));
     $accounts->redirect(BASE_ROOT . 'admission-fee.php');
 }
 
@@ -75,14 +75,7 @@ require_once 'includes/sidebar.php';
                     <div class="form-group">
                         <label>Section</label>
                         <select name="section_id" id="section_id" class="form-control">
-                            <?php if ($sections->count) : ?>
-                                <option value="">Select class</option>
-                                <?php foreach ($sections->results as $section) : ?>
-                                    <option value="<?= $section->id; ?>" <?= ($search->section_id == $section->id) ? 'selected' : ''; ?>><?= $section->section_name; ?></option>
-                                <?php endforeach; ?>
-                            <?php else : ?>
-                                <option value="">No fee head</option>
-                            <?php endif; ?>
+                            <option value=""><?= $sections->count ? 'Select Section' : 'No fee head'; ?></option>
                         </select>
                     </div>
                 </div>
@@ -137,7 +130,7 @@ require_once 'includes/sidebar.php';
                                 <?php if ($admission_fees->success && $admission_fees->count) : ?>
                                     <?php foreach ($admission_fees->results as $key => $admission_fee) : ?>
                                         <tr>
-                                            <td><?= $admission_fee->student_id; ?></td>
+                                            <td><?= $admission_fee->admission_id; ?></td>
                                             <td><?= $key + 1; ?></td>
                                             <td><?= $admission_fee->admission_no; ?></td>
                                             <td><?= $admission_fee->student_name; ?></td>
@@ -173,8 +166,8 @@ require_once 'includes/sidebar.php';
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else : ?>
-                                    <tr class="col-sm-12">
-                                        <td class="text-center" colspan="9">No data here</td>
+                                    <tr>
+                                        <td class="text-center" colspan="10">No data here</td>
                                     </tr>
                                 <?php endif; ?>
                             </tbody>
@@ -203,6 +196,29 @@ require_once 'includes/sidebar.php';
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
     <script type="text/javascript">
         (function($) {
+            var sections = <?= ($sections->success && $sections->count) ? json_encode($sections->results) : '[]'; ?>;
+
+            <?php if ($search->class_id) : ?>
+                setTimeout(() => {
+                    $('[name="class_id"]').trigger('change');
+                }, 1000);
+            <?php endif; ?>
+
+            $(document).on('change', '[name="class_id"]', function(event) {
+                var $sectionEl = $('[name="section_id"]');
+                $sectionEl.find('option:not(:first-child)').remove();
+                for (let index = 0; index < sections.length; index++) {
+                    if (sections[index]['class_id'] == $(this).val()) {
+                        $sectionEl.append(
+                            $('<option />', {
+                                value: sections[index]['id'],
+                                selected: ('<?= $search->section_id ?>' == sections[index]['id']),
+                            }).text(sections[index]['section_name'])
+                        );
+                    }
+                }
+            });
+
             $('#filter-admission-fee-list').submit(function(e) {
                 $(this).find('select,input').map(function(i, element) {
                     element.disabled = !$(element).val();
@@ -236,10 +252,10 @@ require_once 'includes/sidebar.php';
                 var form = document.createElement('form');
                 form.method = 'POST';
                 form.action = '';
-                $.each(selected, function(i, student_id) {
+                $.each(selected, function(i, admission_id) {
                     var input = document.createElement('input');
-                    input.name = 'student_id[]';
-                    input.value = student_id;
+                    input.name = 'admission_id[]';
+                    input.value = admission_id;
                     form.appendChild(input);
                 });
 

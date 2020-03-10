@@ -903,4 +903,10 @@ class Accounts
     {
         return $this->select('sections');
     }
+
+    public function getStudentListByClassAndSection($request)
+    {
+        $where = $this->arrayOnly($request, ['class_id', 'section_id']);
+        return $this->select('students', '*', $where);
+    }
 }

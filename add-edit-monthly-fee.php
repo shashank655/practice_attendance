@@ -16,6 +16,9 @@ if ($id = isset($_GET['id']) ? intval($_GET['id']) : null) {
     $monthly_fee_items = new Optional();
 }
 
+if (is_null($id) && isset($_GET['date_from'])) $monthly_fee->date_from = $accounts->date('d/m/Y', $_GET['date_from']);
+if (is_null($id) && isset($_GET['date_to'])) $monthly_fee->date_to = $accounts->date('d/m/Y', $_GET['date_to']);
+
 if (isset($_POST['action']) && $_POST['action'] == 'add-edit-monthly-fee') {
     $result = $accounts->addEditMonthlyFee($_POST, $id);
     if ($_POST['payment_time'] == 'now') {

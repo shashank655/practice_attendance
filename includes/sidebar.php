@@ -32,7 +32,7 @@ $menus = [
                 'to' => 'all-students.php',
                 'related' => ['student-profile.php']
             ]
-        ]    
+        ]
     ],
     'Exam Management' => [
         'icon' => 'fa fa-graduation-cap',
@@ -121,8 +121,7 @@ $menus = [
                 'related' => ['monthly-discount.php']
             ],
             'Collect Fees' => [
-                'to' => 'deposit-monthly-fees.php',
-                'related' => ['deposit-monthly-fees.php']
+                'to' => 'collect-fee.php'
             ],
             'Admission Fee List' => [
                 'to' => 'admission-fee.php',

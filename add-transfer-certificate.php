@@ -2,9 +2,11 @@
 require_once 'employee/class/dbclass.php'; 
 require_once 'includes/header.php'; 
 require_once 'includes/sidebar.php';
+require_once 'employee/class/Admin.php';
 require_once 'employee/class/TransferCertificate.php';
 $leaves = new TransferCertificate();
-
+$admin = new Admin();
+$adminData = $admin->getAdminInfo($_SESSION['userId']);
 $leaveId = (isset($_REQUEST['id'])) ? $_REQUEST['id'] : NULL; 
 if ($leaveId != NULL) { $result = $leaves->getLeaveTypeInfo($leaveId); 
     if ($result == NULL) { $leaveId = ''; } }
@@ -30,8 +32,10 @@ if ($leaveId != NULL) { $result = $leaves->getLeaveTypeInfo($leaveId);
          <div class="row justify-content-between">
         <div class="col"><img src="<?php echo BASE_ROOT; ?>assets/img/logo-tc.jpg" alt="" class="logo"></div>
         <div class="col text-center">
-            <h3>U.P. Global School</h3>
-            <p>Affiliated to CBSE New Delhi</p>
+            <h3><?php echo $adminData[0]['school_name'];?></h3>
+            <p class="mb-1"><?php echo $adminData[0]['address'];?></p>
+                        <p class="mb-1">Phone number: <?php echo $adminData[0]['phone_number'];?> </p>
+                        <p class="mb-1">Email: <em><strong><?php echo $adminData[0]['email_address'];?></strong></em>
         </div>
         <div class="col  text-center">
         </div>

@@ -231,13 +231,21 @@ class Accounts
     public function getFeeHeadFeesTypes($id)
     {
         $get_fees_type = $this->select('fees_head_fees_type', '*', ['fee_head_id' => $id]);
-        if (!$get_fees_type->success || !$get_fees_type->count) $this->notFound();
+        // if (!$get_fees_type->success || !$get_fees_type->count) $this->notFound();
         return $get_fees_type;
     }
 
     public function getTransportationFees()
     {
         return $this->select('transportation_fees');
+    }
+
+    public function getTransportationFee($id)
+    {
+        $transportation_fee = $this->select('transportation_fees', '*', compact('id'));
+        if (!$transportation_fee->success || !$transportation_fee->count) $this->notFound();
+
+        return $transportation_fee->results[0];
     }
 
     public function addEditFeeHead($request, $id = null)

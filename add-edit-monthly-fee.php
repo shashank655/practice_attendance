@@ -14,6 +14,33 @@ if ($id = isset($_GET['id']) ? intval($_GET['id']) : null) {
 } else {
     $monthly_fee = new Optional();
     $monthly_fee_items = new Optional();
+    $monthly_fee_items->count = 0;
+    $monthly_fee_items->success = true;
+    $monthly_fee_items->results = [];
+    if ($fee_head_id = (isset($_GET['fee_head_id']) ? urldecode($_GET['fee_head_id']) : null)) {
+        $fee_head_fees = $accounts->getFeeHeadFeesTypes($fee_head_id);
+        if ($fee_head_fees->success && $fee_head_fees->count > 0) {
+            foreach ($fee_head_fees->results as $fee_head_fee) {
+                $monthly_fee_items->results[] = (object) [
+                    'fee_type' => $fee_head_fee->fees_type,
+                    'fee_amount' => $fee_head_fee->amount,
+                    'total' => $fee_head_fee->amount
+                ];
+            }
+        }
+    }
+
+    if ($transportation_fee_id = (isset($_GET['transportation_fee_id']) ? urldecode($_GET['transportation_fee_id']) : null)) {
+        if (!isset($monthly_fee_items->results)) $monthly_fee_items->results = [];
+        $transportation_fee = $accounts->getTransportationFee($transportation_fee_id);
+        $monthly_fee_items->results[] = (object) [
+            'fee_type' => 'Transportation Fee (' . $transportation_fee->routeName . ')',
+            'fee_amount' => $transportation_fee->addAmount,
+            'total' => $transportation_fee->addAmount
+        ];
+    }
+
+    $monthly_fee_items->count = count($monthly_fee_items->results);
 }
 
 if (is_null($id) && isset($_GET['date_from'])) $monthly_fee->date_from = $accounts->date('d/m/Y', $_GET['date_from']);
@@ -292,6 +319,7 @@ require_once 'includes/sidebar.php';
             fee_item.discount_amount = fee_item.discount_amount || 0;
             return fee_item;
         });
+
         var blank_row_tr = '<tr id="blank_row_tr"><td class="text-center" colspan="7">No data here</td></tr>';
 
         function new_row_template(fee_type, fee_amount, discount_head_id, discount_type, discount_amount, total) {

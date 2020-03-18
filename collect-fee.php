@@ -14,6 +14,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'send-reminder' && count($_PO
 $classes = $accounts->getClasses();
 $sections = $accounts->getSections();
 $fee_heads = $accounts->getFeeHeads();
+$transportation_fees = $accounts->getTransportationFees();
 
 if ((!isset($_GET['class_id']) || empty($_GET['class_id'])) && $classes->count > 0) {
     $_GET['class_id'] = $classes->results[0]->id;
@@ -108,6 +109,7 @@ require_once 'includes/sidebar.php';
                                     <th>Student Name</th>
                                     <th>Class/Section</th>
                                     <th>Fee Head</th>
+                                    <th>Transportation Route</th>
                                     <th>From Date</th>
                                     <th>To Date</th>
                                     <th>Action</th>
@@ -130,6 +132,18 @@ require_once 'includes/sidebar.php';
                                                         <option value="">Select fee head</option>
                                                         <?php foreach ($fee_heads->results as $fee_head) : ?>
                                                             <option value="<?= $fee_head->id; ?>"><?= $fee_head->title; ?></option>
+                                                        <?php endforeach; ?>
+                                                    <?php else : ?>
+                                                        <option value="">No fee head</option>
+                                                    <?php endif; ?>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select name="transportation_fee_id[]" class="form-control form-control-sm required">
+                                                    <?php if ($transportation_fees->count) : ?>
+                                                        <option value="">Select fee head</option>
+                                                        <?php foreach ($transportation_fees->results as $transportation_fee) : ?>
+                                                            <option value="<?= $transportation_fee->id; ?>"><?= $transportation_fee->routeName; ?></option>
                                                         <?php endforeach; ?>
                                                     <?php else : ?>
                                                         <option value="">No fee head</option>
@@ -211,11 +225,17 @@ require_once 'includes/sidebar.php';
                 var date = '<?= date('d/m/Y'); ?>';
                 var admission_no = $(this).parents('tr').find('[name="admission_no[]"]').val();
                 var fee_head_id = $(this).parents('tr').find('[name="fee_head_id[]"]').val();
+                var transportation_fee_id = $(this).parents('tr').find('[name="transportation_fee_id[]"]').val();
                 var date_from = $(this).parents('tr').find('[name="date_from[]"]').val();
                 var date_to = $(this).parents('tr').find('[name="date_to[]"]').val();
 
                 if (!fee_head_id) {
                     alert('Select fee head.');
+                    return;
+                }
+
+                if (!transportation_fee_id) {
+                    alert('Select transportation route head.');
                     return;
                 }
 
@@ -229,7 +249,7 @@ require_once 'includes/sidebar.php';
                     return;
                 }
 
-                window.location.href = encodeURI('/add-edit-monthly-fee.php?fee_head_id=' + fee_head_id + '&date=' + date + '&admission_no=' + admission_no + '&date_from=' + date_from + '&date_to=' + date_to);
+                window.location.href = encodeURI('/add-edit-monthly-fee.php?fee_head_id=' + fee_head_id + '&transportation_fee_id=' + transportation_fee_id + '&date=' + date + '&admission_no=' + admission_no + '&date_from=' + date_from + '&date_to=' + date_to);
             });
         }(jQuery))
     </script>

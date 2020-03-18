@@ -57,7 +57,7 @@ require_once 'includes/sidebar.php';
                                         <td><?php echo $value['first_name']; ?></td>
                                         <td><?php echo $value['last_name']; ?></td>
                                         <td class="">
-                                            <a href="add-sample-students-marks.php?sID=<?php echo $value[0]; ?>" class="btn btn-primary btn-sm mb-1">
+                                            <a href="add-students-marks.php?sID=<?php echo $value[0]; ?>" class="btn btn-primary btn-sm mb-1">
                                                 Add Marks
                                             </a>
                                         </td>

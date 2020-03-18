@@ -419,58 +419,12 @@ require_once 'includes/sidebar.php';
 					required:true,
 					dropdownValidation:true
 				},
-				date_of_joining:{
-					required:true
-				},
 				mobile_number:{
 					required:true
 				},
 				admission_no:{
 					required:true,
 					isCheckAdmissionNo:true
-				},
-				dob:{
-					required:true
-				},
-				roll_number:{
-					required:true
-				},
-				religion:{
-					required:true
-				},
-				parents_mobile_number:{
-					required:true
-				},
-				present_address:{
-					required:true
-				},
-				fathers_name:{
-					required:true
-				},
-				fathers_adhar_card:{
-					required:true
-				},
-				mothers_name:{
-					required:true
-				},
-				fathers_occupation:{
-					required:true
-				},
-				parents_email_address:{
-					required:true,
-					isCheckParentEmail:true
-				},
-				nationality:{
-					required:true
-				},
-				annual_income:{
-					required:true
-				},
-				todays_date:{
-					required:true
-				},
-				blood_group:{
-					required:true
 				}
 			}
 		});

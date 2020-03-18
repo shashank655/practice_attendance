@@ -139,9 +139,25 @@ class ExamType extends MySQLCN {
     }
 
     function getExamNameList($examTypeID,$classId,$sectionId) {
-        $fetchData = "SELECT exams_list.id as examId, exams_list.date_of_exam, exams_list.time_of_exam, exam_type.*, exam_term.*, classes_name.*, sections.*, subjects.*  FROM `exams_list` LEFT JOIN exam_type on exams_list.exam_type_id=exam_type.id LEFT JOIN exam_term on exams_list.exam_term_id=exam_term.id LEFT JOIN classes_name on exams_list.class_id=classes_name.id LEFT JOIN sections on exams_list.section_id=sections.id LEFT JOIN subjects on subjects.id=exams_list.exam_name where exams_list.exam_type_id='{$examTypeID}' and exams_list.class_id='{$classId}' and exams_list.section_id='{$sectionId}' order by 'exams_list.id' DESC";
+        $fetchData = "SELECT exams_list.id as examId, exam_type.*, exam_term.*, classes_name.*, sections.*  FROM `exams_list` LEFT JOIN exam_type on exams_list.exam_type_id=exam_type.id LEFT JOIN exam_term on exams_list.exam_term_id=exam_term.id LEFT JOIN classes_name on exams_list.class_id=classes_name.id LEFT JOIN sections on exams_list.section_id=sections.id where exams_list.exam_type_id='{$examTypeID}' and exams_list.class_id='{$classId}' and exams_list.section_id='{$sectionId}' order by 'exams_list.id' DESC";
         $fetch_data = $this->select($fetchData);
         return $fetch_data;
+    }
+
+    function getExamsSubjectsList($sectionID) {
+        $fetchSubject = "SELECT subjects_id FROM `class_sections_subjects` where section_id='{$sectionID}'";
+        $fetch_subject_ids = $this->select($fetchSubject);
+        $getData = array();
+                $fetch_subject_array = explode(',', $fetch_subject_ids[0]['subjects_id']);
+                $subjects_array = array();
+                foreach ($fetch_subject_array as $key => $value) {
+
+                    $getSubject = "SELECT subject_name FROM `subjects` where id='{$value}'";
+                    $subject_name = $this->select($getSubject);
+                    $subjects_array[$key]['subject_name'] = $subject_name[0]['subject_name'];
+                    $subjects_array[$key]['subId'] = $value;
+                } 
+        return $subjects_array;
     }
 }
 ?>

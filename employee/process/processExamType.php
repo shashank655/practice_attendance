@@ -74,6 +74,10 @@ if ($data['type'] == 'Add') {
     $result = $exam_type->getExamTermList($_POST['examTypeID']);
     echo json_encode($result);
     exit;
+} else if ($_POST['type'] == 'getExamsSubjects' && $_POST['sectionID'] != NULL ){
+    $result = $exam_type->getExamsSubjectsList($_POST['sectionID']);
+    echo json_encode($result);
+    exit;
 } else if ($_POST['type'] == 'getExamNameList' && $_POST['examTypeID'] != NULL && $_POST['classId'] != NULL && $_POST['sectionId'] != NULL ){
     $result = $exam_type->getExamNameList($_POST['examTypeID'],$_POST['classId'],$_POST['sectionId']);
     echo json_encode($result);

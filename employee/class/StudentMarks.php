@@ -8,23 +8,26 @@ class StudentMarks extends MySQLCN {
         $class_id = $data['class_id'];
         $section_id = $data['section_id'];
         $exam_id = $data['exam_id'];
-        $exam_name = $data['exam_name'];
         $exam_term_id = $data['exam_term_id'];
 
         $qry = "DELETE FROM `students_marks` WHERE exam_id = '{$exam_id}' and teacher_id = '{$teacher_id}' ";
         $res = $this->deleteData($qry);
 
-        foreach ($data['student_id'] as $key => $value) {
-          $qry1 = 'INSERT INTO `students_marks`
+        foreach ($data['marks_obtain'] as $key_student => $value_student) {
+
+            foreach ($value_student as $key => $value) {
+                $qry1 = 'INSERT INTO `students_marks`
               (`class_id`,`section_id`,`exam_id`,`exam_term_id`,`teacher_id`,`exam_name`,`student_id`,`total_marks`,`marks_obtain`)
-              VALUES ( "'. $class_id . '", "'. $section_id . '", "'. $exam_id . '", "'. $exam_term_id . '", "'. $teacher_id . '", "'. $exam_name . '", "'. $value . '", "'.$data['total_marks'].'", "'. $data['marks_obtain'][$key] . '")';
-          $res1 = $this->insert($qry1);
+              VALUES ( "'. $class_id . '", "'. $section_id . '", "'. $exam_id . '", "'. $exam_term_id . '", "'. $teacher_id . '", "'. $key . '", "'. $key_student . '", "'.$data['totalMarks'][$key].'", "'. $value . '")';
+                $res1 = $this->insert($qry1);   
+            }
+
         }
         return true;
     }
 
     function getStudentsSubjectMarks($examId, $teacherId) {
-        $qry = "SELECT student_id,total_marks,marks_obtain FROM students_marks WHERE exam_id = '{$examId}' AND teacher_id = '{$teacherId}' ";
+        $qry = "SELECT student_id,exam_name,total_marks,marks_obtain FROM students_marks WHERE exam_id = '{$examId}' AND teacher_id = '{$teacherId}' ";
         $result = $this->select($qry);
         if ($result != NULL) {
             return $result;

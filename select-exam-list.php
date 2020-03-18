@@ -12,7 +12,7 @@ if($_SESSION['user_role'] == '2') {
     $output = $teacher->getTeacherClassName($_SESSION['userId']);
     $get_class_id = $output[0]['classId'];
     $get_section_id = $output[0]['sectionId'];
-    $resultExamList=$exams->getClassTeachersExamsLists($get_class_id , $get_section_id);    
+    $resultExamList=$exams->getClassTeachersExamsLists($get_class_id , $get_section_id);
 } else {
     header('Location: ' . BASE_ROOT.'dashboard.php');
 } 
@@ -114,7 +114,7 @@ require_once 'includes/sidebar.php';
                             // if(data[i].id==exam_term_id){
                             //    option+=" selected";
                             // }
-                           option+=" >"+'Session: '+data[i].year_session+', Start Date: '+data[i].start_date+', End Date: '+data[i].end_date+', Subject:'+data[i].subject_name+', Time of Exam:'+data[i].time_of_exam+', Date of Exam: '+data[i].date_of_exam+"</option>"
+                           option+=" >"+'Session: '+data[i].year_session+', Start Date: '+data[i].start_date+', End Date: '+data[i].end_date+"</option>"
                         $("#exam_id").append(option);
                     }                    
                 }else{

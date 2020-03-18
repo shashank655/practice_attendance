@@ -6664,6 +6664,13 @@ label.error:before {
 		.header .has-arrow .dropdown-toggle::after {
 			display: none;
 		}
+		#loginform .custom-checkbox{
+	    	flex: 100%;
+	    }
+	    .logo img{
+	    	width: 100%;
+	    	display: block;
+	    }
 
 	}
 
@@ -6902,4 +6909,4 @@ label.error:before {
         margin-left: 10px;
         vertical-align: top;
     }
-    
+

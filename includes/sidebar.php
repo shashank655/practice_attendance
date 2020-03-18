@@ -46,10 +46,41 @@ $menus = [
                 'to' => 'manage-exam-terms-lists.php',
                 'related' => ['add-exam-term.php']
             ],
-            'Exams List' => [
+            'Manage Exam List' => [
                 'to' => 'exams-list.php',
                 'related' => ['add-exams.php']
+            ]    
+            // ],
+            // 'Add Term' => [
+            //     'to' => 'add-session-term.php',
+            //     'related' => ['add-session-term.php']
+            // ],
+            // 'Edit Term' => [
+            //     'to' => 'exams-list.php',
+            //     'related' => ['add-exams.php']
+            // ],
+            // 'Report Card' => [
+            //     'to' => 'exams-list.php',
+            //     'related' => ['add-exams.php']
+            // ]
+        ]
+    ],
+    'Examination' => [
+        'icon' => 'fa fa-user',
+        'can' => $_SESSION['user_role'] == 2,
+        'childs' => [
+            'Add Student Marks' => [
+                'to' => 'students-exam-list.php',
+                'related' => ['students-exam-list.php']
             ]
+            // 'Add Student Marks' => [
+            //     'to' => 'select-exam-list.php',
+            //     'related' => ['student-attendance.php']
+            // ],
+            // 'Results & Analysis' => [
+            //     'to' => 'add-students-marks.php',
+            //     'related' => ['students-result.php']
+            // ]
         ]
     ],
     'Classes & Sections' => [

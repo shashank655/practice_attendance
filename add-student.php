@@ -325,49 +325,12 @@
                       required:true,
                       dropdownValidation:true
                   },
-                  date_of_joining:{
-                      required:true
-                  },
                   mobile_number:{
                       required:true
                   },
                   admission_no:{
                       required:true,
                       isCheckAdmissionNo:true
-                  },
-                  dob:{
-                      required:true
-                  },
-                  roll_number:{
-                      required:true
-                  },
-                  religion:{
-                  	required:true
-                  },
-                  fathers_name:{
-                  	required:true
-                  },
-                  mothers_name:{
-                  	required:true
-                  },
-                  fathers_occupation:{
-                  	required:true
-                  },
-                  parents_email_address:{
-                  	required:true,
-                  	isCheckParentEmail:true
-                  },
-                  parents_password:{
-                  	required:true
-                  },
-                  parents_mobile_number:{
-                  	required:true
-                  },
-                  present_address:{
-                  	required:true
-                  },
-                  permanent_address:{
-                  	required:true
                   }
               }
           });

@@ -152,13 +152,7 @@ require_once 'includes/sidebar.php';
             <?php endif; ?>
             <form class="form-validate" action="" name="add-fee-form" id="add-fee-form" method="post" novalidate="novalidate">
                 <div class="row">
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label>Student Roll No</label>
-                            <input type="text" name="student_roll_no" class="form-control required" value="<?= $student->roll_number; ?>" required readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label>Student Name</label>
                             <input type="text" name="student_name" class="form-control required" value="<?= $student->first_name . ' ' . $student->last_name; ?>" required readonly>
@@ -379,7 +373,7 @@ require_once 'includes/sidebar.php';
         $(document).on('click', '#add-fee', function(e) {
             e.preventDefault();
 
-            if (!$('[name="student_roll_no"]').val()) {
+            if ($('[name="student_name"]').val().trim() === '') {
                 alert('Select a student before adding fee');
                 return;
             }
@@ -469,6 +463,10 @@ require_once 'includes/sidebar.php';
         });
 
         $(document).on('submit', '#add-fee-form', function(e) {
+            if ($('[name="student_name"]').val().trim() === '') {
+                alert('Select a student before adding fee');
+                return;
+            }
             if ($('#add-fee-table tbody tr:not(#blank_row_tr)').length == 0) {
                 alert('Add fee before submit.');
                 e.preventDefault();

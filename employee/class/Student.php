@@ -34,10 +34,15 @@ class Student extends MySQLCN {
         } else {
             $parentsProfileImageName = '';
         }
-  
+        
+        if($data['transportation_taken'] == 'no') {
+            $transportation_id = '';
+        } else {
+            $transportation_id = $data['transportation_id'];
+        }
         $qry = 'INSERT INTO `students` 
-            (`first_name`,`last_name`, `gender`, `dob`,`class_id`,`section_id`,`religion`,`date_of_joining`,`admission_no`,`roll_number`,`fathers_name`,`fathers_occupation`,`parents_email_address`,`parents_password`,`parents_mobile_number`,`present_address`,`mothers_name`,`mothers_occupation`,`nationality`,`permanent_address`,`student_profile_image`,`parents_profile_image`) 
-            VALUES ( "'. $data['first_name'] . '", "'. $data['last_name'] . '" , "'. $data['gender'] .'" ,"'. $data['dob'].'" ,"'. $data['class_id'].'" ,"'. $data['section_id'].'" ,"'. $data['religion'].'" ,"'. $data['date_of_joining'].'" ,"'. $data['admission_no'].'" ,"'. $data['roll_number'].'" ,"'. $data['fathers_name'].'" ,"'. $data['fathers_occupation'].'","'. $data['parents_email_address'].'","'. md5($data['parents_password']).'" ,"'. $data['parents_mobile_number'].'","'. $data['present_address'].'","'. $data['mothers_name'].'","'. $data['mothers_occupation'].'" ,"'. $data['nationality'].'" ,"'. $data['permanent_address'].'" ,"'.$studentProfileImageName.'" ,"'.$parentsProfileImageName.'")';
+            (`first_name`,`last_name`, `gender`, `dob`,`class_id`,`section_id`,`religion`,`date_of_joining`,`admission_no`,`roll_number`,`transportation_taken`,`transportation_id`,`fathers_name`,`fathers_occupation`,`parents_email_address`,`parents_password`,`parents_mobile_number`,`present_address`,`mothers_name`,`mothers_occupation`,`nationality`,`permanent_address`,`student_profile_image`,`parents_profile_image`) 
+            VALUES ( "'. $data['first_name'] . '", "'. $data['last_name'] . '" , "'. $data['gender'] .'" ,"'. $data['dob'].'" ,"'. $data['class_id'].'" ,"'. $data['section_id'].'" ,"'. $data['religion'].'" ,"'. $data['date_of_joining'].'" ,"'. $data['admission_no'].'" ,"'. $data['roll_number'].'","'. $data['transportation_taken'].'","'. $transportation_id.'" ,"'. $data['fathers_name'].'" ,"'. $data['fathers_occupation'].'","'. $data['parents_email_address'].'","'. md5($data['parents_password']).'" ,"'. $data['parents_mobile_number'].'","'. $data['present_address'].'","'. $data['mothers_name'].'","'. $data['mothers_occupation'].'" ,"'. $data['nationality'].'" ,"'. $data['permanent_address'].'" ,"'.$studentProfileImageName.'" ,"'.$parentsProfileImageName.'")';
         $res = $this->insert($qry);
         if ($res) {
             return true;
@@ -63,6 +68,12 @@ class Student extends MySQLCN {
             $parentsProfileImageName = $_POST['parents_profile_image_name'];
         }
 
+        if($data['transportation_taken'] == 'no') {
+            $transportation_id = '';
+        } else {
+            $transportation_id = $data['transportation_id'];
+        }
+
         $qry = "UPDATE `students` SET
               `first_name` = '{$data['first_name']}', 
               `last_name` = '{$data['last_name']}',
@@ -74,6 +85,8 @@ class Student extends MySQLCN {
               `date_of_joining` = '{$data['date_of_joining']}',
               `admission_no` = '{$data['admission_no']}',
               `roll_number` = '{$data['roll_number']}',
+              `transportation_taken` = '{$data['transportation_taken']}',
+              `transportation_id` = '{$transportation_id}',
               `fathers_name` = '{$data['fathers_name']}',
               `fathers_occupation` = '{$data['fathers_occupation']}',
               `parents_email_address` = '{$data['parents_email_address']}',

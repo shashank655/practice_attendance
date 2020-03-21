@@ -3,9 +3,13 @@
    require_once 'employee/config/config.php'; 
    require_once 'employee/class/Student.php'; 
    require_once 'employee/class/CommonFunction.php'; 
+   require_once 'employee/class/Accounts.php';
    $common_function=new CommonFunction(); 
+   $accounts = new Accounts();
    $resultSubjects=$common_function->getAllSubjects(); 
+   $resultClasses = $common_function->getAllClassesName();
    $resultClasses = $common_function->getAllClassesName(); 
+   $get_trans_fees = $accounts->getTransportationFees();
    $student = new Student(); 
    $studentId = (isset($_REQUEST['studentId'])) ? $_REQUEST['studentId'] : NULL; 
    if ($studentId != NULL) { $result = $student->getStudentInfo($studentId); 
@@ -124,6 +128,46 @@
                                  <i class="bar"></i>
                               </div>
                            </div>
+                            <div class="page-title w-100 mt-4">
+                              <div class="row">
+                                 <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <div class="page-title pl-3">Transportation</div>
+                                 </div>
+                              </div>
+                           </div>
+
+                           <div class="card-body w-100 p-3">
+                              <div class="row">
+                                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group custom-mt-form-group">
+                                       <select id="transportation_taken" name="transportation_taken">
+                                          <option <?php if($result[0]['transportation_taken'] == 'no'){echo 'selected'; } ?> value="no">No</option>
+                                          <option <?php if($result[0]['transportation_taken'] == 'yes'){echo 'selected'; } ?> value="yes">Yes</option>
+                                       </select>
+                                       <i class="bar"></i>
+                                    </div>
+                                 </div>
+                                 <?php 
+                                    if(!empty($result[0]['transportation_id'])) {
+                                       $styleValue = "";
+                                    } else {
+                                       $styleValue = "display: none;";
+                                    }
+                                 ?>
+                                 <div id="transportation_section" style="<?php echo $styleValue; ?>" class="col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group custom-mt-form-group">
+                                    <select id="transportation_id" name="transportation_id" >
+                                       <option value='' disabled="" selected="">Select Route</option>
+                                       <?php foreach ($get_trans_fees->results as $fees) : ?>   
+                                       <option <?php if($result[0]['transportation_id'] == $fees->id){echo 'selected'; } ?>  value="<?php echo $fees->id; ?>"><?php echo $fees->routeName. ' ('.$fees->addAmount.')'; ?></option>
+                                       <?php
+                                         endforeach; ?>
+                                    </select>
+                                    <i class="bar"></i>
+                                 </div>
+                              </div>
+                              </div> 
+                           </div>               
                            <div class="page-title w-100 mt-4">
                               <div class="row">
                                  <div class="col-lg-12 col-md-12 col-sm-12 col-12">
@@ -331,6 +375,9 @@
                   admission_no:{
                       required:true,
                       isCheckAdmissionNo:true
+                  },
+                  transportation_id:{
+                      required:true
                   }
               }
           });
@@ -384,5 +431,12 @@
                  $("#parents_profile_image_div").hide();
                  $("#parents_profile_image_name").val('');
               }
-   	});
+   	}); 
+      $('#transportation_taken').change(function(){
+         if($('#transportation_taken').val() == 'yes') {
+            $('#transportation_section').show(); 
+         } else {
+            $('#transportation_section').hide(); 
+         } 
+      });   
 </script>

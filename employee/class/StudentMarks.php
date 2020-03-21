@@ -5,32 +5,43 @@ class StudentMarks extends MySQLCN {
 
     function addingStudentsMarks($data) {
         $teacher_id = $_SESSION['userId'];
-        $class_id = $data['class_id'];
-        $section_id = $data['section_id'];
         $exam_id = $data['exam_id'];
-        $exam_term_id = $data['exam_term_id'];
-
+        
         $qry = "DELETE FROM `students_marks` WHERE exam_id = '{$exam_id}' and teacher_id = '{$teacher_id}' ";
         $res = $this->deleteData($qry);
 
+        $qry_del = "DELETE FROM `students_marks_details` WHERE exam_id = '{$exam_id}' ";
+        $res_del = $this->deleteData($qry_del);
+
         foreach ($data['marks_obtain'] as $key_student => $value_student) {
 
+            $qry1 = 'INSERT INTO `students_marks`
+              (`exam_id`,`teacher_id`,`student_id`)
+              VALUES ( "'. $exam_id . '", "'. $teacher_id . '", "'. $key_student . '")';
+                $res1 = $this->insert($qry1);
+
             foreach ($value_student as $key => $value) {
-                $qry1 = 'INSERT INTO `students_marks`
-              (`class_id`,`section_id`,`exam_id`,`exam_term_id`,`teacher_id`,`exam_name`,`student_id`,`total_marks`,`marks_obtain`)
-              VALUES ( "'. $class_id . '", "'. $section_id . '", "'. $exam_id . '", "'. $exam_term_id . '", "'. $teacher_id . '", "'. $key . '", "'. $key_student . '", "'.$data['totalMarks'][$key].'", "'. $value . '")';
-                $res1 = $this->insert($qry1);   
+
+                $qry2 = 'INSERT INTO `students_marks_details`
+              (`students_marks_id`,`exam_id`,`exam_name`,`total_marks`,`marks_obtain`)
+              VALUES ( "'. $res1 . '","'. $exam_id . '", "'. $key . '", "'. $data['totalMarks'][$key] . '", "'. $value . '")';
+                $res2 = $this->insert($qry2);
+
             }
 
         }
         return true;
     }
 
-    function getStudentsSubjectMarks($examId, $teacherId) {
-        $qry = "SELECT student_id,exam_name,total_marks,marks_obtain FROM students_marks WHERE exam_id = '{$examId}' AND teacher_id = '{$teacherId}' ";
+    function getStudentsSubjectMarks($examId, $studentId) {
+        $qry = "SELECT id FROM students_marks WHERE exam_id = '{$examId}' AND student_id = '{$studentId}' ";
         $result = $this->select($qry);
-        if ($result != NULL) {
-            return $result;
+
+        $qry1 = "SELECT * FROM students_marks_details WHERE students_marks_id = '{$result[0]['id']}' AND exam_id = '{$examId}' ";
+        $result1 = $this->select($qry1);
+
+        if ($result1 != NULL) {
+            return $result1;
         } else {
             return false;
         }

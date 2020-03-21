@@ -21,12 +21,7 @@
        $output = $teacher->getTeacherClassName($_SESSION['userId']);
        $get_class_id = $output[0]['classId'];
        $get_section_id = $output[0]['sectionId'];
-       $get_total_class_students = $teacher->getTotalClassStudents($get_class_id,$get_section_id); 
-   
-       $get_students_subject_marks = $student_marks->getStudentsSubjectMarks($examId, $teacher_id);
-           if(!empty($get_students_subject_marks)) {
-               //echo "<pre>";print_r($get_students_subject_marks);die;
-           }   
+       $get_total_class_students = $teacher->getTotalClassStudents($get_class_id,$get_section_id);    
        } else {
            header('Location: ' . BASE_ROOT.'select-exam-list.php');
        }
@@ -126,12 +121,15 @@
                      
                      <?php if(!empty($get_total_class_students)) { ?>
 
-                        <?php foreach ($get_total_class_students as $key_student => $value_student) { ?> 
+                        <?php foreach ($get_total_class_students as $key_student => $value_student) { 
+
+                            $getStudMarks = $student_marks->getStudentsSubjectMarks($examId,$value_student['id']);
+                          ?> 
                             <tr>
                                 <th><?php echo $value_student['first_name'].' '.$value_student['last_name'] ?></th>
                                 <?php if(!empty($resultExam['fetch_details'])) {
                                     foreach ($resultExam['fetch_details'] as $key_sub => $value_sub) { ?>
-                                <th><input type="text" name="marks_obtain[<?php echo $value_student['id']; ?>][<?php echo $value_sub['exam_name'];?>]"></th>
+                                <th><input type="text" name="marks_obtain[<?php echo $value_student['id']; ?>][<?php echo $value_sub['exam_name'];?>]" value="<?php echo $getStudMarks[$key_sub]['marks_obtain']; ?>"></th>
                                 <?php } } ?>
                             </tr>
                             <?php } } ?>

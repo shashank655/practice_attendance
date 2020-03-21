@@ -321,3 +321,6 @@ CREATE TABLE `up_global`.`transportation_fees` ( `id` INT(11) NOT NULL AUTO_INCR
 CREATE TABLE `up_global`.`exam_list_details` ( `id` INT(11) NULL AUTO_INCREMENT , `exam_list_id` INT(11) NOT NULL , `exam_name` INT(11) NOT NULL , `date_of_exam` VARCHAR(200) NOT NULL , `time_of_exam` VARCHAR(200) NOT NULL , `createdDate` TIMESTAMP NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 
 exam_list
+session_terms
+session_terms_details
+ALTER TABLE `students` ADD `transportation_taken` VARCHAR(50) NULL AFTER `roll_number`, ADD `transportation_id` INT(11) NULL AFTER `transportation_taken`;

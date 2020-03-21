@@ -49,20 +49,19 @@ $menus = [
             'Manage Exam List' => [
                 'to' => 'exams-list.php',
                 'related' => ['add-exams.php']
-            ]    
-            // ],
-            // 'Add Term' => [
-            //     'to' => 'add-session-term.php',
-            //     'related' => ['add-session-term.php']
-            // ],
-            // 'Edit Term' => [
-            //     'to' => 'exams-list.php',
-            //     'related' => ['add-exams.php']
-            // ],
-            // 'Report Card' => [
-            //     'to' => 'exams-list.php',
-            //     'related' => ['add-exams.php']
-            // ]
+            ],
+            'Add Term' => [
+                'to' => 'session-terms-list.php',
+                'related' => ['session-terms-list.php']
+            ],
+            'Edit Term' => [
+                'to' => 'edit-session-terms.php',
+                'related' => ['edit-session-terms.php']
+            ],
+            'Report Card' => [
+                'to' => 'final-report-student.php',
+                'related' => ['final-report-student.php']
+            ]
         ]
     ],
     'Examination' => [

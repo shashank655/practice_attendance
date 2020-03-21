@@ -25,12 +25,16 @@ $menus = [
             'Add Student' => [
                 'to' => 'add-student.php'
             ],
-            'Upload Student CSV' => [
+            'Upload Student Data' => [
                 'to' => 'upload-student-csv.php'
             ],
-            'Search Students' => [
+            'All Students' => [
                 'to' => 'all-students.php',
                 'related' => ['student-profile.php']
+            ],
+            'Deleted Students' => [
+                'to' => 'deleted-student.php',
+                'related' => ['deleted-student.php']
             ]
         ]
     ],
@@ -235,7 +239,7 @@ $menus =  array_map(function ($menu) {
     <div class="sidebar-inner slimscroll">
         <div id="sidebar-menu" class="sidebar-menu">
             <ul>
-                <li class="menu-title">Main</li>
+                <li class="menu-title"><?php echo date('d-M-Y , H:i:s'); ?></li>
                 <?php foreach ($menus as $text => $menu) : ?>
                     <?php
                     $class_names = [];

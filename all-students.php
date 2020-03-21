@@ -45,6 +45,7 @@ require_once 'includes/sidebar.php';
                         <a href="#" class="btn btn-primary btn-rounded float-right" data-toggle="modal" data-target="#student_csv_report"><i class="fa fa-plus"></i> Download CSV Report</a>
                         <div class="view-icons">
                             <a href="all-students.php" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+                            <a href="upload-student-csv.php" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
                         </div>
                     </div>
                 </div>
@@ -108,7 +109,7 @@ require_once 'includes/sidebar.php';
                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a class="dropdown-item" href="add-student.php?studentId=<?php echo $value[0]; ?>"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" val="<?php echo $value[0]; ?>" href="#" id="delTeacher"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                    <a class="dropdown-item" href="employee/process/processAddStudent.php?type=delete&studentId=<?php echo $value[0]; ?>" id="delTeacher"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                 </div>
                             </div>
                             <?php } ?>

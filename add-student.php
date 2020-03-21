@@ -54,7 +54,7 @@
                         <div class="row">
                            <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                               <div class="form-group custom-mt-form-group">
-                                 <input type="text"  placeholder="First Name" name="first_name" value="<?php
+                                 <input type="text"  placeholder="*First Name" name="first_name" value="<?php
                                     if (isset($result[0]['first_name']))
                                       	echo htmlspecialchars($result[0]['first_name']);
                                     ?>"/>
@@ -62,7 +62,7 @@
                               </div>
                               <div class="form-group custom-mt-form-group">
                                  <select id="gender" name="gender">
-                                    <option selected="" value="" disabled="">Select Gender</option>
+                                    <option selected="" value="" disabled="">*Select Gender</option>
                                     <option <?php if($result[0]['gender'] == 'male'){echo 'selected'; } ?> value="male">Male</option>
                                     <option <?php if($result[0]['gender'] == 'female'){echo 'selected'; } ?> value="female">Female</option>
                                  </select>
@@ -77,7 +77,7 @@
                               </div>
                               <div class="form-group custom-mt-form-group">
                                  <select id="class_id" name="class_id" onchange="getSections(this.value);">
-                                    <option value='' disabled="" selected="">Select Class</option>
+                                    <option value='' disabled="" selected="">*Select Class</option>
                                     <?php for ($i=0 ; $i < count($resultClasses); $i++) : ?>
                                     <option <?php if (isset($result[0]['class_id'])) { if ($result[0]['class_id']==$resultClasses[$i]['id']) { echo 'selected'; } } ?> value="<?php echo $resultClasses[$i][ 'id']; ?>"><?php echo $resultClasses[$i][ 'class_name']; ?></option>
                                     <?php endfor; ?>	
@@ -86,7 +86,7 @@
                               </div>
                               <div class="form-group custom-mt-form-group">
                                  <select name="section_id" id="section_id">
-                                    <option value='' disabled="" selected="">Select Section</option>
+                                    <option value='' disabled="" selected="">*Select Section</option>
                                  </select>
                                  <i class="bar"></i>
                               </div>
@@ -100,7 +100,7 @@
                            </div>
                            <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                               <div class="form-group custom-mt-form-group">
-                                 <input type="text"  name="last_name" placeholder="Lastname" value="<?php
+                                 <input type="text"  name="last_name" placeholder="*Last Name" value="<?php
                                     if (isset($result[0]['last_name']))
                                       	echo htmlspecialchars($result[0]['last_name']);
                                     ?>">
@@ -114,7 +114,7 @@
                                  <i class="bar"></i>
                               </div>
                               <div class="form-group custom-mt-form-group">
-                                 <input type="text"  name="admission_no" placeholder="Admission No" value="<?php
+                                 <input type="text"  name="admission_no" placeholder="*Admission No" value="<?php
                                     if (isset($result[0]['admission_no']))
                                       	echo htmlspecialchars($result[0]['admission_no']);
                                     ?>"/>
@@ -241,8 +241,8 @@
                                        <i class="bar"></i>
                                     </div>
                                     <div class="form-group">
-                                       <textarea id="message" class="form__field" placeholder="Premanent Address" name="permanent_address"><?php if (isset($result[0][ 'permanent_address'])) echo $result[0][ 'permanent_address']; ?></textarea>
-                                       <label for="message" class="form-label">Premanent Address</label>
+                                       <textarea id="message" class="form__field" placeholder="Permanent Address" name="permanent_address"><?php if (isset($result[0][ 'permanent_address'])) echo $result[0][ 'permanent_address']; ?></textarea>
+                                       <label for="message" class="form-label">Permanent Address</label>
                                     </div>
                                  </div>
                               </div>

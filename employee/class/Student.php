@@ -125,7 +125,7 @@ class Student extends MySQLCN {
     }
 
     function DeleteStudent($sId) {
-        $qry = "DELETE FROM `students` WHERE id = '{$sId}'";
+        $qry = "UPDATE `students` set delete_student = '1' WHERE id = '{$sId}'";
         $res = $this->deleteData($qry);
         if ($res) {
             return true;
@@ -148,7 +148,8 @@ class Student extends MySQLCN {
         if(!empty($get_section_id)) {
             $sWhere.=" and students.section_id = '$get_section_id'";
         }
-                
+            $sWhere.=" and delete_student='0'";
+
         $fetchList = "SELECT * FROM `students` left join classes_name on students.class_id=classes_name.id left join sections on students.section_id=sections.id $sWhere order by `first_name` asc limit 100";
         $fetch_list = $this->select($fetchList);
         //echo "<pre>";print_r($fetch_list);die;
@@ -169,6 +170,12 @@ class Student extends MySQLCN {
         }
         return [];
     }
+
+    function getDeletedStudentsListing() {
+            $fetchList = "SELECT * FROM `students` join classes_name on students.class_id=classes_name.id join sections on students.section_id=sections.id where delete_student='1' order by `first_name` asc";
+            $fetch_list = $this->select($fetchList);
+            return $fetch_list;
+        }
 
     function getStudentsLists() {
         $fetchList = "SELECT * FROM `students` join classes_name on students.class_id=classes_name.id join sections on students.section_id=sections.id order by `first_name` asc";

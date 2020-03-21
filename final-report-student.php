@@ -10,6 +10,21 @@
    require_once 'includes/header.php'; 
    require_once 'includes/sidebar.php';
    ?>
+     <style type="text/css" media="screen">
+
+.report-card .table-bordered td,.report-card .table-bordered th{
+  border-color: #000;
+}
+.report-card .report-table{
+  text-align: center;
+}
+.report-card .report-table td:nth-of-type(1){
+  text-align: left
+}
+.report-card .report-table .topHead{
+  background-color: #87B2E7
+}
+   </style>
 <div class="page-wrapper">
    <!-- content -->
    <div class="content container-fluid">
@@ -27,7 +42,7 @@
          </div>
       </div>
       <div class="row">
-         <div class="report-card">
+         <div class="report-card w-100">
   <div class="table-responsive">
     <table class="table table-bordered mb-3">
       <thead>
@@ -63,7 +78,7 @@
       <tbody>
         <tr>
           <td>English Communnicative</td>
-          <td>7</td>
+          <td><input type="text" class="border-0" name=""></td>
           <td>4</td>
           <td>3</td>
           <td>70</td>

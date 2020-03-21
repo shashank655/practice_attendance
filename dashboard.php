@@ -39,6 +39,7 @@ require_once 'includes/sidebar.php';
 <?php } ?>
             <div class="content container-fluid">
                <div class="row">
+               <?php if( ($_SESSION['user_role'] == '1')) { ?>
                     <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                         <div class="dash-widget dash-widget5">
                             <span class="dash-widget-icon bg-primary"><i class="fa fa-users" aria-hidden="true"></i></span>
@@ -48,6 +49,20 @@ require_once 'includes/sidebar.php';
                             </div>
                         </div>
                     </div>
+                <?php } ?>
+                
+                <?php if( ($_SESSION['user_role'] == '2')) { ?>
+                    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                        <div class="dash-widget dash-widget5">
+                            <span class="dash-widget-icon bg-primary"><i class="fa fa-users" aria-hidden="true"></i></span>
+                            <div class="dash-widget-info">
+                                <h3>Today's Homework</h3>
+                                <span>Today's Homework</span>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+
                     <?php if( ($_SESSION['user_role'] == '1')) { ?>
                      <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                         <div class="dash-widget dash-widget5">

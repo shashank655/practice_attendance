@@ -27,9 +27,11 @@ if ($data['type'] == 'Add') {
         $_SESSION['success'] = false;
         header('Location: ' . BASE_ROOT.'add-student.php');
     }    
-} else if ($_POST['type'] == 'delete' && $_POST['studentId'] != NULL) {
-    $res = $student->DeleteStudent($_POST['studentId']);
-    echo "Student Deleted Sucessfully.";
+} else if ($data['type'] == 'delete' && $data['studentId'] != NULL) {
+    $res = $student->DeleteStudent($data['studentId']);
+    $_SESSION['Msg'] = "Student Deleted successfully!";
+    $_SESSION['success'] = false;
+    header('Location: ' . BASE_ROOT.'all-students.php');
 } else if ($_POST['type'] == 'getSection' && $_POST['classID'] != NULL ){
     $common_function = new CommonFunction();
     $sectionData = $common_function->getSectionList($_POST['classID']);

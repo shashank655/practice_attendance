@@ -215,7 +215,7 @@ require_once 'includes/sidebar.php';
 		  	</div>
 		  	<div class="col-md-6">
   				<div class="form-group">
-  				<input type="text" class="form-control" name="current_address" placeholder="Current address/ Office address" value="<?php
+  				<input type="text" class="form-control" name="current_address" placeholder="Current address" value="<?php
 					if (isset($result[0]['current_address']))
 						echo htmlspecialchars($result[0]['current_address']);
 					?>"/>
@@ -246,7 +246,7 @@ require_once 'includes/sidebar.php';
 			  	</div>
 		  	</div>
 		  	<div class="col-md-6">
-  				<div class="form-group"><input type="text" class="form-control" name="name_date_tc_issued" placeholder="Number and date of T.C. issued by previous school with status of result" value="<?php
+  				<div class="form-group"><input type="text" class="form-control" name="name_date_tc_issued" placeholder="Previous TC number" value="<?php
 					if (isset($result[0]['name_date_tc_issued']))
 						echo htmlspecialchars($result[0]['name_date_tc_issued']);
 					?>"/>
@@ -262,7 +262,7 @@ require_once 'includes/sidebar.php';
 		  	</div>
 		  	<div class="col-md-6">
   				<div class="form-group">
-  				<input type="text" class="form-control" name="previous_school_board_name" placeholder="If the previous schools was not affliated with CBSE, specify name of the board" value="<?php
+  				<input type="text" class="form-control" name="previous_school_board_name" placeholder="Specify school board name" value="<?php
 					if (isset($result[0]['previous_school_board_name']))
 						echo htmlspecialchars($result[0]['previous_school_board_name']);
 					?>"/>
@@ -290,7 +290,7 @@ require_once 'includes/sidebar.php';
 		  	</div>
 			<div class="col-md-6">
 				<div class="form-group">
-				<input type="text" class="form-control" name="tc_attached_status" placeholder="Wether the transfer certificate is attached: Yes/No" value="<?php
+				<input type="text" class="form-control" name="tc_attached_status" placeholder="TC attached? : Yes/No" value="<?php
 					if (isset($result[0]['tc_attached_status']))
 						echo htmlspecialchars($result[0]['tc_attached_status']);
 					?>"/>

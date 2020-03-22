@@ -88,13 +88,13 @@ require_once 'includes/sidebar.php';
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
-                        <label>Date From</label>
+                        <label>Due Date From</label>
                         <input type="text" name="date_from" class="form-control datetimepicker required" required value="<?= $search->date_from ? $accounts->date('d-m-Y', $search->date_from) : ''; ?>">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
-                        <label>Date To</label>
+                        <label>Due Date To</label>
                         <input type="text" name="date_to" class="form-control datetimepicker required" required value="<?= $search->date_to ? $accounts->date('d-m-Y', $search->date_to) : ''; ?>">
                     </div>
                 </div>
@@ -119,10 +119,10 @@ require_once 'includes/sidebar.php';
                                     <th>#</th>
                                     <th>Admission No</th>
                                     <th>Student Name</th>
-                                    <th>Fee Amount</th>
+                                    <th>Total Amount</th>
                                     <th>Fee Paid</th>
-                                    <th>Fee Due</th>
-                                    <th>Fee Due Date</th>
+                                    <th>Balance</th>
+                                    <th>Balance Date</th>
                                     <th>Invoice</th>
                                     <th>Action</th>
                                 </tr>
@@ -202,12 +202,6 @@ require_once 'includes/sidebar.php';
         (function($) {
             var sections = <?= ($sections->success && $sections->count) ? json_encode($sections->results) : '[]'; ?>;
 
-            <?php if ($search->class_id) : ?>
-                setTimeout(() => {
-                    $('[name="class_id"]').trigger('change');
-                }, 1000);
-            <?php endif; ?>
-
             $(document).on('change', '[name="class_id"]', function(event) {
                 var $sectionEl = $('[name="section_id"]');
                 $sectionEl.find('option:not(:first-child)').remove();
@@ -221,6 +215,10 @@ require_once 'includes/sidebar.php';
                     }
                 }
             });
+
+            <?php if ($search->class_id) : ?>
+                $('[name="class_id"]').trigger('change');
+            <?php endif; ?>
 
             $('#filter-monthly-fee-list').submit(function(e) {
                 $(this).find('select,input').map(function(i, element) {

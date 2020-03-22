@@ -7,19 +7,19 @@ $accounts = new Accounts();
 
 $id = isset($_GET['id']) ? intval($_GET['id']) : null;
 if (isset($_POST['action']) && $_POST['action'] == 'add-edit-fee-head') {
-    $result = $accounts->addEditFeeHead($_POST, $id);
-    $accounts->redirect(BASE_ROOT . 'fee-head.php');
+    $result = $accounts->addEditMonthlyFeeHead($_POST, $id);
+    $accounts->redirect(BASE_ROOT . 'monthly-fee-head.php');
 }
 
 if ($id) {
-    $fee_head = $accounts->getFeeHead($id);
+    $fee_head = $accounts->getMonthlyFeeHead($id);
 } else {
     $fee_head = new Optional();
 }
 
 $classes = $accounts->getClasses();
 $sections = $accounts->getSections();
-$fee_heads = $accounts->getFeeHeads();
+$fee_heads = $accounts->getMonthlyFeeHeads();
 
 $class_results = [];
 foreach ($classes->results as $class) {
@@ -151,7 +151,7 @@ require_once 'includes/sidebar.php';
                                     <td><?= $_fee_head->type; ?></td>
                                     <td><?= $_fee_head->amount; ?></td>
                                     <td class="text-center">
-                                        <a href="fee-head.php?id=<?= $_fee_head->id; ?>" class="text-dark">
+                                        <a href="monthly-fee-head.php?id=<?= $_fee_head->id; ?>" class="text-dark">
                                             <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
                                         </a>
                                     </td>
@@ -193,9 +193,9 @@ require_once 'includes/sidebar.php';
             $('[name="class_id"]').trigger('change');
         <?php endif; ?>
         <?php if ($fee_head->section_id) : ?>
-        setTimeout(function () {
-            $('[name="section_id"]').val('<?= $fee_head->section_id; ?>');
-        }, 100);
+            setTimeout(function() {
+                $('[name="section_id"]').val('<?= $fee_head->section_id; ?>');
+            }, 100);
         <?php endif; ?>
     }(jQuery))
 </script>

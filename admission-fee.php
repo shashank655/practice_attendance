@@ -118,10 +118,10 @@ require_once 'includes/sidebar.php';
                                     <th>#</th>
                                     <th>Admission No</th>
                                     <th>Student Name</th>
-                                    <th>Fee Amount</th>
+                                    <th>Total Amount</th>
                                     <th>Fee Paid</th>
-                                    <th>Fee Due</th>
-                                    <th>Fee Due Date</th>
+                                    <th>Balance</th>
+                                    <th>Balance Date</th>
                                     <th>Invoice</th>
                                     <th>Action</th>
                                 </tr>

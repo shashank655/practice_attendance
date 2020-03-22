@@ -1,207 +1,9 @@
 <?php
 
-if (!defined('DEBUG')) define('DEBUG', false);
+require_once __DIR__ . '/Database.php';
 
-class Accounts
+class Accounts extends Databse
 {
-    protected $mysqli;
-
-    public function __construct()
-    {
-        $this->mysqli = $this->connect();
-    }
-
-    protected function throwException(Throwable $th)
-    {
-        if (DEBUG) throw $th;
-        $this->setAlert('danger', $th->getMessage());
-    }
-
-    public function alert()
-    {
-        if (!isset($_SESSION['alert'])) {
-            return null;
-        }
-        $alert = $_SESSION['alert'];
-        unset($_SESSION['alert']);
-        return $alert;
-    }
-
-    public function setAlert($type, $message = null)
-    {
-        if (is_null($message)) {
-            $message = $type;
-            $type = 'success';
-        }
-        $_SESSION['alert'] = compact('type', 'message');
-    }
-
-    public function date($format, $string = null)
-    {
-        if (is_null($string)) {
-            $string = $format;
-            $format = 'Y-m-d';
-        }
-        return date($format, strtotime(str_replace('/', '-', $string)));
-    }
-
-    public function redirect($path)
-    {
-        die("<script type=\"text/javascript\">window.location.href = '{$path}'</script>");
-    }
-
-    protected function connect()
-    {
-        if ($this->mysqli instanceof mysqli) return $this->mysqli;
-
-        $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-
-        if ($mysqli->connect_errno) {
-            throw new Exception("Failed to connect to MySQL: {$mysqli->connect_error}", 500);
-        }
-
-        return $mysqli;
-    }
-
-    protected function isAssociativeArray(array $array): bool
-    {
-        return array_keys($array) !== range(0, count($array) - 1);
-    }
-
-    protected function arrayOnly($array, $keys)
-    {
-        return array_intersect_key($array, array_flip((array) $keys));
-    }
-
-    protected function mapPlaceholderMark(array $array): array
-    {
-        return array_map(function ($key) {
-            return "{$key} = ?";
-        }, $array);
-    }
-
-    protected function getTypes(array $values): string
-    {
-        return implode(array_map(function ($value) {
-            if ('integer' == gettype($value)) return 'i';
-            if ('double' == gettype($value)) return 'd';
-            if ('string' == gettype($value)) return 's';
-
-            return 'b';
-        }, $values));
-    }
-
-    protected function wrapIfNotArray($value): array
-    {
-        return is_array($value) ? $value : [$value];
-    }
-
-    protected function prepareExecute(string $query, array $values)
-    {
-        $return = new stdClass;
-
-        if ($return->success = $stmt = $this->mysqli->prepare($query)) {
-            if ($values) $stmt->bind_param($this->getTypes($values), ...$values);
-            if ($return->success = $stmt->execute()) {
-
-                if (strpos($query, 'SELECT') === 0) {
-                    $result = $stmt->get_result();
-
-                    $return->results = [];
-                    $return->count = $result->num_rows;
-
-                    while ($row = $result->fetch_object()) {
-                        array_push($return->results, $row);
-                    }
-                }
-
-                if (strpos($query, 'INSERT') === 0) {
-                    $return->insert_id = $stmt->insert_id;
-                }
-
-                if (strpos($query, 'UPDATE') === 0) {
-                    $return->affected_rows = $stmt->affected_rows;
-                }
-            } else {
-                throw new Exception($stmt->error);
-            }
-        } else {
-            throw new Exception($this->mysqli->error);
-        }
-
-        return $return;
-    }
-
-    protected function select(string $table, $columns = '*', array $where = [], array $extra = [])
-    {
-        $values = [];
-
-        if (is_array($columns)) {
-            if (0 == count($columns)) throw new InvalidArgumentException('The columns must have at least 1 items.');
-
-            if ($this->isAssociativeArray($columns)) throw new InvalidArgumentException('The columns must be a sequential array.');
-
-            $columns = implode(', ', $columns);
-        }
-
-        if (0 < count($where)) {
-            if (!$this->isAssociativeArray($where)) throw new InvalidArgumentException('The where must be a associative array.');
-
-            $values = array_merge($values, array_values($where));
-            $where = implode(' AND ', $this->mapPlaceholderMark(array_keys($where)));
-        }
-
-        $limit = null;
-        if (array_key_exists('limit', $extra)) {
-            $limit = implode(', ', $this->wrapIfNotArray($extra['limit']));
-        }
-
-        $query = "SELECT {$columns} FROM {$table}";
-        if ($where) $query .= " WHERE {$where}";
-        if ($limit) $query .= " LIMIT {$limit}";
-
-        return $this->prepareExecute($query, $values);
-    }
-
-    protected function insert(string $table, array $data = [])
-    {
-        if (!$this->isAssociativeArray($data)) throw new InvalidArgumentException('The data must be a associative array.');
-
-        $columns = implode(', ', array_keys($data));
-        $placeholders = implode(', ', array_fill(0, count($data), '?'));
-
-        $query = "INSERT INTO {$table} ({$columns}) VALUES ({$placeholders})";
-        return $this->prepareExecute($query, array_values($data));
-    }
-
-    protected function update(string $table, array $data = [], array $where)
-    {
-        if (!$this->isAssociativeArray($data)) throw new InvalidArgumentException('The data must be a associative array.');
-
-        if (!$this->isAssociativeArray($where)) throw new InvalidArgumentException('The where must be a associative array.');
-
-        $values = array_merge(array_values($data), array_values($where));
-
-        $columns = implode(', ', $this->mapPlaceholderMark(array_keys($data)));
-        $where = implode(' AND ', $this->mapPlaceholderMark(array_keys($where)));
-
-        $query = "UPDATE {$table} SET {$columns} WHERE {$where}";
-        return $this->prepareExecute($query, $values);
-    }
-
-    protected function delete(string $table, array $where = [])
-    {
-        $values = array_values($where);
-
-        if (0 == count($where)) throw new InvalidArgumentException('The where must have at least 1 items.');
-        if (!$this->isAssociativeArray($where)) throw new InvalidArgumentException('The where must be a associative array.');
-
-        $where = implode(' AND ', $this->mapPlaceholderMark(array_keys($where)));
-
-        $query = "DELETE FROM {$table} WHERE {$where}";
-        return $this->prepareExecute($query, $values);
-    }
-
     public function notFound($message = null)
     {
         if (!$message) $message = '<h1>Not Found</h1><p>The requested URL was not found on this server.</p>';
@@ -221,18 +23,78 @@ class Accounts
         $fee_head = $this->select('fee_heads', '*', compact('id'));
         if (!$fee_head->success || !$fee_head->count) $this->notFound();
 
-        $fee_head = $fee_head->results[0];
-        $fee_head_sections = $this->select('fee_head_sections', '*', ['fee_head_id' => $id]);
-        $fee_head->sections = $fee_head_sections->results;
-
-        return $fee_head;
+        return $fee_head->results[0];
     }
 
-    public function getFeeHeadFeesTypes($id)
+    public function getClassSectionFeeHead($class_id, $section_id)
     {
-        $get_fees_type = $this->select('fees_head_fees_type', '*', ['fee_head_id' => $id]);
-        // if (!$get_fees_type->success || !$get_fees_type->count) $this->notFound();
-        return $get_fees_type;
+        $fee_head = $this->select('fee_heads', '*', compact('class_id', 'section_id'));
+        if ($fee_head->success && $fee_head->count) {
+            return $fee_head->results[0];
+        }
+
+        return null;
+    }
+
+    public function addEditFeeHead($request, $id = null)
+    {
+        try {
+            $data = $this->arrayOnly($request, ['class_id', 'section_id', 'title', 'type', 'amount']);
+            if (is_null($id)) {
+                $result = $this->insert('fee_heads', $data);
+                $this->setAlert('Fee Head added successfully.');
+                $id = $result->insert_id;
+            } else {
+                $result = $this->update('fee_heads', $data, compact('id'));
+                $this->setAlert('Fee Head updated successfully.');
+            }
+
+            return $result;
+        } catch (\Throwable $th) {
+            return $this->throwException($th);
+        }
+    }
+
+    public function getMonthlyFeeHeads()
+    {
+        return $this->select('monthly_fee_heads');
+    }
+
+    public function getMonthlyFeeHead($id)
+    {
+        $fee_head = $this->select('monthly_fee_heads', '*', compact('id'));
+        if (!$fee_head->success || !$fee_head->count) $this->notFound();
+
+        return $fee_head->results[0];
+    }
+
+    public function getClassSectionMonthlyFeeHead($class_id, $section_id)
+    {
+        $fee_head = $this->select('monthly_fee_heads', '*', compact('class_id', 'section_id'));
+        if ($fee_head->success && $fee_head->count) {
+            return $fee_head->results[0];
+        }
+
+        return null;
+    }
+
+    public function addEditMonthlyFeeHead($request, $id = null)
+    {
+        try {
+            $data = $this->arrayOnly($request, ['class_id', 'section_id', 'title', 'type', 'amount']);
+            if (is_null($id)) {
+                $result = $this->insert('monthly_fee_heads', $data);
+                $this->setAlert('Fee Head added successfully.');
+                $id = $result->insert_id;
+            } else {
+                $result = $this->update('monthly_fee_heads', $data, compact('id'));
+                $this->setAlert('Fee Head updated successfully.');
+            }
+
+            return $result;
+        } catch (\Throwable $th) {
+            return $this->throwException($th);
+        }
     }
 
     public function getTransportationFees()
@@ -246,46 +108,6 @@ class Accounts
         if (!$transportation_fee->success || !$transportation_fee->count) $this->notFound();
 
         return $transportation_fee->results[0];
-    }
-
-    public function addEditFeeHead($request, $id = null)
-    {
-        try {
-            $data = $this->arrayOnly($request, 'title');
-            if (is_null($id)) {
-                $result = $this->insert('fee_heads', $data);
-                $this->setAlert('Fee Head added successfully.');
-                $id = $result->insert_id;
-            } else {
-                $result = $this->update('fee_heads', $data, compact('id'));
-                $this->setAlert('Fee Head updated successfully.');
-            }
-
-            $fee_head_id = $id;
-            $this->delete('fee_head_sections', compact('fee_head_id'));
-
-            if (isset($request['section_id']) && is_array($request['section_id'])) {
-                foreach ($request['section_id'] as $class_id => $sections) {
-                    foreach ($sections as $section_id => $value) {
-                        $this->insert('fee_head_sections', compact('fee_head_id', 'class_id', 'section_id'));
-                    }
-                }
-            }
-
-            $this->delete('fees_head_fees_type', compact('fee_head_id'));
-
-            if (isset($request['addFeesTypes']) && is_array($request['addFeesTypes'])) {
-                foreach ($request['addFeesTypes'] as $key => $value) {
-                    $fees_type = $request['addFeesTypes'][$key];
-                    $amount = $request['addAmount'][$key];
-                    $this->insert('fees_head_fees_type', compact('fee_head_id', 'fees_type', 'amount'));
-                }
-            }
-
-            return $result;
-        } catch (\Throwable $th) {
-            return $this->throwException($th);
-        }
     }
 
     public function addTransportationFees($request)
@@ -321,6 +143,16 @@ class Accounts
         return $discount->results[0];
     }
 
+    public function getFeeHeadDiscount($id)
+    {
+        $discount = $this->select('discounts', '*', compact('id'));
+        if ($discount->success && $discount->count) {
+            return $discount->results[0];
+        }
+
+        return null;
+    }
+
     public function addEditDiscount($request, $id = null)
     {
         try {
@@ -350,6 +182,16 @@ class Accounts
         if (!$discount->success || !$discount->count) $this->notFound();
 
         return $discount->results[0];
+    }
+
+    public function getMonthlyFeeHeadDiscount($fee_head_id)
+    {
+        $discount = $this->select('monthly_discounts', '*', compact('fee_head_id'));
+        if ($discount->success && $discount->count) {
+            return $discount->results[0];
+        }
+
+        return null;
     }
 
     public function addEditMonthlyDiscount($request, $id = null)
@@ -525,10 +367,8 @@ class Accounts
     {
         try {
             $data = [
-                'student_roll_no' => $request['student_roll_no'],
-                'date' => $this->date(urldecode($_GET['date'])),
-                'fee_head_id' => urldecode($_GET['fee_head_id']),
                 'admission_no' => urldecode($_GET['admission_no']),
+                'date' => $this->date('now'),
                 'due_date' => $this->date('+15 days')
             ];
 
@@ -556,7 +396,6 @@ class Accounts
                         'admission_fee_id',
                         'fee_type',
                         'fee_amount',
-                        'discount_head_id',
                         'discount_type',
                         'discount_amount',
                         'total'
@@ -691,10 +530,8 @@ class Accounts
     {
         try {
             $data = [
-                'student_roll_no' => $request['student_roll_no'],
-                'date' => $this->date(urldecode($_GET['date'])),
-                'fee_head_id' => urldecode($_GET['fee_head_id']),
                 'admission_no' => urldecode($_GET['admission_no']),
+                'date' => $this->date('now'),
                 'date_from' => $this->date($request['date_from']),
                 'date_to' => $this->date($request['date_to']),
                 'due_date' => $this->date('+15 days')
@@ -715,7 +552,6 @@ class Accounts
             if (isset($request['fee_type']) && is_array($request['fee_type'])) {
                 foreach ($request['fee_type'] as $key => $fee_type) {
                     $fee_amount = floatval($request['fee_amount'][$key]);
-                    $discount_head_id = $request['discount_head'][$key] ?: null;
                     $discount_type = $request['discount_type'][$key] ?: null;
                     $discount_amount = floatval($request['discount_amount'][$key] ?: 0);
                     $total = floatval($fee_amount - $discount_amount);
@@ -724,7 +560,6 @@ class Accounts
                         'monthly_fee_id',
                         'fee_type',
                         'fee_amount',
-                        'discount_head_id',
                         'discount_type',
                         'discount_amount',
                         'total'
@@ -742,12 +577,10 @@ class Accounts
     {
         try {
             $monthly_fee = $this->getMonthlyFee($monthly_fee_id);
-            $student = $this->getStudentByAdmssionNo($monthly_fee->admission_no);
 
             $data = $this->arrayOnly($request, ['fee_paid', 'payment_date', 'payment_method', 'comment', 'payment_information']);
 
             $data['monthly_fee_id'] = $monthly_fee->id;
-            $data['student_id'] = $student->id;
             $data['payment_date'] = $this->date($request['payment_date']);
             $data['billing_address'] = serialize($request['billing']);
 
@@ -912,9 +745,40 @@ class Accounts
         return $this->select('sections');
     }
 
-    public function getStudentListByClassAndSection($request)
+    public function getCollectFeeStudentListing($request)
     {
-        $where = $this->arrayOnly($request, ['class_id', 'section_id']);
-        return $this->select('students', '*', $where);
+        $where = [];
+        $values = [];
+
+        if (isset($request['class_id'])) {
+            $where[] = 's.class_id = ?';
+            $values[] = $request['class_id'];
+        }
+
+        if (isset($request['section_id'])) {
+            $where[] = 's.section_id = ?';
+            $values[] = $request['section_id'];
+        }
+
+        if (isset($request['admission_no'])) {
+            $where[] = 's.admission_no = ?';
+            $values[] = $request['admission_no'];
+        }
+
+        if (isset($request['student_name'])) {
+            $where[] = "CONCAT(s.first_name,' ', s.first_name) LIKE ?";
+            $values[] = "%{$request['student_name']}%";
+        }
+
+        $query = "SELECT
+            s.*,
+            (SELECT amount FROM monthly_fee_heads as mfh WHERE mfh.class_id = s.class_id AND mfh.section_id = s.section_id) AS total_fee
+            FROM students AS s";
+
+        if (count($where)) {
+            $query .= ' WHERE ' . implode(' AND ', $where);
+        }
+
+        return $this->prepareExecute($query, $values);
     }
 }

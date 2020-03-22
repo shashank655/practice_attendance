@@ -5,42 +5,58 @@ require_once 'employee/class/Optional.php';
 
 $accounts = new Accounts();
 
+$student = new Optional();
+$monthly_fee = new Optional();
+$monthly_fee_items = new Optional();
+
 if ($id = isset($_GET['id']) ? intval($_GET['id']) : null) {
     $monthly_fee = $accounts->getMonthlyFee($id);
     $monthly_fee_items = $accounts->getMonthlyFeeItems($id);
-    $_GET['date'] = $accounts->date('d/m/Y', $monthly_fee->date);
-    $_GET['fee_head_id'] = $monthly_fee->fee_head_id;
     $_GET['admission_no'] = $monthly_fee->admission_no;
-} else {
-    $monthly_fee = new Optional();
-    $monthly_fee_items = new Optional();
-    $monthly_fee_items->count = 0;
-    $monthly_fee_items->success = true;
-    $monthly_fee_items->results = [];
-    if ($fee_head_id = (isset($_GET['fee_head_id']) ? urldecode($_GET['fee_head_id']) : null)) {
-        $fee_head_fees = $accounts->getFeeHeadFeesTypes($fee_head_id);
-        if ($fee_head_fees->success && $fee_head_fees->count > 0) {
-            foreach ($fee_head_fees->results as $fee_head_fee) {
-                $monthly_fee_items->results[] = (object) [
-                    'fee_type' => $fee_head_fee->fees_type,
-                    'fee_amount' => $fee_head_fee->amount,
-                    'total' => $fee_head_fee->amount
-                ];
+}
+
+if ($admission_no = isset($_GET['admission_no']) ? urldecode($_GET['admission_no']) : null) {
+    $student = $accounts->getStudentByAdmssionNo($admission_no);
+}
+
+if (is_null($id)) {
+    $monthly_fee_items_results = [];
+    if ($fee_head = $accounts->getClassSectionMonthlyFeeHead($student->class_id, $student->section_id)) {
+        $discount = $accounts->getMonthlyFeeHeadDiscount($fee_head->id);
+        $discount_amount = 0;
+
+        if (isset($_GET['discount_type']) && $_GET['discount_value']) {
+            if ($_GET['discount_type'] == 'fixed') {
+                $discount_amount = intval($_GET['discount_value']);
+            }
+
+            if ($_GET['discount_type'] == 'percentage') {
+                $discount_amount = $fee_head->amount * intval($_GET['discount_value']) / 100;
             }
         }
+
+        $monthly_fee_items_results[] = (object) [
+            'fee_type' => $fee_head->type,
+            'fee_amount' => $fee_head->amount,
+            'discount_type' => $discount_amount ? $_GET['discount_type'] : null,
+            'discount_amount' => $discount_amount,
+            'total' => $fee_head->amount - $discount_amount
+        ];
     }
 
     if ($transportation_fee_id = (isset($_GET['transportation_fee_id']) ? urldecode($_GET['transportation_fee_id']) : null)) {
-        if (!isset($monthly_fee_items->results)) $monthly_fee_items->results = [];
         $transportation_fee = $accounts->getTransportationFee($transportation_fee_id);
-        $monthly_fee_items->results[] = (object) [
+        $monthly_fee_items_results[] = (object) [
             'fee_type' => 'Transportation Fee (' . $transportation_fee->routeName . ')',
             'fee_amount' => $transportation_fee->addAmount,
             'total' => $transportation_fee->addAmount
         ];
     }
 
-    $monthly_fee_items->count = count($monthly_fee_items->results);
+    $monthly_fee_items = new Optional([
+        'success' => true, 'count' => count($monthly_fee_items_results), 'results' => $monthly_fee_items_results
+    ]);
+    unset($monthly_fee_items_results);
 }
 
 if (is_null($id) && isset($_GET['date_from'])) $monthly_fee->date_from = $accounts->date('d/m/Y', $_GET['date_from']);
@@ -57,17 +73,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'add-edit-monthly-fee') {
     $accounts->redirect(BASE_ROOT . 'monthly-fee.php');
 }
 
-$date = isset($_GET['date']) ? urldecode($_GET['date']) : null;
-$fee_head_id = isset($_GET['fee_head_id']) ? urldecode($_GET['fee_head_id']) : null;
-$admission_no = isset($_GET['admission_no']) ? urldecode($_GET['admission_no']) : null;
-
-if ($fee_head_id && $date && $admission_no) {
-    $student = $accounts->getStudentByAdmssionNo($admission_no);
-} else {
-    $student = new Optional();
-}
-
-$search_form = new Optional(compact('fee_head_id', 'date', 'admission_no'));
+$search_form = new Optional(compact('admission_no'));
 
 $fee_heads_results = [];
 $fee_heads = $accounts->getFeeHeads();
@@ -107,52 +113,39 @@ require_once 'includes/sidebar.php';
                 </button>
             </div>
         <?php endif; ?>
-        <div class="card-box">
-            <?php if (is_null($id)) : ?>
-                <form class="form-validate" action="" method="get" novalidate="novalidate">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Fee Head</label>
-                                <select name="fee_head_id" id="fee_head_id" class="form-control required">
-                                    <?php if ($fee_heads->count) : ?>
-                                        <option value="">Select fee head</option>
-                                        <?php foreach ($fee_heads->results as $fee_head) : ?>
-                                            <option value="<?= $fee_head->id; ?>" <?= ($search_form->fee_head_id == $fee_head->id) ? 'selected' : ''; ?>><?= $fee_head->title; ?></option>
-                                        <?php endforeach; ?>
-                                    <?php else : ?>
-                                        <option value="">No fee head</option>
-                                    <?php endif; ?>
-                                </select>
-                            </div>
+        <?php if (is_null($id)) : ?>
+            <form class="form-validate" action="" method="get" novalidate="novalidate">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Admission No</label>
+                            <input type="text" name="admission_no" class="form-control required" value="<?= $search_form->admission_no; ?>" required>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Date</label>
-                                <input type="text" name="date" class="form-control datetimepicker required" value="<?= $search_form->date; ?>" required>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Admission No</label>
-                                <input type="text" name="admission_no" class="form-control required" value="<?= $search_form->admission_no; ?>" required>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Action</label>
-                                <div class="d-flex">
-                                    <button class="btn btn-light w-100 shadow-none" type="submit">Search</button>
-                                </div>
+                    </div>
+                    <div class="col-md-8">
+
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Action</label>
+                            <div class="d-flex">
+                                <button class="btn btn-light w-100 shadow-none" type="submit">Search</button>
                             </div>
                         </div>
                     </div>
-                </form>
-                <hr>
-            <?php endif; ?>
+                </div>
+            </form>
+        <?php endif; ?>
+        <div class="card-box">
             <form class="form-validate" action="" name="add-fee-form" id="add-fee-form" method="post" novalidate="novalidate">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Admission No</label>
+                            <input type="text" name="student_admission_no" class="form-control required" value="<?= $student->admission_no; ?>" required readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label>Student Name</label>
                             <input type="text" name="student_name" class="form-control required" value="<?= $student->first_name . ' ' . $student->last_name; ?>" required readonly>
@@ -185,7 +178,7 @@ require_once 'includes/sidebar.php';
                 </div>
 
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label>Fee Type</label>
                             <input type="text" id="fee_type" class="form-control">
@@ -195,21 +188,6 @@ require_once 'includes/sidebar.php';
                         <div class="form-group">
                             <label>Fee Amount</label>
                             <input type="text" id="fee_amount" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label>Discount Head</label>
-                            <select id="discount_head" class="form-control">
-                                <?php if ($discount_heads->count) : ?>
-                                    <option value="">Select fee head</option>
-                                    <?php foreach ($discount_heads->results as $discount_head) : ?>
-                                        <option value="<?= $discount_head->id; ?>"><?= $discount_head->discount_head; ?></option>
-                                    <?php endforeach; ?>
-                                <?php else : ?>
-                                    <option value="">No fee head</option>
-                                <?php endif; ?>
-                            </select>
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -245,7 +223,7 @@ require_once 'includes/sidebar.php';
                                 <th>#</th>
                                 <th>Fee Type</th>
                                 <th>Amount</th>
-                                <th>Discount Head</th>
+                                <th>Discount Type</th>
                                 <th>Discount Amount</th>
                                 <th>Total</th>
                                 <th>Action</th>
@@ -316,8 +294,8 @@ require_once 'includes/sidebar.php';
 
         var blank_row_tr = '<tr id="blank_row_tr"><td class="text-center" colspan="7">No data here</td></tr>';
 
-        function new_row_template(fee_type, fee_amount, discount_head_id, discount_type, discount_amount, total) {
-            if (discount_amount == 0) discount_head_id = discount_type = '';
+        function new_row_template(fee_type, fee_amount, discount_type, discount_amount, total) {
+            if (discount_amount == 0) discount_type = '';
             return '<tr>' +
                 '<td class="counter"></td>' +
                 '<td class="fee_type_td">' +
@@ -328,9 +306,8 @@ require_once 'includes/sidebar.php';
                 '<span>' + fee_amount + '</span>' +
                 '<input type="hidden" name="fee_amount[]" value="' + fee_amount + '" />' +
                 '</td>' +
-                '<td class="discount_head_td">' +
-                '<span>' + (discounts_results[discount_head_id] || '-') + '</span>' +
-                '<input type="hidden" name="discount_head[]" value="' + discount_head_id + '" />' +
+                '<td class="discount_type">' +
+                '<span>' + (discount_type || '-') + '</span>' +
                 '<input type="hidden" name="discount_type[]" value="' + discount_type + '" />' +
                 '</td>' +
                 '<td class="discount_amount_td">' +
@@ -380,13 +357,11 @@ require_once 'includes/sidebar.php';
 
             var $fee_type = $('#fee_type');
             var $fee_amount = $('#fee_amount');
-            var $discount_head = $('#discount_head');
             var $discount_type = $('#discount_type');
             var $discount_value = $('#discount_value');
 
             var fee_type = $fee_type.val();
             var fee_amount = $fee_amount.val();
-            var discount_head = $discount_head.val();
             var discount_type = $discount_type.val();
             var discount_value = $discount_value.val();
 
@@ -402,11 +377,6 @@ require_once 'includes/sidebar.php';
 
             if (isNaN(fee_amount) || 0 >= fee_amount) {
                 alert('Fee amount should be a number and greater than zero.');
-                return;
-            }
-
-            if (discount_value && !discount_head) {
-                alert('Select discount head');
                 return;
             }
 
@@ -445,12 +415,11 @@ require_once 'includes/sidebar.php';
             }
 
             $('#add-fee-table tbody').append(
-                new_row_template(fee_type, fee_amount, discount_head, discount_type, discount_amount, total)
+                new_row_template(fee_type, fee_amount, discount_type, discount_amount, total)
             );
 
             $fee_type.val('');
             $fee_amount.val('');
-            $discount_head.val('');
             $discount_type.val('');
             $discount_value.val('');
             calculate_total();
@@ -482,7 +451,7 @@ require_once 'includes/sidebar.php';
             for (var i = 0; i < monthly_fee_items.length; i++) {
                 var fee_item = monthly_fee_items[i];
                 $('#add-fee-table tbody').append(
-                    new_row_template(fee_item.fee_type, fee_item.fee_amount, fee_item.discount_head_id, fee_item.discount_type, fee_item.discount_amount, fee_item.total)
+                    new_row_template(fee_item.fee_type, fee_item.fee_amount, fee_item.discount_type, fee_item.discount_amount, fee_item.total)
                 );
             }
             calculate_total();

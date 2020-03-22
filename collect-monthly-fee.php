@@ -56,8 +56,8 @@ require_once 'includes/sidebar.php';
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label>Student Roll No</label>
-                            <input type="text" name="student_roll_no" class="form-control required" value="<?= $student->roll_number; ?>" required readonly>
+                            <label>Admission No</label>
+                            <input type="text" name="student_roll_no" class="form-control required" value="<?= $student->admission_no; ?>" required readonly>
                         </div>
                     </div>
                     <div class="col-md-3">

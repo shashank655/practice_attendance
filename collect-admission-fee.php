@@ -56,8 +56,8 @@ require_once 'includes/sidebar.php';
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label>Student Roll No</label>
-                            <input type="text" name="student_roll_no" class="form-control required" value="<?= $admission->roll_number; ?>" required readonly>
+                            <label>Admission No</label>
+                            <input type="text" name="student_roll_no" class="form-control required" value="<?= $admission->admission_no; ?>" required readonly>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -272,7 +272,7 @@ require_once 'includes/sidebar.php';
             return validate_fee_paid_amount();
         });
 
-        $(document).on('submit', '#collect-admission-fee-form', function (e) {
+        $(document).on('submit', '#collect-admission-fee-form', function(e) {
             return validate_fee_paid_amount();
         });
     }(jQuery));

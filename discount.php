@@ -101,7 +101,7 @@ require_once 'includes/sidebar.php';
                             <label>Action</label>
                             <div class="d-flex">
                                 <button class="btn btn-dark w-50 shadow-none mr-2" type="submit" name="action" value="add-edit-discount"><?= $id ? 'Update' : 'Add'; ?></button>
-                                <a class="btn btn-light w-50 shadow-none" href="discount.php">Cancle</a>
+                                <a class="btn btn-light w-50 shadow-none" href="discount.php">Cancel</a>
                             </div>
                         </div>
                     </div>

@@ -144,6 +144,7 @@
                 new_row_template(row.title, row.amount, row.discount_type, row.discount_value, row.discount, row.total)
             );
         }
+        calculate_total();
     }
 }(jQuery));
 

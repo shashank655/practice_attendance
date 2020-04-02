@@ -9,11 +9,6 @@ if ($admission_fee_payments->success && $admission_fee_payments->count) {
     }
 }
 
-$discounts_results = [];
-$discount_heads = $accounts->getDiscounts();
-foreach ($discount_heads->results as $discount) {
-    $discounts_results[$discount->id] = $discount->discount_head;
-}
 $base_path_or_url = $is_download ? DOCUMENT_ROOT : BASE_ROOT;
 ?>
 <?php if ($is_download) : ?>
@@ -36,6 +31,7 @@ $base_path_or_url = $is_download ? DOCUMENT_ROOT : BASE_ROOT;
                 font-size: 80%;
                 line-height: 1.2;
             }
+
             h4 {
                 font-size: 80%;
             }
@@ -92,10 +88,10 @@ $base_path_or_url = $is_download ? DOCUMENT_ROOT : BASE_ROOT;
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Fee Type</th>
+                        <th>Fee Title</th>
                         <th>Amount</th>
-                        <th>Discount Head</th>
-                        <th>Discount Amount</th>
+                        <th>Discount Type</th>
+                        <th>Discount</th>
                         <th>Total</th>
                     </tr>
                 </thead>
@@ -104,10 +100,10 @@ $base_path_or_url = $is_download ? DOCUMENT_ROOT : BASE_ROOT;
                         <?php foreach ($admission_fee_items->results as $key => $admission_fee_item) : ?>
                             <tr>
                                 <td><?= $key + 1; ?></td>
-                                <td><?= $admission_fee_item->fee_type; ?></td>
-                                <td><?= $admission_fee_item->fee_amount; ?></td>
-                                <td><?= isset($discounts_results[$admission_fee_item->discount_head_id]) ? $discounts_results[$admission_fee_item->discount_head_id] : '-'; ?></td>
-                                <td><?= $admission_fee_item->discount_amount; ?></td>
+                                <td><?= $admission_fee_item->title; ?></td>
+                                <td><?= $admission_fee_item->amount; ?></td>
+                                <td><?= $admission_fee_item->discount_type ?: '-'; ?></td>
+                                <td><?= $admission_fee_item->discount; ?></td>
                                 <td><?= $admission_fee_item->total; ?></td>
                             </tr>
                         <?php endforeach; ?>
@@ -138,9 +134,9 @@ $base_path_or_url = $is_download ? DOCUMENT_ROOT : BASE_ROOT;
                         <?php foreach ($admission_fee_payments->results as $key => $admission_fee_payment) : ?>
                             <tr>
                                 <td><?= $key + 1; ?></td>
-                                <td><?= $admission_fee_payment->payment_date ? date('d/m/Y', strtotime($admission_fee_payment->payment_date)) : '-'; ?></td>
-                                <td><?= $admission_fee_payment->payment_method; ?></td>
-                                <td><?= $admission_fee_payment->fee_paid; ?></td>
+                                <td><?= $admission_fee_payment->date ? date('d/m/Y', strtotime($admission_fee_payment->payment_date)) : '-'; ?></td>
+                                <td><?= $admission_fee_payment->method; ?></td>
+                                <td><?= $admission_fee_payment->amount; ?></td>
                             </tr>
                         <?php endforeach; ?>
                     <?php else : ?>

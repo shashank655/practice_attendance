@@ -59,14 +59,14 @@ require_once 'includes/sidebar.php';
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>Class</label>
-                        <select name="class_id" id="class_id" class="form-control">
+                        <select name="class_id" id="class_id" class="form-control update-section-on-change" data-section-ref="#section_id">
                             <?php if ($classes->count) : ?>
                                 <option value="">Select class</option>
                                 <?php foreach ($classes->results as $class) : ?>
                                     <option value="<?= $class->id; ?>" <?= ($search->class_id == $class->id) ? 'selected' : ''; ?>><?= $class->class_name; ?></option>
                                 <?php endforeach; ?>
                             <?php else : ?>
-                                <option value="">No fee head</option>
+                                <option value="">No class</option>
                             <?php endif; ?>
                         </select>
                     </div>
@@ -74,8 +74,8 @@ require_once 'includes/sidebar.php';
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>Section</label>
-                        <select name="section_id" id="section_id" class="form-control">
-                            <option value=""><?= $sections->count ? 'Select Section' : 'No fee head'; ?></option>
+                        <select name="section_id" id="section_id" class="form-control" data-value="<?= $search->section_id; ?>">
+                            <option value=""><?= $sections->count ? 'Select Section' : 'No Section'; ?></option>
                         </select>
                     </div>
                 </div>
@@ -127,19 +127,24 @@ require_once 'includes/sidebar.php';
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $total_amount = $total_fee_paid = 0; ?>
                                 <?php if ($admission_fees->success && $admission_fees->count) : ?>
                                     <?php foreach ($admission_fees->results as $key => $admission_fee) : ?>
+                                        <?php
+                                        $total_amount += $admission_fee->total;
+                                        $total_fee_paid += $admission_fee->payment;
+                                        ?>
                                         <tr>
                                             <td><?= $admission_fee->admission_id; ?></td>
                                             <td><?= $key + 1; ?></td>
                                             <td><?= $admission_fee->admission_no; ?></td>
                                             <td><?= $admission_fee->student_name; ?></td>
-                                            <td><?= $admission_fee->total_fee_amount; ?></td>
-                                            <td><?= $admission_fee->total_fee_payment ?: 0; ?></td>
-                                            <td><?= ($admission_fee->total_fee_amount - $admission_fee->total_fee_payment) ?: 0; ?></td>
+                                            <td><?= $admission_fee->total; ?></td>
+                                            <td><?= $admission_fee->payment ?: 0; ?></td>
+                                            <td><?= ($admission_fee->total - $admission_fee->payment) ?: 0; ?></td>
                                             <td><?= $admission_fee->due_date ? date('d/m/Y', strtotime($admission_fee->due_date)) : '-'; ?></td>
                                             <td>
-                                                <?php if ($admission_fee->total_fee_payment) : ?>
+                                                <?php if ($admission_fee->payment) : ?>
                                                     <a href="admission-fee-receipt.php?id=<?= $admission_fee->id; ?>" class="text-dark p-2">
                                                         <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i>
                                                     </a>
@@ -149,12 +154,12 @@ require_once 'includes/sidebar.php';
                                             </td>
                                             <td>
                                                 <div class="d-flex justify-content-center">
-                                                    <?php if ($admission_fee->total_fee_payment == 0) : ?>
+                                                    <?php if ($admission_fee->payment == 0) : ?>
                                                         <a href="add-edit-admission-fee.php?id=<?= $admission_fee->id; ?>" class="text-dark p-2">
                                                             <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
                                                         </a>
                                                     <?php endif; ?>
-                                                    <?php if ($admission_fee->total_fee_amount > $admission_fee->total_fee_payment) : ?>
+                                                    <?php if ($admission_fee->total > $admission_fee->payment) : ?>
                                                         <a href="collect-admission-fee.php?id=<?= $admission_fee->id; ?>" class="text-dark p-2">
                                                             <i class="fa fa-rupee fa-lg" aria-hidden="true"></i>
                                                         </a>
@@ -171,6 +176,15 @@ require_once 'includes/sidebar.php';
                                     </tr>
                                 <?php endif; ?>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4" class="text-center">Total</td>
+                                    <td><?= $total_amount; ?></td>
+                                    <td><?= $total_fee_paid; ?></td>
+                                    <td><?= $total_amount - $total_fee_paid; ?></td>
+                                    <td colspan="4" class="text-center">-</td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -196,28 +210,31 @@ require_once 'includes/sidebar.php';
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
     <script type="text/javascript">
         (function($) {
-            var sections = <?= ($sections->success && $sections->count) ? json_encode($sections->results) : '[]'; ?>;
+            var sections = <?= json_encode($sections->results ?: []); ?>;
 
-            <?php if ($search->class_id) : ?>
-                setTimeout(() => {
-                    $('[name="class_id"]').trigger('change');
-                }, 1000);
-            <?php endif; ?>
+            function getClassSections(class_id) {
+                return sections.filter(function(section) {
+                    return section.class_id == class_id;
+                });
+            }
 
-            $(document).on('change', '[name="class_id"]', function(event) {
-                var $sectionEl = $('[name="section_id"]');
-                $sectionEl.find('option:not(:first-child)').remove();
-                for (let index = 0; index < sections.length; index++) {
-                    if (sections[index]['class_id'] == $(this).val()) {
-                        $sectionEl.append(
-                            $('<option />', {
-                                value: sections[index]['id'],
-                                selected: ('<?= $search->section_id ?>' == sections[index]['id']),
-                            }).text(sections[index]['section_name'])
-                        );
+            $(document).on('change', '.update-section-on-change', function() {
+                var $sectionEl = $($(this).data('sectionRef'));
+                var sections = getClassSections($(this).val());
+                if ($sectionEl.length && sections.length) {
+                    var section_id = $sectionEl.data('value');
+                    $sectionEl.find('option:not(:first-child)').remove();
+                    for (var i = 0; i < sections.length; i++) {
+                        var attrs = {
+                            value: sections[i]['id']
+                        };
+                        if (attrs.value == section_id) attrs.selected = true;
+                        $sectionEl.append($('<option />', attrs).text(sections[i]['section_name']));
                     }
                 }
             });
+
+            $('.update-section-on-change').trigger('change');
 
             $('#filter-admission-fee-list').submit(function(e) {
                 $(this).find('select,input').map(function(i, element) {

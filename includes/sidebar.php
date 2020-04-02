@@ -144,15 +144,11 @@ $menus = [
         'childs' => [
             'Fees Head' => [
                 'to' => 'fee-head.php',
-                'related' => ['monthly-fee-head.php']
+                'related' => ['add-edit-fee-head.php']
             ],
             'Transportation' => [
                 'to' => 'fees-transportation.php',
                 'related' => ['fees-transportation.php']
-            ],
-            'Discounts' => [
-                'to' => 'discount.php',
-                'related' => ['monthly-discount.php']
             ],
             'Collect Fees' => [
                 'to' => 'collect-fee.php'

@@ -8,29 +8,16 @@ $accounts = new Accounts();
 
 $classes = $accounts->getClasses();
 $sections = $accounts->getSections();
-$transportation_fees = $accounts->getTransportationFees();
 
-if ((!isset($_GET['class_id']) || empty($_GET['class_id'])) && $classes->count > 0) {
-    $_GET['class_id'] = $classes->results[0]->id;
-}
-
-if ((!isset($_GET['section_id']) || empty($_GET['section_id'])) && $sections->count > 0) {
-    $_GET['section_id'] = $sections->results[0]->id;
+if (!isset($_GET) || count($_GET) == 0) {
+    if ($sections->success && $sections->count) {
+        $_GET['class_id'] = $sections->results[0]->class_id;
+        $_GET['section_id'] = $sections->results[0]->id;
+    }
 }
 
 $search = new Optional($_GET);
 $students = $accounts->getCollectFeeStudentListing($_GET);
-$fee_head = $accounts->getClassSectionFeeHead($search->class_id, $search->section_id);
-
-$classes_results = [];
-foreach ($classes->results as $classe) {
-    $classes_results[$classe->id] = $classe->class_name;
-}
-
-$sections_results = [];
-foreach ($sections->results as $section) {
-    $sections_results[$section->id] = $section->section_name;
-}
 ?>
 
 <?php
@@ -66,14 +53,14 @@ require_once 'includes/sidebar.php';
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>Class</label>
-                        <select name="class_id" id="class_id" class="form-control">
+                        <select name="class_id" id="class_id" class="form-control update-section-on-change" data-section-ref="#section_id">
                             <?php if ($classes->count) : ?>
                                 <option value="">Select class</option>
                                 <?php foreach ($classes->results as $class) : ?>
                                     <option value="<?= $class->id; ?>" <?= ($search->class_id == $class->id) ? 'selected' : ''; ?>><?= $class->class_name; ?></option>
                                 <?php endforeach; ?>
                             <?php else : ?>
-                                <option value="">No fee head</option>
+                                <option value="">No class</option>
                             <?php endif; ?>
                         </select>
                     </div>
@@ -81,8 +68,8 @@ require_once 'includes/sidebar.php';
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>Section</label>
-                        <select name="section_id" id="section_id" class="form-control">
-                            <option value=""><?= $sections->count ? 'Select Section' : 'No fee head'; ?></option>
+                        <select name="section_id" id="section_id" class="form-control" data-value="<?= $search->section_id; ?>">
+                            <option value=""><?= $sections->count ? 'Select Section' : 'No section'; ?></option>
                         </select>
                     </div>
                 </div>
@@ -121,8 +108,6 @@ require_once 'includes/sidebar.php';
                                     <th>Class/Section</th>
                                     <th>Total Fee</th>
                                     <th>Transportation Route</th>
-                                    <th>Discount Type</th>
-                                    <th>Discount Amount</th>
                                     <th>From Date</th>
                                     <th>To Date</th>
                                     <th>Action</th>
@@ -138,32 +123,12 @@ require_once 'includes/sidebar.php';
                                                 <?= $student->admission_no; ?>
                                             </td>
                                             <td><?= $student->first_name . ' ' . $student->last_name; ?></td>
-                                            <td><?= $classes_results[$student->class_id] . '/' . $sections_results[$student->section_id]; ?></td>
+                                            <td><?= $student->class_name . '/' . $student->section_name; ?></td>
                                             <td>
-                                                <?= $student->total_fee ?? '-'; ?>
-                                                <input type="hidden" name="fee_amount[]" value="<?= $student->total_fee ?? 0; ?>">
+                                                <?= $student->total ?? '-'; ?>
                                             </td>
                                             <td>
-                                                <select name="transportation_fee_id[]" class="form-control form-control-sm required">
-                                                    <?php if ($transportation_fees->count) : ?>
-                                                        <option value="">Select fee head</option>
-                                                        <?php foreach ($transportation_fees->results as $transportation_fee) : ?>
-                                                            <option value="<?= $transportation_fee->id; ?>"><?= $transportation_fee->routeName; ?></option>
-                                                        <?php endforeach; ?>
-                                                    <?php else : ?>
-                                                        <option value="">No fee head</option>
-                                                    <?php endif; ?>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select name="discount_type[]" class="form-control form-control-sm">
-                                                    <option value="">Select discount type</option>
-                                                    <option value="fixed">Fixed</option>
-                                                    <option value="percentage">Percentage</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input type="text" name="discount_value[]" class="form-control form-control-sm">
+                                                <?= $student->transportation; ?>
                                             </td>
                                             <td>
                                                 <input type="text" name="date_from[]" class="form-control form-control-sm datetimepicker required" required />
@@ -195,45 +160,33 @@ require_once 'includes/sidebar.php';
     <?php require_once 'includes/footer.php'; ?>
     <link rel="stylesheet" href="<?= BASE_ROOT; ?>assets/css/dataTables.checkboxes.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
-    <style>
-        .dt-buttons {
-            float: right !important;
-        }
-
-        #monthly-fee-list {
-            margin-top: 0 !important;
-        }
-    </style>
-
     <script type="text/javascript">
         (function($) {
-            var sections = <?= ($sections->success && $sections->count) ? json_encode($sections->results) : '[]'; ?>;
+            var sections = <?= json_encode($sections->results ?: []); ?>;
 
-            $(document).on('change', '[name="class_id"]', function(event) {
-                var $sectionEl = $('[name="section_id"]');
-                $sectionEl.find('option:not(:first-child)').remove();
-                for (let index = 0; index < sections.length; index++) {
-                    if (sections[index]['class_id'] == $(this).val()) {
-                        $sectionEl.append(
-                            $('<option />', {
-                                value: sections[index]['id']
-                            }).text(sections[index]['section_name'])
-                        );
+            function getClassSections(class_id) {
+                return sections.filter(function(section) {
+                    return section.class_id == class_id;
+                });
+            }
+
+            $(document).on('change', '.update-section-on-change', function() {
+                var $sectionEl = $($(this).data('sectionRef'));
+                var sections = getClassSections($(this).val());
+                if ($sectionEl.length && sections.length) {
+                    var section_id = $sectionEl.data('value');
+                    $sectionEl.find('option:not(:first-child)').remove();
+                    for (var i = 0; i < sections.length; i++) {
+                        var attrs = {
+                            value: sections[i]['id']
+                        };
+                        if (attrs.value == section_id) attrs.selected = true;
+                        $sectionEl.append($('<option />', attrs).text(sections[i]['section_name']));
                     }
                 }
             });
 
-            <?php if (isset($search->class_id)) : ?>
-                $('[name="class_id"]').trigger('change');
-            <?php endif; ?>
-
-            <?php if (isset($search->section_id)) : ?>
-                setTimeout(function() {
-                    $('[name="section_id"]').val('<?= $search->section_id; ?>');
-                }, 100);
-            <?php endif; ?>
-
-            $('[name="class_id"]').trigger('change');
+            $('.update-section-on-change').trigger('change');
 
             $('#filter-collet-fee-list').submit(function(e) {
                 $(this).find('select,input').map(function(i, element) {
@@ -244,24 +197,8 @@ require_once 'includes/sidebar.php';
             $(document).on('click', '.collect-fee-action', function(event) {
                 event.preventDefault();
                 var admission_no = $(this).parents('tr').find('[name="admission_no[]"]').val();
-                var fee_amount = $(this).parents('tr').find('[name="fee_amount[]"]').val();
-                var discount_type = $(this).parents('tr').find('[name="discount_type[]"]').val();
-                var discount_value = $(this).parents('tr').find('[name="discount_value[]"]').val();
-                var transportation_fee_id = $(this).parents('tr').find('[name="transportation_fee_id[]"]').val();
-
                 var date_from = $(this).parents('tr').find('[name="date_from[]"]').val();
                 var date_to = $(this).parents('tr').find('[name="date_to[]"]').val();
-
-
-                if (!transportation_fee_id) {
-                    alert('Select transportation route head.');
-                    return;
-                }
-
-                if (discount_value && !discount_type) {
-                    alert('Select discount type.');
-                    return;
-                }
 
                 if (!date_from) {
                     alert('Enter from date');
@@ -273,35 +210,10 @@ require_once 'includes/sidebar.php';
                     return;
                 }
 
-                var discount_amount = 0;
-                var total = fee_amount = parseInt(fee_amount);
-
-                if (discount_value = parseInt(discount_value)) {
-                    if (discount_type === 'fixed') {
-                        discount_amount = discount_value;
-                    }
-
-                    if (discount_type === 'percentage') {
-                        discount_amount = fee_amount * discount_value / 100;
-                    }
-
-                    total = fee_amount - discount_amount;
-                }
-
-                if (0 >= total) {
-                    alert('Discount should be less than fee amount');
-                    return;
-                }
-
                 var params = {};
                 if (admission_no) params['admission_no'] = admission_no;
-                if (transportation_fee_id) params['transportation_fee_id'] = transportation_fee_id;
                 if (date_from) params['date_from'] = date_from;
                 if (date_to) params['date_to'] = date_to;
-                if (discount_type && discount_value) {
-                    params['discount_type'] = discount_type;
-                    params['discount_value'] = discount_value;
-                }
 
                 window.location.href = encodeURI('/add-edit-monthly-fee.php?' + Object.keys(params).map(key => key + '=' + params[key]).join('&'));
             });

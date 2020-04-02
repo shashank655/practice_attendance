@@ -157,9 +157,23 @@ abstract class Databse
         }
 
         $query = "SELECT {$columns} FROM {$table}";
+
+        if (array_key_exists('join', $extra)) {
+            $joins = $this->isAssociativeArray($extra['join']) ? [$extra['join']] : $extra['join'];
+            foreach ($joins as $join) {
+                $join_table = array_key_exists('table', $join) ? $join['table'] : null;
+                $join_type = array_key_exists('type', $join) ? $join['type'] : null;
+                $join_on = array_key_exists('on', $join) ? $join['on'] : null;
+                if (!$join_table || !$join_type || !$join_on) {
+                    throw new InvalidArgumentException('Invalid join params.');
+                }
+                $query .= " {$join['type']} {$join['table']} ON ({$join['on']})";
+            }
+        }
+
         if ($where) $query .= " WHERE {$where}";
         if ($limit) $query .= " LIMIT {$limit}";
-
+        
         return $this->prepareExecute($query, $values);
     }
 

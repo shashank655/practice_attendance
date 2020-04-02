@@ -60,18 +60,18 @@ require_once 'includes/sidebar.php';
                                             <td><?= $key + 1; ?></td>
                                             <td><?= $monthly_fee->admission_no; ?></td>
                                             <td><?= $monthly_fee->student_name; ?></td>
-                                            <td><?= $monthly_fee->total_fee_amount; ?></td>
-                                            <td><?= $monthly_fee->total_fee_payment ?: 0; ?></td>
-                                            <td><?= ($monthly_fee->total_fee_amount - $monthly_fee->total_fee_payment) ?: 0; ?></td>
+                                            <td><?= $monthly_fee->amount; ?></td>
+                                            <td><?= $monthly_fee->payment ?: 0; ?></td>
+                                            <td><?= ($monthly_fee->amount - $monthly_fee->payment) ?: 0; ?></td>
                                             <td><?= $monthly_fee->due_date ? date('d/m/Y', strtotime($monthly_fee->due_date)) : '-'; ?></td>
                                             <td>
                                                 <div class="d-flex justify-content-center">
-                                                    <?php if ($monthly_fee->total_fee_amount == $monthly_fee->total_fee_payment) : ?>
+                                                    <?php if ($monthly_fee->amount == $monthly_fee->payment) : ?>
                                                         <a href="monthly-fee-receipt.php?id=<?= $monthly_fee->id; ?>" class="text-dark p-2">
                                                             <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i>
                                                         </a>
                                                     <?php endif; ?>
-                                                    <?php if ($monthly_fee->total_fee_amount > $monthly_fee->total_fee_payment) : ?>
+                                                    <?php if ($monthly_fee->amount > $monthly_fee->payment) : ?>
                                                         <a href="collect-online-fee.php?id=<?= $monthly_fee->id; ?>&type=monthly" class="text-dark p-2">
                                                             <i class="fa fa-rupee fa-lg" aria-hidden="true"></i>
                                                         </a>

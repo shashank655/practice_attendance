@@ -62,80 +62,61 @@ require_once 'includes/sidebar.php';
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label>Student Name</label>
-                            <input type="text" name="student_name" class="form-control required" value="<?= $admission->first_name . ' ' . $admission->last_name; ?>" required readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
                             <label>Class</label>
                             <input type="text" name="student_class" class="form-control required" value="<?= $admission->class_name; ?>" required readonly>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <label>Section</label>
-                            <input type="text" name="student_section" class="form-control required" value="<?= $admission->section_name; ?>" required readonly>
+                            <label>Student Name</label>
+                            <input type="text" name="student_name" class="form-control required" value="<?= $admission->first_name . ' ' . $admission->last_name; ?>" required readonly>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label>Total Amount</label>
                             <input type="text" name="total_amount" class="form-control required" value="<?= $admission_total_fee; ?>" required readonly>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                    </div>
-                    <div class="col-md-3">
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Payment Date</label>
-                            <input type="text" name="payment_date" class="form-control datetimepicker required" value="<?= date('d/m/Y', strtotime('now')); ?>" required>
-                        </div>
-                    </div>
                 </div>
-
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
-                            <label>Fee Paid</label>
-                            <input type="text" name="fee_paid" class="form-control required" required>
+                            <label>Amount</label>
+                            <input type="text" name="amount" class="form-control required" required>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label>Due Fee</label>
                             <input type="text" name="fee_due" class="form-control" readonly>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label>Due Date</label>
-                            <input type="text" name="fee_due_date" class="form-control datetimepicker" readonly>
+                            <input type="text" name="due_date" class="form-control datetimepicker" readonly>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label>Payment Mode</label>
-                            <select name="payment_method" id="payment_method" class="form-control required">
+                            <select name="method" id="method" class="form-control required">
                                 <option value="cash">Cash</option>
                                 <option value="cheque">Cheque</option>
                                 <option value="bank_transter">Bank Transter</option>
                             </select>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label>Collected By</label>
                             <input type="text" id="collected_by" class="form-control required" value="<?= $_SESSION['name']; ?>" required>
                         </div>
                     </div>
-                    <div class="col-sm-8">
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label>Comment</label>
                             <textarea name="comment" id="comment" cols="30" class="form-control required"></textarea>
@@ -218,7 +199,7 @@ require_once 'includes/sidebar.php';
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label>Payment relation Info (Optional)</label>
-                            <textarea name="payment_information" id="payment_information" cols="30" class="form-control" placeholder="Enter payment info like cheque no, transaction no if bank transter or other payment related info."></textarea>
+                            <textarea name="description" id="description" cols="30" class="form-control" placeholder="Enter payment info like cheque no, transaction no if bank transter or other payment related info."></textarea>
                         </div>
                     </div>
                 </div>
@@ -238,27 +219,27 @@ require_once 'includes/sidebar.php';
 <script type="text/javascript" src="<?= BASE_ROOT; ?>assets/js/accounts.js"></script>
 <script type="text/javascript">
     (function($) {
-        var total_fee = parseInt($('[name="total_amount"]').val());
+        var total_fee = parseFloat($('[name="total_amount"]').val());
 
         function update_due_fee() {
-            var fee_due = total_fee - parseInt($('[name="fee_paid"]').val());
+            var fee_due = total_fee - parseFloat($('[name="amount"]').val());
             if (isNaN(fee_due)) return;
             $('[name="fee_due"]').val(fee_due);
             if (fee_due > 0) {
-                $('[name="fee_due_date"]').addClass('required').removeAttr('readonly');
+                $('[name="due_date"]').addClass('required').removeAttr('readonly');
             } else {
-                $('[name="fee_due_date"]').removeClass('required').val('').attr('readonly', 'true');
+                $('[name="due_date"]').removeClass('required').val('').attr('readonly', 'true');
             }
         }
 
-        function validate_fee_paid_amount() {
-            var fee_paid = $('[name="fee_paid"]').val();
-            if (isNaN(fee_paid) || 0 >= fee_paid) {
+        function validate_amount() {
+            var amount = $('[name="amount"]').val();
+            if (isNaN(amount) || 0 >= amount) {
                 alert('Fee amount should be a number and greater than zero.');
                 return false;
             }
 
-            if (fee_paid > total_fee) {
+            if (amount > total_fee) {
                 alert('Fee amount should not be more than total fee.');
                 return false;
             }
@@ -268,12 +249,12 @@ require_once 'includes/sidebar.php';
             return true;
         }
 
-        $(document).on('blur', '[name="fee_paid"]', function() {
-            return validate_fee_paid_amount();
+        $(document).on('blur', '[name="amount"]', function() {
+            return validate_amount();
         });
 
         $(document).on('submit', '#collect-admission-fee-form', function(e) {
-            return validate_fee_paid_amount();
+            return validate_amount();
         });
     }(jQuery));
 </script>

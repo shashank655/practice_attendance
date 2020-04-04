@@ -1,184 +1,105 @@
 <?php
-   require_once 'employee/config/config.php';
-   require_once 'employee/class/Accounts.php';
-   require_once 'employee/class/Optional.php';
-   
-   $accounts = new Accounts();
-   
-   $id = isset($_GET['id']) ? intval($_GET['id']) : null;
-   
-   if (isset($_POST['action']) && $_POST['action'] == 'add-edit-fee-head') {
-       $result = $accounts->addEditFeeHead($_POST, $id);
-   
-       $redirect_path = BASE_ROOT . 'add-edit-fee-head.php?id=' . $id;
-       if ($result->success && is_null($id)) $id = $result->insert_id;
-       $accounts->redirect($redirect_path);
-   }
-   
-   if ($id) {
-       $fee_head = $accounts->getFeeHead($id);
-       $fee_head_fees_types = $accounts->getFeeHeadFeesTypes($id);
-   } else {
-       $fee_head = new Optional();
-       $fee_head->sections = [];
-   }
-   
-   $fee_head->sections_ids = array_map(function ($fee_head_section) {
-       return $fee_head_section->section_id;
-   }, $fee_head->sections);
-   
-   $classes = $accounts->getClasses();
-   $sections = $accounts->getSections();
-   
-   require_once 'includes/header.php';
-   require_once 'includes/sidebar.php';
-   ?>
-<?php $title = $id ? 'Edit Fee Head' : 'Create Fee Head'; ?>
-<div class="page-wrapper">
-   <!-- content -->
-   <div class="content container-fluid">
-      <div class="page-header">
-         <div class="row">
-            <div class="col-lg-7 col-md-12 col-sm-12 col-12">
-               <h5 class="text-uppercase"><?= $title; ?></h5>
-            </div>
-            <div class="col-lg-5 col-md-12 col-sm-12 col-12">
-               <ul class="list-inline breadcrumb float-right">
-                  <li class="list-inline-item"><a href="dashboard.php">Home</a></li>
-                  <li class="list-inline-item"><?= $title; ?></li>
-               </ul>
-            </div>
-         </div>
-      </div>
-      <?php if ($alert = $accounts->alert()) : ?>
-      <div class="alert alert-<?= $alert['type']; ?> alert-dismissible fade show" role="alert">
-         <?= $alert['message']; ?>
-         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-         <span aria-hidden="true">&times;</span>
-         </button>
-      </div>
-      <?php endif; ?>
-      <form class="form-validate" action="" method="post" novalidate="novalidate">
-         <div class="card-box mb-0">
-            <div class="card-header border-0">
-               <h4 class="card-title"><?= $title; ?></h4>
-            </div>
-            <div class="card-body">
-               <div class="form-group row">
-                  <label class="col-form-label col-md-2">Title</label>
-                  <div class="col-md-10">
-                     <input type="text" name="title" class="form-control required" value="<?= $fee_head->title; ?>" required>
-                  </div>
-               </div>
-               <?php $i=1;?>
-               <?php foreach ($fee_head_fees_types->results as $fees_types) : ?>
-               <div class="form-group row add_fees_type" id="trans-fees-<?php echo $i;?>">
-                    <label class="col-form-label col-md-2">Fees Type</label>
-                    <div class="col-md-3">
-                        <input type="text" value = "<?= $fees_types->fees_type; ?>" name="addFeesTypes[]" class="addFeesTypes form-control">
-                    </div>
-                    <label class="col-form-label">Amount</label>
-                    <div class="col-md-3">
-                        <input type="text" value = "<?= $fees_types->amount; ?>" name="addAmount[]" class="addAmount form-control">
-                    </div>
-                    <div class="col-md-3">
-                      <img title="DELETE" src="<?php echo BASE_ROOT;?>assets/img/cancel.png" onclick="javascript:deleteAddress(this.name)" style="cursor: pointer;" name="trans-fees-<?php echo $i;?>">
-                    </div>
-                </div>
-                <?php 
-                $i++;
-                endforeach; ?>
+require_once 'employee/config/config.php';
+require_once 'employee/class/Accounts.php';
+require_once 'employee/class/Optional.php';
 
-                <div id="fees-types-div">
+$accounts = new Accounts();
+
+$fee_head = $fee_head_items = new Optional();
+
+if ($id = isset($_GET['id']) ? intval($_GET['id']) : null) {
+    $fee_head = $accounts->getFeeHead($id);
+    $fee_head_items = $accounts->getFeeHeadItems($id);
+}
+
+if (isset($_POST['action']) && $_POST['action'] == 'add-edit-fee-head') {
+    $result = $accounts->addEditFeeHead($_POST, $id);
+    $accounts->redirect(BASE_ROOT . 'fee-head.php');
+}
+
+$classes = $accounts->getClasses();
+
+require_once 'includes/header.php';
+require_once 'includes/sidebar.php';
+?>
+
+<?php $title = $id ? 'Edit FeeHead Fee' : 'Add FeeHead Fee'; ?>
+<div class="page-wrapper">
+    <!-- content -->
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-lg-7 col-md-12 col-sm-12 col-12">
+                    <h5 class="text-uppercase"><?= $title; ?></h5>
                 </div>
-               <div class="controls addAnotherStop">
-                    <a href="javascript:addAnother();" >Add Fees Types</a>
+                <div class="col-lg-5 col-md-12 col-sm-12 col-12">
+                    <ul class="list-inline breadcrumb float-right">
+                        <li class="list-inline-item"><a href="dashboard.php">Home</a></li>
+                        <li class="list-inline-item"><?= $title; ?></li>
+                    </ul>
                 </div>
-               <div class="form-group row">
-                  <label class="col-form-label col-md-2">Classes</label>
-                  <div class="col-md-10">
-                     <div class="row">
-                        <?php if ($classes->success && $classes->count) : ?>
-                        <?php foreach ($classes->results as $class) : ?>
-                        <div class="col-md-4">
-                           <h4><?= $class->class_name; ?></h4>
-                           <ul class="list-group list-group-flush border-bottom ml-4 mb-4">
-                              <?php foreach ($sections->results as $section) : ?>
-                              <?php if ($class->id == $section->class_id) : ?>
-                              <li class="list-group-item p-2">
-                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="section-<?= $section->id; ?>" name="section_id[<?= $class->id; ?>][<?= $section->id; ?>]" <?= in_array($section->id, $fee_head->sections_ids) ? 'checked' : ''; ?> />
-                                    <label class="custom-control-label" for="section-<?= $section->id; ?>"><?= $section->section_name; ?></label>
-                                 </div>
-                              </li>
-                              <?php endif; ?>
-                              <?php endforeach; ?>
-                           </ul>
-                        </div>
-                        <?php endforeach; ?>
-                        <?php else : ?>
-                        <div class="col-sm-12">
-                           <span>No data here</span>
-                        </div>
-                        <?php endif; ?>
-                     </div>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-md-12">
-                     <div class="pull-right">
-                        <button class="btn btn-secondary shadow-none mr-2" type="submit" name="action" value="add-edit-fee-head">Submit</button>
-                        <a class="btn btn-secondary shadow-none" href="fee-head.php">Cancel</a>
-                     </div>
-                  </div>
-               </div>
             </div>
-         </div>
-      </form>
-   </div>
-</div>
-</div>
-<div id="clone-fees-type-div" style="display: none;" class="form-group row add_fees_type">
-                    <label class="col-form-label col-md-2">Fees Type</label>
-                    <div class="col-md-3">
-                        <input type="text" name="addFeesTypes[]" class="addFeesTypes form-control">
+        </div>
+        <?php if ($alert = $accounts->alert()) : ?>
+            <div class="alert alert-<?= $alert['type']; ?> alert-dismissible fade show" role="alert">
+                <?= $alert['message']; ?>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <?php endif; ?>
+        <div class="card-box">
+            <form class="form-validate" action="" name="add-fee-form" id="add-fee-form" method="post" novalidate="novalidate">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Fee Head Type</label>
+                            <select id="type" name="type" class="form-control required" required>
+                                <option value="monthly" <?= ($fee_head->type == 'monthly') ? 'selected' : ''; ?>>Monthly</option>
+                                <option value="admission" <?= ($fee_head->type == 'admission') ? 'selected' : ''; ?>>Admission</option>
+                            </select>
+                        </div>
                     </div>
-                    <label class="col-form-label">Amount</label>
-                    <div class="col-md-3">
-                        <input type="text" name="addAmount[]" class="addAmount form-control">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Class</label>
+                            <select id="class_id" name="class_id" class="form-control required" required>
+                                <?php if ($classes->count) : ?>
+                                    <option value="">Select class</option>
+                                    <?php foreach ($classes->results as $class) : ?>
+                                        <option value="<?= $class->id; ?>" <?= ($fee_head->class_id == $class->id) ? 'selected' : ''; ?>><?= $class->class_name; ?></option>
+                                    <?php endforeach; ?>
+                                <?php else : ?>
+                                    <option value="">No fee head</option>
+                                <?php endif; ?>
+
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-md-3">
-                      <img id="delete-icon" title="DELETE" src="<?php echo BASE_ROOT;?>assets/img/cancel.png" border="0" onclick="javascript:deleteAddress(this.name)" style="cursor: pointer;" />
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>Fee Head Title</label>
+                            <input type="text" name="title" class="form-control required" value="<?= $fee_head->title; ?>" required>
+                        </div>
                     </div>
+                </div>
+
+                <?php require_once('./fee-section.php'); ?>
+
+                <div class="row mt-2">
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button class="btn btn-secondary shadow-none mr-2" type="submit" name="action" value="add-edit-fee-head">Submit</button>
+                            <a class="btn btn-secondary shadow-none" href="fee-head.php">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 <?php require_once 'includes/footer.php'; ?>
-<script type="text/javascript" src="<?= BASE_ROOT; ?>assets/js/accounts.js"></script>
 <script type="text/javascript">
-    var sectionLength = $('.add_fees_type').length;
-    var k = (sectionLength > 0) ? sectionLength + 1 : 1;
-
-        function addAnother() {
-                var aboutAddrow = $("#clone-fees-type-div").clone().removeAttr('style'); 
-                aboutAddrow.attr("id", "trans-fees-" + k);
-
-                var feetypeBoxname = aboutAddrow.find('.addFeesTypes').attr('name', 'addFeesTypes[]');    
-                feetypeBoxname.attr('id', 'addFeesTypes' + k);
-                feetypeBoxname.attr('placeholder', 'Fees Types');
-
-                var amountBox = aboutAddrow.find('.addAmount').attr('name', 'addAmount[]');    
-                amountBox.attr('id', 'addAmount' + k);
-                amountBox.attr('placeholder', 'Amount');
-
-                var deleteicon = aboutAddrow.find('#delete-icon');
-                deleteicon.attr('id', 'newdelete' + k);
-                deleteicon.attr('name', 'trans-fees-' + k);
-
-                $("#fees-types-div").append(aboutAddrow);
-
-                k = k + 1;
-        }
-
-        function deleteAddress(deleteid) {
-            $('#' + deleteid).remove();
-        }
+    $(function() {window.fee_items = <?= json_encode($fee_head_items->results ?: []); ?>;}());
 </script>
+<script type="text/javascript" src="<?= BASE_ROOT; ?>assets/js/accounts.js"></script>

@@ -4,32 +4,27 @@ class Optional
 {
     protected $value;
 
-    public function __construct($value=null)
+    public function __construct($value = [])
     {
-        $this->value = (object) $value;
+        $this->value = $value;
     }
 
     public function __get($key)
     {
-        if (is_object($this->value)) {
-            return $this->value->{$key} ?? null;
-        }
+        return isset($this->value[$key]) ? $this->value[$key] : null;
     }
 
     public function __isset($name)
     {
-        if (is_object($this->value)) {
-            return isset($this->value->{$name});
-        }
+        return isset($this->value[$name]);
 
         return false;
     }
 
     public function __call($method, $parameters)
     {
-
-        if (is_object($this->value)) {
-            return $this->value->{$method}(...$parameters);
+        if (isset($this->value[$method])) {
+            return $this->value[$method](...$parameters);
         }
     }
 }

@@ -150,10 +150,6 @@ $menus = [
                 'to' => 'fees-transportation.php',
                 'related' => ['fees-transportation.php']
             ],
-            'Discounts' => [
-                'to' => 'discount.php',
-                'related' => ['monthly-discount.php']
-            ],
             'Collect Fees' => [
                 'to' => 'collect-fee.php'
             ],

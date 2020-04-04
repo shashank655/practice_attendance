@@ -60,18 +60,18 @@ require_once 'includes/sidebar.php';
                                             <td><?= $key + 1; ?></td>
                                             <td><?= $admission_fee->admission_no; ?></td>
                                             <td><?= $admission_fee->student_name; ?></td>
-                                            <td><?= $admission_fee->total_fee_amount; ?></td>
-                                            <td><?= $admission_fee->total_fee_payment ?: 0; ?></td>
-                                            <td><?= ($admission_fee->total_fee_amount - $admission_fee->total_fee_payment) ?: 0; ?></td>
+                                            <td><?= $admission_fee->amount; ?></td>
+                                            <td><?= $admission_fee->payment ?: 0; ?></td>
+                                            <td><?= ($admission_fee->amount - $admission_fee->payment) ?: 0; ?></td>
                                             <td><?= $admission_fee->due_date ? date('d/m/Y', strtotime($admission_fee->due_date)) : '-'; ?></td>
                                             <td>
                                                 <div class="d-flex justify-content-center">
-                                                    <?php if ($admission_fee->total_fee_amount == $admission_fee->total_fee_payment) : ?>
+                                                    <?php if ($admission_fee->amount == $admission_fee->payment) : ?>
                                                         <a href="admission-fee-receipt.php?id=<?= $admission_fee->id; ?>" class="text-dark p-2">
                                                             <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i>
                                                         </a>
                                                     <?php endif; ?>
-                                                    <?php if ($admission_fee->total_fee_amount > $admission_fee->total_fee_payment) : ?>
+                                                    <?php if ($admission_fee->amount > $admission_fee->payment) : ?>
                                                         <a href="collect-online-fee.php?id=<?= $admission_fee->id; ?>&type=admission" class="text-dark p-2">
                                                             <i class="fa fa-rupee fa-lg" aria-hidden="true"></i>
                                                         </a>

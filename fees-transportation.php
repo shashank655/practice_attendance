@@ -4,11 +4,8 @@
    $accounts = new Accounts();
 
    if (isset($_POST['action']) && $_POST['action'] == 'fees-transportation') {
-       $result = $accounts->addTransportationFees($_POST);
-   
-       $redirect_path = BASE_ROOT . 'fees-transportation.php';
-       if ($result->success && is_null($id)) $id = $result->insert_id;
-       $accounts->redirect($redirect_path);
+       $accounts->addTransportationFees($_POST);
+          $accounts->redirect(BASE_ROOT . 'fees-transportation.php');
    }
     $get_trans_fees = $accounts->getTransportationFees();
    require_once 'includes/header.php';

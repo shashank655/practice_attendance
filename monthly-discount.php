@@ -17,7 +17,7 @@ if ($id) {
     $discount = new Optional();
 }
 
-$fee_heads = $accounts->getFeeHeads();
+$fee_heads = $accounts->getMonthlyFeeHeads();
 $fee_heads_results = [];
 foreach ($fee_heads->results as $fee_head) {
     $fee_heads_results[$fee_head->id] = $fee_head->title;
@@ -101,7 +101,7 @@ require_once 'includes/sidebar.php';
                             <label>Action</label>
                             <div class="d-flex">
                                 <button class="btn btn-dark w-50 shadow-none mr-2" type="submit" name="action" value="add-edit-monthly-discount"><?= $id ? 'Update' : 'Add'; ?></button>
-                                <a class="btn btn-light w-50 shadow-none" href="monthly-discount.php">Cancle</a>
+                                <a class="btn btn-light w-50 shadow-none" href="monthly-discount.php">Cancel</a>
                             </div>
                         </div>
                     </div>

@@ -69,14 +69,8 @@ require_once 'includes/sidebar.php';
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label>Student Roll No</label>
-                            <input type="text" name="student_roll_no" class="form-control required" value="<?= $student->roll_number; ?>" required readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label>Student Name</label>
-                            <input type="text" name="student_name" class="form-control required" value="<?= $student->first_name . ' ' . $student->last_name; ?>" required readonly>
+                            <label>Admission No</label>
+                            <input type="text" name="admission_no" class="form-control required" value="<?= $student->admission_no; ?>" required readonly>
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -85,10 +79,10 @@ require_once 'includes/sidebar.php';
                             <input type="text" name="student_class" class="form-control required" value="<?= $student->class_name; ?>" required readonly>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <label>Section</label>
-                            <input type="text" name="student_section" class="form-control required" value="<?= $student->section_name; ?>" required readonly>
+                            <label>Student Name</label>
+                            <input type="text" name="student_name" class="form-control required" value="<?= $student->first_name . ' ' . $student->last_name; ?>" required readonly>
                         </div>
                     </div>
                     <div class="col-md-2">

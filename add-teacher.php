@@ -255,21 +255,6 @@ require_once 'includes/sidebar.php';
                 is_class_teacher:{
                     required:true,
                     dropdownValidation:true
-                },
-                joining_date:{
-                    required:true
-                },
-                mobile_number:{
-                    required:true
-                },
-                dob:{
-                    required:true
-                },
-                teacher_id:{
-                    required:true
-                },
-                permanent_address:{
-                    required:true
                 }
             }
         });

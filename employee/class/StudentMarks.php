@@ -47,6 +47,66 @@ class StudentMarks extends MySQLCN {
         }
     }
 
+    function getStudentsFinalMarks($editSessionId, $headId, $subjectID, $studentId) {
+        $teacher_id = $_SESSION['userId'];
+
+        $qry = "SELECT id FROM students_final_marks WHERE edit_session_term_id = '{$editSessionId}' AND student_id = '{$studentId}' AND teacher_id = '{$teacher_id}'";
+        $result = $this->select($qry);
+
+        $qry1 = "SELECT marks_obtain FROM students_final_marks_details WHERE students_final_marks_id = '{$result[0]['id']}' AND head_id = '{$headId}' AND subject_id = '{$subjectID}' ";
+        $result1 = $this->select($qry1);
+        if ($result1 != NULL) {
+            return $result1;
+        } else {
+            return false;
+        }
+    }
+
+    function getStudentsFinalCosMarks($editSessionId, $subjectID, $studentId) {
+        $teacher_id = $_SESSION['userId'];
+
+        $qry = "SELECT id FROM students_final_marks WHERE edit_session_term_id = '{$editSessionId}' AND student_id = '{$studentId}' AND teacher_id = '{$teacher_id}'";
+        $result = $this->select($qry);
+
+        $qry1 = "SELECT marks_obtain FROM students_final_marks__coScholastic_details WHERE students_final_marks_id = '{$result[0]['id']}' AND subject_id = '{$subjectID}' ";
+        $result1 = $this->select($qry1);
+        if ($result1 != NULL) {
+            return $result1;
+        } else {
+            return false;
+        }
+    }
+
+    function getStudentsFinalAttendance($editSessionId, $studentId) {
+        $teacher_id = $_SESSION['userId'];
+
+        $qry = "SELECT id FROM students_final_marks WHERE edit_session_term_id = '{$editSessionId}' AND student_id = '{$studentId}' AND teacher_id = '{$teacher_id}'";
+        $result = $this->select($qry);
+
+        $qry1 = "SELECT attendance_value FROM students_final_marks_attendance WHERE students_final_marks_id = '{$result[0]['id']}' ";
+        $result1 = $this->select($qry1);
+        if ($result1 != NULL) {
+            return $result1;
+        } else {
+            return false;
+        }
+    }
+
+    function getStudentsFinalWorkingDays($editSessionId, $studentId) {
+        $teacher_id = $_SESSION['userId'];
+
+        $qry = "SELECT id FROM students_final_marks WHERE edit_session_term_id = '{$editSessionId}' AND student_id = '{$studentId}' AND teacher_id = '{$teacher_id}'";
+        $result = $this->select($qry);
+
+        $qry1 = "SELECT working_days_value FROM students_final_marks_working_days WHERE students_final_marks_id = '{$result[0]['id']}' ";
+        $result1 = $this->select($qry1);
+        if ($result1 != NULL) {
+            return $result1;
+        } else {
+            return false;
+        }
+    }
+
     function getResultIfExist($examTermId,$get_class_id,$get_section_id,$teacher_id) {
         $qry = "SELECT id FROM students_marks WHERE exam_term_id = '{$examTermId}' AND class_id = '{$get_class_id}' AND section_id = '{$get_section_id}' AND teacher_id = '{$teacher_id}'";
         $result = $this->select($qry);
@@ -125,6 +185,65 @@ class StudentMarks extends MySQLCN {
             $studentData['message'] = 'data not found!';
         }
         return $studentData;
+    }
+
+    function addingStudentsFinalMarks($data) {
+        $teacher_id = $_SESSION['userId'];
+        $student_id = $data['student_id'];
+        foreach ($data['marks_obtain'] as $key_term_id => $value_term_id) {
+
+            $qry = "SELECT id FROM students_final_marks WHERE edit_session_term_id = '{$key_term_id}' AND student_id = '{$student_id}' AND teacher_id = '{$teacher_id}'";
+            $result = $this->select($qry);
+
+            $qryDel = "DELETE FROM `students_final_marks` WHERE id = '{$result[0]['id']}' ";
+            $this->deleteData($qryDel);
+
+            $qryDel2 = "DELETE FROM `students_final_marks_details` WHERE students_final_marks_id = '{$result[0]['id']}' ";
+            $this->deleteData($qryDel2);
+
+            $qryDel3 = "DELETE FROM `students_final_marks__coScholastic_details` WHERE students_final_marks_id = '{$result[0]['id']}' ";
+            $this->deleteData($qryDel3);
+
+            $qryDel4 = "DELETE FROM `students_final_marks_working_days` WHERE students_final_marks_id = '{$result[0]['id']}' ";
+            $this->deleteData($qryDel4);
+
+            $qryDel5 = "DELETE FROM `students_final_marks_attendance` WHERE students_final_marks_id = '{$result[0]['id']}' ";
+            $this->deleteData($qryDel5);
+
+            $qry1 = 'INSERT INTO `students_final_marks`
+              (`edit_session_term_id`,`teacher_id`,`student_id`)
+              VALUES ( "'. $key_term_id . '", "'. $teacher_id . '", "'. $student_id . '")';
+                $res1 = $this->insert($qry1);
+
+            foreach ($value_term_id as $key_head => $value_head) {
+
+                foreach ($value_head as $key_sub => $value_sub) {
+                     $qry2 = 'INSERT INTO `students_final_marks_details`
+                      (`students_final_marks_id`,`head_id`,`subject_id`,`marks_obtain`)
+                      VALUES ( "'. $res1 . '","'. $key_head . '", "'. $key_sub . '", "'. $value_sub . '")';
+                        $res2 = $this->insert($qry2);     
+                }
+            }
+
+            foreach ($data['marks_obtain_CoScholastic'][$key_term_id] as $key_sub_co => $value_sub_co) {
+                $qry_3 = 'INSERT INTO `students_final_marks__coScholastic_details`
+                          (`students_final_marks_id`,`subject_id`,`marks_obtain`)
+                    VALUES ( "'. $res1 . '", "'. $key_sub_co . '", "'. $value_sub_co . '")';
+                $res3 = $this->insert($qry_3);
+            }
+
+            $qry_4 = 'INSERT INTO `students_final_marks_attendance`
+                          (`students_final_marks_id`,`attendance_value`)
+                VALUES ( "'. $res1 . '", "'. $data['total_attendance_term'][$key_term_id] . '")';
+            $res4 = $this->insert($qry_4);
+
+
+            $qry_5 = 'INSERT INTO `students_final_marks_working_days`
+                          (`students_final_marks_id`,`working_days_value`)
+                VALUES ( "'. $res1 . '", "'. $data['total_working_term'][$key_term_id] . '")';
+            $res5 = $this->insert($qry_5);
+        }
+        return true;
     }
 }
 ?>

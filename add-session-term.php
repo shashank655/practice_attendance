@@ -59,7 +59,7 @@
                   <?php if(!empty($result)) { ?>
                   <?php foreach ($result as $key => $value) { ?>
                   <div id="trans-fees-<?php echo $i;?>" class="form-group row add_terms">
-                     <input type="hidden" name="sessionIds[]" value="<?php echo $value[4]; ?>">
+                     <input type="hidden" name="sessionIds[]" value="<?php echo $value['id']; ?>">
                      <label class="col-form-label col-md-2">Term Name</label>
                      <div class="col-md-3">
                         <input type="text" name="addTerm[]" class="form-control" value="<?php

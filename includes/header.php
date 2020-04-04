@@ -81,7 +81,7 @@ function user_has_permission($page = null)
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.jpg">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
     <title>Adhyay</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="<?php echo BASE_ROOT ?>assets/css/bootstrap.min.css">

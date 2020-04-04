@@ -31,6 +31,17 @@ if ($data['type'] == 'student_marks') {
         }
 
         echo json_encode($getData);
+} else if ($data['type'] == 'student_final_marks') {
+    $result = $student_marks->addingStudentsFinalMarks($data);
+    if ($result) {
+        $_SESSION['Msg'] = "Subject Marks added successfully!";
+        $_SESSION['success'] = true;
+        header('Location: ' . BASE_ROOT.'students-exam-list.php');
+    } else {
+        $_SESSION['Msg'] = "Something went wrong!";
+        $_SESSION['success'] = false;
+        header('Location: ' . BASE_ROOT.'students-exam-list.php');
+    } 
 } else {
     header("Location: ". BASE_ROOT.'dashboard.php');
 }

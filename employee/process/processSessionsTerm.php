@@ -33,6 +33,21 @@ if ($data['type'] == 'Add') {
         $_SESSION['success'] = false;
         header('Location: ' . BASE_ROOT.'class-section-list.php');
     }   
+} else if ($_POST['type'] == 'getSessionTerm' && $_POST['sessionID'] != NULL ){
+    $sessionData = $sessionTerms->getSessionTermList($_POST['sessionID']);
+    echo json_encode($sessionData);
+    exit;
+} else if ($_POST['type'] == 'edit-sessions-terms'){
+    $result = $sessionTerms->editSessionTerms($data);
+    if ($result) {
+        $_SESSION['Msg'] = "Terms details added successfully!";
+        $_SESSION['success'] = true;
+        header('Location: ' . BASE_ROOT.'edit-session-terms.php');
+    } else {
+        $_SESSION['Msg'] = "Something went wrong!";
+        $_SESSION['success'] = false;
+        header('Location: ' . BASE_ROOT.'edit-session-terms.php');
+    }
 } else {
     header("Location: ". BASE_ROOT);
 }

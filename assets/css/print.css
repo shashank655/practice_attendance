@@ -31,3 +31,38 @@
         -moz-appearance: none;
     }
 }
+
+/*report card print*/
+
+@page{
+    size: auto;
+    margin:  0 0 0 0;
+}
+body{
+    border: 10px solid #254769;
+    padding:20px;
+}
+.report-card-print .report-table-print{
+    text-align: center;
+}
+.report-card-print .report-table-print td,
+.report-card-print .report-table-print th{
+    background: #d7e7f7 !important;
+    -webkit-print-color-adjust: exact !important;
+}
+.report-card-print .report-table-print td:nth-of-type(1),
+.report-card-print .report-table-print th:nth-of-type(1){
+    text-align: left;
+    background: #254769 !important;
+    -webkit-print-color-adjust: exact !important;
+    color: #fff;
+}
+.report-card-print .report-table-print .topHead th{
+    background: #254769 !important;
+    color: #fff;
+    -webkit-print-color-adjust: exact !important;
+}
+.report-card-print .table-bordered td,.report-card-print .table-bordered th{
+    -webkit-print-color-adjust: exact !important;
+    border: 0.5px solid #fff !important;
+}

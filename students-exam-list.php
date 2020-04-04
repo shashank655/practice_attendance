@@ -47,6 +47,7 @@ require_once 'includes/sidebar.php';
                                         <th style="min-width:50px;">First Name</th>
                                         <th style="min-width:50px;">Last Name</th>
                                         <th style="min-width:50px;">Add Marks</th>
+                                        <th style="min-width:50px;">Final Marksheet</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -59,6 +60,11 @@ require_once 'includes/sidebar.php';
                                         <td class="">
                                             <a href="add-students-marks.php?sID=<?php echo $value[0]; ?>" class="btn btn-primary btn-sm mb-1">
                                                 Add Marks
+                                            </a>
+                                        </td>
+                                        <td class="">
+                                            <a href="final-report-student.php?sID=<?php echo $value[0]; ?>" class="btn btn-primary btn-sm mb-1">
+                                                Final Reporting
                                             </a>
                                         </td>
                                     </tr>

@@ -56,7 +56,7 @@ $menus = [
             ],
             'Add Term' => [
                 'to' => 'session-terms-list.php',
-                'related' => ['session-terms-list.php']
+                'related' => ['session-terms-list.php','add-session-term.php']
             ],
             'Edit Term' => [
                 'to' => 'edit-session-terms.php',

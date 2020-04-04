@@ -3,7 +3,7 @@ require_once 'employee/class/dbclass.php';
 require_once 'employee/config/config.php'; 
 require_once 'employee/class/SessionTerms.php';  
 $sessionTerms=new SessionTerms(); 
-$resultAllSession=$sessionTerms->getSessionTermLists(); 
+$resultAllSession=$sessionTerms->getSessionYearLists(); 
 ?>
 
 <?php 

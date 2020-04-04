@@ -2,11 +2,43 @@
    require_once 'employee/config/config.php';
    require_once 'employee/class/dbclass.php';
    require_once 'employee/class/SessionTerms.php';
+   require_once 'employee/class/Teacher.php';
+   require_once 'employee/class/Student.php';
+   require_once 'employee/class/StudentMarks.php';
+
    $sessionTerm=new SessionTerms(); 
-   $sessionId = (isset($_REQUEST['id'])) ? $_REQUEST['id'] : NULL; 
-   if ($sessionId != NULL) { 
-      $result = $sessionTerm->getSessionInfo($sessionId);
+   $teacher = new Teacher();
+   $student = new Student();
+   $student_marks = new StudentMarks();
+
+   $studentId = (isset($_REQUEST['sID'])) ? $_REQUEST['sID'] : NULL; 
+  
+   if($_POST) {
+      $studentID = (isset($_POST['studentID'])) ? $_POST['studentID'] : NULL;
+      $session_year_id = (isset($_POST['session_year_id'])) ? $_POST['session_year_id'] : NULL;  
+
+       if ($session_year_id != NULL) { 
+          if($_SESSION['user_role'] == '2') {
+             $output = $teacher->getTeacherClassName($_SESSION['userId']);
+             $get_class_id = $output[0]['classId'];
+             $get_section_id = $output[0]['sectionId']; 
+             } else {
+                 header('Location: ' . BASE_ROOT.'students-exam-list.php');
+             }
+
+        $resultTerms = $sessionTerm->getSessionTermsInfo($session_year_id , $get_class_id , $get_section_id);
+          if(!$resultTerms) {
+            header('Location: ' . BASE_ROOT.'students-exam-list.php');
+          } else {
+            $result = $student->getStudentInfo($studentID);
+          }
+        }    
+   } else {
+       header('Location: ' . BASE_ROOT.'select-session-list.php?sID='.$studentId);
    }
+
+   ?>
+   <?php 
    require_once 'includes/header.php'; 
    require_once 'includes/sidebar.php';
    ?>
@@ -41,264 +73,139 @@
             </div>
          </div>
       </div>
+      <div class="row print-button-div mb-2">
+            <div class="col-12">
+                <div class="pull-right">
+                    <a href="final-report-card-pdf.php" class="btn btn-sm btn-dark" target="_blank">Download PDF</a>
+                </div>
+            </div>
+        </div>
       <div class="row">
          <div class="report-card w-100">
   <div class="table-responsive">
+  <form id="addFinalStudentMarks" action="employee/process/processStudentsMarks.php" method="post" novalidate="novalidate">
+    <input type="hidden" name="type" value="student_final_marks" />
+    <input type="hidden" name="student_id" value="<?php echo $studentID; ?>" />
     <table class="table table-bordered mb-3">
       <thead>
         <tr>
-          <th>Student's Name : Aadhya Dabral</th>
-          <th>Class: 1st</th>
-          <th>Sec: A</th>
-          <th>Roll: </th>
+          <th>Student's Name : <?php echo $result[0]['first_name'].' '.$result[0]['last_name']?></th>
+          <th>Class: <?php echo $result[0]['class_name'];?></th>
+          <th>Sec: <?php echo $result[0]['section_name'];?></th>
+          <th>Roll: <?php echo $result[0]['roll_number'];?></th>
         </tr>
         <tr>
-          <th>Admission No: 1419</th>
-          <th>House: </th>
-          <th colspan="3">D.O.B: 6/11/12</th>
+          <th>Admission No: <?php echo $result[0]['admission_no'];?></th>
+          <th>Address: <?php echo $result[0]['permanent_address'];?></th>
+          <th colspan="3">D.O.B: <?php echo $result[0]['dob'];?></th>
         </tr>
-      </thead>      
+      </thead>     
     </table>
+    <?php if(!empty($resultTerms)) { 
+      foreach ($resultTerms['termId'] as $key => $value) {
+    ?>
     <table class="report-table table table-bordered mb-3">
       <thead>
         <tr class="topHead">
           <th>Scholastic Area:</th>
-          <th colspan="6">TERM 1st - ( 100 MARKS )</th>
+          <th colspan="6"><?php echo $value['term_name']; ?> - ( 100 MARKS )</th>
         </tr>
         <tr>
           <th>Sub Name</th>
-          <th>1st <br> U.Test <br> (10)</th>
-          <th>Note Book <br> (5)</th>
-          <th>Subject <br> Enrichment <br> (5)</th>
-          <th>Half Yearly Exam <br> (80)</th>
-          <th>Marks <br> Obtained (100)</th>
-          <th>Grade</th>
+          <?php $getTermSubjectsLists = $sessionTerm->gettingTermSubjectsLists($value['editSessionTermId']); 
+            if(!empty($getTermSubjectsLists['scholastic_heads'])) {
+              foreach ($getTermSubjectsLists['scholastic_heads'] as $key_heads => $value_heads) { ?> 
+          <th><?php echo $value_heads['headName']; ?> (<?php echo $value_heads['totalMarks']; ?>)</th>
+          <?php } } ?>
         </tr>
       </thead>  
       <tbody>
+      <?php  if(!empty($getTermSubjectsLists['scholastic_subects'])) {
+          foreach ($getTermSubjectsLists['scholastic_subects'] as $key_subjects => $value_subjects) { ?> 
         <tr>
-          <td>English Communnicative</td>
-          <td><input type="text" class="border-0" name=""></td>
-          <td>4</td>
-          <td>3</td>
-          <td>70</td>
-          <td>84.00</td>
-          <td>A2</td>
+          <td><?php echo $value_subjects['subjectName']?></td>
+          <?php if(!empty($getTermSubjectsLists['scholastic_heads'])) {
+          foreach ($getTermSubjectsLists['scholastic_heads'] as $key_head_2 => $value_heads_2) { 
+
+              $getStudMarks = $student_marks->getStudentsFinalMarks($value['editSessionTermId'] , $value_heads_2['headId'] , $value_subjects['subjectId'] , $studentID);
+          ?>  
+          <td><input type="text" value="<?php echo $getStudMarks[0]['marks_obtain']; ?>" class="border-0" name="marks_obtain[<?php echo $value['editSessionTermId']; ?>][<?php echo $value_heads_2['headId']; ?>][<?php echo $value_subjects['subjectId']; ?>]"></td>
+          <?php } } ?>
         </tr>
-        <tr>
-          <td>Hindi - A</td>  
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-        </tr>
-        <tr>
-          <td>Mathematics</td>  
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-        </tr>
-        <tr>
-          <td>EVS</td>  
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-        </tr>
-        <tr>
-          <td>Computer</td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-        </tr>
-        <tr>
-          <td>G.K</td>  
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-        </tr>
+      <?php } } ?>  
       </tbody>    
     </table>
-
-    <table class="report-table table table-bordered mb-3">
-      <thead>
-        <tr class="topHead">
-          <th>Scholastic Area:</th>
-          <th colspan="8">TERM IInd - ( 100 MARKS )</th>
-        </tr>
-        <tr>
-          <th>Subjects</th>
-          <th>IInd <br> U.Test <br> (10)</th>
-          <th>Note Book <br> (5)</th>
-          <th>Subject <br> Enrichment <br> (5)</th>
-          <th>Final <br> Exams <br> (80)</th>
-          <th>Marks <br> Obtained <br> (100)</th>
-          <th>Gr</th>
-          <th>Term <br> 1+2 <br> (100) </th>
-          <th>Gr</th>
-        </tr>
-      </thead>  
-      <tbody>
-        <tr>
-          <td>English Communnicative</td>
-          <td>7</td>
-          <td>4</td>
-          <td>3</td>
-          <td>70</td>
-          <td>84.00</td>
-          <td>A2</td>
-          <td>A2</td>
-          <td>A2</td>
-        </tr>
-        <tr>
-          <td>Hindi - A</td>  
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-        </tr>
-        <tr>
-          <td>Mathematics</td>  
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-        </tr>
-        <tr>
-          <td>EVS</td>  
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-        </tr>
-        <tr>
-          <td>Computer</td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-        </tr>
-        <tr>
-          <td>G.K</td>  
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-          <td></td> 
-        </tr>
-        <tr>
-          <td colspan="6"></td>
-          <td>Total</td>
-          <td>42</td>
-          <td>7%</td>
-        </tr>
-      </tbody>    
-    </table>
-
+    <?php } } ?>
     <table class="report-table table table-bordered mb-3">
       <thead>
         <tr class="topHead">
           <th>Co-Scholastic Area: [ on 3-point (A-C) Grade Scale]</th>
-          <th>Grade(Term I)</th>
-          <th>Grade(Term II)</th>
+          <?php 
+          if(!empty($resultTerms)){
+            foreach ($resultTerms['termId'] as $key => $value) {
+          ?>
+          <th>Grade(<?php echo $value['term_name'];?>)</th>
+          <?php } }?>
         </tr>
       </thead>  
       <tbody>
+      <?php 
+        if(!empty($resultTerms)){
+            foreach ($resultTerms['termId'] as $key_2 => $value_2) {
+              $getCoScholasticLists = $sessionTerm->gettingCoScholasticSubjectsLists($value_2['editSessionTermId']); 
+              break;
+            } } 
+        ?>
+
+        <?php foreach ($getCoScholasticLists as $key_sub => $value_sub) { ?>
         <tr>
-          <td>Work Education (on Pre-vocational Education)</td>
-          <td></td>
-          <td></td>
+          <td><?php echo $value_sub['subjectCoSName']; ?></td>
+            <?php foreach ($resultTerms['termId'] as $key_term => $value_term) {
+
+              $getStudCoSMarks = $student_marks->getStudentsFinalCosMarks($value_term['editSessionTermId'] , $value_sub['subjectId'] , $studentID);
+
+            ?>
+              <td><input type="text" value="<?php echo $getStudCoSMarks[0]['marks_obtain']; ?>" class="border-0" name="marks_obtain_CoScholastic[<?php echo $value_term['editSessionTermId']; ?>][<?php echo $value_sub['subjectId']; ?>]"></td>
+            <?php } ?>
         </tr>
-        <tr>
-          <td>Art Education</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Craft</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Music / Dance</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Health & Physical Education</td>
-          <td></td>
-          <td></td>
-        </tr>
+        <?php } ?>
       </tbody>    
     </table>
-
-    <table class="report-table table table-bordered mb-3">
-      <thead>
-        <tr class="topHead">
-          <th>Discipline Term- I & II [ on 3-point (A-C) Grade Scale]</th>
-          <th>Grade(Term I)</th>
-          <th>Grade(Term II)</th>
-        </tr>
-      </thead>  
-      <tbody>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-      </tbody>    
-    </table>
-
     <table class="report-table table table-bordered mb-3">
       <thead>
         <tr class="topHead">
           <th></th>
-          <th>Term I</th>
-          <th>Term II</th>
+          <?php 
+          if(!empty($resultTerms)){
+            foreach ($resultTerms['termId'] as $key => $value) {
+          ?>
+          <th><?php echo $value['term_name'];?></th>
+          <?php } }?>
         </tr>
       </thead>  
       <tbody>
         <tr>
           <td>Total Attendance</td>
-          <td></td>
-          <td></td>
+          <?php 
+            if(!empty($resultTerms)){
+            foreach ($resultTerms['termId'] as $key_2 => $value_2) { 
+
+              $getStudAtten = $student_marks->getStudentsFinalAttendance($value_2['editSessionTermId'], $studentID);
+            ?>
+            <td><input type="text" value="<?php echo $getStudAtten[0]['attendance_value']; ?>"  class="border-0" name="total_attendance_term[<?php echo $value_2['editSessionTermId']; ?>]"></td>
+          <?php  } } ?>
         </tr>
         <tr>
           <td>Total Working Days</td>
-          <td></td>
-          <td></td>
+          <?php 
+            if(!empty($resultTerms)){
+            foreach ($resultTerms['termId'] as $key_2 => $value_2) { 
+
+              $getStudWorkDays = $student_marks->getStudentsFinalWorkingDays($value_2['editSessionTermId'], $studentID);
+
+            ?>
+          <td><input type="text" value="<?php echo $getStudWorkDays[0]['working_days_value']; ?>" class="border-0" name="total_working_term[<?php echo $value_2['editSessionTermId']; ?>]"></td>
+          <?php  } } ?>
         </tr>
         <tr>
           <td>Sign of Class Teacher</td>
@@ -328,6 +235,9 @@
     <p class="text-right px-2">
       <strong><em>Signature of principal</em></strong>
     </p>
+    <div class="form-group text-center custom-mt-form-group">
+      <button class="btn btn-primary btn-lg mr-2" type="submit">Submit</button>
+    </form>
   </div>
 </div>
       </div>

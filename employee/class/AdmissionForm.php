@@ -2,7 +2,13 @@
 class AdmissionForm extends MySQLCN {
 
     function getAdmissionFormsListing() {
-        $fetchList = "SELECT * FROM `admission_form_listing` join classes_name on admission_form_listing.class_id=classes_name.id join sections on admission_form_listing.section_id=sections.id order by `first_name` asc";
+        $fetchList = "SELECT * FROM `admission_form_listing` join classes_name on admission_form_listing.class_id=classes_name.id join sections on admission_form_listing.section_id=sections.id where admission_form_listing.cancel_form_status='0' order by `first_name` asc";
+        $fetch_list = $this->select($fetchList);
+        return $fetch_list;
+    }
+
+    function getCancelAdmissionFormsListing() {
+        $fetchList = "SELECT * FROM `admission_form_listing` join classes_name on admission_form_listing.class_id=classes_name.id join sections on admission_form_listing.section_id=sections.id where admission_form_listing.cancel_form_status='1' order by `first_name` asc";
         $fetch_list = $this->select($fetchList);
         return $fetch_list;
     }
@@ -35,7 +41,7 @@ class AdmissionForm extends MySQLCN {
     }
 
     function getLastFormId() {
-        $fetchList = "SELECT admission_no FROM `students` order by `id` desc limit 1";
+        $fetchList = "SELECT admission_no FROM `admission_form_listing` order by `id` desc limit 1";
         $fetch_list = $this->select($fetchList);
         return $fetch_list;
     }

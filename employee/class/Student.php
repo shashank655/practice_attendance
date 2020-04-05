@@ -207,7 +207,7 @@ class Student extends MySQLCN {
         if($_POST['oldAdmissionNo'] == $_POST['admissionNo']) {
             return false;
         } else {
-            $fetch = "SELECT * FROM `students` where admission_no='".$_POST['admissionNo']."'";
+            $fetch = "SELECT * FROM `admission_form_listing` where admission_no='".$_POST['admissionNo']."'";
             $fetch_result = $this->select($fetch);
             if (!empty($fetch_result)) {
                 return true;
@@ -229,6 +229,11 @@ class Student extends MySQLCN {
                 return false;
             }
         }
+    }
+
+    function cancelAdmissionForms($data) {
+        $qry_update = "UPDATE `admission_form_listing` set cancel_form_status = '1' WHERE admission_no = '{$data['admissionNo']}'";
+        $this->updateData($qry_update);
     }
 
     function AddAdmissionStudent($data) {
@@ -253,6 +258,9 @@ class Student extends MySQLCN {
             $res = $this->insert($qry_student);
 
                 if($res) {
+                    $qry_update = "UPDATE `admission_form_listing` set fees_submit_status = '1' WHERE admission_no = '{$data['admission_no']}'";
+                    $this->updateData($qry_update);
+
                     $result['status'] = true;
                 } else {
                     $result['status'] = false;

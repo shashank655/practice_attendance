@@ -135,6 +135,10 @@ $menus = [
             'TC Form' => [
                 'to' => 'transfer-certificate-listing.php',
                 'related' => ['add-transfer-certificate.php']
+            ],
+            'Cancel Admission Form' => [
+                'to' => 'cancel-admission-form-listing.php',
+                'related' => ['cancel-admission-form.php']
             ]
         ]
     ],

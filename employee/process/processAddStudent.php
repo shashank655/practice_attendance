@@ -48,6 +48,11 @@ if ($data['type'] == 'Add') {
         $_SESSION['success'] = false;
         header('Location: ' . BASE_ROOT.'admission-form-listing.php');
     } 
+} else if ($data['type'] == 'cancelAdmissionForms' && $data['admissionNo'] != NULL) {
+    $res = $student->cancelAdmissionForms($data);
+    $_SESSION['Msg'] = "Admission Form cancelled successfully!";
+    $_SESSION['success'] = true;
+    header('Location: ' . BASE_ROOT.'admission-form-listing.php');
 } else if ($_POST['type'] == 'isCheckAdmissionNo' && $_POST['admissionNo'] != NULL) {
     $res = $student->isCheckAdmissionNo();
     echo $res;exit;

@@ -3,7 +3,7 @@ require_once 'employee/class/dbclass.php';
 require_once 'employee/config/config.php'; 
 require_once 'employee/class/AdmissionForm.php'; 
 $admissionForm = new AdmissionForm(); 
-$resultAllListing=$admissionForm->getAdmissionFormsListing();
+$resultAllListing=$admissionForm->getCancelAdmissionFormsListing();
 ?>
 
 <?php 
@@ -15,7 +15,7 @@ require_once 'includes/sidebar.php';
             <div class="page-header">
                     <div class="row">
                         <div class="col-lg-7 col-md-12 col-sm-12 col-12">
-                            <h5 class="text-uppercase">Admission Form</h5>
+                            <h5 class="text-uppercase">Cancel Admission Form</h5>
                         </div>
                         <div class="col-lg-5 col-md-12 col-sm-12 col-12">
                             <ul class="list-inline breadcrumb float-right">
@@ -41,7 +41,6 @@ require_once 'includes/sidebar.php';
                                 <thead>
                                     <tr>
                                         <th style="min-width:50px;">S.No.</th>
-                                        <th style="min-width:50px;">Paid</th>
                                         <th style="min-width:50px;">Fees Status</th>
                                         <th style="min-width:50px;">Full Name</th>
                                         <th style="min-width:50px;">Admission Number</th>
@@ -49,8 +48,6 @@ require_once 'includes/sidebar.php';
                                         <th style="min-width:50px;">Gender</th>
                                         <th style="min-width:50px;">Class</th>
                                         <th style="min-width:50px;">Sections</th>
-                                        <th style="min-width:50px;">View</th>
-                                        <th style="min-width:50px;">Cancel</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -66,7 +63,6 @@ require_once 'includes/sidebar.php';
                                                 $paidStatus = 'UnPaid';
                                             }
                                         ?>
-                                        <td><a href="employee/process/processAddStudent.php?type=addAdmissionStudent&admissionNo=<?php echo $value['admission_no']; ?>"><?php echo $paidStatus; ?></a></td>
                                         <td><strong><?php echo $paidStatus; ?></strong></td>
                                         <td><?php echo  $value['first_name'].' '.$value['last_name']; ?></td>
                                         <td><?php echo $value['admission_no']; ?></td>
@@ -74,8 +70,6 @@ require_once 'includes/sidebar.php';
                                         <td><?php echo $value['gender']; ?></td>
                                         <td><?php echo $value['class_name'];?></td>
                                         <td><?php echo $value['section_name']; ?></td>
-                                        <td><a href="view-admission-form.php?formId=<?php echo $value[0];?>">View</a></td>
-                                        <td><a href="employee/process/processAddStudent.php?type=cancelAdmissionForms&admissionNo=<?php echo $value['admission_no']; ?>">Cancel</a></td>
                                     </tr>
                                     <?php $i++; } ?>
                                 </tbody>

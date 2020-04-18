@@ -61,10 +61,6 @@ $menus = [
             'Edit Term' => [
                 'to' => 'edit-session-terms.php',
                 'related' => ['edit-session-terms.php']
-            ],
-            'Report Card' => [
-                'to' => 'final-report-student.php',
-                'related' => ['final-report-student.php']
             ]
         ]
     ],
@@ -136,7 +132,7 @@ $menus = [
                 'to' => 'transfer-certificate-listing.php',
                 'related' => ['add-transfer-certificate.php']
             ],
-            'Cancel Admission Form' => [
+            'Canceled Adm. forms' => [
                 'to' => 'cancel-admission-form-listing.php',
                 'related' => ['cancel-admission-form.php']
             ]

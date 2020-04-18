@@ -92,14 +92,26 @@ class ClassSections extends MySQLCN {
         $res = $this->updateData($qry);
         if ($res) {
             if(!empty($data['addSection'])){
+
+                $qryDel = "DELETE FROM `sections` WHERE class_id = '{$data['classId'] }'";
+                $resDel = $this->deleteData($qryDel);
+
+                $qryDel2 = "DELETE FROM `class_sections_subjects` WHERE class_id = '{$data['classId'] }'";
+                $resDel2 = $this->deleteData($qryDel2);
+
                 foreach ($data['addSection'] as $key => $value) {
                     if(!empty($data['sectionsIds'][$key])) {
-                        $qry2 = "UPDATE `sections` SET `section_name` = '{$value}' WHERE id = '{$data['sectionsIds'][$key]}'";
-                        $res2 = $this->updateData($qry2);
+                        $qry2 = 'INSERT INTO `sections`
+                            (`id`,`class_id`,`section_name`)
+                        VALUES ("'. $data['sectionsIds'][$key] . '","'. $data['classId'] . '", "'. $value . '")';
+                        $res2 = $this->insert($qry2);
+
                         if(!empty($data['subjects_id'])) {
                             $subjectsId = implode(',', $data['subjects_id']);
-                            $qry3 = "UPDATE `class_sections_subjects` SET `subjects_id` = '{$subjectsId}' WHERE class_id = '{$data['classId']}' and section_id = '{$data['sectionsIds'][$key]}'";
-                            $res3 = $this->updateData($qry3);
+                            $qry3 = 'INSERT INTO `class_sections_subjects`
+                                (`class_id`,`section_id`,`subjects_id`)
+                                VALUES ("'. $data['classId'] . '","'. $data['sectionsIds'][$key] . '", "'. $subjectsId . '")';
+                            $res3 = $this->insert($qry3);
                         }
                     } else {
                         $qry4 = 'INSERT INTO `sections`

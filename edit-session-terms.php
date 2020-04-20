@@ -13,7 +13,8 @@
     $class_id = (isset($_REQUEST['class_id'])) ? $_REQUEST['class_id'] : NULL;
     $section_id = (isset($_REQUEST['section_id'])) ? $_REQUEST['section_id'] : NULL;
    
-    //$resultAllStudents=$student->getAllStudents($get_class_id,$get_section_id,$admission_no,$student_name);
+    $getEditTermsData=$sessionTerm->getEditTerms($session_year_id,$session_term_id,$class_id,$section_id);
+
    
    require_once 'includes/header.php'; 
    require_once 'includes/sidebar.php';
@@ -44,7 +45,7 @@
                         <select class="custom-select" id="session_year_id" name="session_year_id" onchange="getSessionTerm(this.value);">
                            <option value='' >Select Session</option>
                            <?php foreach ($resultAllSession as $key => $value) { ?>
-                           <option value="<?php echo $value['id']?>"><?php echo $value['session_year']?></option>
+                           <option <?php if ($session_year_id==$value['id']) { echo 'selected'; }  ?> value="<?php echo $value['id']?>"><?php echo $value['session_year']?></option>
                            <?php } ?>  
                         </select>
                      </div>
@@ -67,7 +68,7 @@
                         <select id="class_id" class="custom-select" name="class_id" onchange="getSections(this.value);">
                            <option value='' >Select Class</option>
                            <?php for ($i=0 ; $i < count($resultClasses); $i++) : ?>
-                           <option <?php if (isset($result['fetch_data'][0]['class_id'])) { if ($result['fetch_data'][0]['class_id']==$resultClasses[$i]['id']) { echo 'selected'; } } ?> value="<?php echo $resultClasses[$i][ 'id']; ?>"><?php echo $resultClasses[$i][ 'class_name']; ?></option>
+                           <option <?php if ($class_id==$resultClasses[$i]['id']) { echo 'selected'; }  ?> value="<?php echo $resultClasses[$i][ 'id']; ?>"><?php echo $resultClasses[$i][ 'class_name']; ?></option>
                            <?php endfor; ?>
                         </select>
                      </div>
@@ -93,6 +94,7 @@
             <div class="col-12 mb-3">
                <form class="form-validate" id="fees-transportation-form" action="employee/process/processSessionsTerm.php" method="post" novalidate="novalidate">
                <input type="hidden" name="type" value="edit-sessions-terms">
+               <input type="hidden" name="edit-term-id" value="<?php echo $getEditTermsData['edit_session_terms_id']; ?>">
                <input type="hidden" name="session_year_id" value="<?php echo $session_year_id;?>">
                <input type="hidden" name="session_term_id" value="<?php echo $session_term_id;?>">
                <input type="hidden" name="class_id" value="<?php echo $class_id;?>">
@@ -103,7 +105,7 @@
                         <h4 class="card-title">Scholastic</h4>
                      </div>
                      <div class="card-body">
-                        <?php if(!$get_trans_fees->success) { ?>
+                        <?php if(empty($getEditTermsData['fetch_heads'])) { ?>
                         <div class="form-group row">
                            <label class="col-form-label col-md-2">Head Name</label>
                            <div class="col-md-3">
@@ -111,10 +113,29 @@
                            </div>
                            <label class="col-form-label">Total  Marks</label>
                            <div class="col-md-3">
-                              <input type="text" placeholder="Amount" name="totalMarks[]" class="totalMarks form-control">
+                              <input type="text" placeholder="Marks" name="totalMarks[]" class="totalMarks form-control">
                            </div>
                         </div>
-                        <?php } ?>  
+                        <?php } else { 
+                          $i = 1;
+                          foreach ($getEditTermsData['fetch_heads'] as $key_heads => $value_heads) { ?>
+                          <div class="form-group row add_heads_type" id="trans-heads-<?php echo $i;?>">
+                           
+                           <input type="hidden" name="headNameIds[]" value="<?php echo $value_heads['id']; ?>">
+
+                           <label class="col-form-label col-md-2">Head Name</label>
+                           <div class="col-md-3">
+                              <input type="text" placeholder="Head Name" name="headName[]" value="<?php echo $value_heads['headName']; ?>" class="headName form-control">
+                           </div>
+                           <label class="col-form-label">Total  Marks</label>
+                           <div class="col-md-3">
+                              <input type="text" placeholder="Marks" value="<?php echo $value_heads['totalMarks']; ?>" name="totalMarks[]" class="totalMarks form-control">
+                           </div>
+                           <div class="col-md-3">
+                            <img title="DELETE" src="<?php echo BASE_ROOT;?>assets/img/cancel.png" onclick="javascript:deleteAddress(this.name)" style="cursor: pointer;" name="trans-heads-<?php echo $i;?>">
+                          </div>
+                        </div>
+                        <?php $i++;} } ?>  
                         <div id="heads-types-div">
                         </div>
                         <div class="controls">
@@ -122,14 +143,29 @@
                         </div>
                      </div>
                      <div class="card-body">
-                        <?php if(!$get_trans_fees->success) { ?>
+                        <?php if(empty($getEditTermsData['fetch_subjects'])) { ?>
                         <div class="form-group row">
                            <label class="col-form-label col-md-2">Subject Name</label>
                            <div class="col-md-3">
                               <input type="text" placeholder="Subject Name" name="subjectName[]" class="subjectName form-control">
                            </div>
                         </div>
-                        <?php } ?>
+                        <?php } else {
+                        $j = 1; 
+                        foreach ($getEditTermsData['fetch_subjects'] as $key_sub => $value_sub) { ?>
+                          <div class="form-group row add_subjects_type" id="trans-subject-<?php echo $j;?>">
+
+                          <input type="hidden" name="subjectNameIds[]" value="<?php echo $value_sub['id']; ?>">
+
+                           <label class="col-form-label col-md-2">Subject Name</label>
+                           <div class="col-md-3">
+                              <input type="text" placeholder="Subject Name" name="subjectName[]" value="<?php echo $value_sub['subjectName'] ?>" class="subjectName form-control">
+                           </div>
+                           <div class="col-md-3">
+                            <img title="DELETE" src="<?php echo BASE_ROOT;?>assets/img/cancel.png" onclick="javascript:deleteAddress(this.name)" style="cursor: pointer;" name="trans-subject-<?php echo $j;?>">
+                          </div>
+                        </div>
+                        <?php $j++;} } ?>
                         <div id="subjects-types-div">
                         </div>
                         <div class="controls">
@@ -142,14 +178,27 @@
                         <h4 class="card-title">Co-Scholastic</h4>
                      </div>
                      <div class="card-body">
-                        <?php if(!$get_trans_fees->success) { ?>
+                        <?php if(empty($getEditTermsData['fetch_co_subjects'])) { ?>
                         <div class="form-group row">
                            <label class="col-form-label col-md-2">Subject Name</label>
                            <div class="col-md-3">
                               <input type="text" placeholder="Subject Name" name="subjectCoSName[]" class="subjectCoSName form-control">
                            </div>
                         </div>
-                        <?php } ?>
+                        <?php } else {
+                          $k = 1;
+                        foreach ($getEditTermsData['fetch_co_subjects'] as $key_co_sub => $value_co_sub) { ?>
+                          <div class="form-group row add_subjects_type" id="trans-coschol-subject-<?php echo $k;?>">
+                          <input type="hidden" name="subjectCoSNameIds[]" value="<?php echo $value_co_sub['id']; ?>">
+                           <label class="col-form-label col-md-2">Subject Name</label>
+                           <div class="col-md-3">
+                              <input type="text" placeholder="Subject Name" name="subjectCoSName[]" value="<?php echo $value_co_sub['subjectCoSName'] ?>" class="subjectCoSName form-control">
+                           </div>
+                           <div class="col-md-3">
+                            <img title="DELETE" src="<?php echo BASE_ROOT;?>assets/img/cancel.png" onclick="javascript:deleteAddress(this.name)" style="cursor: pointer;" name="trans-coschol-subject-<?php echo $k;?>">
+                          </div>
+                        </div>
+                        <?php $k++;} } ?>
                         <div id="subjects-coschol-types-div">
                         </div>
                         <div class="controls">
@@ -204,7 +253,7 @@
    
            function addAnotherHeads() {
                    var aboutAddrow = $("#clone-heads-type-div").clone().removeAttr('style'); 
-                   aboutAddrow.attr("id", "trans-fees-" + k);
+                   aboutAddrow.attr("id", "trans-heads-" + k);
    
                    var feetypeBoxname = aboutAddrow.find('.headName').attr('name', 'headName[]');    
                    feetypeBoxname.attr('id', 'headName' + k);
@@ -216,7 +265,7 @@
    
                    var deleteicon = aboutAddrow.find('#delete-icon');
                    deleteicon.attr('id', 'newdelete' + k);
-                   deleteicon.attr('name', 'trans-fees-' + k);
+                   deleteicon.attr('name', 'trans-heads-' + k);
    
                    $("#heads-types-div").append(aboutAddrow);
    
@@ -263,7 +312,11 @@
    
                    L = L + 1;
            }
-
+      <?php  if($class_id!=''){ ?>        
+          section_id='<?php echo $section_id; ?>';
+          getSections('<?php echo $class_id; ?>');
+       <?php }?>
+            
       function getSections(classID){
              $.ajax({
                  type: "POST",
@@ -291,7 +344,12 @@
                  }
              });
          }
-      
+        
+        <?php  if($session_year_id!=''){ ?>        
+          session_term_id='<?php echo $session_term_id; ?>';
+          getSessionTerm('<?php echo $session_year_id; ?>');
+        <?php }?>
+
          function getSessionTerm(ID){
              $.ajax({
                  type: "POST",

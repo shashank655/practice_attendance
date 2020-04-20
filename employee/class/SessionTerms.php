@@ -114,40 +114,95 @@ class SessionTerms extends MySQLCN {
     }
 
     function editSessionTerms($data) {
-        $qry = 'INSERT INTO `edit_session_terms`
-            (`session_year_id`,`session_term_id`,`class_id`,`section_id`)
-            VALUES ( "'. $data['session_year_id'] . '","'. $data['session_term_id'] . '","'. $data['class_id'] . '","'. $data['section_id'] . '")';
-        $res = $this->insert($qry);
 
+        if(!empty($data['edit-term-id'])) {
+            $qry1 = "DELETE FROM `scholastic_heads_detail` WHERE edit_session_term_id = '{$data['edit-term-id']}'";
+            $this->deleteData($qry1);
+
+            $qry2 = "DELETE FROM `scholastic_subjects_detail` WHERE edit_session_term_id = '{$data['edit-term-id']}'";
+            $this->deleteData($qry2);
+
+            $qry3 = "DELETE FROM `co_scholastic_subjects_detail` WHERE edit_session_term_id = '{$data['edit-term-id']}'";
+            $this->deleteData($qry3);
+            $res = $data['edit-term-id'];
+        } else {
+            $qry = 'INSERT INTO `edit_session_terms`
+                (`session_year_id`,`session_term_id`,`class_id`,`section_id`)
+                VALUES ( "'. $data['session_year_id'] . '","'. $data['session_term_id'] . '","'. $data['class_id'] . '","'. $data['section_id'] . '")';
+            $res = $this->insert($qry);
+        }
             if(!empty($res)) {
                 if(!empty($data['headName'])){
                     foreach ($data['headName'] as $key => $value) {
+                        if(!empty($data['headNameIds'][$key])) {
+                            $qry2 = 'INSERT INTO `scholastic_heads_detail`
+                                (`id`,`edit_session_term_id`,`headName`,`totalMarks`)
+                            VALUES ("'. $data['headNameIds'][$key] .'","'. $res . '", "'. $value . '", "'. $data['totalMarks'][$key] . '")';
+                            $res2 = $this->insert($qry2);
+                        } else {
                             $qry2 = 'INSERT INTO `scholastic_heads_detail`
                                 (`edit_session_term_id`,`headName`,`totalMarks`)
                             VALUES ("'. $res . '", "'. $value . '", "'. $data['totalMarks'][$key] . '")';
-                        $res2 = $this->insert($qry2);
+                            $res2 = $this->insert($qry2);
+                        }
                     }
                 } 
 
                 if(!empty($data['subjectName'])){
                     foreach ($data['subjectName'] as $key1 => $value1) {
+                        if(!empty($data['subjectNameIds'][$key1])) {
+                            $qry3 = 'INSERT INTO `scholastic_subjects_detail`
+                                (`id`,`edit_session_term_id`,`subjectName`)
+                            VALUES ("'.$data['subjectNameIds'][$key1].'", "'. $res . '", "'. $value1 . '")';
+                            $res3 = $this->insert($qry3);
+                        } else {
                             $qry3 = 'INSERT INTO `scholastic_subjects_detail`
                                 (`edit_session_term_id`,`subjectName`)
                             VALUES ("'. $res . '", "'. $value1 . '")';
-                        $res3 = $this->insert($qry3);
+                            $res3 = $this->insert($qry3);
+                        }
                     }
                 }
 
                 if(!empty($data['subjectCoSName'])){
                     foreach ($data['subjectCoSName'] as $key2 => $value2) {
+                        if(!empty($data['subjectCoSNameIds'][$key2])) {
+                            $qry4 = 'INSERT INTO `co_scholastic_subjects_detail`
+                                (`id`,`edit_session_term_id`,`subjectCoSName`)
+                            VALUES ("'.$data['subjectCoSNameIds'][$key2].'","'. $res . '", "'. $value2 . '")';
+                            $res4 = $this->insert($qry4);
+                        } else {
                             $qry4 = 'INSERT INTO `co_scholastic_subjects_detail`
                                 (`edit_session_term_id`,`subjectCoSName`)
                             VALUES ("'. $res . '", "'. $value2 . '")';
-                        $res4 = $this->insert($qry4);
+                            $res4 = $this->insert($qry4);
+                        }
                     }
                 }
                 return true;
             }
+    }
+
+    function getEditTerms($session_year_id,$session_term_id,$class_id,$section_id) {
+
+        $fetch = "SELECT id FROM `edit_session_terms` where session_year_id='{$session_year_id}' and session_term_id='{$session_term_id}' and class_id='{$class_id}' and section_id='{$section_id}'";
+        $fetch_data = $this->select($fetch);
+        $finalArray = array();
+            if(!empty($fetch_data)) {
+                $finalArray['edit_session_terms_id'] = $fetch_data[0]['id'];
+                $sql_heads = "SELECT * FROM `scholastic_heads_detail` where edit_session_term_id='{$fetch_data[0]['id']}'";
+                $fetch_heads = $this->select($sql_heads); 
+                $finalArray['fetch_heads'] = $fetch_heads;
+
+                $sql_subjects = "SELECT * FROM `scholastic_subjects_detail` where edit_session_term_id='{$fetch_data[0]['id']}'";
+                $fetch_subjects = $this->select($sql_subjects); 
+                $finalArray['fetch_subjects'] = $fetch_subjects;
+
+                $sql_co_subjects = "SELECT * FROM `co_scholastic_subjects_detail` where edit_session_term_id='{$fetch_data[0]['id']}'";
+                $fetch_co_subjects = $this->select($sql_co_subjects); 
+                $finalArray['fetch_co_subjects'] = $fetch_co_subjects;
+            }
+            return $finalArray;
     }
 
     function getSessionTermsInfo($session_year_id , $get_class_id , $get_section_id) {

@@ -49,7 +49,7 @@ require_once 'includes/sidebar.php';
             </div>
         <?php endif; ?>
         <div class="card-box">
-            <form class="form-validate" action="" name="add-fee-form" id="add-fee-form" method="post" novalidate="novalidate">
+            <form class="form-validate" action="" name="add-edit-fee-head" id="add-edit-fee-head" method="post" novalidate="novalidate">
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-group">

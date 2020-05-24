@@ -397,8 +397,8 @@ class Accounts extends Databse
             'class_id' => 's.class_id = ?',
             'section_id' => 's.section_id = ?',
             'admission_no' => 'mf.admission_no = ?',
-            'date_from' => 'mf.due_date >= ?',
-            'date_to' => 'mf.due_date <= ?'
+            'date_from' => 'mf.date >= ?',
+            'date_to' => 'mf.date <= ?'
         ];
 
         $where = $this->arrayOnly($_GET, array_keys($filters));

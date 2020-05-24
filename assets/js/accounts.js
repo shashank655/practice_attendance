@@ -134,6 +134,13 @@
         return true;
     });
 
+    $(document).on('change', '#add-edit-fee-head [name="type"], #add-edit-fee-head [name="class_id"]', function (e) {
+        var $from = $('#add-edit-fee-head');
+        var type = $from.find('[name="type"] option:selected').text();
+        var class_name = $from.find('[name="class_id"] option:selected').text();
+        $from.find('[name="title"]').val(type + ' - ' + class_name);
+    });
+
     if (window.fee_items && window.fee_items.length > 0) {
         if ($('#add-fee-table tbody tr#blank_row_tr').length) {
             $('#add-fee-table tbody tr#blank_row_tr').remove();

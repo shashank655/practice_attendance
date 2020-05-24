@@ -123,7 +123,8 @@ require_once 'includes/sidebar.php';
                                     <th>Balance</th>
                                     <th>Balance Date</th>
                                     <th>Invoice</th>
-                                    <th>Action</th>
+                                    <th>Edit</th>
+                                    <th>Pay Now</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -153,20 +154,22 @@ require_once 'includes/sidebar.php';
                                                 <?php endif; ?>
                                             </td>
                                             <td>
-                                                <div class="d-flex justify-content-center">
-                                                    <?php if ($admission_fee->payment == 0) : ?>
-                                                        <a href="add-edit-admission-fee.php?id=<?= $admission_fee->id; ?>" class="text-dark p-2">
-                                                            <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
-                                                        </a>
-                                                    <?php endif; ?>
-                                                    <?php if ($admission_fee->total > $admission_fee->payment) : ?>
-                                                        <a href="collect-admission-fee.php?id=<?= $admission_fee->id; ?>" class="text-dark p-2">
-                                                            <i class="fa fa-rupee fa-lg" aria-hidden="true"></i>
-                                                        </a>
-                                                    <?php else : ?>
-                                                        -
-                                                    <?php endif; ?>
-                                                </div>
+                                                <?php if ($admission_fee->payment == 0) : ?>
+                                                    <a href="add-edit-admission-fee.php?id=<?= $admission_fee->id; ?>" class="text-dark p-2">
+                                                        <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+                                                    </a>
+                                                <?php else : ?>
+                                                    -
+                                                <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <?php if ($admission_fee->total > $admission_fee->payment) : ?>
+                                                    <a href="collect-admission-fee.php?id=<?= $admission_fee->id; ?>" class="btn btn-link p-2">
+                                                        Pay Now
+                                                    </a>
+                                                <?php else : ?>
+                                                    -
+                                                <?php endif; ?>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

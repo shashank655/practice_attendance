@@ -130,25 +130,25 @@ require_once 'includes/sidebar.php';
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>First Name</label>
-                            <input type="text" name="billing[first_name]" class="form-control required" required>
+                            <input type="text" name="billing[first_name]" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Last Name</label>
-                            <input type="text" name="billing[last_name]" class="form-control required" required>
+                            <input type="text" name="billing[last_name]" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Phone</label>
-                            <input type="text" name="billing[phone]" class="form-control required" required>
+                            <input type="text" name="billing[phone]" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="text" name="billing[email]" class="form-control required" required>
+                            <input type="text" name="billing[email]" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -156,7 +156,7 @@ require_once 'includes/sidebar.php';
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Address 1</label>
-                            <input type="text" name="billing[address_1]" class="form-control required" required>
+                            <input type="text" name="billing[address_1]" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -170,25 +170,25 @@ require_once 'includes/sidebar.php';
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>City/District</label>
-                            <input type="text" name="billing[city]" class="form-control required" required>
+                            <input type="text" name="billing[city]" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>State/Province</label>
-                            <input type="text" name="billing[state]" class="form-control required" required>
+                            <input type="text" name="billing[state]" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Postal Code</label>
-                            <input type="text" name="billing[postal_code]" class="form-control required" required>
+                            <input type="text" name="billing[postal_code]" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Country</label>
-                            <input type="text" name="billing[country]" class="form-control required" required>
+                            <input type="text" name="billing[country]" class="form-control">
                         </div>
                     </div>
                 </div>

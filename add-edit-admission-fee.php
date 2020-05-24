@@ -21,8 +21,12 @@ if ($id = isset($_GET['id']) ? intval($_GET['id']) : null) {
 
 if ($admission_no = isset($_GET['admission_no']) ? urldecode($_GET['admission_no']) : null) {
     $admission = $accounts->getAdmissionByAdmssionNo($admission_no);
-    $fee_head = $accounts->getFeeHeadByClassId('admission', $admission->class_id);
-    $fee_head_items = $accounts->getFeeHeadItems($fee_head->id);
+    if ($admission->class_id) {
+        $fee_head = $accounts->getFeeHeadByClassId('admission', $admission->class_id);
+        $fee_head_items = $accounts->getFeeHeadItems($fee_head->id);
+    } else {
+        $_GET['admission_no'] = $admission_no = null;
+    }
 }
 
 if (isset($_POST['action']) && $_POST['action'] == 'add-edit-admission-fee') {
@@ -67,29 +71,33 @@ require_once 'includes/sidebar.php';
                 </button>
             </div>
         <?php endif; ?>
-        <?php if (is_null($admission_no)) : ?>
-            <form class="form-validate" action="" method="get" novalidate="novalidate">
-                <div class="row">
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label>Admission No</label>
-                            <input type="text" name="admission_no" class="form-control required" value="<?= $search_form->admission_no; ?>" required>
-                        </div>
+        <form class="form-validate" action="" method="get" novalidate="novalidate">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="text" class="form-control" value="<?= date('d-m-Y'); ?>" readonly>
                     </div>
-                    <div class="col-md-8">
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Admission No</label>
+                        <input type="text" name="admission_no" class="form-control required" value="<?= $search_form->admission_no; ?>" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
 
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label>Action</label>
-                            <div class="d-flex">
-                                <button class="btn btn-light w-100 shadow-none" type="submit">Search</button>
-                            </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Action</label>
+                        <div class="d-flex">
+                            <button class="btn btn-light w-100 shadow-none" type="submit">Search</button>
                         </div>
                     </div>
                 </div>
-            </form>
-        <?php endif; ?>
+            </div>
+        </form>
         <div class="card-box">
             <form class="form-validate" action="" name="add-fee-form" id="add-fee-form" method="post" novalidate="novalidate">
                 <div class="row">

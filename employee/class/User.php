@@ -2,25 +2,36 @@
 class User extends MySQLCN {
 
     function userLogin($data) {
-        $qry = "SELECT * FROM users WHERE email_address = '{$data['email_address']}' AND password = md5('{$data['password']}')";
-        $result = $this->select($qry);
-        if ($result != NULL) {
-                if($result[0]['user_role'] == '1') {
-                    if($result[0]['email_verification'] == '0') {
-                        return false;
-                    }
-                }
-            $_SESSION['userId'] = $result[0]['id'];
-            $_SESSION['name'] = $result[0]['first_name'].' '.$result[0]['last_name'];
-            $_SESSION['email_address'] = $result[0]['email_address'];
-            $_SESSION['user_role'] = $result[0]['user_role'];
-            $_SESSION['last_login_timestamp'] = time();
-            if($result[0]['user_role'] == '3' || $result[0]['user_role'] == '2') {
-                $this->takeTeacherAttendance($result[0]['id']);
-                $this->recordTeachersAttendance($result[0]['id']);
-                return true;
+
+        if(!empty($data)) {
+            if($data['user_role'] == 'super_admin') {
+                $qry = "SELECT * FROM users WHERE email_address = '{$data['email_address']}' AND password = md5('{$data['password']}') AND user_role = '1'";
+                $result = $this->select($qry);
+            } else if($data['user_role'] == 'teachers') {
+                $qry = "SELECT * FROM users WHERE email_address = '{$data['email_address']}' AND password = md5('{$data['password']}') AND user_role!= '1'";
+                $result = $this->select($qry);
             }
-            return true;
+            if ($result != NULL) {
+                    if($result[0]['user_role'] == '1') {
+                        if($result[0]['email_verification'] == '0') {
+                            return false;
+                        }
+                    }
+                $_SESSION['userId'] = $result[0]['id'];
+                $_SESSION['name'] = $result[0]['first_name'].' '.$result[0]['last_name'];
+                $_SESSION['email_address'] = $result[0]['email_address'];
+                $_SESSION['user_role'] = $result[0]['user_role'];
+                $_SESSION['last_login_timestamp'] = time();
+                if($result[0]['user_role'] == '3' || $result[0]['user_role'] == '2') {
+                    $this->takeTeacherAttendance($result[0]['id']);
+                    $this->recordTeachersAttendance($result[0]['id']);
+                    return true;
+                }
+                return true;
+            } else {
+                return false;
+            }
+
         } else {
             return false;
         }

@@ -15,6 +15,10 @@ $menus = [
             ],
             'Add Teacher' => [
                 'to' => 'add-teacher.php'
+            ],
+            'Deleted Teachers' => [
+                'to' => 'deleted-teachers.php',
+                'related' => ['deleted-teachers.php']
             ]
         ]
     ],

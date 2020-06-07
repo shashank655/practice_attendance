@@ -336,3 +336,4 @@ students_final_marks_attendance
 students_final_marks_working_days
 ALTER TABLE `admission_form_listing` ADD `cancel_form_status` INT(11) NOT NULL DEFAULT '0' AFTER `fees_submit_status`;
 
+ALTER TABLE `users` ADD `isDeleted` INT(11) NOT NULL DEFAULT '0' AFTER `email_verification`;

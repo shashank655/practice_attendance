@@ -70,6 +70,11 @@ if ($data['type'] == 'Add') {
         $_SESSION['success'] = false;
         header('Location: ' . BASE_ROOT.'dashboard.php');
     }
+} else if ($data['type'] == 'delete' && $data['teacherId'] != NULL) {
+    $res = $teacher->DeleteTeacher($data['teacherId']);
+    $_SESSION['Msg'] = "Teacher Deleted successfully!";
+    $_SESSION['success'] = false;
+    header('Location: ' . BASE_ROOT.'all-teachers.php');
 } else {
     header("Location: ". BASE_ROOT.'dashboard.php');
 }

@@ -241,6 +241,16 @@ class Teacher extends MySQLCN {
       }
     }
 
+    function DeleteTeacher($tId) {
+        $qry = "UPDATE `users` set isDeleted = '1' WHERE id = '{$tId}'";
+        $res = $this->deleteData($qry);
+        if ($res) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     function getAttendanceLists($teacherId, $get_current_year, $get_current_month , $numberOfDays) {
         $fetch = "SELECT teacher_id, login_time , date_of_attendance , DAY(date_of_attendance) as day_number from teachers_attendance where teachers_attendance.teacher_id='".$teacherId."' and MONTH(teachers_attendance.date_of_attendance)='".$get_current_month."' and YEAR(teachers_attendance.date_of_attendance)='".$get_current_year."'";
         $fetch_result = $this->select($fetch);
@@ -369,5 +379,12 @@ class Teacher extends MySQLCN {
             $results[$row['teacher_id']] = $row['count'];
         }
         return $results;
+    }
+
+    public function getAllDeletedTeachers() {
+      $fetchList = "SELECT * FROM `users` join teachers on users.id=teachers.user_id join subjects on subjects.id=teachers.subject_id where user_role != '1' and isDeleted = '1' order by `first_name` asc";
+        $fetch_list = $this->select($fetchList);
+        //echo "<pre>";print_r($fetch_list);die;
+        return $fetch_list;
     }
 }

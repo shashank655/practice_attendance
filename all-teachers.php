@@ -89,7 +89,7 @@ require_once 'includes/sidebar.php';
                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a class="dropdown-item" href="add-teacher.php?userId=<?php echo $value[0]; ?>"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a class="dropdown-item" val="<?php echo $value[0]; ?>" href="#" id="delTeacher"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                    <a class="dropdown-item" val="<?php echo $value[0]; ?>" href="employee/process/processAddTeacher.php?type=delete&teacherId=<?php echo $value[0]; ?>" id="delTeacher"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                 </div>
                             </div>
                             <h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="teacher-profile.php?userId=<?php echo $value[0]; ?>"><?php echo $value['first_name'].' '.$value['last_name']; ?></a></h4>

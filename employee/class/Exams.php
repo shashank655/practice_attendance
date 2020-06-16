@@ -37,7 +37,13 @@ class Exams extends MySQLCN {
     }
 
     function getExamsLists() {
-        $fetch = "SELECT * FROM `exams_list` LEFT JOIN exam_type on exams_list.exam_type_id=exam_type.id LEFT JOIN exam_term on exams_list.exam_term_id=exam_term.id LEFT JOIN classes_name on exams_list.class_id=classes_name.id LEFT JOIN sections on exams_list.section_id=sections.id order by exams_list.id";
+        $fetch = "SELECT * FROM `exams_list` LEFT JOIN exam_type on exams_list.exam_type_id=exam_type.id LEFT JOIN exam_term on exams_list.exam_term_id=exam_term.id LEFT JOIN classes_name on exams_list.class_id=classes_name.id LEFT JOIN sections on exams_list.section_id=sections.id order by exams_list.id DESC";
+        $fetch_data = $this->select($fetch);
+        return $fetch_data;
+    }
+
+    function getExamsSubjectsLists() {
+        $fetch = "SELECT exam_list_details.*,  FROM `exam_list_details` LEFT JOIN exams_list on exam_list_details.exam_list_id=exams_list.id LEFT JOIN subjects on exam_list_details.exam_name=subjects.id order by exam_list_details.id DESC";
         $fetch_data = $this->select($fetch);
         return $fetch_data;
     }

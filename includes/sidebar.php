@@ -82,6 +82,15 @@
                                 <li><a class="<?php if($currentURL =='leave-requests-list.php'){echo 'active';}?>" class="" href="leave-requests-list.php">Leave Requests List</a></li>
                             </ul>
                         </li>
+                        <li class="submenu">
+                            <a href="#"><i class="fa fa-shield" aria-hidden="true"></i> <span> Roles & Permission</span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled" style="display: none;">
+                                <li><a class="<?php if($currentURL =='roles-list.php'){echo 'active';}?>" href="roles-list.php">Roles</a></li>
+                                <li><a class="<?php if($currentURL =='permissions-list.php'){echo 'active';}?>" class="" href="permissions-list.php">Permission</a></li>
+                                <li><a class="<?php if($currentURL =='users-list.php'){echo 'active';}?>" class="" href="users-list.php">Users</a></li>
+                                <li><a class="<?php if($currentURL =='teachers.php'){echo 'active';}?>" class="" href="teachers.php">Teachers</a></li>
+                            </ul>
+                        </li>
                         <?php } ?>
                         <?php if($_SESSION['user_role'] == '2' ) { ?>
                         <li class="submenu">
